@@ -14,11 +14,11 @@ load_dotenv()
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'NAME': os.getenv('SQL_SERVER_DATABASE'),
-        'USER': os.getenv('SQL_SERVER_USER'),
-        'PASSWORD': os.getenv('SQL_SERVER_PASSWORD'),
-        'HOST': os.getenv('SQL_SERVER_URL'),
-        'PORT': '1433',  # Geralmente em branco para Azure SQL Database
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
         'OPTIONS': {
             'driver': 'ODBC Driver 18 for SQL Server',
             'extra_params': 'TrustServerCertificate=yes;'
@@ -28,3 +28,7 @@ DATABASES = {
 
 
 # Outras configurações do Django...
+
+DEBUG = True  # Defina como False em produção
+
+ALLOWED_HOSTS = ['*']  # Substitua '*' por domínios específicos em produção
