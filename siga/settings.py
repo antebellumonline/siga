@@ -10,15 +10,17 @@ from decouple import config
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'NAME': config('DATABASE_NAME'),
-        'USER': config('DATABASE_USER'),
-        'PASSWORD': config('DATABASE_PASSWORD'),
-        'HOST': config('DATABASE_HOST'),
-        'PORT': config('DATABASE_PORT'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', default='1433'),
         'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',
+            'driver': config('DB_DRIVER', default='ODBC Driver 17 for SQL Server'),
+            'extra_params': 'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;',
         },
     }
 }
+
 
 # Outras configurações do Django...
