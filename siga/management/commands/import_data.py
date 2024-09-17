@@ -2,6 +2,8 @@ import os
 import pandas as pd
 import pyodbc
 from dotenv import load_dotenv
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 
 # Carregar as variáveis de ambiente do arquivo .env
 load_dotenv()
@@ -42,13 +44,22 @@ def import_excel_to_sql(file_path, table_name):
     except Exception as e:
         print(f"Erro ao importar dados: {e}")
 
+def select_file():
+    # Cria uma janela oculta para usar o diálogo de arquivo
+    Tk().withdraw() 
+    file_path = askopenfilename(filetypes=[("Excel files", "*.xlsx")])
+    return file_path
+
 # Chamada da função
 if __name__ == "__main__":
-    # Caminho para o arquivo Excel
-    file_path = 'caminho/para/seu/arquivo.xlsx'
+    # Solicitar ao usuário para selecionar o arquivo Excel
+    file_path = select_file()
 
-    # Nome da tabela no SQL Server
-    table_name = 'nome_da_sua_tabela'
-
-    # Executar a importação
-    import_excel_to_sql(file_path, table_name)
+    if file_path:
+        # Nome da tabela no SQL Server (alterar conforme necessário)
+        table_name = 'nome_da_sua_tabela'
+        
+        # Executar a importação
+        import_excel_to_sql(file_path, table_name)
+    else:
+        print("Nenhum arquivo selecionado.")
