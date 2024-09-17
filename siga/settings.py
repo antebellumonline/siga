@@ -5,19 +5,23 @@ This module contains the settings for the Django project, including
 configuration for the database, installed apps, middleware, and more.
 """
 
-from decouple import config
+import os
+from dotenv import load_dotenv
+
+# Carregar variáveis do arquivo .env
+load_dotenv()
 
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT', default='1433'),
+        'NAME': os.getenv('SQL_SERVER_DATABASE'),
+        'USER': os.getenv('SQL_SERVER_USER'),
+        'PASSWORD': os.getenv('SQL_SERVER_PASSWORD'),
+        'HOST': os.getenv('SQL_SERVER_URL'),
+        'PORT': '1433',  # Geralmente em branco para Azure SQL Database
         'OPTIONS': {
-            'driver': config('DB_DRIVER', default='ODBC Driver 17 for SQL Server'),
-            'extra_params': 'Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;',
+            'driver': 'ODBC Driver 18 for SQL Server',
+            'extra_params': 'TrustServerCertificate=yes;'
         },
     }
 }
