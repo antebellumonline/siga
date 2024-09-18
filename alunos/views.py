@@ -4,7 +4,20 @@ from .models import Aluno
 from .forms import AlunoForm
 
 def aluno_list(request):
+    query = request.GET.get('q') # Obtém o termo de busca da URL
+    cidade = request.GET.get('cidade') # Obtém o Filtro de Cidade
+    inativo = request.GET.get('inativo') # Obtém o filtro de status (inativo)
+
     alunos = Aluno.objects.all()
+
+    #Aplicar os filtros e pesquisa
+    if query:
+        alunos = alunos.filter(nome__icontains=query)  # Pesquisa por nome (parcial)
+    if cidade:
+        alunos = alunos.filter(cidade=cidade)  # Filtra por cidade
+    if inativo:
+        alunos = alunos.filter(inativo=inativo)  # Filtra por status
+
     return render(request, 'alunos/aluno_list.html', {'alunos': alunos})
 
 def aluno_detail(request, pk):
