@@ -11,7 +11,7 @@ class Aluno(models.Model):
     """
     uid = models.AutoField(primary_key=True)  # Código único
     nome = models.CharField(max_length=255)  # Nome completo do aluno
-    cpf = models.CharField(max_length=11, unique=True, blank=True, null=True)  # CPF do aluno
+    cpf = models.CharField(max_length=11, blank=True, null=True)  # CPF do aluno
     cep = models.CharField(max_length=8, blank=True, null=True)  # CEP
     endereco = models.CharField(max_length=255, blank=True, null=True)  # Endereço
     numero = models.CharField(max_length=10, blank=True, null=True)  # Número da residência
@@ -61,7 +61,7 @@ class ConfigTpContato(models.Model):
         return f'{self.descricao} - {"Inativo" if self.inativo else "Ativo"}'
 
     class Meta:
-        db_table = 'tb_config_tp_contato'  # Corrigido para snake_case
+        db_table = 'tb_config_tpContato'
 
 
 class AlunoContato(models.Model):
@@ -81,4 +81,4 @@ class AlunoContato(models.Model):
         return f'Contato de {self.aluno.nome}: {self.tipo_contato.descricao} - {self.contato}'
 
     class Meta:
-        db_table = 'tb_aluno_contato'
+        db_table = 'tb_aluno-contato'
