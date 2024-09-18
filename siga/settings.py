@@ -27,6 +27,12 @@ DATABASES = {
 }
 
 
+INSTALLED_APPS = [
+    # Outros apps
+    'siga',  # Adicione o nome do seu aplicativo aqui
+]
+
+
 # Outras configurações do Django...
 
 DEBUG = True  # Defina como False em produção
