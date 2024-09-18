@@ -9,7 +9,7 @@ class Aluno(models.Model):
     """
     Modelo que representa um aluno no sistema.
     """
-    UID = models.AutoField(primary_key=True)  # Código único
+    uid = models.AutoField(primary_key=True)  # Código único
     nome = models.CharField(max_length=255)  # Nome completo do aluno
     cpf = models.CharField(max_length=11, unique=True, blank=True, null=True)  # CPF do aluno
     cep = models.CharField(max_length=8, blank=True, null=True)  # CEP
@@ -17,7 +17,7 @@ class Aluno(models.Model):
     numero = models.CharField(max_length=10, blank=True, null=True)  # Número da residência
     complemento = models.CharField(max_length=255, blank=True, null=True)  # Complemento (opcional)
     bairro = models.CharField(max_length=255, blank=True, null=True)  # Bairro
-    cidade = models.CharField(max_length=7)  # Código da cidade conforme IBGE (utilize CharField para códigos)
+    cidade = models.CharField(max_length=7)  # Código da cidade conforme IBGE
     observacao = models.TextField(blank=True, null=True)  # Observações sobre o aluno
     inativo = models.BooleanField(default=False)  # Status: 0 Ativo, 1 Inativo
 
@@ -26,12 +26,12 @@ class Aluno(models.Model):
         Sobrescreve o método save para definir o UID inicial. 
         Note que isso deve ser usado com cautela.
         """
-        if self._state.adding and self.UID is None:
-            last_id = Aluno.objects.aggregate(models.Max('UID'))['UID__max']
+        if self._state.adding and self.uid is None:
+            last_id = Aluno.objects.aggregate(models.Max('uid'))['uid__max']
             if last_id is None:
-                self.UID = 10000000
+                self.uid = 10000000
             else:
-                self.UID = last_id + 1
+                self.uid = last_id + 1
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -39,8 +39,8 @@ class Aluno(models.Model):
         Retorna uma representação em string do objeto Aluno.
         Exibe o UID e o nome do aluno.
         """
-        return f'Aluno {self.UID}; {self.nome}'
-    
+        return f'Aluno {self.uid}; {self.nome}'
+
     class Meta:
         db_table = 'tb_aluno'
 
@@ -59,9 +59,9 @@ class ConfigTpContato(models.Model):
         Retorna a descrição do tipo de contato.
         """
         return f'{self.descricao} - {"Inativo" if self.inativo else "Ativo"}'
-    
+
     class Meta:
-        db_table = 'tb_config_tpContato'
+        db_table = 'tb_config_tp_contato'  # Corrigido para snake_case
 
 
 class AlunoContato(models.Model):

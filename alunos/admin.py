@@ -11,10 +11,10 @@ class AlunoAdmin(admin.ModelAdmin):
     """
     Configuração do modelo Aluno no painel administrativo.
     """
-    list_display = ('UID', 'nome', 'cpf', 'cep', 'endereco', 'numero', 'complemento', 'bairro', 'cidade', 'observacao', 'inativo')
-    search_fields = ('UID', 'nome', 'cpf', 'cidade')  # Campos que podem ser pesquisados
+    list_display = ('uid', 'nome', 'cpf', 'cep', 'endereco', 'numero', 'complemento', 'bairro', 'cidade', 'observacao', 'inativo')
+    search_fields = ('uid', 'nome', 'cpf', 'cidade')  # Campos que podem ser pesquisados
     list_filter = ('cidade', 'inativo')  # Filtros que podem ser aplicados
-    readonly_fields = ('UID',)  # Define UID como somente leitura
+    readonly_fields = ('uid',)  # Define uid como somente leitura
 
 @admin.register(ConfigTpContato)
 class ConfigTpContatoAdmin(admin.ModelAdmin):
