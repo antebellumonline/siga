@@ -14,6 +14,9 @@ load_dotenv()
 # Definição do BASE_DIR
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Configuração do SECRET_KEY
+SECRET_KEY = os.getenv('SECRET_KEY')
+
 # Configuração do banco de dados
 DATABASES = {
     'default': {
