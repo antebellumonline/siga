@@ -1,0 +1,23 @@
+<!-- templates/alunos/aluno_detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalhes do Aluno</title>
+</head>
+<body>
+    <h1>Detalhes do Aluno</h1>
+    <p><strong>Nome:</strong> {{ aluno.nome }}</p>
+    <p><strong>CPF:</strong> {{ aluno.cpf }}</p>
+    <p><strong>CEP:</strong> {{ aluno.cep }}</p>
+    <p><strong>Endereço:</strong> {{ aluno.endereco }}</p>
+    <p><strong>Número:</strong> {{ aluno.numero }}</p>
+    <p><strong>Complemento:</strong> {{ aluno.complemento }}</p>
+    <p><strong>Bairro:</strong> {{ aluno.bairro }}</p>
+    <p><strong>Cidade:</strong> {{ aluno.cidade }}</p>
+    <p><strong>Observação:</strong> {{ aluno.observacao }}</p>
+    <p><strong>Status:</strong> {{ aluno.inativo|yesno:"Inativo,Ativo" }}</p>
+    <a href="{% url 'aluno_update' aluno.pk %}">Editar</a>
+    <a href="{% url 'aluno_delete' aluno.pk %}">Excluir</a>
+    <a href="{% url 'aluno_list' %}">Voltar para a lista</a>
+</body>
+</html>

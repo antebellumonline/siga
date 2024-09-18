@@ -1,0 +1,15 @@
+<!-- templates/alunos/aluno_confirm_delete.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirmar Exclusão</title>
+</head>
+<body>
+    <h1>Tem certeza que deseja excluir {{ aluno.nome }}?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar</button>
+        <a href="{% url 'aluno_list' %}">Cancelar</a>
+    </form>
+</body>
+</html>
