@@ -40,6 +40,9 @@ class Aluno(models.Model):
         Exibe o UID e o nome do aluno.
         """
         return f'Aluno {self.UID}; {self.nome}'
+    
+    class Meta:
+        db_table = 'tb_aluno'
 
 
 class ConfigTpContato(models.Model):
@@ -56,6 +59,9 @@ class ConfigTpContato(models.Model):
         Retorna a descrição do tipo de contato.
         """
         return f'{self.descricao} - {"Inativo" if self.inativo else "Ativo"}'
+    
+    class Meta:
+        db_table = 'tb_config_tpContato'
 
 
 class AlunoContato(models.Model):
@@ -73,3 +79,6 @@ class AlunoContato(models.Model):
         Retorna uma string com o tipo de contato e o contato.
         """
         return f'Contato de {self.aluno.nome}: {self.tipo_contato.descricao} - {self.contato}'
+
+    class Meta:
+        db_table = 'tb_aluno_contato'
