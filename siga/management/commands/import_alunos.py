@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from django.core.management.base import BaseCommand
 from alunos.models import Aluno
@@ -5,10 +6,17 @@ from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 import logging
 
+# Configuração do diretório de logs
+log_dir = os.path.join(os.path.dirname(__file__), 'logs')
+os.makedirs(log_dir, exist_ok=True)  # Cria o diretório de logs se não existir
+
+# Configuração do arquivo de log
+log_file = os.path.join(log_dir, 'import_log.txt')
+
 # Configuração do logging
 logging.basicConfig(
-    filename='import_log.txt',  # Nome do arquivo de log
-    level=logging.INFO,          # Define o nível do log
+    filename=log_file,  # Nome do arquivo de log
+    level=logging.INFO,  # Define o nível do log
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
@@ -35,7 +43,7 @@ class Command(BaseCommand):
             for index, row in df.iterrows():
                 try:
                     aluno = Aluno(
-                        UID=int(row['UID']),
+                        uid=int(row['uid']),
                         nome=str(row['nome']).strip() if pd.notna(row['nome']) else None,
                         cpf=row['cpf'] if pd.notnull(row['cpf']) and row['cpf'] != 0 else None,
                         cep=str(row['cep']).strip() if pd.notna(row['cep']) else None,
@@ -48,7 +56,7 @@ class Command(BaseCommand):
                         inativo=bool(row['inativo']) if pd.notna(row['inativo']) else False,
                     )
                     aluno.save()
-                    logging.info(f'Aluno {aluno.nome} (UID: {aluno.UID}) importado com sucesso.')
+                    logging.info(f'Aluno {aluno.nome} (UID: {aluno.uid}) importado com sucesso.')
                 except Exception as e:
                     self.stdout.write(self.style.ERROR(f"Erro ao importar aluno na linha {index + 1}: {e}"))
                     logging.error(f'Erro ao importar aluno na linha {index + 1}: {e}')
