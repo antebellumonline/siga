@@ -11,7 +11,8 @@ class AlunoAdmin(admin.ModelAdmin):
     """
     Configuração do modelo Aluno no painel administrativo.
     """
-    list_display = ('UID', 'nome', 'cpf', 'inativo')
+    list_display = ('UID', 'nome', 'cpf', 'cep', 'endereco', 'numero', 'complemento', 'bairro', 'cidade', 'observacao', 'inativo')
+    readonly_fields = ('UID',)  # Define UID como somente leitura
 
 @admin.register(ConfigTpContato)
 class ConfigTpContatoAdmin(admin.ModelAdmin):
@@ -25,4 +26,4 @@ class AlunoContatoAdmin(admin.ModelAdmin):
     """
     Configuração do modelo AlunoContato no painel administrativo.
     """
-    list_display = ('aluno', 'tipo_contato', 'contato')
+    list_display = ('aluno', 'tipo_contato', 'contato', 'detalhe')

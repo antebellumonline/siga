@@ -11,7 +11,7 @@ class Aluno(models.Model):
     """
     UID = models.AutoField(primary_key=True)  # Código único
     nome = models.CharField(max_length=255)  # Nome completo do aluno
-    cpf = models.CharField(max_length=11, unique=True)  # CPF do aluno
+    cpf = models.CharField(max_length=11, unique=True, blank=True, null=True)  # CPF do aluno
     cep = models.CharField(max_length=8, blank=True, null=True)  # CEP
     endereco = models.CharField(max_length=255, blank=True, null=True)  # Endereço
     numero = models.CharField(max_length=10, blank=True, null=True)  # Número da residência
