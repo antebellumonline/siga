@@ -117,10 +117,10 @@ LOGGING = {
 
 
 # Configuração de linguagem e fuso horário
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_L10N = True
+USE_I18N = False
+USE_L10N = False
 USE_TZ = True
 
 # Configuração de arquivos estáticos
@@ -130,3 +130,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # Definições adicionais
 DEBUG = True  # Defina como False em produção
 ALLOWED_HOSTS = ['*']  # Substitua '*' por domínios específicos em produção
+
+
+print("DB_NAME:", os.getenv('DB_NAME'))
+print("DB_USER:", os.getenv('DB_USER'))
+print("DB_PASSWORD:", os.getenv('DB_PASSWORD'))
+print("DB_HOST:", os.getenv('DB_HOST'))
+print("DB_PORT:", os.getenv('DB_PORT'))
