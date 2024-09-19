@@ -5,20 +5,19 @@ from .forms import AlunoForm
 
 def aluno_list(request):
     query = request.GET.get('q')  # Obtém o termo de busca da URL
-    cidade = request.GET.get('cidade')  # Obtém o filtro de cidade
     inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)
 
     # Ordenação
     order_by = request.GET.get('order_by', 'uid')  # Define a ordenação padrão por UID
     descending = request.GET.get('descending', 'False') == 'True'  # Verifica se é para ordenar de forma descendente
 
-    alunos = Aluno.objects.all()
+    # Otimiza a consulta usando select_related para carregar cidade junto com aluno
+    alunos = Aluno.objects.select_related('cidade').all()
 
     # Aplicar os filtros e pesquisa
     if query:
         alunos = alunos.filter(nome__icontains=query)  # Pesquisa por nome (parcial)
-    if cidade:
-        alunos = alunos.filter(cidade=cidade)  # Filtra por cidade
+    
     if inativo:
         alunos = alunos.filter(inativo=inativo)  # Filtra por status
 
