@@ -1,10 +1,8 @@
 # apps/alunos/forms.py
 from django import forms
-from .models import Aluno
-from localidades.models import Cidade  # Certifique-se de que o modelo Cidade está importado
+from .models import Aluno, Cidade
 
 class AlunoForm(forms.ModelForm):
-    cidade = forms.ModelChoiceField(queryset=Cidade.objects.all(), widget=forms.Select, required=True)
     class Meta:
         model = Aluno
         fields = ['uid', 'nome', 'cpf', 'cep', 'endereco', 'numero', 'complemento', 'bairro', 'cidade', 'observacao', 'inativo']

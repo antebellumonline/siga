@@ -8,4 +8,5 @@ urlpatterns = [
     path('aluno/new/', views.aluno_create, name='aluno_create'),
     path('aluno/<int:pk>/edit/', views.aluno_update, name='aluno_update'),
     path('aluno/<int:pk>/delete/', views.aluno_delete, name='aluno_delete'),
+    path('cidades/por-codigo-ibge/<str:codigo_ibge>/', views.cidade_por_codigo_ibge, name='cidade_por_codigo_ibge'),
 ]

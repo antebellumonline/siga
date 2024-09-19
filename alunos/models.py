@@ -5,6 +5,13 @@ Ele define as tabelas e relacionamentos no banco de dados.
 
 from django.db import models
 
+class Cidade(models.Model):
+    nome = models.CharField(max_length=100)
+    codigo_ibge = models.CharField(max_length=10, unique=True)
+
+    def __str__(self):
+        return f'{self.nome} - {self.codigo_ibge}'
+
 class Aluno(models.Model):
     """
     Modelo que representa um aluno no sistema.
@@ -17,7 +24,7 @@ class Aluno(models.Model):
     numero = models.CharField(max_length=10, blank=True, null=True)  # Número da residência
     complemento = models.CharField(max_length=255, blank=True, null=True)  # Complemento (opcional)
     bairro = models.CharField(max_length=255, blank=True, null=True)  # Bairro
-    cidade = models.CharField(max_length=10, blank=True, null=True)  # Código da cidade conforme IBGE
+    cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, null=True)  # Código da cidade conforme IBGE
     observacao = models.TextField(blank=True, null=True)  # Observações sobre o aluno
     inativo = models.BooleanField(default=False)  # Status: 0 Ativo, 1 Inativo
 

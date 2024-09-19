@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import JsonResponse
 from .models import Aluno, AlunoContato
 from .forms import AlunoForm
 
@@ -60,3 +61,10 @@ def aluno_delete(request, pk):
         aluno.delete()
         return redirect('aluno_list')
     return render(request, 'alunos/aluno_confirm_delete.html', {'aluno': aluno})
+
+def cidade_por_codigo_ibge(request, codigo_ibge):
+    try:
+        cidade = Cidade.objects.get(codigo_ibge=codigo_ibge)
+        return JsonResponse({'cidade_id': cidade.id})
+    except Cidade.DoesNotExist:
+        return JsonResponse({'erro': 'Cidade não encontrada'}, status=404)
