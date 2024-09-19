@@ -1,16 +1,19 @@
-# apps/alunos/views.py
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Aluno
+from .models import Aluno, AlunoContato
 from .forms import AlunoForm
 
 def aluno_list(request):
-    query = request.GET.get('q') # Obtém o termo de busca da URL
-    cidade = request.GET.get('cidade') # Obtém o Filtro de Cidade
-    inativo = request.GET.get('inativo') # Obtém o filtro de status (inativo)
+    query = request.GET.get('q')  # Obtém o termo de busca da URL
+    cidade = request.GET.get('cidade')  # Obtém o filtro de cidade
+    inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)
+
+    # Ordenação
+    order_by = request.GET.get('order_by', 'uid')  # Define a ordenação padrão por UID
+    descending = request.GET.get('descending', 'False') == 'True'  # Verifica se é para ordenar de forma descendente
 
     alunos = Aluno.objects.all()
 
-    #Aplicar os filtros e pesquisa
+    # Aplicar os filtros e pesquisa
     if query:
         alunos = alunos.filter(nome__icontains=query)  # Pesquisa por nome (parcial)
     if cidade:
@@ -18,11 +21,17 @@ def aluno_list(request):
     if inativo:
         alunos = alunos.filter(inativo=inativo)  # Filtra por status
 
+    # Aplicar ordenação
+    if descending:
+        order_by = f'-{order_by}'
+    alunos = alunos.order_by(order_by)
+
     return render(request, 'alunos/aluno_list.html', {'alunos': alunos})
 
 def aluno_detail(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)
-    return render(request, 'alunos/aluno_detail.html', {'aluno': aluno})
+    contatos = AlunoContato.objects.filter(aluno=aluno)  # Aqui você busca os contatos relacionados ao aluno
+    return render(request, 'alunos/aluno_detail.html', {'aluno': aluno, 'contatos': contatos})
 
 def aluno_create(request):
     if request.method == "POST":

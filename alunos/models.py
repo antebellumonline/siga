@@ -17,7 +17,7 @@ class Aluno(models.Model):
     numero = models.CharField(max_length=10, blank=True, null=True)  # Número da residência
     complemento = models.CharField(max_length=255, blank=True, null=True)  # Complemento (opcional)
     bairro = models.CharField(max_length=255, blank=True, null=True)  # Bairro
-    cidade = models.CharField(max_length=7)  # Código da cidade conforme IBGE
+    cidade = models.CharField(max_length=10, blank=True, null=True)  # Código da cidade conforme IBGE
     observacao = models.TextField(blank=True, null=True)  # Observações sobre o aluno
     inativo = models.BooleanField(default=False)  # Status: 0 Ativo, 1 Inativo
 

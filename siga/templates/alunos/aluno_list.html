@@ -9,11 +9,22 @@
     <button type="submit">Buscar</button>
 </form>
 
+<!-- Botão para criar um novo aluno -->
+<a href="{% url 'aluno_create' %}" class="btn btn-primary">Novo Aluno</a>
+
 <table>
     <thead>
         <tr>
-            <th>UID</th>
-            <th>Nome</th>
+            <th>
+                <a href="?{% if request.GET.order_by == 'uid' and not request.GET.descending %}order_by=uid&descending=True{% else %}order_by=uid{% endif %}">
+                    UID {% if request.GET.order_by == 'uid' %}{% if request.GET.descending %}▼{% else %}▲{% endif %}{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?{% if request.GET.order_by == 'nome' and not request.GET.descending %}order_by=nome&descending=True{% else %}order_by=nome{% endif %}">
+                    Nome {% if request.GET.order_by == 'nome' %}{% if request.GET.descending %}▼{% else %}▲{% endif %}{% endif %}
+                </a>
+            </th>
             <th>CPF</th>
             <th>Cidade</th>
             <th>Status</th>
@@ -23,7 +34,11 @@
         {% for aluno in alunos %}
         <tr>
             <td>{{ aluno.uid }}</td>
-            <td>{{ aluno.nome }}</td>
+            <td>
+                <a href="{% url 'aluno_detail' aluno.pk %}">
+                    {{ aluno.nome }}
+                </a>
+            </td>
             <td>{{ aluno.cpf }}</td>
             <td>{{ aluno.cidade }}</td>
             <td>{{ aluno.inativo|yesno:"Inativo,Ativo" }}</td>
