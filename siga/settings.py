@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'siga',
     'alunos',
+    'localidades',
     # Adicione outros aplicativos aqui
 ]
 
