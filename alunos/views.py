@@ -1,7 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.forms import inlineformset_factory
 from django.http import JsonResponse
 from .models import Aluno, AlunoContato
 from .forms import AlunoForm
+
+# Defina o formset para AlunoContato
+AlunoContatoFormSet = inlineformset_factory(Aluno, AlunoContato, fields=('tipo_contato', 'contato'), extra=1, can_delete=True)
 
 def aluno_list(request):
     query = request.GET.get('q')  # Obtém o termo de busca da URL
@@ -36,23 +40,30 @@ def aluno_detail(request, pk):
 def aluno_create(request):
     if request.method == "POST":
         form = AlunoForm(request.POST)
-        if form.is_valid():
-            form.save()
+        formset = AlunoContatoFormSet(request.POST)
+        if form.is_valid() and formset.is_valid():
+            aluno = form.save()  # Salva o aluno
+            formset.instance = aluno  # Define a instância do aluno no formset
+            formset.save()  # Salva os contatos
             return redirect('aluno_list')
     else:
         form = AlunoForm()
-    return render(request, 'alunos/aluno_form.html', {'form': form})
+        formset = AlunoContatoFormSet()
+    return render(request, 'alunos/aluno_form.html', {'form': form, 'formset': formset})
 
 def aluno_update(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)
     if request.method == "POST":
         form = AlunoForm(request.POST, instance=aluno)
-        if form.is_valid():
+        formset = AlunoContatoFormSet(request.POST, instance=aluno)
+        if form.is_valid() and formset.is_valid():
             form.save()
+            formset.save()
             return redirect('aluno_list')
     else:
         form = AlunoForm(instance=aluno)
-    return render(request, 'alunos/aluno_form.html', {'form': form})
+        formset = AlunoContatoFormSet(instance=aluno)
+    return render(request, 'alunos/aluno_form.html', {'form': form, 'formset': formset})
 
 def aluno_delete(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)

@@ -1,4 +1,4 @@
-<!-- templates/alunos/aluno_list.html -->
+<!-- Formulário de busca e filtro -->
 <form method="GET" action="{% url 'aluno_list' %}">
     <input type="text" name="q" placeholder="Buscar por nome" value="{{ request.GET.q }}">
     <input type="text" name="cidade" placeholder="Filtrar por cidade" value="{{ request.GET.cidade }}">
@@ -7,21 +7,26 @@
         Mostrar inativos
     </label>
     <button type="submit">Buscar</button>
+    <!-- Botão para limpar filtros -->
+    <a href="{% url 'aluno_list' %}" class="btn btn-secondary">Limpar Filtros</a>
 </form>
 
 <!-- Botão para criar um novo aluno -->
 <a href="{% url 'aluno_create' %}" class="btn btn-primary">Novo Aluno</a>
 
+<!-- Tabela de alunos -->
 <table>
     <thead>
         <tr>
             <th>
-                <a href="?{% if request.GET.order_by == 'uid' and not request.GET.descending %}order_by=uid&descending=True{% else %}order_by=uid{% endif %}">
+                <!-- Link para ordenar por UID -->
+                <a href="?order_by=uid{% if request.GET.descending %}&descending=False{% else %}&descending=True{% endif %}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}">
                     UID {% if request.GET.order_by == 'uid' %}{% if request.GET.descending %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
             <th>
-                <a href="?{% if request.GET.order_by == 'nome' and not request.GET.descending %}order_by=nome&descending=True{% else %}order_by=nome{% endif %}">
+                <!-- Link para ordenar por Nome -->
+                <a href="?order_by=nome{% if request.GET.descending %}&descending=False{% else %}&descending=True{% endif %}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}">
                     Nome {% if request.GET.order_by == 'nome' %}{% if request.GET.descending %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>

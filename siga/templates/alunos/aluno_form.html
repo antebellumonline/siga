@@ -1,20 +1,33 @@
-<!-- templates/alunos/aluno_form.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Formulário de Aluno</title>
+    <title>Cadastro do Aluno</title>
 </head>
 <body>
     <h1>{{ form.instance.pk|yesno:"Editar,Adicionar" }} Aluno</h1>
     <form method="post">
         {% csrf_token %}
+        
+        <!-- Renderiza os campos não relacionados ao endereço -->
+        <div>
+            <label for="id_nome">Nome:</label>
+            {{ form.nome }}
+        </div>
+        
+        <!-- Campo CPF com máscara -->
+        <div>
+            <label for="id_cpf">CPF:</label>
+            {{ form.cpf }}
+        </div>
+        
+        <!-- Campos de endereço renderizados manualmente -->
         <div>
             <label for="id_cep">CEP:</label>
             {{ form.cep }}
         </div>
         <div>
             <label for="id_logradouro">Logradouro:</label>
-            {{ form.logradouro }}
+            {{ form.endereco }}
         </div>
         <div>
             <label for="id_bairro">Bairro:</label>
@@ -24,15 +37,45 @@
             <label for="id_cidade">Cidade:</label>
             {{ form.cidade }}  <!-- Dropdown da cidade -->
         </div>
+
+        <!-- Seção de contatos -->
+        <h3>Contatos</h3>
+        {{ formset.management_form }}
+        <div id="contato-formset">
+            {% for form in formset %}
+                <div class="formset-row">
+                    {{ form.as_p }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Botão para adicionar mais contatos -->
+        <button type="button" id="add-contact">Adicionar outro contato</button>
+
         <button type="submit">Salvar</button>
-    </form>    
+    </form>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const cepInput = document.querySelector('#id_cep');
             const logradouroInput = document.querySelector('#id_logradouro');
             const bairroInput = document.querySelector('#id_bairro');
             const cidadeInput = document.querySelector('#id_cidade');
-    
+            const cpfInput = document.querySelector('#id_cpf');
+            const addContactBtn = document.getElementById('add-contact');
+            const contatoFormsetDiv = document.getElementById('contato-formset');
+            let formCount = {{ formset.total_form_count }};  // Quantidade atual de formulários
+
+            // Função para buscar cidade por código IBGE
+            function fetchCidadePorCodigoIBGE(codigo_ibge) {
+                fetch(`/cidades/por-codigo-ibge/${codigo_ibge}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        cidadeInput.value = data.cidade_id;
+                    });
+            }
+
+            // Evento ao sair do campo de CEP
             cepInput.addEventListener('blur', function() {
                 const cep = this.value.replace(/\D/g, '');  // Remove caracteres não numéricos
                 if (cep.length === 8) {
@@ -42,7 +85,6 @@
                             if (!data.erro) {
                                 logradouroInput.value = data.logradouro;
                                 bairroInput.value = data.bairro;
-                                // Você pode adicionar a lógica para setar a cidade com base no código IBGE retornado
                                 const codigo_ibge = data.ibge;
                                 fetchCidadePorCodigoIBGE(codigo_ibge);
                             } else {
@@ -53,15 +95,31 @@
                     alert('Formato de CEP inválido.');
                 }
             });
-    
-            function fetchCidadePorCodigoIBGE(codigo_ibge) {
-                fetch(`/cidades/por-codigo-ibge/${codigo_ibge}/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        cidadeInput.value = data.cidade_id;
-                    });
-            }
+
+            // Função para adicionar novo formulário de contato
+            addContactBtn.addEventListener('click', function() {
+                const newForm = contatoFormsetDiv.children[0].cloneNode(true);
+                const totalFormsInput = document.querySelector('#id_form-TOTAL_FORMS');
+
+                formCount++;
+                newForm.innerHTML = newForm.innerHTML.replace(/form-(\d)-/g, `form-${formCount}-`);
+                contatoFormsetDiv.appendChild(newForm);
+                totalFormsInput.value = formCount;  // Atualiza a contagem total de formulários
+            });
+
+            // Função para aplicar máscara ao CPF
+            cpfInput.addEventListener('input', function() {
+                let value = cpfInput.value.replace(/\D/g, '');  // Remove tudo que não for dígito
+                if (value.length > 11) value = value.slice(0, 11);  // Limita a 11 dígitos
+
+                // Aplica a máscara no formato CPF: XXX.XXX.XXX-XX
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+                cpfInput.value = value;
+            });
         });
-    </script>    
+    </script>
 </body>
 </html>

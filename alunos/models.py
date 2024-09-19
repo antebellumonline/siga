@@ -18,7 +18,7 @@ class Aluno(models.Model):
     numero = models.CharField(max_length=10, blank=True, null=True)  # Número da residência
     complemento = models.CharField(max_length=255, blank=True, null=True)  # Complemento (opcional)
     bairro = models.CharField(max_length=255, blank=True, null=True)  # Bairro
-    cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, null=True)  # Código da cidade conforme IBGE
+    cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, blank=True, null=True)  # Código da cidade conforme IBGE
     observacao = models.TextField(blank=True, null=True)  # Observações sobre o aluno
     inativo = models.BooleanField(default=False)  # Status: 0 Ativo, 1 Inativo
 
@@ -27,6 +27,12 @@ class Aluno(models.Model):
         Sobrescreve o método save para definir o UID inicial. 
         Note que isso deve ser usado com cautela.
         """
+
+        # Garante que o nome seja salvo em caixa alta
+        if self.nome:
+            self.nome = self.nome.upper()
+
+        # Lógica para definir o UID inicial
         if self._state.adding and self.uid is None:
             last_id = Aluno.objects.aggregate(models.Max('uid'))['uid__max']
             if last_id is None:
@@ -70,7 +76,7 @@ class AlunoContato(models.Model):
     Modelo que representa os contatos do aluno.
     """
     id = models.AutoField(primary_key=True)
-    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)  # Relaciona com a tabela Aluno
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='contatos')  # Relaciona com a tabela Aluno
     tipo_contato = models.ForeignKey(ConfigTpContato, on_delete=models.CASCADE)  # Relaciona com a tabela ConfigTpContato
     contato = models.CharField(max_length=255)  # Celular, telefone ou e-mail
     detalhe = models.TextField(blank=True, null=True)  # Observações adicionais
