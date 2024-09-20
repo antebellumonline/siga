@@ -1,15 +1,21 @@
 import pandas as pd
 from django.core.management.base import BaseCommand
-from alunos.models import Aluno, ConfigTpContato, AlunoContato  # Importações corrigidas
+from alunos.models import Aluno
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 import logging
+import os
+
+# Configuração do logging (modificação para salvar na pasta 'logs')
+log_dir = os.path.join(os.getcwd(), 'logs')
+os.makedirs(log_dir, exist_ok=True)
+log_file = os.path.join(log_dir, 'import_alunos-contatos-log.txt')
 
 # Configura o logger para registrar informações em um arquivo
 logging.basicConfig(
-    filename='import_aluno_contatos.log', 
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename=log_file,  # Nome do arquivo de log dentro da pasta 'logs'
+    level=logging.INFO,  # Define o nível do log
+    format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
 class Command(BaseCommand):
