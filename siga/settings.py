@@ -21,7 +21,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
 # Configuração de Allowed Hosts (permitir domínios específicos em produção)
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if not DEBUG else ['*']
 
 # Configuração do banco de dados
 DATABASES = {
@@ -145,7 +145,9 @@ USE_TZ = True
 
 # Configuração de arquivos estáticos
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Configuração do STATIC_ROOT para produção
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
