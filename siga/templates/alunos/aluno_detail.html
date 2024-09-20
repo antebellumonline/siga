@@ -20,12 +20,30 @@
 
     <!-- Seção de Contatos -->
     <h2>Contatos</h2>
-    <ul>
-        {% for contato in contatos %}
-            <li><strong>{{ contato.tipo }}:</strong> {{ contato.valor }}</li>
-        {% empty %}
-            <li>Este aluno não possui contatos cadastrados.</li>
-        {% endfor %}
+
+    {% if contatos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo de Contato</th>
+                    <th>Contato</th>
+                    <th>Detalhe</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contato in contatos %}
+                    <tr>
+                        <td>{{ contato.tipo_contato }}</td>
+                        <td>{{ contato.contato }}</td>
+                        <td>{{ contato.detalhe }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Este aluno não possui contatos cadastrados.</p>
+    {% endif %}
+    
     </ul>
 
     <a href="{% url 'aluno_update' aluno.pk %}">Editar</a>

@@ -65,7 +65,7 @@ class ConfigTpContato(models.Model):
         """
         Retorna a descrição do tipo de contato.
         """
-        return f'{self.descricao} - {"Inativo" if self.inativo else "Ativo"}'
+        return self.descricao
 
     class Meta:
         db_table = 'tb_config_tpContato'
