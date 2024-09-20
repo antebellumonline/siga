@@ -51,7 +51,7 @@ class Command(BaseCommand):
                     tp_contato = ConfigTpContato(
                         id=int(row['id']),  # Convertendo ID para inteiro
                         descricao=str(row['descricao']).strip() if pd.notna(row['descricao']) else None,
-                        inativo=bool(row['ativo']) if pd.notna(row['ativo']) else True,  # Se nulo, assume ativo como True
+                        inativo=bool(row['inativo']) if pd.notna(row['inativo']) else False,
                     )
                     tp_contato.save()
                     logging.info(f'Tipo de Contato {tp_contato.descricao} (ID: {tp_contato.id}) importado com sucesso.')
