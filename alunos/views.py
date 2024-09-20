@@ -1,8 +1,31 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm
 from django.forms import inlineformset_factory
 from django.http import JsonResponse
 from .models import Aluno, AlunoContato
 from .forms import AlunoForm
+
+# View para a página inicial
+@login_required
+def home(request):
+    return render(request, 'home.html')
+
+# View para a página de login
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')  # Redireciona para a página inicial
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
 
 # Defina o formset para AlunoContato
 AlunoContatoFormSet = inlineformset_factory(Aluno, AlunoContato, fields=('tipo_contato', 'contato'), extra=1, can_delete=True)

@@ -17,6 +17,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Configuração do SECRET_KEY
 SECRET_KEY = os.getenv('SECRET_KEY')
 
+# Configuração de depuração (DEBUG) a partir do .env
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
+
+# Configuração de Allowed Hosts (permitir domínios específicos em produção)
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+
 # Configuração do banco de dados
 DATABASES = {
     'default': {
@@ -58,6 +64,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Middleware extra de segurança, ativado apenas em produção
+if not DEBUG:
+    MIDDLEWARE += [
+        'django.middleware.security.SecurityMiddleware',
+        'django.middleware.http.ConditionalGetMiddleware',
+        'django.middleware.common.BrokenLinkEmailsMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+    ]
+
 # Configuração dos templates
 TEMPLATES = [
     {
@@ -97,6 +112,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Configuração de login/logout
+LOGIN_URL = 'login'  # Rota para página de login
+LOGIN_REDIRECT_URL = 'home'  # Após o login, redireciona para 'home'
+LOGOUT_REDIRECT_URL = 'login'  # Após o logout, redireciona para 'login'
 
 # Configurações de depuração SQL
 LOGGING = {
@@ -127,6 +146,9 @@ USE_TZ = True
 # Configuração de arquivos estáticos
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# Configuração do STATIC_ROOT para produção
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Definições adicionais
 DEBUG = True  # Defina como False em produção

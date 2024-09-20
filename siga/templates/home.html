@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+</head>
+<body>
+    <h1>Bem-vindo ao Sistema!</h1>
+
+    {% if request.user.is_authenticated %}
+        <p>Você está logado como {{ request.user.username }}</p>
+        
+        <!-- Se o usuário for administrador (is_staff == True), exibe link para o painel admin -->
+        {% if request.user.is_staff %}
+            <h2>Painel Administrativo</h2>
+            <p><a href="/admin/">Acessar o Painel Administrativo</a></p>
+        {% endif %}
+
+        <!-- Seção acessível para todos os usuários (administradores e usuários comuns) -->
+        <h2>Seus Projetos</h2>
+        <ul>
+            <li><a href="/alunos/">Ver Alunos</a></li>
+            <li><a href="/cidades/">Ver Cidades</a></li>
+            <!-- Adicione outros links que todos os usuários podem acessar -->
+        </ul>
+
+        <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+        <p>Você não está autenticado. <a href="{% url 'login' %}">Login</a></p>
+    {% endif %}
+</body>
+</html>
