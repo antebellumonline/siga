@@ -1,33 +1,68 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Link para o arquivo CSS -->
 </head>
 <body>
-    <h1>Bem-vindo ao Sistema!</h1>
+    <!-- Barra de navegação -->
+    <header>
+        <div class="nav-container">
+            <h1 class="logo">Sistema ANTEBELLUM</h1>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.is_staff %}
+                            <li><a href="/admin/">Painel Administrativo</a></li>
+                        {% endif %}
+                        <li><a href="/alunos/">Alunos</a></li>
+                        <li><a href="/cidades/">Cidades</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    {% if request.user.is_authenticated %}
-        <p>Você está logado como {{ request.user.username }}</p>
-        
-        <!-- Se o usuário for administrador (is_staff == True), exibe link para o painel admin -->
-        {% if request.user.is_staff %}
-            <h2>Painel Administrativo</h2>
-            <p><a href="/admin/">Acessar o Painel Administrativo</a></p>
-        {% endif %}
+    <!-- Conteúdo principal -->
+    <div class="container">
+        <div class="content">
+            <h2>Bem-vindo ao Sistema!</h2>
 
-        <!-- Seção acessível para todos os usuários (administradores e usuários comuns) -->
-        <h2>Seus Projetos</h2>
-        <ul>
-            <li><a href="/alunos/">Ver Alunos</a></li>
-            <li><a href="/cidades/">Ver Cidades</a></li>
-            <!-- Adicione outros links que todos os usuários podem acessar -->
-        </ul>
+            <!-- Imagem descritiva -->
+            <div class="image-container">
+                <img src="URL_DA_IMAGEM_HOSPEDADA_NO_WORDPRESS" alt="Imagem Descritiva" class="main-image">
+            </div>
 
-        <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-        <p>Você não está autenticado. <a href="{% url 'login' %}">Login</a></p>
-    {% endif %}
+            {% if request.user.is_authenticated %}
+                <p>Você está logado como <strong>{{ request.user.username }}</strong>.</p>
+
+                <!-- Se o usuário for administrador -->
+                {% if request.user.is_staff %}
+                    <h3>Painel Administrativo</h3>
+                    <p><a class="btn" href="/admin/">Acessar o Painel Administrativo</a></p>
+                {% endif %}
+
+                <!-- Projetos do usuário -->
+                <h3>Seus Projetos</h3>
+                <ul class="project-list">
+                    <li><a href="/alunos/">Ver Alunos</a></li>
+                    <li><a href="/cidades/">Ver Cidades</a></li>
+                    <!-- Adicione outros links conforme necessário -->
+                </ul>
+
+                <a class="btn logout" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <p>Você não está autenticado. <a href="{% url 'login' %}">Login</a></p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Link para o arquivo JavaScript -->
+    <script src="{% static 'js/scripts.js' %}"></script>
 </body>
 </html>
