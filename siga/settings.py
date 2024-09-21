@@ -34,7 +34,8 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
         'OPTIONS': {
             'driver': 'ODBC Driver 18 for SQL Server',
-            'extra_params': 'TrustServerCertificate=yes;'
+            'timeout': 300,  # Tempo limite de conexão em segundos
+            'extra_params': 'TrustServerCertificate=yes;MultiSubnetFailover=yes;',
         },
     }
 }
