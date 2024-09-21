@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>SIGA - Login</title>
     {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Link para o arquivo CSS -->
 </head>
 <body class="login-page">
@@ -26,7 +27,7 @@
                     <label for="{{ form.password.id_for_label }}">Senha:</label>
                     {{ form.password }}
                 </div>
-                <button type="submit" class="btn">Acesso</button>
+                <button type="submit" class="btn">Acessar</button>
             </form>
         </div>
     </div>
