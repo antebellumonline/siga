@@ -6,9 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGA - Sistema Integrado de Gestão Administrativa</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Link para o arquivo CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<body>
+<body class="home-page">
     <!-- Barra de navegação -->
     <header>
         <div class="nav-container">
@@ -29,7 +29,7 @@
     </header>
 
     <!-- Conteúdo principal -->
-    <div class="container">
+    <main class="container">
         <div class="content">
             <h2>Bem-vindo (a) ao Sistema Integrado de Gestão Administrativa da ANTEBELLUM!</h2>
 
@@ -60,9 +60,8 @@
                 <p>Você não está autenticado. <a href="{% url 'login' %}">Login</a></p>
             {% endif %}
         </div>
-    </div>
+    </main>
 
-    <!-- Link para o arquivo JavaScript -->
     <script src="{% static 'js/scripts.js' %}"></script>
 </body>
 </html>

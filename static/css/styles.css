@@ -1,22 +1,24 @@
-/* Estrutura geral */
+/* Estilos gerais */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
     color: #575756;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
 
+/* Estilos para o header e navegação */
 header {
     background-color: #be1622;
     color: white;
     padding: 15px 0;
     text-align: center;
-    font-size: 1.2em;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .logo {
@@ -27,10 +29,11 @@ header {
 nav ul {
     list-style: none;
     padding: 0;
+    text-align: center;
 }
 
 nav ul li {
-    display: inline;
+    display: inline-block;
     margin-right: 15px;
 }
 
@@ -43,6 +46,7 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 
+/* Container de conteúdo */
 .container {
     width: 90%;
     max-width: 1200px;
@@ -52,6 +56,7 @@ nav ul li a:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilo do conteúdo principal */
 h2 {
     color: #be1622;
 }
@@ -102,15 +107,12 @@ h2 {
     text-decoration: underline;
 }
 
-/* Estilos para a tela de login */
-.login-container {
+/* Estilos específicos para a tela de login */
+.login-page {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
+    align-items: center;
+    height: 100vh;
 }
 
 .login-box {
@@ -120,6 +122,7 @@ h2 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 100%;
+    max-width: 400px;
 }
 
 .form-group {
@@ -138,10 +141,9 @@ h2 {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Garante que o padding não estenda além do container */
 }
 
-.btn {
+.login-page .btn {
     background-color: #be1622;
     color: white;
     border: none;
@@ -151,11 +153,11 @@ h2 {
     font-size: 16px;
 }
 
-.btn:hover {
+.login-page .btn:hover {
     background-color: #a1141d;
 }
 
-/* Imagem de destaque */
+/* Estilos para o login image */
 .login-image {
     margin-bottom: 20px;
 }
