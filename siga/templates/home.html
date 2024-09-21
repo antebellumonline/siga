@@ -5,14 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial</title>
+    <title>SIGA - Sistema Integrado de Gestão Administrativa</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Link para o arquivo CSS -->
 </head>
 <body>
     <!-- Barra de navegação -->
     <header>
         <div class="nav-container">
-            <h1 class="logo">Sistema ANTEBELLUM</h1>
+            <h1 class="logo">Sistema Integrado de Gestão Administrativa - SIGA</h1>
             <nav>
                 <ul>
                     <li><a href="/">Home</a></li>
@@ -31,11 +31,11 @@
     <!-- Conteúdo principal -->
     <div class="container">
         <div class="content">
-            <h2>Bem-vindo ao Sistema!</h2>
+            <h2>Bem-vindo (a) ao Sistema Integrado de Gestão Administrativa da ANTEBELLUM!</h2>
 
             <!-- Imagem descritiva -->
             <div class="image-container">
-                <img src="URL_DA_IMAGEM_HOSPEDADA_NO_WORDPRESS" alt="Imagem Descritiva" class="main-image">
+                <img src="https://antebellum.com.br/wp-content/uploads/2022/09/Logo-Antebellum-2-Linhas.png" alt="Imagem Descritiva" class="main-image">
             </div>
 
             {% if request.user.is_authenticated %}
