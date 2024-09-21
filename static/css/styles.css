@@ -5,6 +5,10 @@ body {
     padding: 0;
     background-color: #f4f4f4;
     color: #575756;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 header {
@@ -96,4 +100,68 @@ h2 {
 
 .project-list a:hover {
     text-decoration: underline;
+}
+
+/* Estilos para a tela de login */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.login-box {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Garante que o padding não estenda além do container */
+}
+
+.btn {
+    background-color: #be1622;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background-color: #a1141d;
+}
+
+/* Imagem de destaque */
+.login-image {
+    margin-bottom: 20px;
+}
+
+.login-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
 }

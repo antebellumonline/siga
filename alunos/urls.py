@@ -1,4 +1,11 @@
 # apps/alunos/urls.py
+
+"""
+Este módulo define as URLs para o aplicativo de alunos. 
+Ele mapeia as requisições HTTP para as respectivas views, 
+permitindo a navegação e interação com o sistema.
+"""
+
 from django.urls import path
 from . import views
 

@@ -1,46 +1,47 @@
 """
-Django settings for your_project.
+Configurações do Django para o projeto siga.
 
-This module contains the settings for the Django project, including
-configuration for the database, installed apps, middleware, and more.
+Este módulo contém as configurações para o projeto Django siga, incluindo
+configurações para o banco de dados, aplicativos instalados, middlewares e muito mais.
 """
 
 import os
 from dotenv import load_dotenv
 
-# Carregar variáveis do arquivo .env
+# Carrega variáveis de ambiente do arquivo .env
 load_dotenv()
 
-# Definição do BASE_DIR
+# Definição do diretório base do projeto (BASE_DIR)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Configuração do SECRET_KEY
+# Configuração da chave secreta (SECRET_KEY)
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-# Configuração de depuração (DEBUG) a partir do .env
+# Configuração do modo de depuração (DEBUG) baseado na variável de ambiente
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-# Configuração de Allowed Hosts (permitir domínios específicos em produção)
+# Configuração dos hosts permitidos (ALLOWED_HOSTS) para produção
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if not DEBUG else ['*']
 
 # Configuração do banco de dados
 DATABASES = {
     'default': {
-        'ENGINE': 'sql_server.pyodbc',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'ENGINE': 'sql_server.pyodbc', # Motor do banco de dados
+        'NAME': os.getenv('DB_NAME'), # Nome do banco de dados
+        'USER': os.getenv('DB_USER'), # Usuário do banco de dados
+        'PASSWORD': os.getenv('DB_PASSWORD'), # Senha do banco de dados
+        'HOST': os.getenv('DB_HOST'), # Host do banco de dados
+        'PORT': os.getenv('DB_PORT'), # Porta do banco de dados
         'OPTIONS': {
-            'driver': 'ODBC Driver 18 for SQL Server',
+            'driver': 'ODBC Driver 18 for SQL Server', # Driver ODBC para SQL Server
             'timeout': 300,  # Tempo limite de conexão em segundos
+            # Parâmetros extras de conexão
             'extra_params': 'TrustServerCertificate=yes;MultiSubnetFailover=yes;',
         },
     }
 }
 
-# Configuração dos aplicativos instalados
+# Configuração dos aplicativos instalados (INSTALLED_APPS)
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -48,13 +49,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'siga',
-    'cidades',
-    'alunos',
+    'siga', # Aplicativo principal do projeto
+    'cidades', # Aplicativo Cidades
+    'alunos', #Aplicativo Alunos
     # Adicione outros aplicativos aqui
 ]
 
-# Configuração dos middlewares
+# Configuração dos middlewares (MIDDLEWARE)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,7 +66,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Middleware extra de segurança, ativado apenas em produção
+# Middleware extra de segurança ativados apenas em produção
 if not DEBUG:
     MIDDLEWARE += [
         'django.middleware.security.SecurityMiddleware',
@@ -74,7 +75,7 @@ if not DEBUG:
         'django.middleware.csrf.CsrfViewMiddleware',
     ]
 
-# Configuração dos templates
+# Configuração dos templates (TEMPLATES)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -91,13 +92,13 @@ TEMPLATES = [
     },
 ]
 
-# Configuração das URLs
+# Configuração da URL principal (ROOT_URLCONFIG)
 ROOT_URLCONF = 'siga.urls'
 
-# Configuração do WSGI
+# Configuração da aplicação WSGI (WSGI_APPLICATION)
 WSGI_APPLICATION = 'siga.wsgi.application'
 
-# Configuração de validação de senhas
+# Configuração de validação de senhas (AUTH_PASSWORD_VALIDATORS)
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
