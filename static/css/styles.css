@@ -245,6 +245,19 @@ h2 {
     text-align: center;
 }
 
+* Alinhamento centralizado para UID, CPF e Status no corpo da tabela */
+.alunos-table tbody td:nth-child(1), /* UID */
+.alunos-table tbody td:nth-child(3), /* CPF */
+.alunos-table tbody td:nth-child(5)  /* Status */ {
+    text-align: center;
+}
+
+/* Alinhamento à esquerda para Nome e Cidade no corpo da tabela */
+.alunos-table tbody td:nth-child(2), /* Nome */
+.alunos-table tbody td:nth-child(4)  /* Cidade */ {
+    text-align: left;
+}
+
 /* Adicionar ícones para as setas de ordenação */
 .alunos-table th a {
     color: #333;
