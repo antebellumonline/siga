@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'fontawesome_free'
+    'fontawesome-free',
     'siga', # Aplicativo principal do projeto
     'cidades', # Aplicativo Cidades
     'alunos', #Aplicativo Alunos

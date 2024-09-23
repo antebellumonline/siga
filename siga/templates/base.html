@@ -1,0 +1,45 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SIGA{% endblock %}</title>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <!-- Cabeçalho Comum-->
+    <header>
+        <div class="nav-container">
+            <h1 class="logo">Sistema Integrado de Gestão Administrativa - SIGA</h1>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.is_staff %}
+                            <li><a href="/admin/">Painel Administrativo</a></li>
+                        {% endif %}
+                        <li><a href="/alunos/">Alunos</a></li>
+                        <li><a href="/cidades/">Cidades</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <nav>
+        <!-- Navegação comum -->
+    </nav>
+    
+    <div class="container">
+        {% block content %}
+        <!-- Aqui vai o conteúdo específico de cada página -->
+        {% endblock %}
+    </div>
+    
+    <footer>
+        <!-- Rodapé comum -->
+    </footer>
+</body>
+</html>
