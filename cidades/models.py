@@ -3,6 +3,7 @@ from django.db import models
 class Estado(models.Model) :
     id = models.CharField(primary_key=True, max_length=2, unique=True)
     nome = models.CharField(max_length=255)
+    uf = models.CharField(max_length=2, blank=True, null=True)
 
     def __str__(self) -> str:
         return f'{self.id}, {self.nome}'
