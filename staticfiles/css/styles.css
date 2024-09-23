@@ -43,18 +43,29 @@ nav ul {
 }
 
 nav ul li {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #800f17;
     display: inline-block;
     margin-right: 15px;
+}
+
+nav ul li:hover {
+    background-color: #bf9d2a;
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
-    font-family: 'Montserrat', sans-serif; /* Montserrat para links */
+    text-transform: uppercase;
+    font-family: 'Fredoka', sans-serif;
 }
 
-nav ul li a:hover {
-    text-decoration: underline;
+nav ul li a i {
+    font-size: 24px;
+    display: block;
+    margin-bottom: 5px;
 }
 
 /* Container de conteúdo */
@@ -69,7 +80,9 @@ nav ul li a:hover {
 
 /* Estilo do conteúdo principal */
 h2 {
-    color: #be1622;
+    color: #40080b;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .image-container {
@@ -243,6 +256,19 @@ h2 {
 
 .alunos-table tbody td {
     text-align: center;
+}
+
+* Alinhamento centralizado para UID, CPF e Status no corpo da tabela */
+.alunos-table tbody td:nth-child(1), /* UID */
+.alunos-table tbody td:nth-child(3), /* CPF */
+.alunos-table tbody td:nth-child(5)  /* Status */ {
+    text-align: center;
+}
+
+/* Alinhamento à esquerda para Nome e Cidade no corpo da tabela */
+.alunos-table tbody td:nth-child(2), /* Nome */
+.alunos-table tbody td:nth-child(4)  /* Cidade */ {
+    text-align: left;
 }
 
 /* Adicionar ícones para as setas de ordenação */
