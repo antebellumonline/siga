@@ -1,5 +1,3 @@
-<!-- templates/alunos/aluno_detail.html -->
-
 {% extends 'base.html' %}
 
 {% block title %}SIGA - Detalhes do Aluno{% endblock %}
@@ -10,10 +8,10 @@
 
 <p><strong>UID:</strong> {{ aluno.uid }}</p>
 <p><strong>Nome:</strong> {{ aluno.nome }}</p>
-<p><strong>CPF:</strong> {{ aluno.cpf }}</p>
-<p><strong>CEP:</strong> {{ aluno.cep }}</p>
+<p><strong>CPF:</strong> <span id="cpf">{{ aluno.cpf }}</span></p>
+<p><strong>CEP:</strong> <span id="cep">{{ aluno.cep }}</span></p>
 <p><strong>Endereço:</strong> {{ aluno.endereco }}</p>
-<p><strong>Número:</strong> {{ aluno.numero }}</p>
+<p><strong>Número:</strong> {{ aluno.numero|floatformat:0 }}</p> <!-- Exibe o número sem decimais -->
 <p><strong>Complemento:</strong> {{ aluno.complemento }}</p>
 <p><strong>Bairro:</strong> {{ aluno.bairro }}</p>
 <p><strong>Cidade:</strong> {{ aluno.cidade }}</p>
@@ -36,7 +34,13 @@
             {% for contato in contatos %}
                 <tr>
                     <td>{{ contato.tipo_contato }}</td>
-                    <td>{{ contato.contato }}</td>
+                    <td>
+                        {% if contato.tipo_contato == 'Telefone' or contato.tipo_contato == 'Celular' %}
+                            <span class="telefone">{{ contato.contato }}</span>
+                        {% else %}
+                            {{ contato.contato }}
+                        {% endif %}
+                    </td>
                     <td>{{ contato.detalhe }}</td>
                 </tr>
             {% endfor %}
@@ -46,10 +50,13 @@
     <p>Este aluno não possui contatos cadastrados.</p>
 {% endif %}
 
-</ul>
-
-<a href="{% url 'aluno_update' aluno.pk %}">Editar</a>
-<a href="{% url 'aluno_delete' aluno.pk %}">Excluir</a>
-<a href="{% url 'aluno_list' %}">Voltar para a lista</a>
+<!-- Botões de ação -->
+<div class="btn-group">
+    <a class="btn" href="{% url 'aluno_update' aluno.pk %}">Editar</a>
+    <a class="btn" href="{% url 'aluno_delete' aluno.pk %}">Excluir</a>
+    <a class="btn" href="{% url 'aluno_list' %}">Voltar para a lista</a>
+</div>
 
 {% endblock %}
+
+<!-- O bloco de scripts foi removido daqui e agora está centralizado no arquivo scripts.js -->

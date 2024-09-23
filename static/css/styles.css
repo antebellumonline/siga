@@ -98,6 +98,7 @@ h2 {
 .btn {
     background-color: #be1622;
     color: white;
+    margin: 30px 10px 20px;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
@@ -292,4 +293,15 @@ h2 {
 
 .alunos-table th a[data-order="descending"]:after {
     content: '▼';
+}
+
+/* Adicionar ícones para as setas de ordenação */
+footer {
+    text-align: center;
+}
+
+/* Grupo de botões */
+.btn-group {
+    margin: 10px;
+    text-align: right;
 }
