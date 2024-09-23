@@ -19,4 +19,4 @@ class Cidade(models.Model):
         return f'{self.nome} ({self.id})'
 
     class Meta:
-        db_table = 'tb_ufcidade'
+        db_table = 'tb_uf-cidade'
