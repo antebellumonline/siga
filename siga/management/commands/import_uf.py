@@ -1,29 +1,68 @@
-import requests
+import pandas as pd
 from django.core.management.base import BaseCommand
 from cidades.models import Estado
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
+import logging
+import os
+
+# Configuração do logging (modificação para salvar na pasta 'logs')
+log_dir = os.path.join(os.getcwd(), 'logs')
+os.makedirs(log_dir, exist_ok=True)
+log_file = os.path.join(log_dir, 'import_uf-log.txt')
+
+logging.basicConfig(
+    filename=log_file,  # Nome do arquivo de log dentro da pasta 'logs'
+    level=logging.INFO,  # Define o nível do log
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 class Command(BaseCommand):
-    help = 'Importa estados do IBGE'
+    help = 'Importa tipos de contato de uma planilha Excel'
 
     def handle(self, *args, **kwargs):
-        # URL da API que fornece os estados
-        url = "https://servicodados.ibge.gov.br/api/v3/malhas/estados/"
-
-        response = requests.get(url)
-        if response.status_code != 200:
-            self.stdout.write(self.style.ERROR('Erro ao acessar a API.'))
+        # Oculta a janela principal do Tkinter
+        Tk().withdraw()
+        
+        # Solicita ao usuário selecionar a planilha do Excel
+        arquivo = askopenfilename(title='Selecione a planilha Excel', filetypes=[('Excel files', '*.xlsx;*.xls')])
+        
+        if not arquivo:
+            self.stdout.write(self.style.ERROR('Nenhum arquivo selecionado.'))
+            logging.warning('Nenhum arquivo selecionado.')
             return
 
-        estados_data = response.json()
+        try:
+            # Lê o arquivo Excel
+            df = pd.read_excel(arquivo)
+            logging.info('Arquivo Excel lido com sucesso.')
 
-        for estado_data in estados_data:
-            estado_id = estado_data['id']  # Código do estado
-            nome_estado = estado_data['nome']  # Nome do estado
+            # Verificar se a coluna 'id' ou outra chave primária existe
+            if 'id' not in df.columns:
+                raise ValueError("A coluna 'id' não foi encontrada no arquivo Excel.")
 
-            estado, created = Estado.objects.get_or_create(id=estado_id, defaults={'nome': nome_estado})
+            for index, row in df.iterrows():
+                try:
+                    # Verificar se o ID está presente e é válido
+                    if pd.isna(row['id']) or not isinstance(row['id'], (int, float)):
+                        raise ValueError(f"ID inválido na linha {index + 1}")
 
-            if created:
-                self.stdout.write(self.style.SUCCESS(f'Estado {nome_estado} importado com sucesso.'))
-            else:
-                self.stdout.write(self.style.WARNING(f'O estado {nome_estado} já existe.'))
+                    # Preencher os campos do modelo TpContato
+                    uf = Estado(
+                        id=int(row['id']),  # Convertendo ID para inteiro
+                        nome=str(row['nome']).strip() if pd.notna(row['nome']) else None,
+                        uf=str(row['uf']).strip() if pd.notna(row['uf']) else None,
+                    )
+                    uf.save()
+                    logging.info(f'Estado {uf.nome} (ID: {uf.id}) importado com sucesso.')
+                
+                except Exception as e:
+                    self.stdout.write(self.style.ERROR(f"Erro ao importar Estado na linha {index + 1}: {e}"))
+                    logging.error(f'Erro ao importar Estado na linha {index + 1}: {e}')
 
+            self.stdout.write(self.style.SUCCESS('Importação concluída com sucesso!'))
+            logging.info('Importação concluída com sucesso!')
+        
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f'Erro ao ler o arquivo Excel: {e}'))
+            logging.error(f'Erro ao ler o arquivo Excel: {e}')
