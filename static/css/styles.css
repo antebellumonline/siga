@@ -43,18 +43,29 @@ nav ul {
 }
 
 nav ul li {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #800f17;
     display: inline-block;
     margin-right: 15px;
+}
+
+nav ul li:hover {
+    background-color: #bf9d2a;
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
-    font-family: 'Montserrat', sans-serif; /* Montserrat para links */
+    text-transform: uppercase;
+    font-family: 'Fredoka', sans-serif;
 }
 
-nav ul li a:hover {
-    text-decoration: underline;
+nav ul li a i {
+    font-size: 24px;
+    display: block;
+    margin-bottom: 5px;
 }
 
 /* Container de conteúdo */

@@ -1,67 +1,37 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA - Sistema Integrado de Gestão Administrativa</title>
-    {% load static %}
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body class="home-page">
-    <!-- Barra de navegação -->
-    <header>
-        <div class="nav-container">
-            <h1 class="logo">Sistema Integrado de Gestão Administrativa - SIGA</h1>
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    {% if request.user.is_authenticated %}
-                        {% if request.user.is_staff %}
-                            <li><a href="/admin/">Painel Administrativo</a></li>
-                        {% endif %}
-                        <li><a href="/alunos/">Alunos</a></li>
-                        <li><a href="/cidades/">Cidades</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
-    </header>
+{% extends 'base.html' %}
 
-    <!-- Conteúdo principal -->
-    <main class="container">
-        <div class="content">
-            <h2>Bem-vindo (a) ao Sistema Integrado de Gestão Administrativa da ANTEBELLUM!</h2>
+{% block title %}SIGA - Lista de Alunos{% endblock %}
 
-            <!-- Imagem descritiva -->
-            <div class="image-container">
-                <img src="https://antebellum.com.br/wp-content/uploads/2022/09/Logo-Antebellum-2-Linhas.png" alt="Imagem Descritiva" class="main-image">
-            </div>
+{% block content %}
+<h2 class="page-title">Bem-vindo (a) ao Sistema Integrado de Gestão Administrativa da ANTEBELLUM!</h2>
+<div class="container">
+    <!-- Imagem descritiva -->
+    <div class="image-container">
+        <img src="https://antebellum.com.br/wp-content/uploads/2022/09/Logo-Antebellum-2-Linhas.png" alt="Imagem Descritiva" class="main-image">
+    </div>
 
-            {% if request.user.is_authenticated %}
-                <p>Você está logado como <strong>{{ request.user.username }}</strong>.</p>
+    {% if request.user.is_authenticated %}
+        <p>Você está logado como <strong>{{ request.user.username }}</strong>.</p>
 
-                <!-- Se o usuário for administrador -->
-                {% if request.user.is_staff %}
-                    <h3>Painel Administrativo</h3>
-                    <p><a class="btn" href="/admin/">Acessar o Painel Administrativo</a></p>
-                {% endif %}
+        <!-- Se o usuário for administrador -->
+        {% if request.user.is_staff %}
+            <h3>Painel Administrativo</h3>
+            <p><a class="btn" href="/admin/">Acessar o Painel Administrativo</a></p>
+        {% endif %}
 
-                <!-- Projetos do usuário -->
-                <h3>Seus Projetos</h3>
-                <ul class="project-list">
-                    <li><a href="/alunos/">Ver Alunos</a></li>
-                    <li><a href="/cidades/">Ver Cidades</a></li>
-                    <!-- Adicione outros links conforme necessário -->
-                </ul>
+        <!-- Projetos do usuário -->
+        <h3>Aplicativos Disponíveis</h3>
+        <ul class="project-list">
+            <li><a href="/alunos/">Ver Alunos</a></li>
+            <li><a href="/cidades/">Ver Cidades</a></li>
+            <!-- Adicione outros links conforme necessário -->
+        </ul>
 
-                <a class="btn logout" href="{% url 'logout' %}">Logout</a>
-            {% else %}
-                <p>Você não está autenticado. <a href="{% url 'login' %}">Login</a></p>
-            {% endif %}
-        </div>
-    </main>
+        <a class="btn logout" href="{% url 'logout' %}">Logout</a>
+    {% else %}
+        <p>Você não está autenticado. <a href="{% url 'login' %}">Login</a></p>
+    {% endif %}
 
-    <script src="{% static 'js/scripts.js' %}"></script>
-</body>
-</html>
+</div>
+
+{% endblock %}
