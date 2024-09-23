@@ -1,53 +1,55 @@
 <!-- templates/alunos/aluno_detail.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Detalhes do Aluno</title>
-</head>
-<body>
-    <h1>Detalhes do Aluno</h1>
-    <p><strong>UID:</strong> {{ aluno.uid }}</p>
-    <p><strong>Nome:</strong> {{ aluno.nome }}</p>
-    <p><strong>CPF:</strong> {{ aluno.cpf }}</p>
-    <p><strong>CEP:</strong> {{ aluno.cep }}</p>
-    <p><strong>Endereço:</strong> {{ aluno.endereco }}</p>
-    <p><strong>Número:</strong> {{ aluno.numero }}</p>
-    <p><strong>Complemento:</strong> {{ aluno.complemento }}</p>
-    <p><strong>Bairro:</strong> {{ aluno.bairro }}</p>
-    <p><strong>Cidade:</strong> {{ aluno.cidade }}</p>
-    <p><strong>Observação:</strong> {{ aluno.observacao }}</p>
-    <p><strong>Status:</strong> {{ aluno.inativo|yesno:"Inativo,Ativo" }}</p>
 
-    <!-- Seção de Contatos -->
-    <h2>Contatos</h2>
+{% extends 'base.html' %}
 
-    {% if contatos %}
-        <table>
-            <thead>
+{% block title %}SIGA - Detalhes do Aluno{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Detalhes do Aluno</h2>
+
+<p><strong>UID:</strong> {{ aluno.uid }}</p>
+<p><strong>Nome:</strong> {{ aluno.nome }}</p>
+<p><strong>CPF:</strong> {{ aluno.cpf }}</p>
+<p><strong>CEP:</strong> {{ aluno.cep }}</p>
+<p><strong>Endereço:</strong> {{ aluno.endereco }}</p>
+<p><strong>Número:</strong> {{ aluno.numero }}</p>
+<p><strong>Complemento:</strong> {{ aluno.complemento }}</p>
+<p><strong>Bairro:</strong> {{ aluno.bairro }}</p>
+<p><strong>Cidade:</strong> {{ aluno.cidade }}</p>
+<p><strong>Observação:</strong> {{ aluno.observacao }}</p>
+<p><strong>Status:</strong> {{ aluno.inativo|yesno:"Inativo,Ativo" }}</p>
+
+<!-- Seção de Contatos -->
+<h3>Contatos</h3>
+
+{% if contatos %}
+    <table>
+        <thead>
+            <tr>
+                <th>Tipo de Contato</th>
+                <th>Contato</th>
+                <th>Detalhe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contato in contatos %}
                 <tr>
-                    <th>Tipo de Contato</th>
-                    <th>Contato</th>
-                    <th>Detalhe</th>
+                    <td>{{ contato.tipo_contato }}</td>
+                    <td>{{ contato.contato }}</td>
+                    <td>{{ contato.detalhe }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for contato in contatos %}
-                    <tr>
-                        <td>{{ contato.tipo_contato }}</td>
-                        <td>{{ contato.contato }}</td>
-                        <td>{{ contato.detalhe }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>Este aluno não possui contatos cadastrados.</p>
-    {% endif %}
-    
-    </ul>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Este aluno não possui contatos cadastrados.</p>
+{% endif %}
 
-    <a href="{% url 'aluno_update' aluno.pk %}">Editar</a>
-    <a href="{% url 'aluno_delete' aluno.pk %}">Excluir</a>
-    <a href="{% url 'aluno_list' %}">Voltar para a lista</a>
-</body>
-</html>
+</ul>
+
+<a href="{% url 'aluno_update' aluno.pk %}">Editar</a>
+<a href="{% url 'aluno_delete' aluno.pk %}">Excluir</a>
+<a href="{% url 'aluno_list' %}">Voltar para a lista</a>
+
+{% endblock %}

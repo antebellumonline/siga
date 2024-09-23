@@ -69,7 +69,9 @@ nav ul li a:hover {
 
 /* Estilo do conteúdo principal */
 h2 {
-    color: #be1622;
+    color: #40080b;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .image-container {
