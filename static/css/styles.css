@@ -200,33 +200,56 @@ h2 {
 
 /* Formulário de Busca */
 .search-form {
-    display: flex;
-    gap: 10px;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    font-family: 'Montserrat', sans-serif;
     margin-bottom: 20px;
 }
 
-.search-form .form-group {
-    flex-grow: 1;
+.search-form .form-control,
+.search-form .select2 {
+    border-radius: 6px;
+    border: 1px solid #40080b;
+    padding: 10px;
 }
 
-.search-form input[type="text"] {
-    width: 100%;
+.search-form .row {
+    display: flex;
+    justify-content: space-between;
 }
 
+/* Estilizar botões do formulário */
 .search-form .btn {
-    margin-top: 5px;
+    padding: 10px 20px; /* Aumenta o padding para garantir que todos os botões tenham o mesmo tamanho */
+    font-size: 14px; /* Define um tamanho de fonte consistente */
+    text-transform: uppercase; /* Garante que o texto dos botões fique em uppercase */
+    background-color: #ca555b; /* Cor personalizada para o botão */
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.search-form .btn-primary {
+    background-color: #be1622;
+    color: white;
+}
+
+.search-form .btn:hover {
+    background-color: #bf9d2a;
+}
+
+/* Centraliza os botões em uma nova linha */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espaço entre os botões */
+    margin-top: 10px; /* Margem para separar dos campos de pesquisa */
 }
 
 /* Ajustar o alinhamento dos checkboxes */
-.checkbox-group {
+.form-check {
     display: flex;
     align-items: center;
-}
-
-.checkbox-group label {
-    margin-left: 5px;
+    justify-content: center; /* Centraliza o checkbox */
+    margin-bottom: 10px; /* Espaço abaixo do checkbox */
 }
 
 /* Tabela de Alunos */
