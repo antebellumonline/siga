@@ -1,6 +1,5 @@
 from django.urls import path
 from .views import (
-    certificador_home,
     certificador_list,
     certificador_detail,
     certificador_create,
@@ -15,19 +14,18 @@ from .views import (
 )
 
 urlpatterns = [
-    # Rotas para certificações
-    path('certificacoes/', certificacao_home, name='certificacao_home'),
-    path('certificadores/', certificador_list, name='certificador_list'),
-    path('certificadores/<int:pk>/', certificador_detail, name='certificador_detail'),
-    path('certificadores/create/', certificador_create, name='certificador_create'),
-    path('certificadores/<int:pk>/update/', certificador_update, name='certificador_update'),
-    path('certificadores/<int:pk>/delete/', certificador_delete, name='certificador_delete'),
-    
     # Rotas para certificadores
-    path('certificadores/', certificador_home, name='certificador_home'),
-    path('certificacoes/', certificacao_list, name='certificacao_list'),
-    path('certificacoes/<int:pk>/', certificacao_detail, name='certificacao_detail'),
-    path('certificacoes/create/', certificacao_create, name='certificacao_create'),
-    path('certificacoes/<int:pk>/update/', certificacao_update, name='certificacao_update'),
-    path('certificacoes/<int:pk>/delete/', certificacao_delete, name='certificacao_delete'),
+    path('certificador/list/', certificador_list, name='certificador_list'),
+    path('certificador/<int:pk>/', certificador_detail, name='certificador_detail'),
+    path('certificador/create/', certificador_create, name='certificador_create'),
+    path('certificador/<int:pk>/update/', certificador_update, name='certificador_update'),
+    path('certificador/<int:pk>/delete/', certificador_delete, name='certificador_delete'),
+    
+    # Rotas para certificações
+    path('certificacao/', certificacao_home, name='certificacao_home'),
+    path('certificacao/list/', certificacao_list, name='certificacao_list'),
+    path('certificacao/<int:pk>/', certificacao_detail, name='certificacao_detail'),
+    path('certificacao/create/', certificacao_create, name='certificacao_create'),
+    path('certificacao/<int:pk>/update/', certificacao_update, name='certificacao_update'),
+    path('certificacao/<int:pk>/delete/', certificacao_delete, name='certificacao_delete'),
 ]
