@@ -9,7 +9,7 @@ import os
 # Configuração do logging (modificação para salvar na pasta 'logs')
 log_dir = os.path.join(os.getcwd(), 'logs')
 os.makedirs(log_dir, exist_ok=True)
-log_file = os.path.join(log_dir, 'import_certificacao-log.txt')
+log_file = os.path.join(log_dir, 'import_certificacoes-log.txt')
 
 logging.basicConfig(
     filename=log_file,  # Nome do arquivo de log dentro da pasta 'logs'
@@ -18,7 +18,7 @@ logging.basicConfig(
 )
 
 class Command(BaseCommand):
-    help = 'Importa Certificações de uma planilha Excel'
+    help = 'Importa certificações de uma planilha Excel'
 
     def handle(self, *args, **kwargs):
         # Oculta a janela principal do Tkinter
@@ -37,38 +37,43 @@ class Command(BaseCommand):
             df = pd.read_excel(arquivo)
             logging.info('Arquivo Excel lido com sucesso.')
 
-            # Verificar se as colunas 'id', 'nome', e 'estado' estão presentes
-            if not all(col in df.columns for col in ['id', 'nome', 'estado']):
-                raise ValueError("As colunas 'id', 'nome', ou 'estado' não foram encontradas no arquivo Excel.")
+            # Verificar se as colunas necessárias estão presentes
+            required_columns = ['id', 'idCertificador', 'descricao', 'siglaExame', 'duracao', 'observacao', 'inativo']
+            if not all(col in df.columns for col in required_columns):
+                raise ValueError("As colunas necessárias não foram encontradas no arquivo Excel.")
 
             for index, row in df.iterrows():
                 try:
                     # Verificar se o ID está presente e é válido
-                    if pd.isna(row['id']) or not isinstance(row['id'], (int, float)):
+                    if pd.isna(row['id']):
                         raise ValueError(f"ID inválido na linha {index + 1}")
 
-                    # Obter o Estado relacionado com base no ID
-                    estado_id = row['estado']
-                    estado = Estado.objects.filter(id=estado_id).first()
+                    # Obter o Certificador relacionado com base no ID
+                    id_certificador = row['idCertificador']
+                    certificador = Certificador.objects.filter(id=id_certificador).first()
 
-                    if not estado:
-                        raise ValueError(f"Estado com ID {estado_id} não encontrado para a cidade na linha {index + 1}")
+                    if not certificador:
+                        raise ValueError(f"Certificador com ID {id_certificador} não encontrado na linha {index + 1}")
 
-                    # Preencher os campos do modelo Cidade
-                    cidade = Cidade(
-                        id=int(row['id']),  # Convertendo ID para inteiro
-                        nome=str(row['nome']).strip() if pd.notna(row['nome']) else None,
-                        estado=estado  # Relacionando com o estado
+                    # Preencher os campos do modelo Certificacao
+                    certificacao = Certificacao(
+                        id=str(row['id']),  # Presumindo que o ID é uma string
+                        idCertificador=certificador.id,
+                        descricao=str(row['descricao']).strip() if pd.notna(row['descricao']) else None,
+                        siglaExame=str(row['siglaExame']).strip() if pd.notna(row['siglaExame']) else None,
+                        duracao=int(row['duracao']) if pd.notna(row['duracao']) else None,
+                        observacao=str(row['observacao']).strip() if pd.notna(row['observacao']) else None,
+                        inativo=row.get('inativo', 'False') == 'True'  # Conversão de string para booleano
                     )
-                    cidade.save()
-                    logging.info(f'Cidade {cidade.nome} (ID: {cidade.id}) importada com sucesso.')
+                    certificacao.save()
+                    logging.info(f'Certificação {certificacao.descricao} (ID: {certificacao.id}) importada com sucesso.')
                 
                 except Exception as e:
-                    self.stdout.write(self.style.ERROR(f"Erro ao importar Cidade na linha {index + 1}: {e}"))
-                    logging.error(f'Erro ao importar Cidade na linha {index + 1}: {e}')
+                    self.stdout.write(self.style.ERROR(f"Erro ao importar Certificação na linha {index + 1}: {e}"))
+                    logging.error(f'Erro ao importar Certificação na linha {index + 1}: {e}')
 
-            self.stdout.write(self.style.SUCCESS('Importação de cidades concluída com sucesso!'))
-            logging.info('Importação de cidades concluída com sucesso!')
+            self.stdout.write(self.style.SUCCESS('Importação de certificações concluída com sucesso!'))
+            logging.info('Importação de certificações concluída com sucesso!')
         
         except Exception as e:
             self.stdout.write(self.style.ERROR(f'Erro ao ler o arquivo Excel: {e}'))
