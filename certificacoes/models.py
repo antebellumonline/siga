@@ -17,7 +17,7 @@ class Certificador(models.Model):
 
 class Certificacao(models.Model):
     id = models.CharField(max_length=7, primary_key=True)
-    idCertificador = models.CharField(max_length=7)
+    idCertificador = models.ForeignKey(Certificador, on_delete=models.CASCADE)  # Ajusta para ForeignKey
     descricao = models.TextField()
     siglaExame = models.CharField(max_length=50)
     duracao = models.IntegerField()

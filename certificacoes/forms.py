@@ -9,4 +9,4 @@ class CertificadorForm(forms.ModelForm):
 class CertificacaoForm(forms.ModelForm):
     class Meta:
         model = Certificacao
-        fields = ['id', 'idCertificador', 'descricao', 'siglaExame', 'duracao', 'observacao', 'inativo']
+        fields = ['idCertificador', 'descricao', 'siglaExame', 'duracao', 'observacao', 'inativo']
