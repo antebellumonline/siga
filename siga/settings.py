@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'siga', # Aplicativo principal do projeto
     'cidades', # Aplicativo Cidades
     'alunos', #Aplicativo Alunos
+    'certificacoes' #Aplicativo Certificações
     # Adicione outros aplicativos aqui
 ]
 
