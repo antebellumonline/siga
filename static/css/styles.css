@@ -201,7 +201,7 @@ h2 {
 /* Formulário de Busca */
 .search-form {
     font-family: 'Montserrat', sans-serif;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .search-form .form-control,
@@ -214,6 +214,24 @@ h2 {
 .search-form .row {
     display: flex;
     justify-content: space-between;
+}
+
+.search-form .form-control {
+    width: 100%; /* Cada campo ocupará toda a largura da coluna */
+}
+
+/* Flex para manter os campos lado a lado */
+.row.mb-3 {
+    display: flex; /* Permite que os itens filhos fiquem lado a lado */
+}
+
+/* Garantindo que as colunas tenham largura adequada */
+.col-md-8 {
+    flex: 0 0 67%; /* Define que esta coluna ocupará 67% */
+}
+
+.col-md-4 {
+    flex: 0 0 30%; /* Define que esta coluna ocupará 30% */
 }
 
 /* Estilizar botões do formulário */

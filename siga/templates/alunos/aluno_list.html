@@ -12,10 +12,10 @@
     <form method="GET" action="{% url 'aluno_list' %}" class="search-form mb-4">
         <!-- Campos de pesquisa ocupando toda a div -->
         <div class="row mb-3">
-            <div class="col mb-2">
+            <div class="col-md-8">
                 <input type="text" name="q" placeholder="Buscar por nome" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por nome">
             </div>
-            <div class="col mb-2">
+            <div class="col-md-4">
                 <select name="cidade" class="form-control select2">
                     <option value="">Selecionar cidade</option>
                     <option value="São Paulo" {% if request.GET.cidade == "São Paulo" %}selected{% endif %}>São Paulo</option>
@@ -84,6 +84,5 @@
         </tbody>
     </table>
 </div>
-
 
 {% endblock %}
