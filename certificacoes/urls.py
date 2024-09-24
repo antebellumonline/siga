@@ -26,6 +26,6 @@ urlpatterns = [
     path('certificacao/list/', certificacao_list, name='certificacao_list'),
     path('certificacao/<int:pk>/', certificacao_detail, name='certificacao_detail'),
     path('certificacao/create/', certificacao_create, name='certificacao_create'),
-    path('certificacao/<int:pk>/update/', certificacao_update, name='certificacao_update'),
-    path('certificacao/<int:pk>/delete/', certificacao_delete, name='certificacao_delete'),
+    path('certificacao/<str:pk>/update/', certificacao_update, name='certificacao_update'),
+    path('certificacao/<str:pk>/delete/', certificacao_delete, name='certificacao_delete'),
 ]
