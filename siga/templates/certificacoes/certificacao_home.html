@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Certificações</h2>
+
+<div>
+    <a href="{% url 'certificacao_create' %}">
+        <button type="button">Novo</button>
+    </a>
+    
+    <a href="{% url 'certificacao_list' %}">
+        <button type="button">Localizar</button>
+    </a>
+    
+    <a href="#">
+        <button type="button">Relatórios</button>
+    </a>
+</div>
+
+{% endblock %}

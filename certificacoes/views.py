@@ -2,6 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Certificacao, Certificador
 from .forms import CertificacaoForm, CertificadorForm  # Certifique-se de criar esses formulários
 
+# Página principal de certificadores
+def certificador_home(request):
+    return render(request, 'certificacoes/certificador_home.html')
+
 # Listar Certificadores
 def certificador_list(request):
     certificadores = Certificador.objects.all()
@@ -42,6 +46,10 @@ def certificador_delete(request, pk):
         certificador.delete()
         return redirect('certificador_list')
     return render(request, 'certificacoes/certificador_confirm_delete.html', {'certificador': certificador})
+
+# Página principal de certificações
+def certificacao_home(request):
+    return render(request, 'certificacoes/certificacao_home.html')
 
 # Listar Certificações
 def certificacao_list(request):
