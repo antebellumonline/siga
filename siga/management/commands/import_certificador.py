@@ -6,14 +6,14 @@ from tkinter.filedialog import askopenfilename
 import logging
 import os
 
-# Configuração do logging (modificação para salvar na pasta 'logs')
+# Configuração do logging
 log_dir = os.path.join(os.getcwd(), 'logs')
 os.makedirs(log_dir, exist_ok=True)
 log_file = os.path.join(log_dir, 'import_certificador-log.txt')
 
 logging.basicConfig(
-    filename=log_file,  # Nome do arquivo de log dentro da pasta 'logs'
-    level=logging.INFO,  # Define o nível do log
+    filename=log_file,
+    level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
@@ -21,10 +21,7 @@ class Command(BaseCommand):
     help = 'Importa os Certificadores de uma planilha Excel'
 
     def handle(self, *args, **kwargs):
-        # Oculta a janela principal do Tkinter
         Tk().withdraw()
-        
-        # Solicita ao usuário selecionar a planilha do Excel
         arquivo = askopenfilename(title='Selecione a planilha Excel', filetypes=[('Excel files', '*.xlsx;*.xls')])
         
         if not arquivo:
@@ -33,36 +30,35 @@ class Command(BaseCommand):
             return
 
         try:
-            # Lê o arquivo Excel
             df = pd.read_excel(arquivo)
             logging.info('Arquivo Excel lido com sucesso.')
 
-            # Verificar se a coluna 'id' ou outra chave primária existe
-            if 'id' not in df.columns:
-                raise ValueError("A coluna 'id' não foi encontrada no arquivo Excel.")
+            # Verificar se a coluna 'siglaCertificador' existe
+            if 'siglaCertificador' not in df.columns:
+                raise ValueError("A coluna 'siglaCertificador' não foi encontrada no arquivo Excel.")
 
             for index, row in df.iterrows():
                 try:
-                    # Verificar se o ID está presente e é válido
-                    if pd.isna(row['id']) or not isinstance(row['id'], (int, float)):
-                        raise ValueError(f"ID inválido na linha {index + 1}")
+                    # Obter a sigla do certificador
+                    sigla_certificador = str(row['siglaCertificador']).strip() if pd.notna(row['siglaCertificador']) else None
+                    
+                    if sigla_certificador:
+                        # Salvar o certificador se ele não existir
+                        certificador, created = Certificador.objects.get_or_create(siglaCertificador=sigla_certificador)
+                        if created:
+                            logging.info(f'Novo certificador criado: {certificador.siglaCertificador} na linha {index + 1}.')
+                        else:
+                            logging.info(f'Certificador existente: {certificador.siglaCertificador} na linha {index + 1}.')
+                    else:
+                        raise ValueError(f"Sigla inválida na linha {index + 1}")
 
-                    # Preencher os campos do modelo TpContato
-                    certificador = Certificador (
-                        id=int(row['id']),  # Convertendo ID para inteiro
-                        descricao=str(row['descricao']).strip() if pd.notna(row['descricao']) else None,
-                        inativo=bool(row['inativo']) if pd.notna(row['inativo']) else False,
-                    )
-                    certificador.save()
-                    logging.info(f'Certificador: {certificador.descricao} (ID: {certificador.id}) importado com sucesso.')
-                
                 except Exception as e:
-                    self.stdout.write(self.style.ERROR(f"Erro ao importar Estado na linha {index + 1}: {e}"))
-                    logging.error(f'Erro ao importar Estado na linha {index + 1}: {e}')
+                    self.stdout.write(self.style.ERROR(f"Erro ao importar na linha {index + 1}: {e}"))
+                    logging.error(f'Erro ao importar na linha {index + 1}: {e}')
 
             self.stdout.write(self.style.SUCCESS('Importação concluída com sucesso!'))
             logging.info('Importação concluída com sucesso!')
-        
+
         except Exception as e:
             self.stdout.write(self.style.ERROR(f'Erro ao ler o arquivo Excel: {e}'))
             logging.error(f'Erro ao ler o arquivo Excel: {e}')
