@@ -16,6 +16,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # Inclui as URLs do app 'alunos'
     path('', include('alunos.urls')),
+    # Inclui as URLs do app 'certificacoes'
+    path('', include('certificacoes.urls')),
     # Path para o logout do usuário
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
