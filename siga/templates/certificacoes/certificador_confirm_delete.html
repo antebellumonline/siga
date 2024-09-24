@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Excluir Certificador</h2>
+<p>Você tem certeza que deseja excluir "{{ certificador.descricao }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Sim, Excluir</button>
+</form>
+<a href="{% url 'certificador_list' %}">Cancelar</a>
+{% endblock %}

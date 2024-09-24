@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Lista de Certificadores</h2>
+<a href="{% url 'certificador_create' %}">Adicionar Certificador</a>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Descrição</th>
+            <th>Sigla</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for certificador in certificadores %}
+        <tr>
+            <td>{{ certificador.id }}</td>
+            <td>{{ certificador.descricao }}</td>
+            <td>{{ certificador.siglaCertificador }}</td>
+            <td>
+                <a href="{% url 'certificador_update' certificador.id %}">Editar</a>
+                <form action="{% url 'certificador_delete' certificador.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
