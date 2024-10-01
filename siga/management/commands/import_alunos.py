@@ -1,6 +1,7 @@
 import pandas as pd
 from django.core.management.base import BaseCommand
 from alunos.models import Aluno
+from cidades.models import Cidade
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 import logging
@@ -48,14 +49,16 @@ class Command(BaseCommand):
                         raise ValueError(f"UID inválido na linha {index + 1}")
 
                     # Preencher cidade e cpf com zero (0) caso estejam ausentes ou nulos
-                    cidade_valor = row.get('cidade', 0)
-                    if pd.isna(cidade_valor):
-                        cidade_valor = 0  # Define 0 se a cidade estiver nula
+                    cidade_valor = row.get('cidade', 0) or 0
+                    cpf_valor = row.get('cpf', 0) or 0
 
-                    cpf_valor = row.get('cpf', 0)
-                    if pd.isna(cpf_valor) or cpf_valor == 0:
-                        cpf_valor = 0  # Define 0 se o CPF estiver nulo ou for 0
-
+                    # Buscando a instância de Cidade com base no valor
+                    try:
+                        cidade_instance = Cidade.objects.get(id=str(cidade_valor))
+                    except Cidade.DoesNotExist:
+                        logging.warning(f"Cidade com ID {cidade_valor} não encontrada.")
+                        cidade_instance, created = Cidade.objects.get_or_create(id='0')
+                        
                     aluno = Aluno(
                         uid=int(row['uid']),
                         nome=str(row['nome']).strip() if pd.notna(row['nome']) else '',
@@ -65,7 +68,7 @@ class Command(BaseCommand):
                         numero=str(row['numero']).strip() if pd.notna(row['numero']) else '',
                         complemento=str(row['complemento']).strip() if pd.notna(row['complemento']) else '',
                         bairro=str(row['bairro']).strip() if pd.notna(row['bairro']) else '',
-                        cidade=int(cidade_valor),  # Usando 0 para cidade se nulo
+                        cidade=cidade_instance,
                         observacao=str(row['observacao']).strip() if pd.notna(row['observacao']) else '',
                         inativo=bool(row['inativo']) if pd.notna(row['inativo']) else False,
                     )
