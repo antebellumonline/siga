@@ -59,7 +59,7 @@ class Command(BaseCommand):
                         aluno=aluno,
                         tipo_contato=tipo_contato,
                         contato=str(row['contato']).strip(),
-                        detalhe=str(row['detalhe']).strip() if pd.notna(row['detalhe']) else None
+                        detalhe=str(row['detalhe']).strip() if pd.notna(row['detalhe']) else ''
                     )
                     logging.info(f"Contato do aluno {aluno.nome} importado com sucesso.")
 
