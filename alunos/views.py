@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.forms import inlineformset_factory
 from django.http import JsonResponse
 from .models import Aluno, AlunoContato
+from cidades.models import Cidade, Estado
 from .forms import AlunoForm
 
 # View para a página inicial
@@ -33,13 +34,15 @@ AlunoContatoFormSet = inlineformset_factory(Aluno, AlunoContato, fields=('tipo_c
 def aluno_list(request):
     query = request.GET.get('q')  # Obtém o termo de busca da URL
     inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)
+    cidade = request.GET.get('cidade')  # Obtém o filtro de cidade
+
 
     # Ordenação
     order_by = request.GET.get('order_by', 'uid')  # Define a ordenação padrão por UID
     descending = request.GET.get('descending', 'False') == 'True'  # Verifica se é para ordenar de forma descendente
 
     # Otimiza a consulta usando select_related para carregar cidade junto com aluno
-    alunos = Aluno.objects.select_related('cidade').all()
+    alunos = Aluno.objects.select_related('cidade', 'cidade__estado').all()
 
     # Aplicar os filtros e pesquisa
     if query:
@@ -47,13 +50,21 @@ def aluno_list(request):
     
     if inativo:
         alunos = alunos.filter(inativo=inativo)  # Filtra por status
+    if cidade:
+        alunos = alunos.filter(cidade__nome=cidade) # Filtra por Cidade
 
     # Aplicar ordenação
     if descending:
         order_by = f'-{order_by}'
     alunos = alunos.order_by(order_by)
 
-    return render(request, 'alunos/aluno_list.html', {'alunos': alunos})
+    # Buscar e ordenar as cidades em ordem alfabética junto com o estado (UF)
+    cidades = Cidade.objects.select_related('estado').all().order_by('nome')
+
+    return render(request, 'alunos/aluno_list.html', {
+        'alunos': alunos,
+        'cidades': cidades,
+        })
 
 def aluno_detail(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)

@@ -18,10 +18,11 @@
             <div class="col-md-4">
                 <select name="cidade" class="form-control select2">
                     <option value="">Selecionar cidade</option>
-                    <option value="São Paulo" {% if request.GET.cidade == "São Paulo" %}selected{% endif %}>São Paulo</option>
-                    <option value="Rio de Janeiro" {% if request.GET.cidade == "Rio de Janeiro" %}selected{% endif %}>Rio de Janeiro</option>
-                    <option value="Belo Horizonte" {% if request.GET.cidade == "Belo Horizonte" %}selected{% endif %}>Belo Horizonte</option>
-                    <!-- Adicione mais opções de cidades aqui -->
+                    {% for cidade in cidades %}
+                    <option value="{{ cidade.nome }}" {% if request.GET.cidade == cidade.nome %}selected{% endif %}>
+                        {{ cidade.nome }} - {{ cidade.estado.uf }}
+                    </option>
+                    {% endfor %}
                 </select>
             </div>
         </div>
