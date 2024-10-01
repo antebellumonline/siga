@@ -58,15 +58,15 @@ class Command(BaseCommand):
 
                     aluno = Aluno(
                         uid=int(row['uid']),
-                        nome=str(row['nome']).strip() if pd.notna(row['nome']) else None,
+                        nome=str(row['nome']).strip() if pd.notna(row['nome']) else '',
                         cpf=cpf_valor,  # Usando 0 para CPF se nulo
-                        cep=str(row['cep']).strip() if pd.notna(row['cep']) else None,
-                        endereco=str(row['endereco']).strip() if pd.notna(row['endereco']) else None,
-                        numero=str(row['numero']).strip() if pd.notna(row['numero']) else None,
-                        complemento=str(row['complemento']).strip() if pd.notna(row['complemento']) else None,
-                        bairro=str(row['bairro']).strip() if pd.notna(row['bairro']) else None,
+                        cep=str(row['cep']).strip() if pd.notna(row['cep']) else '',
+                        endereco=str(row['endereco']).strip() if pd.notna(row['endereco']) else '',
+                        numero=str(row['numero']).strip() if pd.notna(row['numero']) else '',
+                        complemento=str(row['complemento']).strip() if pd.notna(row['complemento']) else '',
+                        bairro=str(row['bairro']).strip() if pd.notna(row['bairro']) else '',
                         cidade=int(cidade_valor),  # Usando 0 para cidade se nulo
-                        observacao=str(row['observacao']).strip() if pd.notna(row['observacao']) else None,
+                        observacao=str(row['observacao']).strip() if pd.notna(row['observacao']) else '',
                         inativo=bool(row['inativo']) if pd.notna(row['inativo']) else False,
                     )
                     aluno.save()
