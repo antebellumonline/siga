@@ -27,7 +27,11 @@
             <!-- Adicione outros links conforme necessário -->
         </ul>
 
-        <a class="btn logout" href="{% url 'logout' %}">Logout</a>
+        <!-- Formulário de logout -->
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn logout">Logout</button>
+        </form>
     {% else %}
         <p>Você não está autenticado. <a href="{% url 'login' %}">Login</a></p>
     {% endif %}
