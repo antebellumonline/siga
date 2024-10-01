@@ -5,39 +5,34 @@ Este módulo contém as configurações para o projeto Django siga, incluindo
 configurações para o banco de dados, aplicativos instalados, middlewares e muito mais.
 """
 
+import environ
 import os
-from dotenv import load_dotenv
 
-# Carrega variáveis de ambiente do arquivo .env
-load_dotenv()
+# Inicializa o django-environ
+env = environ.Env()
+environ.Env.read_env()  # Lê o arquivo .env
 
 # Definição do diretório base do projeto (BASE_DIR)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Configuração da chave secreta (SECRET_KEY)
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY')
 
 # Configuração do modo de depuração (DEBUG) baseado na variável de ambiente
-DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
+DEBUG = env.bool('DEBUG', default=False)
 
 # Configuração dos hosts permitidos (ALLOWED_HOSTS) para produção
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if not DEBUG else ['*']
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'] if DEBUG else [])
 
 # Configuração do banco de dados
 DATABASES = {
     'default': {
-        'ENGINE': 'sql_server.pyodbc', # Motor do banco de dados
-        'NAME': os.getenv('DB_NAME'), # Nome do banco de dados
-        'USER': os.getenv('DB_USER'), # Usuário do banco de dados
-        'PASSWORD': os.getenv('DB_PASSWORD'), # Senha do banco de dados
-        'HOST': os.getenv('DB_HOST'), # Host do banco de dados
-        'PORT': os.getenv('DB_PORT'), # Porta do banco de dados
-        'OPTIONS': {
-            'driver': 'ODBC Driver 18 for SQL Server', # Driver ODBC para SQL Server
-            'timeout': 300,  # Tempo limite de conexão em segundos
-            # Parâmetros extras de conexão
-            'extra_params': 'TrustServerCertificate=yes;MultiSubnetFailover=yes;',
-        },
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
@@ -50,11 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'fontawesome-free',
-    'siga', # Aplicativo principal do projeto
-    'cidades', # Aplicativo Cidades
-    'alunos', #Aplicativo Alunos
-    'certificacoes' #Aplicativo Certificações
-    # Adicione outros aplicativos aqui
+    'siga',
+    'cidades',
+    'alunos',
+    'certificacoes',
 ]
 
 # Configuração dos middlewares (MIDDLEWARE)
@@ -67,15 +61,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-# Middleware extra de segurança ativados apenas em produção
-if not DEBUG:
-    MIDDLEWARE += [
-        'django.middleware.security.SecurityMiddleware',
-        'django.middleware.http.ConditionalGetMiddleware',
-        'django.middleware.common.BrokenLinkEmailsMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-    ]
 
 # Configuração dos templates (TEMPLATES)
 TEMPLATES = [
@@ -94,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-# Configuração da URL principal (ROOT_URLCONFIG)
+# Configuração da URL principal (ROOT_URLCONF)
 ROOT_URLCONF = 'siga.urls'
 
 # Configuração da aplicação WSGI (WSGI_APPLICATION)
@@ -117,9 +102,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Configuração de login/logout
-LOGIN_URL = 'login'  # Rota para página de login
-LOGIN_REDIRECT_URL = 'home'  # Após o login, redireciona para 'home'
-LOGOUT_REDIRECT_URL = 'login'  # Após o logout, redireciona para 'login'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
 
 # Configurações de depuração SQL
 LOGGING = {
@@ -134,17 +119,16 @@ LOGGING = {
     'loggers': {
         'django.db.backends': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'DEBUG' if DEBUG else 'INFO',
         },
     },
 }
 
-
 # Configuração de linguagem e fuso horário
 LANGUAGE_CODE = 'pt-br'
-TIME_ZONE = 'UTC'
-USE_I18N = False
-USE_L10N = False
+TIME_ZONE = 'America/Sao_Paulo'  # Mudei para horário de Brasília
+USE_I18N = False  # Defina como True se você deseja usar a internacionalização
+USE_L10N = False  # Defina como True se você deseja usar a localização
 USE_TZ = True
 
 # Configuração de arquivos estáticos
@@ -155,7 +139,3 @@ STATICFILES_DIRS = [
 
 # Configuração do STATIC_ROOT para produção
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Definições adicionais
-DEBUG = True  # Defina como False em produção
-ALLOWED_HOSTS = ['*']  # Substitua '*' por domínios específicos em produção
