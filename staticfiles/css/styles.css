@@ -91,13 +91,14 @@ h2 {
 }
 
 .image-container img {
-    max-width: 100%;
+    max-width: 300px;
     height: auto;
 }
 
 .btn {
     background-color: #be1622;
     color: white;
+    margin: 30px 10px 20px;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
@@ -192,40 +193,81 @@ h2 {
 }
 
 .login-image img {
-    max-width: 100%;
+    max-width: 300px;
     height: auto;
     border-radius: 8px;
 }
 
 /* Formulário de Busca */
 .search-form {
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 10px;
+}
+
+.search-form .form-control,
+.search-form .select2 {
+    border-radius: 6px;
+    border: 1px solid #40080b;
+    padding: 10px;
+}
+
+.search-form .row {
     display: flex;
-    gap: 10px;
     justify-content: space-between;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
 }
 
-.search-form .form-group {
-    flex-grow: 1;
+.search-form .form-control {
+    width: 100%; /* Cada campo ocupará toda a largura da coluna */
 }
 
-.search-form input[type="text"] {
-    width: 100%;
+/* Flex para manter os campos lado a lado */
+.row.mb-3 {
+    display: flex; /* Permite que os itens filhos fiquem lado a lado */
 }
 
+/* Garantindo que as colunas tenham largura adequada */
+.col-md-8 {
+    flex: 0 0 67%; /* Define que esta coluna ocupará 67% */
+}
+
+.col-md-4 {
+    flex: 0 0 30%; /* Define que esta coluna ocupará 30% */
+}
+
+/* Estilizar botões do formulário */
 .search-form .btn {
-    margin-top: 5px;
+    padding: 10px 20px; /* Aumenta o padding para garantir que todos os botões tenham o mesmo tamanho */
+    font-size: 14px; /* Define um tamanho de fonte consistente */
+    text-transform: uppercase; /* Garante que o texto dos botões fique em uppercase */
+    background-color: #ca555b; /* Cor personalizada para o botão */
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.search-form .btn-primary {
+    background-color: #be1622;
+    color: white;
+}
+
+.search-form .btn:hover {
+    background-color: #bf9d2a;
+}
+
+/* Centraliza os botões em uma nova linha */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espaço entre os botões */
+    margin-top: 10px; /* Margem para separar dos campos de pesquisa */
 }
 
 /* Ajustar o alinhamento dos checkboxes */
-.checkbox-group {
+.form-check {
     display: flex;
     align-items: center;
-}
-
-.checkbox-group label {
-    margin-left: 5px;
+    justify-content: center; /* Centraliza o checkbox */
+    margin-bottom: 10px; /* Espaço abaixo do checkbox */
 }
 
 /* Tabela de Alunos */
@@ -292,4 +334,15 @@ h2 {
 
 .alunos-table th a[data-order="descending"]:after {
     content: '▼';
+}
+
+/* Adicionar ícones para as setas de ordenação */
+footer {
+    text-align: center;
+}
+
+/* Grupo de botões */
+.btn-group {
+    margin: 10px;
+    text-align: right;
 }
