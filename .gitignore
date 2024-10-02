@@ -1,3 +1,34 @@
 # .gitignore
 .env
+
+# Python-related ignores
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.swp
+
+# Django-related ignores
+*.log
+*.pot
+*.pyc
+*.pyo
+db.sqlite3
+/media/
+staticfiles/
+
+# Ignore migration files, except for the __init__.py
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Logs
 logs/
+*.log
+*.out
+*.err
+
+# Caches
+*.cache
+*.bak
+*.swp
+*.swo
