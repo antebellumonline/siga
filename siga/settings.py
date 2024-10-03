@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'cidades',
     'alunos',
     'certificacoes',
+    'centroProva',
 ]
 
 # Configuração dos middlewares (MIDDLEWARE)
