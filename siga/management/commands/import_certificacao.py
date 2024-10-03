@@ -58,11 +58,11 @@ class Command(BaseCommand):
                     # Preencher os campos do modelo Certificacao
                     certificacao = Certificacao(
                         id=str(row['id']),  # Presumindo que o ID é uma string
-                        idCertificador=certificador.id,
-                        descricao=str(row['descricao']).strip() if pd.notna(row['descricao']) else None,
-                        siglaExame=str(row['siglaExame']).strip() if pd.notna(row['siglaExame']) else None,
-                        duracao=int(row['duracao']) if pd.notna(row['duracao']) else None,
-                        observacao=str(row['observacao']).strip() if pd.notna(row['observacao']) else None,
+                        idCertificador=certificador,
+                        descricao=str(row['descricao']).strip() if pd.notna(row['descricao']) else '',
+                        siglaExame=str(row['siglaExame']).strip() if pd.notna(row['siglaExame']) else '',
+                        duracao=int(row['duracao']) if pd.notna(row['duracao']) else '',
+                        observacao=str(row['observacao']).strip() if pd.notna(row['observacao']) else '',
                         inativo=row.get('inativo', 'False') == 'True'  # Conversão de string para booleano
                     )
                     certificacao.save()
