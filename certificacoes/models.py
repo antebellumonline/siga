@@ -19,8 +19,8 @@ class Certificacao(models.Model):
     id = models.CharField(max_length=7, primary_key=True)
     idCertificador = models.ForeignKey(Certificador, on_delete=models.CASCADE)  # Ajusta para ForeignKey
     descricao = models.TextField()
-    siglaExame = models.CharField(max_length=50)
-    duracao = models.IntegerField()
+    siglaExame = models.CharField(max_length=50, blank=True, null=True)
+    duracao = models.IntegerField(max_length=4, blank=True, null=True)
     observacao = models.TextField(blank=True, null=True)
     inativo = models.BooleanField(default=False)
 
