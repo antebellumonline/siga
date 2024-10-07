@@ -57,4 +57,4 @@ class AlunoContatoAdmin(admin.ModelAdmin):
 
     Exibe o aluno relacionado, o tipo de contato, o contato em si e um detalhe adicional.
     """
-    list_display = ('aluno', 'tipo_contato', 'contato', 'detalhe')
+    list_display = ('aluno', 'tipoContato', 'contato', 'detalhe')

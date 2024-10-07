@@ -29,7 +29,7 @@ def login_view(request):
     return render(request, 'login.html', {'form': form})
 
 # Defina o formset para AlunoContato
-AlunoContatoFormSet = inlineformset_factory(Aluno, AlunoContato, fields=('tipo_contato', 'contato'), extra=1, can_delete=True)
+AlunoContatoFormSet = inlineformset_factory(Aluno, AlunoContato, fields=('tipoContato', 'contato'), extra=1, can_delete=True)
 
 def aluno_list(request):
     query = request.GET.get('q')  # Obtém o termo de busca da URL

@@ -77,7 +77,7 @@ class ConfigTpContato(models.Model):
         return self.descricao
 
     class Meta:
-        db_table = 'tb_config_tpContato'
+        db_table = 'tb_config-tpContato'
 
 
 class AlunoContato(models.Model):
@@ -90,7 +90,7 @@ class AlunoContato(models.Model):
     """
     id = models.AutoField(primary_key=True)
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='contatos')  # Relaciona com a tabela Aluno
-    tipo_contato = models.ForeignKey(ConfigTpContato, on_delete=models.CASCADE)  # Relaciona com a tabela ConfigTpContato
+    tipoContato = models.ForeignKey(ConfigTpContato, on_delete=models.CASCADE)  # Relaciona com a tabela ConfigTpContato
     contato = models.CharField(max_length=255)  # Celular, telefone ou e-mail
     detalhe = models.TextField(blank=True, null=True)  # Observações adicionais
 
@@ -98,7 +98,7 @@ class AlunoContato(models.Model):
         """
         Retorna uma string com o tipo de contato e o contato.
         """
-        return f'Contato de {self.aluno.nome}: {self.tipo_contato.descricao} - {self.contato}'
+        return f'Contato de {self.aluno.nome}: {self.tipoContato.descricao} - {self.contato}'
 
     class Meta:
         db_table = 'tb_aluno-contato'
