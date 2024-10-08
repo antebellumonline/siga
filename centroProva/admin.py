@@ -43,10 +43,9 @@ class CentroProvaExameAdmin(admin.ModelAdmin):
         'aluno', 
         'data', 
         'presenca', 
-        'cancelado', 
-        'inativo'
+        'cancelado'
     )
     # Campos para pesquisa
     search_fields = ('certificacao__nome', 'centroProva__nome', 'aluno__nome')
     # Filtros para a lista
-    list_filter = ('presenca', 'cancelado', 'inativo')
+    list_filter = ('presenca', 'cancelado')

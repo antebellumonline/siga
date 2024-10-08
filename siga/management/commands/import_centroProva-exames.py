@@ -47,7 +47,7 @@ class Command(BaseCommand):
             logging.info('Arquivo Excel lido com sucesso.')
 
             # Verificar se as colunas necessárias existem no DataFrame
-            required_columns = ['certificacao', 'centroProva', 'aluno', 'data', 'presenca', 'cancelado', 'inativo']
+            required_columns = ['certificacao', 'centroProva', 'aluno', 'data', 'presenca', 'cancelado', 'observacao']
             if not all(col in df.columns for col in required_columns):
                 raise ValueError(f"Uma ou mais colunas obrigatórias estão faltando: {required_columns}")
 
@@ -77,7 +77,6 @@ class Command(BaseCommand):
                     # Converter os campos booleanos para o formato correto
                     presenca = bool(row['presenca'])
                     cancelado = bool(row['cancelado'])
-                    inativo = bool(row['inativo'])
 
                     # Criar ou atualizar o registro do exame
                     exame = CentroProvaExame.objects.create(
@@ -87,7 +86,7 @@ class Command(BaseCommand):
                         data=data_exame,
                         presenca=presenca,
                         cancelado=cancelado,
-                        inativo=inativo
+                        observacao=str(row['observacao']).strip() if pd.notna(row['observacao']) else '',
                     )
                     logging.info(f"Exame do aluno {aluno.nome} importado com sucesso.")
 
