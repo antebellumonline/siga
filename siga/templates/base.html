@@ -31,14 +31,6 @@
                         </a>
                     </li>
                     {% if request.user.is_authenticated %}
-                        {% if request.user.is_staff %}
-                            <li>
-                                <a href="/admin/">
-                                    <i class="fa fa-tools"></i><br>
-                                    Painel Administrativo
-                                </a>
-                            </li>
-                        {% endif %}
                         <li>
                             <a href="/alunos/">
                                 <i class="fa fa-user-graduate"></i><br>
@@ -49,6 +41,12 @@
                             <a href="/certificacao/">
                                 <i class="fa fa-graduation-cap"></i><br>
                                 Certificações
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/centroProva/">
+                                <i class="fa fa-certificate"></i><br>
+                                Centro de Provas
                             </a>
                         </li>
                     {% endif %}
