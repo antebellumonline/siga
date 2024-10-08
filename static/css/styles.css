@@ -254,12 +254,80 @@ h2 {
     background-color: #bf9d2a;
 }
 
+/* Padronização dos títulos e subtítulos das páginas */
+.page-title {
+    text-align: center;
+    color: #40080b;
+}
+
+/* Padronização das páginas de duas ou mais colunas */
+.column-container {
+    border-radius: 10px;
+    background-color: #e3e3e1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.column {
+    flex: 1;
+    margin: 0 10px;
+}
+
 /* Centraliza os botões em uma nova linha */
-.button-container {
+.btn-container {
     display: flex;
     justify-content: center;
     gap: 15px; /* Espaço entre os botões */
     margin-top: 10px; /* Margem para separar dos campos de pesquisa */
+}
+
+/* Grupo de botões */
+.btn-group {
+    margin: 10px;
+    text-align: right;
+}
+
+/* Padronização dos botões */
+button {
+    background-color: #be1622;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
+}
+
+button:hover {
+    background-color: #bf9d2a;
+    transform: scale(1.1);
+}
+
+.btn-new::before, 
+.btn-list::before, 
+.btn-reports::before {
+    font-family: 'Font Awesome 6 Free'; /* Fonte do Font Awesome */
+    font-weight: 900; /* Peso necessário para ícones sólidos */
+    margin-right: 8px; /* Espaçamento entre o ícone e o texto */
+}
+
+.btn-new::before {
+    content: "\2b"; /* Código do ícone (Font Awesome) */
+}
+
+.btn-list::before {
+    content: "\f002"; /* Código do ícone (Font Awesome) */
+}
+
+.btn-reports::before {
+    content: "\f56c"; /* Código do ícone (Font Awesome) */
 }
 
 /* Ajustar o alinhamento dos checkboxes */
@@ -339,10 +407,4 @@ h2 {
 /* Adicionar ícones para as setas de ordenação */
 footer {
     text-align: center;
-}
-
-/* Grupo de botões */
-.btn-group {
-    margin: 10px;
-    text-align: right;
 }

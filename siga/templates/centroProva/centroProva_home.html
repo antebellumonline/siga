@@ -1,13 +1,49 @@
-<h1>Centro de Provas</h1>
-<ul>
-    <li><a href="{% url 'centro_prova_novo' %}">Novo Centro de Prova</a></li>
-    <li><a href="{% url 'centro_prova_localizar' %}">Localizar Centro de Prova</a></li>
-    <li><a href="{% url 'centro_prova_relatorios' %}">Relatórios de Centro de Prova</a></li>
-</ul>
+<!-- templates/centroProva/centroProva_home.html -->
 
-<h1>Exames Realizados</h1>
-<ul>
-    <li><a href="{% url 'exame_novo' %}">Novo Exame</a></li>
-    <li><a href="{% url 'exame_localizar' %}">Localizar Exames</a></li>
-    <li><a href="{% url 'exame_relatorios' %}">Relatórios de Exames</a></li>
-</ul>
+{% extends 'base.html' %}
+
+{% block title %}SIGA - Centro de Provas{% endblock %}
+
+{% block content %}
+
+<div class="column-container">
+    <div class="column">
+        <h2 class="page-title">Centro de Provas</h2>
+        <div class="btn-container text-center mb-2">
+            <button class="btn-new">
+                <a href="{% url 'centroProva_new' %}"></a>
+                Novo
+            </button>
+            <button class="btn-list">
+                <a href="{% url 'centroProva_list' %}"></a>
+                Localizar
+            </button>
+            <button class="btn-reports">
+                <a href="{% url 'centroProva_reports' %}"></a>
+                Relatórios
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="column-container">
+    <div class="column">
+        <h2 class="page-title">Exames Realizados</h2>
+        <div class="btn-container text-center mb-2">
+            <button class="btn-new">
+                <a href="{% url 'exame_new' %}"></a>
+                Novo
+            </button>
+            <button class="btn-list">
+                <a href="{% url 'exame_list' %}"></a>
+                Localizar
+            </button>
+            <button class="btn-reports">
+                <a href="{% url 'exame_reports' %}"></a>
+                Relatórios
+            </button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

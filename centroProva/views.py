@@ -4,43 +4,43 @@ from .models import CentroProva, CentroProvaExame
 from .forms import CentroProvaForm, CentroProvaExameForm
 
 # Página inicial com opções
-def home(request):
-    return render(request, 'centroprovas/home.html')
+def centroProva_home(request):
+    return render(request, 'centroProva/centroProva_home.html')
 
 # CRUD Centro de Provas
-def centro_prova_novo(request):
+def centroProva_new(request):
     if request.method == 'POST':
         form = CentroProvaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('centro_prova_localizar'))
+            return redirect(reverse('centroProva_list'))
     else:
         form = CentroProvaForm()
-    return render(request, 'centroprovas/centro_prova_form.html', {'form': form})
+    return render(request, 'centroProva/centroProva_form.html', {'form': form})
 
-def centro_prova_localizar(request):
+def centroProva_list(request):
     centros_prova = CentroProva.objects.all()
-    return render(request, 'centroprovas/centro_prova_lista.html', {'centros_prova': centros_prova})
+    return render(request, 'centroProva/centroProva_list.html', {'centros_prova': centros_prova})
 
-def centro_prova_relatorios(request):
+def centroProva_reports(request):
     # Placeholder para a funcionalidade de relatórios
-    return render(request, 'centroprovas/centro_prova_relatorios.html')
+    return render(request, 'centroProva/centroProva_reports.html')
 
 # CRUD Exames
-def exame_novo(request):
+def exame_new(request):
     if request.method == 'POST':
         form = CentroProvaExameForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('exame_localizar'))
+            return redirect(reverse('exame_list'))
     else:
         form = CentroProvaExameForm()
     return render(request, 'centroprovas/exame_form.html', {'form': form})
 
-def exame_localizar(request):
+def exame_list(request):
     exames = CentroProvaExame.objects.all()
-    return render(request, 'centroprovas/exame_lista.html', {'exames': exames})
+    return render(request, 'centroprovas/exame_list.html', {'exames': exames})
 
-def exame_relatorios(request):
+def exame_reports(request):
     # Placeholder para a funcionalidade de relatórios
-    return render(request, 'centroprovas/exame_relatorios.html')
+    return render(request, 'centroprovas/exame_reports.html')

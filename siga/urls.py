@@ -18,6 +18,8 @@ urlpatterns = [
     path('', include('alunos.urls')),
     # Inclui as URLs do app 'certificacoes'
     path('', include('certificacoes.urls')),
+    # Inclui as URLs do app 'centroProva'
+    path('', include('centroProva.urls')),
     # Path para o logout do usuário
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
