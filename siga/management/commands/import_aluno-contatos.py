@@ -38,7 +38,7 @@ class Command(BaseCommand):
             logging.info('Arquivo Excel lido com sucesso.')
 
             # Verificar se as colunas necessárias existem no DataFrame
-            required_columns = ['aluno', 'tipo_contato', 'contato', 'detalhe']
+            required_columns = ['aluno', 'tipoContato', 'contato', 'detalhe']
             if not all(col in df.columns for col in required_columns):
                 raise ValueError(f"Uma ou mais colunas obrigatórias estão faltando: {required_columns}")
 
@@ -50,14 +50,14 @@ class Command(BaseCommand):
                         raise ValueError(f"Aluno com UID {row['aluno']} não encontrado.")
 
                     # Verificar se o tipo de contato existe
-                    tipo_contato = ConfigTpContato.objects.filter(id=row['tipo_contato']).first()
+                    tipo_contato = ConfigTpContato.objects.filter(id=row['tipoContato']).first()
                     if not tipo_contato:
-                        raise ValueError(f"Tipo de contato com ID {row['tipo_contato']} não encontrado.")
+                        raise ValueError(f"Tipo de contato com ID {row['tipoContato']} não encontrado.")
 
                     # Cria ou atualiza o contato do aluno
                     contato = AlunoContato.objects.create(
                         aluno=aluno,
-                        tipo_contato=tipo_contato,
+                        tipoContato=tipo_contato,
                         contato=str(row['contato']).strip(),
                         detalhe=str(row['detalhe']).strip() if pd.notna(row['detalhe']) else ''
                     )
