@@ -54,7 +54,7 @@ class Command(BaseCommand):
 
                     # Buscando a instância de Cidade com base no valor
                     try:
-                        cidade_instance = Cidade.objects.get(id=str(cidade_valor))
+                        cidade_instance = Cidade.objects.get(id=int(cidade_valor))
                     except Cidade.DoesNotExist:
                         logging.warning(f"Cidade com ID {cidade_valor} não encontrada.")
                         cidade_instance, created = Cidade.objects.get_or_create(id='0')
@@ -63,7 +63,7 @@ class Command(BaseCommand):
                         uid=int(row['uid']),
                         nome=str(row['nome']).strip().upper() if pd.notna(row['nome']) else '',  # Alteração aqui
                         cpf=cpf_valor,  # Usando 0 para CPF se nulo
-                        cep=str(row['cep']).strip() if pd.notna(row['cep']) else '',
+                        cep=str(row['cep']).strip()[:8] if pd.notna(row['cep']) else '',
                         endereco=str(row['endereco']).strip() if pd.notna(row['endereco']) else '',
                         numero=str(row['numero']).strip() if pd.notna(row['numero']) else '',
                         complemento=str(row['complemento']).strip() if pd.notna(row['complemento']) else '',
