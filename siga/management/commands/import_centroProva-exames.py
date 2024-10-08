@@ -64,9 +64,9 @@ class Command(BaseCommand):
                         raise ValueError(f"Centro de Prova com ID {row['centroProva']} não encontrado.")
 
                     # Verificar se o aluno existe
-                    aluno = Aluno.objects.filter(id=row['aluno']).first()
+                    aluno = Aluno.objects.filter(uid=row['aluno']).first()
                     if not aluno:
-                        raise ValueError(f"Aluno com ID {row['aluno']} não encontrado.")
+                        raise ValueError(f"Aluno com UID {row['aluno']} não encontrado.")
 
                     # Verificar e formatar a data
                     try:
