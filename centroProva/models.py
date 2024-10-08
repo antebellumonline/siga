@@ -22,6 +22,7 @@ class CentroProvaExame(models.Model):
     presenca = models.BooleanField(default=False) # Campo booleano: True para presente, False para ausente
     cancelado = models.BooleanField(default=False) # Campo booleano: True para cancelado, False para não cancelado
     inativo = models.BooleanField(default=False) # Campo booleano: True para inativo, False para ativo
+    observacao = models.TextField(blank=True, null=True)  # Observações sobre o Centro de Provas
     def __str__(self):
         return f"{self.certificacao} - {self.centro_prova} - {self.aluno}"
     
