@@ -61,7 +61,7 @@ class Command(BaseCommand):
                         
                     aluno = Aluno(
                         uid=int(row['uid']),
-                        nome=str(row['nome']).strip() if pd.notna(row['nome']) else '',
+                        nome=str(row['nome']).strip().upper() if pd.notna(row['nome']) else '',  # Alteração aqui
                         cpf=cpf_valor,  # Usando 0 para CPF se nulo
                         cep=str(row['cep']).strip() if pd.notna(row['cep']) else '',
                         endereco=str(row['endereco']).strip() if pd.notna(row['endereco']) else '',
