@@ -309,20 +309,48 @@ h2 {
     margin-top: 10px; /* Margem para separar dos campos de pesquisa */
 }
 
-/* Grupo de botões */
+/* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
+
+/* PADRONIZAÇÃO DOS BOTÕES */
+.btn-group-modal {
+    margin: 10px;
+    justify-content: center;
+    text-align: right;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.btn-close-modal:hover,
+.btn-close-modal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .btn-group {
     margin: 10px;
     text-align: right;
+    display: flex;
+    gap: 10px;
 }
 
-/* Padronização dos botões */
 .btn-new,
 .btn-list,
 .btn-reports,
 .btn-save,
 .btn-edit,
 .btn-delete,
-.btn-return {
+.btn-return,
+.btn-confirm,
+.btn-cancel,
+.btn-close {
     text-decoration: none;
     display: inline-block;
     background-color: #be1622;
@@ -336,6 +364,8 @@ h2 {
     font-weight: 500;
     text-transform: uppercase;
     transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
+    position: relative;
+    z-index: 1;
 }
 
 .btn-new:hover,
@@ -344,18 +374,26 @@ h2 {
 .btn-save:hover,
 .btn-edit:hover,
 .btn-delete:hover,
-.btn-return:hover {
+.btn-return:hover,
+.btn-confirm:hover,
+.btn-cancel:hover,
+.btn-close:hover {
     background-color: #bf9d2a;
     transform: scale(1.1);
+    z-index: 2;
+    transform-origin: center;
 }
 
 .btn-new::before, 
 .btn-list::before, 
-.btn-reports::before
+.btn-reports::before,
 .btn-save::before,
 .btn-edit::before,
 .btn-delete::before,
-.btn-return::before {
+.btn-return::before,
+.btn-confirm::before,
+.btn-cancel::before,
+.btn-close::before {
     font-family: 'Font Awesome 6 Free'; /* Fonte do Font Awesome */
     font-weight: 900; /* Peso necessário para ícones sólidos */
     margin-right: 8px; /* Espaçamento entre o ícone e o texto */
@@ -378,19 +416,57 @@ h2 {
 }
 
 .btn-edit::before {
-    content: "\f044";
+    content: "\f044"; /* Código do ícone para "edit" */
 }
 
 .btn-delete::before {
-    content: "\f1f8";
+    content: "\f1f8"; /* Código do ícone para "trash" */
 }
 
 .btn-return::before {
-    content: "\f060";
+    content: "\f060"; /* Código do ícone para "arrow-left" */
 }
 
-/* Ajustar o alinhamento dos checkboxes */
-.form-check {
+.btn-confirm::before {
+    content: "\f00c"; /* Código do ícone para "check" */
+}
+
+.btn-cancel::before {
+    content: "\f05e"; /* Código do ícone para "stop" */
+}
+
+.btn-close::before {
+    content: "\f00d"; /* Código do ícone para "stop" */
+}
+
+/* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
+
+/*MODAL POP-UP */
+.modal-delete,
+.modal-feedback {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5); /* Fundo escurecido */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 6px;
+    width: 400px;
+    text-align: center;
+}
+
+/* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
+
+.form-check { /* Ajustar o alinhamento dos checkboxes */
     display: flex;
     align-items: center;
     justify-content: center; /* Centraliza o checkbox */

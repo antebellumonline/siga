@@ -14,7 +14,29 @@
 
 <div class="btn-group">
     <a class="btn-edit" href="{% url 'centroProva_edit' centroProva.pk %}">Editar</a>
-    <a class="btn-delete" href="{% url 'centroProva_delete' centroProva.pk %}">Excluir</a>
+    <a class="btn-delete" id="btn-delete" data-pk="{{ centroProva.pk }}" href="#">Excluir</a>
     <a class="btn-return" href="{% url 'centroProva_list' %}">Retornar</a>
+</div>
+
+<!-- Modal de Confirmação -->
+<div class="modal-delete" style="display:none;">
+    <div class="modal-content">
+        <span class="btn-close-modal">&times;</span>
+        <h2>Confirmar Exclusão</h2>
+        <p>Tem certeza que deseja excluir o Centro de Provas <strong>{{ centroProva.nome }}</strong>?</p>
+        <div class="btn-group-modal">
+            <button type="button" class="btn-confirm">Confirmar</button>
+            <button type="button" class="btn-cancel">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de feedback de sucesso/erro -->
+<div class="modal-feedback" style="display:none;">
+    <div class="modal-content">
+        <p class="modal-feedback-message"></p>
+        <button type="button" class="btn-close" data-url="{% url 'centroProva_list' %}">Fechar</button>
+    </div>
+</div>
 
 {% endblock %}
