@@ -51,7 +51,7 @@ def centroProva_list(request):
     descending = request.GET.get('descending', 'False') == 'True'  # Verifica se é para ordenar de forma descendente
 
     # Inicializa a variável centroProva
-    centroProva = CentroProva.objects.all()  # Supondo que CentroProva seja seu modelo
+    centroProva = CentroProva.objects.all()
 
     # Aplicar os filtros e pesquisa
     if query:

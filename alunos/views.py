@@ -39,7 +39,6 @@ def aluno_list(request):
     inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)
     cidade = request.GET.get('cidade')  # Obtém o filtro de cidade
 
-
     # Ordenação
     order_by = request.GET.get('order_by', 'uid')  # Define a ordenação padrão por UID
     descending = request.GET.get('descending', 'False') == 'True'  # Verifica se é para ordenar de forma descendente
