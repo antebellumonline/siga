@@ -1,0 +1,20 @@
+<!-- templates/centroProva/centroProva_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}SIGA - Detalhes do Centro de Provas{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Detalhes do Centro de Provas</h2>
+
+<p><strong>ID:</strong> {{ centroProva.id }}</p>
+<p><strong>Nome:</strong> {{ centroProva.nome }}</p>
+<p><strong>Inativo:</strong> {{ centroProva.inativo }}</p>
+
+<div class="btn-group">
+    <a class="btn-edit" href="{% url 'centroProva_edit' centroProva.pk %}">Editar</a>
+    <a class="btn-delete" href="{% url 'centroProva_delete' centroProva.pk %}">Excluir</a>
+    <a class="btn-return" href="{% url 'centroProva_list' %}">Retornar</a>
+
+{% endblock %}

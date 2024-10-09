@@ -319,7 +319,10 @@ h2 {
 .btn-new,
 .btn-list,
 .btn-reports,
-.btn-save {
+.btn-save,
+.btn-edit,
+.btn-delete,
+.btn-return {
     text-decoration: none;
     display: inline-block;
     background-color: #be1622;
@@ -338,7 +341,10 @@ h2 {
 .btn-new:hover,
 .btn-list:hover,
 .btn-reports:hover,
-.btn-save:hover {
+.btn-save:hover,
+.btn-edit:hover,
+.btn-delete:hover,
+.btn-return:hover {
     background-color: #bf9d2a;
     transform: scale(1.1);
 }
@@ -346,7 +352,10 @@ h2 {
 .btn-new::before, 
 .btn-list::before, 
 .btn-reports::before
-.btn-save::before {
+.btn-save::before,
+.btn-edit::before,
+.btn-delete::before,
+.btn-return::before {
     font-family: 'Font Awesome 6 Free'; /* Fonte do Font Awesome */
     font-weight: 900; /* Peso necessário para ícones sólidos */
     margin-right: 8px; /* Espaçamento entre o ícone e o texto */
@@ -366,6 +375,18 @@ h2 {
 
 .btn-save::before {
     content: "\f0c7"; /* Código do ícone para "save" */
+}
+
+.btn-edit::before {
+    content: "\f044";
+}
+
+.btn-delete::before {
+    content: "\f1f8";
+}
+
+.btn-return::before {
+    content: "\f060";
 }
 
 /* Ajustar o alinhamento dos checkboxes */

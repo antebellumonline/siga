@@ -8,12 +8,12 @@ from .models import Aluno, AlunoContato
 from cidades.models import Cidade, Estado
 from .forms import AlunoForm
 
-# View para a página inicial
+# View para a Página Inicial do Projeto
 @login_required
 def home(request):
     return render(request, 'home.html')
 
-# View para a página de login
+# View para a Página de Login
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -50,7 +50,6 @@ def aluno_list(request):
     # Aplicar os filtros e pesquisa
     if query:
         alunos = alunos.filter(nome__icontains=query)  # Pesquisa por nome (parcial)
-    
     if inativo:
         alunos = alunos.filter(inativo=inativo)  # Filtra por status
     if cidade:

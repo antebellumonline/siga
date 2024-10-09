@@ -1,6 +1,42 @@
-<h1>Lista de Centros de Prova</h1>
-<ul>
-    {% for centro in centros_prova %}
-        <li>{{ centro.nome }}</li>
-    {% endfor %}
-</ul>
+<!-- templates/centroProva/centroProva_list.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}SIGA - Centro de Provas{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Lista de Centros de Provas</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                <a href="?order_by=id{% if request.GET.descending %}&descending=False{% else %}&descending=True{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
+                    ID {% if request.GET.order_by == 'id' %}{% if request.GET.descending %}▼{% else %}▲{% endif %}{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?order_by=nome{% if request.GET.descending %}&descending=False{% else %}&descending=True{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
+                    Nome {% if request.GET.order_by == 'nome' %}{% if request.GET.descending %}▼{% else %}▲{% endif %}{% endif %}
+                </a>
+            </th>
+            <th>Inativo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for centro in centroProva %}
+        <tr>
+            <td>{{ centro.id }}</td>
+            <td><a href="{% url 'centroProva_detail' centro.pk %}">{{ centro.nome }}</a></td>
+            <td>{{ centro.inativo|yesno:"Inativo,Ativo" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Nenhum centro de prova encontrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
