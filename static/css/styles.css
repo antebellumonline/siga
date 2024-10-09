@@ -72,7 +72,7 @@ nav ul li a i {
 .container {
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 10px auto;
     padding: 20px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -86,16 +86,17 @@ nav ul li a i {
 }
 
 .column {
-    flex: 1; /* Ocupa espaço igual */
+    flex: 1 1 calc(50% - 10px); /* Cada coluna ocupa 50% menos o gap */
     padding: 10px; /* Preenchimento interno */
     background-color: #e3e3e1; /* Cor de fundo */
-    border-radius: 10px; /* Bordas arredondadas */
+    border-radius: 6px; /* Bordas arredondadas */
     display: flex; /* Permite usar flexbox dentro da coluna */
     flex-direction: column; /* Para alinhar itens na coluna verticalmente */
     justify-content: space-between; /* Espaço entre os elementos */
     min-height: 100px; /* Altura mínima para garantir que as colunas sejam iguais */
     margin: 0 5px; /* Adiciona margem entre as colunas */
     box-sizing: border-box; /* Inclui o padding no cálculo da largura */
+    
 }
 
 /* Margem entre colunas */
@@ -106,7 +107,16 @@ nav ul li a i {
 /* Flexibilidade do contêiner pai */
 .row {
     display: flex; /* Alinha os children lado a lado */
-    flex-wrap: wrap; /* Permite que as colunas quebrem em linhas se não houver espaço */
+    flex: 1; /* Garante que as rows ocupem o mesmo espaço */
+    flex-direction: row; /* Alinha as colunas horizontalmente */
+    flex-wrap: nowrap; /* Impede que as colunas quebrem de linha */
+}
+
+/* Responsividade para mais colunas */
+@media (max-width: 768px) {
+    .column {
+        flex: 1 1 100%; /* Em telas menores, cada coluna ocupa 100% da largura */
+    }
 }
 
 /* Estilo do conteúdo principal */
@@ -319,7 +329,7 @@ h2 {
     cursor: pointer;
     font-family: 'Fredoka', sans-serif;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: uppercase;
     transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
 }
