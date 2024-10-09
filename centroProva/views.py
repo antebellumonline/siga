@@ -35,12 +35,12 @@ def exame_new(request):
             return redirect(reverse('exame_list'))
     else:
         form = CentroProvaExameForm()
-    return render(request, 'centroprovas/exame_form.html', {'form': form})
+    return render(request, 'centroProva/centroProva-exame_form.html', {'form': form})
 
 def exame_list(request):
     exames = CentroProvaExame.objects.all()
-    return render(request, 'centroprovas/exame_list.html', {'exames': exames})
+    return render(request, 'centroProva/centroProva-exame_list.html', {'exames': exames})
 
 def exame_reports(request):
     # Placeholder para a funcionalidade de relatórios
-    return render(request, 'centroprovas/exame_reports.html')
+    return render(request, 'centroProva/centroProva-exame_reports.html')

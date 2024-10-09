@@ -318,7 +318,8 @@ h2 {
 /* Padronização dos botões */
 .btn-new,
 .btn-list,
-.btn-reports {
+.btn-reports,
+.btn-save {
     text-decoration: none;
     display: inline-block;
     background-color: #be1622;
@@ -336,14 +337,16 @@ h2 {
 
 .btn-new:hover,
 .btn-list:hover,
-.btn-reports:hover {
+.btn-reports:hover,
+.btn-save:hover {
     background-color: #bf9d2a;
     transform: scale(1.1);
 }
 
 .btn-new::before, 
 .btn-list::before, 
-.btn-reports::before {
+.btn-reports::before
+.btn-save::before {
     font-family: 'Font Awesome 6 Free'; /* Fonte do Font Awesome */
     font-weight: 900; /* Peso necessário para ícones sólidos */
     margin-right: 8px; /* Espaçamento entre o ícone e o texto */
@@ -359,6 +362,10 @@ h2 {
 
 .btn-reports::before {
     content: "\f56c"; /* Código do ícone para "file-alt" */
+}
+
+.btn-save::before {
+    content: "\f0c7"; /* Código do ícone para "save" */
 }
 
 /* Ajustar o alinhamento dos checkboxes */

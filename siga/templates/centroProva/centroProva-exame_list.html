@@ -1,6 +1,16 @@
-<h1>Novo Exame</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar</button>
-</form>
+<!-- templates/centroProva/centroProva_home.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}SIGA - Centro de Provas{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Exames Realizados no Centro de Provas</h2>
+<ul>
+    {% for exame in exames %}
+        <li>{{ exame.certificacao }} - {{ exame.centroProva }} - {{ exame.aluno }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -6,10 +6,11 @@
 
 {% block content %}
 
+<h2 class="page-title">Gestão do Centro de Provas</h2>
 <div class="column-container">
     <div class="row">
         <div class="column">
-            <h2 class="page-title">Centro de Provas</h2>
+            <h3 class="page-title">Centro de Provas</h3>
             <div class="btn-container text-center mb-2">
                 <a href="{% url 'centroProva_new' %}" class="btn-new" aria-label="Criar novo centro de provas">Novo</a>
                 <a href="{% url 'centroProva_list' %}" class="btn-list" aria-label="Localizar centro de provas">Localizar</a>
@@ -19,7 +20,7 @@
 
     <div class="row">
         <div class="column">
-            <h2 class="page-title">Exames Realizados</h2>
+            <h3 class="page-title">Exames Realizados</h3>
             <div class="btn-container text-center mb-2">
                 <a href="{% url 'exame_new' %}" class="btn-new" aria-label="Criar novo exame">Novo</a>
                 <a href="{% url 'exame_list' %}" class="btn-list" aria-label="Localizar exame">Localizar</a>
@@ -27,6 +28,5 @@
         </div>
     </div>
 </div>
-
 
 {% endblock %}
