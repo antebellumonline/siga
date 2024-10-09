@@ -31,6 +31,9 @@ def login_view(request):
 # Defina o formset para AlunoContato
 AlunoContatoFormSet = inlineformset_factory(Aluno, AlunoContato, fields=('tipoContato', 'contato'), extra=1, can_delete=True)
 
+def aluno_home(request):
+    return render(request, 'alunos/aluno_home.html')
+
 def aluno_list(request):
     query = request.GET.get('q')  # Obtém o termo de busca da URL
     inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)
@@ -71,7 +74,7 @@ def aluno_detail(request, pk):
     contatos = AlunoContato.objects.filter(aluno=aluno)  # Aqui você busca os contatos relacionados ao aluno
     return render(request, 'alunos/aluno_detail.html', {'aluno': aluno, 'contatos': contatos})
 
-def aluno_create(request):
+def aluno_new(request):
     if request.method == "POST":
         form = AlunoForm(request.POST)
         formset = AlunoContatoFormSet(request.POST)

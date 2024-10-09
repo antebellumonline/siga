@@ -1,0 +1,17 @@
+<!-- templates/centroProva/centroProva_home.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}SIGA - Alunos{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Alunos</h2>
+<div class="individual-container">
+    <div class="btn-container text-center mb-2">
+        <a href="{% url 'aluno_new' %}" class="btn-new" aria-label="Criar Novo Aluno">Novo</a>
+        <a href="{% url 'aluno_list' %}" class="btn-list" aria-label="Localizar Aluno">Localizar</a>
+    </div>
+</div>
+
+{% endblock %}
