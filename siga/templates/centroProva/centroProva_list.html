@@ -8,17 +8,17 @@
 
 <h2 class="page-title">Lista de Centros de Provas</h2>
 
-<table>
+<table class="tb-list" id="tb-list-centroProva">
     <thead>
         <tr>
             <th>
                 <a href="?order_by=id{% if request.GET.descending %}&descending=False{% else %}&descending=True{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
-                    ID {% if request.GET.order_by == 'id' %}{% if request.GET.descending %}▼{% else %}▲{% endif %}{% endif %}
+                    ID {% if request.GET.order_by == 'id' %}<span class="sort-arrow">{% if request.GET.descending %}▼{% else %}▲{% endif %}</span>{% endif %}
                 </a>
             </th>
             <th>
                 <a href="?order_by=nome{% if request.GET.descending %}&descending=False{% else %}&descending=True{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
-                    Nome {% if request.GET.order_by == 'nome' %}{% if request.GET.descending %}▼{% else %}▲{% endif %}{% endif %}
+                    Nome {% if request.GET.order_by == 'nome' %}<span class="sort-arrow">{% if request.GET.descending %}▼{% else %}▲{% endif %}</span>{% endif %}
                 </a>
             </th>
             <th>Inativo</th>

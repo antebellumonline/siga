@@ -543,3 +543,52 @@ h2 {
 footer {
     text-align: center;
 }
+
+/* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
+
+/* TABELAS */
+.tb-list {
+    width: 100%; /* Define a largura da tabela */
+    border-collapse: collapse; /* Faz com que as bordas se unam */
+    margin-top: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tb-list th, .tb-list td {
+    text-align: left; /* Alinha o texto à esquerda */
+    padding: 8px; /* Espaçamento interno nas células */
+}
+
+.tb-list thead {
+    background-color: #40080b; /* Cor de fundo do cabeçalho */
+    color: white; /* Cor do texto do cabeçalho */
+}
+
+.tb-list thead th {
+    border-bottom: none; /* Remove a borda inferior do cabeçalho */
+}
+
+.tb-list tbody tr:nth-child(odd) {
+    background-color: #e3e3e1; /* Cor de fundo para linhas ímpares */
+}
+
+.tb-list tbody tr:nth-child(even) {
+    background-color: #ffffff; /* Cor de fundo para linhas pares */
+}
+
+.tb-list th a {
+    color: white; /* Cor do texto dos links no cabeçalho */
+    text-decoration: none; /* Remove o sublinhado dos links */
+}
+
+.tb-list th a:hover {
+    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
+.sort-arrow {
+    font-size: 0.7em; /* Ajusta o tamanho das setas */
+    vertical-align: middle; /* Alinha verticalmente as setas */
+    margin-left: 5px; /* Espaçamento à esquerda das setas */
+}
