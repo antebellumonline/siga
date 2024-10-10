@@ -1,6 +1,17 @@
-<h1>Novo Centro de Prova</h1>
+<!-- templates/centroProva/centroProva_form.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}{{ form.instance.pk|yesno:"Editar Centro de Provas,Adicionar Centro de Provas" }}{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">{{ form.instance.pk|yesno:"Editar Centro de Provas,Adicionar Centro de Provas" }}</h2>
+
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Salvar</button>
 </form>
+
+{% endblock %}
