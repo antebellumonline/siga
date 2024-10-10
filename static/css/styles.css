@@ -239,62 +239,6 @@ h2 {
     border-radius: 8px;
 }
 
-/* Formulário de Busca */
-.search-form {
-    font-family: 'Montserrat', sans-serif;
-    margin-bottom: 10px;
-}
-
-.search-form .form-control,
-.search-form .select2 {
-    border-radius: 6px;
-    border: 1px solid #40080b;
-    padding: 10px;
-}
-
-.search-form .row {
-    display: flex;
-    justify-content: space-between;
-}
-
-.search-form .form-control {
-    width: 100%; /* Cada campo ocupará toda a largura da coluna */
-}
-
-/* Flex para manter os campos lado a lado */
-.row.mb-3 {
-    display: flex; /* Permite que os itens filhos fiquem lado a lado */
-}
-
-/* Garantindo que as colunas tenham largura adequada */
-.col-md-8 {
-    flex: 0 0 67%; /* Define que esta coluna ocupará 67% */
-}
-
-.col-md-4 {
-    flex: 0 0 30%; /* Define que esta coluna ocupará 30% */
-}
-
-/* Estilizar botões do formulário */
-.search-form .btn {
-    padding: 10px 20px; /* Aumenta o padding para garantir que todos os botões tenham o mesmo tamanho */
-    font-size: 14px; /* Define um tamanho de fonte consistente */
-    text-transform: uppercase; /* Garante que o texto dos botões fique em uppercase */
-    background-color: #ca555b; /* Cor personalizada para o botão */
-    color: white;
-    border: none;
-    transition: background-color 0.3s ease;
-}
-
-.search-form .btn-primary {
-    background-color: #be1622;
-    color: white;
-}
-
-.search-form .btn:hover {
-    background-color: #bf9d2a;
-}
-
 /* Padronização dos títulos e subtítulos das páginas */
 .page-title {
     text-align: center;
@@ -341,6 +285,13 @@ h2 {
     gap: 10px;
 }
 
+.btn-group-search {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    gap: 10px;
+}
+
 .btn-new,
 .btn-list,
 .btn-reports,
@@ -350,7 +301,8 @@ h2 {
 .btn-return,
 .btn-confirm,
 .btn-cancel,
-.btn-close {
+.btn-close,
+.btn-clear {
     text-decoration: none;
     display: inline-block;
     background-color: #be1622;
@@ -377,7 +329,8 @@ h2 {
 .btn-return:hover,
 .btn-confirm:hover,
 .btn-cancel:hover,
-.btn-close:hover {
+.btn-close:hover,
+.btn-clear:hover {
     background-color: #bf9d2a;
     transform: scale(1.1);
     z-index: 2;
@@ -393,7 +346,8 @@ h2 {
 .btn-return::before,
 .btn-confirm::before,
 .btn-cancel::before,
-.btn-close::before {
+.btn-close::before,
+.btn-clear::before {
     font-family: 'Font Awesome 6 Free'; /* Fonte do Font Awesome */
     font-weight: 900; /* Peso necessário para ícones sólidos */
     margin-right: 8px; /* Espaçamento entre o ícone e o texto */
@@ -439,6 +393,10 @@ h2 {
     content: "\f00d"; /* Código do ícone para "stop" */
 }
 
+.btn-clear::before {
+    content: "\f55a"; /* Código do ícone para "delete-left" */
+}
+
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
 
 /*MODAL POP-UP */
@@ -461,86 +419,6 @@ h2 {
     border: 1px solid #888;
     border-radius: 6px;
     width: 400px;
-    text-align: center;
-}
-
-/* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
-
-.form-check { /* Ajustar o alinhamento dos checkboxes */
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Centraliza o checkbox */
-    margin-bottom: 10px; /* Espaço abaixo do checkbox */
-}
-
-/* Tabela de Alunos */
-.alunos-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: white;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.alunos-table th, .alunos-table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.alunos-table thead th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-    text-align: center;
-}
-
-.alunos-table tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-.alunos-table tbody td {
-    text-align: center;
-}
-
-* Alinhamento centralizado para UID, CPF e Status no corpo da tabela */
-.alunos-table tbody td:nth-child(1), /* UID */
-.alunos-table tbody td:nth-child(3), /* CPF */
-.alunos-table tbody td:nth-child(5)  /* Status */ {
-    text-align: center;
-}
-
-/* Alinhamento à esquerda para Nome e Cidade no corpo da tabela */
-.alunos-table tbody td:nth-child(2), /* Nome */
-.alunos-table tbody td:nth-child(4)  /* Cidade */ {
-    text-align: left;
-}
-
-/* Adicionar ícones para as setas de ordenação */
-.alunos-table th a {
-    color: #333;
-    text-decoration: none;
-}
-
-.alunos-table th a:hover {
-    color: #007bff;
-}
-
-.alunos-table th a:after {
-    content: ' ';
-    margin-left: 5px;
-}
-
-.alunos-table th a[data-order="ascending"]:after {
-    content: '▲';
-}
-
-.alunos-table th a[data-order="descending"]:after {
-    content: '▼';
-}
-
-/* Adicionar ícones para as setas de ordenação */
-footer {
     text-align: center;
 }
 
@@ -583,12 +461,53 @@ footer {
     text-decoration: none; /* Remove o sublinhado dos links */
 }
 
+.tb-list th a[data-order="ascending"]:after {
+    content: '▲';
+}
+
+.tb-list th a[data-order="descending"]:after {
+    content: '▼';
+}
+
 .tb-list th a:hover {
     text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
 }
 
-.sort-arrow {
-    font-size: 0.7em; /* Ajusta o tamanho das setas */
-    vertical-align: middle; /* Alinha verticalmente as setas */
-    margin-left: 5px; /* Espaçamento à esquerda das setas */
+/* FORMULÁRIOS DE BUSCA */
+.search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group-search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-group-search input[type="text"] {
+    width: 60%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-group-search select {
+    width: 20%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.checkbox-group-search {
+    display: flex;
+    align-items: center;
+    width: 20%;
+}
+
+.checkbox-group-search input[type="checkbox"] {
+    margin-right: 0.5rem;
 }

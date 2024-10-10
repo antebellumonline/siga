@@ -7,20 +7,34 @@
 {% block content %}
 
 <h2 class="page-title">Lista de Centros de Provas</h2>
-
+<!-- Formulário de busca e filtro -->
 <form method="GET" action="{% url 'centroProva_list' %}" class="search-form">
-
+    <div>
+        <div>
+            <input type="text" name="q" placeholder="Buscar por nome" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por nome">
+        </div>
+    </div>
+    <div class="btn-group-search">
+        <button type="submit" class="btn-list">Buscar</button>
+        <a class="btn-clear" href="{% url 'centroProva_list' %}">Limpar Busca</a>
+    </div>
+</form>
+<div class="btn-group">
+    <a class="btn-return" href="{% url 'centroProva_home' %}">Retornar</a>
+    <a class="btn-new" href="{% url 'centroProva_new' %}">Novo</a>
+</div>
+<!-- Tabela de busca -->
 <table class="tb-list" id="tb-list-centroProva">
     <thead>
         <tr>
             <th>
-                <a href="?order_by=id{% if request.GET.descending %}&descending=False{% else %}&descending=True{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
-                    ID {% if request.GET.order_by == 'id' %}<span class="sort-arrow">{% if request.GET.descending %}▼{% else %}▲{% endif %}</span>{% endif %}
+                <a href="?order_by=id&descending={% if request.GET.order_by == 'id' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
+                    ID {% if request.GET.order_by == 'id' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
             <th>
-                <a href="?order_by=nome{% if request.GET.descending %}&descending=False{% else %}&descending=True{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
-                    Nome {% if request.GET.order_by == 'nome' %}<span class="sort-arrow">{% if request.GET.descending %}▼{% else %}▲{% endif %}</span>{% endif %}
+                <a href="?order_by=nome&descending={% if request.GET.order_by == 'nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
+                    Nome {% if request.GET.order_by == 'nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
             <th>Inativo</th>
