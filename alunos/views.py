@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms import inlineformset_factory
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 from .models import Aluno, AlunoContato
 from cidades.models import Cidade, Estado
 from .forms import AlunoForm
@@ -59,11 +60,18 @@ def aluno_list(request):
         order_by = f'-{order_by}'
     alunos = alunos.order_by(order_by)
 
+    # Paginação
+    records_per_page = request.GET.get('records_per_page', 10)  # Padrão: 10 registros por página
+    paginator = Paginator(alunos, records_per_page)  # Cria o paginator
+
+    page_number = request.GET.get('page')  # Obtém o número da página atual
+    alunos_page = paginator.get_page(page_number)  # Pega a página solicitada
+
     # Buscar e ordenar as cidades em ordem alfabética junto com o estado (UF)
     cidades = Cidade.objects.select_related('estado').all().order_by('nome')
 
     return render(request, 'alunos/aluno_list.html', {
-        'alunos': alunos,
+        'alunos': alunos_page,
         'cidades': cidades,
         })
 

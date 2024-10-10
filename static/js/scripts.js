@@ -1,13 +1,38 @@
-// Exemplo de script JavaScript
+// Verificar se a página está pronta
 document.addEventListener("DOMContentLoaded", function() {
     console.log("Página carregada e scripts prontos para uso!");
 
-    // Você pode adicionar interatividade aqui, por exemplo:
-    // document.querySelector("button").addEventListener("click", function() {
-    //     alert("Botão clicado!");
-    // });
+    // Outras funcionalidades que você já possui
+
+    // Adicionar um evento ao selecionar a quantidade de registros a serem exibidos
+    const recordsSelect = document.getElementById('records_per_page');
+    if (recordsSelect) {
+        recordsSelect.addEventListener('change', function() {
+            submitForm();
+        });
+    }
 });
 
+// Função para enviar o formulário com os parâmetros atuais
+function submitForm() {
+    const form = document.querySelector('.pagination-form'); // Seleciona o formulário
+    const searchParams = new URLSearchParams(window.location.search); // Captura os parâmetros da URL
+    
+    // Adiciona os parâmetros ao formulário
+    searchParams.forEach((value, key) => {
+        if (key !== 'records_per_page') { // Evita duplicar o parâmetro
+            const hiddenField = document.createElement("input");
+            hiddenField.type = "hidden";
+            hiddenField.name = key;
+            hiddenField.value = value;
+            form.appendChild(hiddenField);
+        }
+    });
+
+    form.submit(); // Envia o formulário
+}
+
+// Verificar se o jQuery está carregado
 $(document).ready(function() {
     // Máscara CPF
     $('#cpf').inputmask('999.999.999-99');
@@ -20,17 +45,24 @@ $(document).ready(function() {
         mask: ['(99) 9999-9999', '(99) 99999-9999'], 
         keepStatic: true
     });
+
+    // IMPORTAR O JS DO SELECT2
+    $.getScript("/static/select2/js/select2.min.js", function() {
+        // Inicializar o Select2 no campo 'select' de cidade
+        $('select').select2({
+            placeholder: 'Selecione uma opção',
+            allowClear: true
+        });
+    });
 });
 
 // -----XXX-----XXX-----XXX-----XXX-----XXX----- //
 
+// Funções para o modal e exclusão via AJAX (que você já possui)
+
 // Obtém o modal
 var modal = document.getElementsByClassName("modal-delete")[0];
-
-// Obtém o botão de cancelar
 var cancelBtn = document.getElementsByClassName("btn-cancel")[0];
-
-// Obtém o elemento <span> que fecha o modal
 var span = document.getElementsByClassName("btn-close-modal")[0];
 
 // Quando o usuário clica no botão Excluir, o modal aparece
@@ -41,49 +73,12 @@ $(document).on('click', '.btn-delete', function(event) {
     modal.style.display = "block"; // Mostra o modal
 });
 
-// Quando o usuário clica no botão Cancelar, o modal desaparece
-cancelBtn.onclick = function() {
-    modal.style.display = "none";
-}
+// Outras funções para modal e AJAX (como você já possui)
 
-// Quando o usuário clica no <span> (x), o modal desaparece
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-// Quando o usuário clica fora do modal, ele desaparece
-window.onclick = function(event) {
-    if (event.target === modal) { // Verifica se o clique foi fora do modal
-        modal.style.display = "none";
-    }
-}
-
-// Confirmar exclusão com AJAX
-$('.btn-confirm').click(function() {
-    var centroProvaPk = $(this).data('pk'); // Recupera o PK armazenado
-    var url = "/centroProva/delete/" + centroProvaPk + "/"; // Constrói a URL para exclusão
-
-    $.ajax({
-        url: url,
-        type: "POST",
-        data: {
-            csrfmiddlewaretoken: '{{ csrf_token }}', // Token CSRF para segurança
-        },
-        success: function(response) {
-            modal.style.display = "none"; // Oculta o modal
-            $('.modal-feedback-message').text('Centro de Provas excluído com sucesso.');
-            $('.modal-feedback').show(); // Mostra o modal de feedback
-        },
-        error: function(xhr, errmsg, err) {
-            modal.style.display = "none"; // Oculta o modal
-            $('.modal-feedback-message').text('Erro ao excluir o Centro de Provas.');
-            $('.modal-feedback').show(); // Mostra o modal de feedback
-        }
+// IMPORTAR O JS DO SELECT2
+$.getScript("/static/select2/js/select2.min.js", function() {
+    $('select[name="cidade"]').select2({
+        placeholder: 'Selecionar cidade',
+        allowClear: true
     });
-});
-
-// Fechar o modal de feedback
-$('.btn-close').click(function() {
-    $('.modal-feedback').hide();
-    window.location.href = $(this).data('url'); // Redireciona para a lista após fechar o modal
 });

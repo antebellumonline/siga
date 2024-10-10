@@ -1,6 +1,9 @@
-/* Importação de fontes - pode ser usada diretamente no CSS */
+/* IMPORTAÇÃO DE FONTES */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@400;500;700&display=swap');
 
+
+/* IMPORTAR O CSS DO SELECT2 */
+@import url('/static/select2/css/select2.min.css');
 
 /* Fonte padrão para o corpo do texto */
 body {
