@@ -9,16 +9,20 @@
 <h2 class="page-title">Lista de Centros de Provas</h2>
 <!-- Formulário de busca e filtro -->
 <form method="GET" action="{% url 'centroProva_list' %}" class="search-form">
-    <div>
-        <div>
-            <input type="text" name="q" placeholder="Buscar por nome" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por nome">
+    <div class="form-group-search">
+        <input type="text" name="q" placeholder="Buscar por nome" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por nome">
+        <div class="checkbox-group-search">
+            <input type="checkbox" name="inativo" value="True" {% if request.GET.inativo %}checked{% endif %}>
+            <label>Mostrar somente inativos</label>
         </div>
     </div>
+    <!-- Botões de Ação -->
     <div class="btn-group-search">
         <button type="submit" class="btn-list">Buscar</button>
         <a class="btn-clear" href="{% url 'centroProva_list' %}">Limpar Busca</a>
     </div>
 </form>
+<!-- Grupo de botões (Novo e Retornar) -->
 <div class="btn-group">
     <a class="btn-return" href="{% url 'centroProva_home' %}">Retornar</a>
     <a class="btn-new" href="{% url 'centroProva_new' %}">Novo</a>
