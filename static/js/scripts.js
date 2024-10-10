@@ -77,8 +77,8 @@ $(document).on('click', '.btn-delete', function(event) {
 
 // IMPORTAR O JS DO SELECT2
 $.getScript("/static/select2/js/select2.min.js", function() {
-    $('select[name="cidade"]').select2({
-        placeholder: 'Selecionar cidade',
+    $('#select-cidade').select2({
+        placeholder: 'Filtrar por Cidade',
         allowClear: true
     });
 });

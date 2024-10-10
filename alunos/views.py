@@ -62,6 +62,11 @@ def aluno_list(request):
 
     # Paginação
     records_per_page = request.GET.get('records_per_page', 10)  # Padrão: 10 registros por página
+    try:
+        records_per_page = int(records_per_page) if records_per_page else 10
+    except ValueError:
+        records_per_page = 10
+        
     paginator = Paginator(alunos, records_per_page)  # Cria o paginator
 
     page_number = request.GET.get('page')  # Obtém o número da página atual
