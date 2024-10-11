@@ -30,6 +30,11 @@
         <a class="btn-clear" href="{% url 'aluno_list' %}">Limpar Busca</a>
     </div>
 </form>
+<!-- Grupo de botões (Novo e Retornar) -->
+<div class="btn-group">
+    <a class="btn-return" href="{% url 'aluno_home' %}">Retornar</a>
+    <a class="btn-new" href="{% url 'aluno_new' %}">Novo</a>
+</div>
 <!-- Seletor para escolher quantos registros exibir -->
 <form method="GET" action="{% url 'aluno_list' %}" class="pagination-form">
     <label for="records_per_page">Registros para exibir:</label>

@@ -106,7 +106,8 @@ def exame_new(request):
 
 def exame_list(request):
     # Obtém os filtros
-    periodo = request.GET.get('periodo')  # Obtém o filtro de período (intervalo de datas)
+    data_inicio = request.GET.get('data_inicio') # Data de início do período
+    data_fim = request.GET.get('data_fim') # Data de fim do período
     presenca = request.GET.get('presenca')  # Filtro por Presença
     cancelado = request.GET.get('cancelado')  # Filtro de Exame Cancelado
     aluno = request.GET.get('aluno')  # Filtro de Aluno
@@ -121,17 +122,12 @@ def exame_list(request):
     centroProva_exame = CentroProvaExame.objects.select_related('aluno', 'centroProva', 'certificacao')
 
     # Aplicar os filtros e pesquisa
-    if periodo:
-        datas = periodo.split(" to ")
-        if len(datas) == 2:
-            try:
-                # Converta as strings no formato brasileiro 'dd/mm/yyyy' em objetos datetime
-                data_inicio = datetime.strptime(datas[0], "%d/%m/%Y")
-                data_fim = datetime.strptime(datas[1], "%d/%m/%Y")
-                # Filtre o intervalo de datas
-                centroProva_exame = centroProva_exame.filter(data__range=[data_inicio, data_fim])
-            except ValueError:
-                pass  # Se o formato da data for inválido, ignore o filtro de datas
+    if data_inicio and data_fim:
+        centroProva_exame = centroProva_exame.filter(data__range=[data_inicio, data_fim])  # Filtro de Data para um intervalo
+    elif data_inicio:
+        centroProva_exame = centroProva_exame.filter(data__gte=data_inicio)  # Filtro a partir da data de início
+    elif data_fim:
+        centroProva_exame = centroProva_exame.filter(data__lte=data_fim)  # Filtro até a data de fim
 
     if presenca:
         try:
