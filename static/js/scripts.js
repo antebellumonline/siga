@@ -2,8 +2,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     console.log("Página carregada e scripts prontos para uso!");
 
-    // Outras funcionalidades que você já possui
-
     // Adicionar um evento ao selecionar a quantidade de registros a serem exibidos
     const recordsSelect = document.getElementById('records_per_page');
     if (recordsSelect) {

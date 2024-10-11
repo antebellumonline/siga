@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
-from django.forms import inlineformset_factory
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from datetime import datetime
 from django.urls import reverse
 from .models import CentroProva, CentroProvaExame, Aluno, Certificacao
 from .forms import CentroProvaForm, CentroProvaExameForm
@@ -106,12 +106,11 @@ def exame_new(request):
 
 def exame_list(request):
     # Obtém os filtros
-    data_inicio = request.GET.get('data_inicio')  # Data de início do período
-    data_fim = request.GET.get('data_fim')        # Data de fim do período
-    presenca = request.GET.get('presenca')         # Filtro por Presença
-    cancelado = request.GET.get('cancelado')       # Filtro de Exame Cancelado
-    aluno = request.GET.get('aluno')               # Filtro de Aluno
-    centroProva = request.GET.get('centroProva')   # Filtro de Centro de Provas
+    periodo = request.GET.get('periodo')  # Obtém o filtro de período (intervalo de datas)
+    presenca = request.GET.get('presenca')  # Filtro por Presença
+    cancelado = request.GET.get('cancelado')  # Filtro de Exame Cancelado
+    aluno = request.GET.get('aluno')  # Filtro de Aluno
+    centroProva = request.GET.get('centroProva')  # Filtro de Centro de Provas
     certificacao = request.GET.get('certificacao')  # Filtro de Certificação
 
     # Ordenação
@@ -122,23 +121,38 @@ def exame_list(request):
     centroProva_exame = CentroProvaExame.objects.select_related('aluno', 'centroProva', 'certificacao')
 
     # Aplicar os filtros e pesquisa
-    if data_inicio and data_fim:
-        centroProva_exame = centroProva_exame.filter(data__range=[data_inicio, data_fim])  # Filtro de Data para um intervalo
-    elif data_inicio:
-        centroProva_exame = centroProva_exame.filter(data__gte=data_inicio)  # Filtro a partir da data de início
-    elif data_fim:
-        centroProva_exame = centroProva_exame.filter(data__lte=data_fim)  # Filtro até a data de fim
+    if periodo:
+        datas = periodo.split(" to ")
+        if len(datas) == 2:
+            try:
+                # Converta as strings no formato brasileiro 'dd/mm/yyyy' em objetos datetime
+                data_inicio = datetime.strptime(datas[0], "%d/%m/%Y")
+                data_fim = datetime.strptime(datas[1], "%d/%m/%Y")
+                # Filtre o intervalo de datas
+                centroProva_exame = centroProva_exame.filter(data__range=[data_inicio, data_fim])
+            except ValueError:
+                pass  # Se o formato da data for inválido, ignore o filtro de datas
 
     if presenca:
-        centroProva_exame = centroProva_exame.filter(presenca=presenca)  # Pesquisa Presença
+        try:
+            presenca = bool(int(presenca))  # Presença precisa ser um valor booleano
+            centroProva_exame = centroProva_exame.filter(presenca=presenca)
+        except (ValueError, TypeError):
+            pass  # Valor inválido, ignorar filtro
+
     if cancelado:
-        centroProva_exame = centroProva_exame.filter(cancelado=cancelado)  # Pesquisa Cancelado
+        try:
+            cancelado = bool(int(cancelado))  # Cancelado também como valor booleano
+            centroProva_exame = centroProva_exame.filter(cancelado=cancelado)
+        except (ValueError, TypeError):
+            pass  # Valor inválido, ignorar filtro
+
     if aluno:
-        centroProva_exame = centroProva_exame.filter(aluno__nome=aluno)  # Pesquisa Aluno
+        centroProva_exame = centroProva_exame.filter(aluno__uid=aluno)  # Pesquisa por UID de Aluno
     if centroProva:
-        centroProva_exame = centroProva_exame.filter(centroProva__nome=centroProva)  # Pesquisa Centro de Prova
+        centroProva_exame = centroProva_exame.filter(centroProva__id=centroProva)  # Pesquisa por Centro de Prova
     if certificacao:
-        centroProva_exame = centroProva_exame.filter(certificacao__nome=certificacao)  # Pesquisa Certificação
+        centroProva_exame = centroProva_exame.filter(certificacao__id=certificacao)  # Pesquisa por Certificação
 
     # Aplicar ordenação
     if descending:
@@ -154,10 +168,12 @@ def exame_list(request):
 
     paginator = Paginator(centroProva_exame, records_per_page)  # Cria o paginator
     page_number = request.GET.get('page')  # Obtém o número da página atual
-    centroProva_exame_page = paginator.get_page(page_number)  # Pega a página solicitada
+    try:
+        centroProva_exame_page = paginator.get_page(page_number)  # Pega a página solicitada
+    except (ValueError, TypeError):
+        centroProva_exame_page = paginator.get_page(1)  # Volta para a primeira página em caso de erro
 
-    # Buscar e ordenar
-    centroProva_exame = CentroProvaExame.objects.select_related('aluno', 'centro_prova', 'certificacao')
+    # Buscar e ordenar opções de seleção
     alunos = Aluno.objects.order_by('nome')
     centrosProva = CentroProva.objects.order_by('nome')
     certificacoes = Certificacao.objects.order_by('descricao')

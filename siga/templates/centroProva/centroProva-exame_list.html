@@ -11,13 +11,7 @@
 <form method="GET" action="{% url 'exame_list' %}" class="search-form">
     <div class="form-group-search">
         <input type="text" name="aluno" placeholder="Buscar por aluno" value="{{ request.GET.aluno }}" aria-label="Buscar por aluno">
-        <!-- Campo para Data de Início -->
-        <label for="data_inicio">Data de Início:</label>
-        <input type="date" name="data_inicio" value="{{ request.GET.data_inicio }}" aria-label="Buscar por data de início">
-
-        <!-- Campo para Data de Fim -->
-        <label for="data_fim">Data de Fim:</label>
-        <input type="date" name="data_fim" value="{{ request.GET.data_fim }}" aria-label="Buscar por data de fim">
+        <input type="text" id="periodo" name="periodo" placeholder="Selecionar Período" value="{{ request.GET.periodo }}" aria-label="Buscar por período">
         <select name="centroProva" id="select-centroProva" class="select-search">
             <option value="">Selecionar Centro de Prova</option>
             {% for centroProva in centroProva %}
