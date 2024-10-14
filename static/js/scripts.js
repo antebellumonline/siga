@@ -76,7 +76,7 @@ $(document).on('click', '.btn-delete', function(event) {
 // IMPORTAR O JS DO SELECT2
 $.getScript("/static/select2/js/select2.min.js", function() {
     $('#select-cidade').select2({
-        placeholder: 'Filtrar por Cidade',
+        placeholder: 'Selecione a Cidade / UF',
         allowClear: true
     });
 });

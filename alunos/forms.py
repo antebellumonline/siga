@@ -6,7 +6,7 @@ Ele define os formulários para cadastro, edição e outras operações relacion
 """
 
 from django import forms
-from .models import Aluno
+from .models import Aluno, AlunoContato
 
 class AlunoForm(forms.ModelForm):
     """
@@ -39,4 +39,17 @@ class AlunoForm(forms.ModelForm):
             'cep': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'CEP'}),
             'observacao': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
             'inativo': forms.CheckboxInput()
+        }
+
+class AlunoContatoForm(forms.ModelForm):
+    class Meta:
+        model = AlunoContato
+        fields = [
+            'tipoContato',
+            'contato',
+            'detalhe']
+        widgets = {
+            'tipoContato': forms.Select(attrs={'class': 'form-control'}),
+            'contato': forms.TextInput(attrs={'class': 'form-control'}),
+            'detalhe': forms.Textarea(attrs={'class': 'form-control'}),
         }

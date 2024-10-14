@@ -540,22 +540,10 @@ h2 {
     font-family: 'Montserrat', sans-serif;
 }
 
-.form-group-search input[type="text"] {
-    width: 60%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
 .checkbox-group-search {
     display: flex;
     align-items: center;
     width: 20%;
-}
-
-.checkbox-group-search input[type="checkbox"] {
-    margin-right: 0.5rem;
 }
 
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
@@ -596,7 +584,7 @@ h2 {
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
 
 
-/* Flexbox para campos lado a lado */
+/* PÁGINA DE EDIÇÃO / ALTERAÇÃO DE REGISTROS */
 .form-group-edit {
     display: flex;
     flex-wrap: wrap;
@@ -604,57 +592,80 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* Nome com 70%, CPF com 30% */
-.field-nome {
-    flex: 0 0 70%; /* 70% de largura */
-}
-
-.field-cpf {
-    flex: 0 0 30%; /* 30% de largura */
-}
-
-/* Campos dentro de form-group-edit-sub com flexbox */
 .form-group-edit-sub {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    padding: 0 15px 0 0;
-    border: 2px solid #40080b; /* Bordas na cor desejada */
+    padding: 0;
+    border: 2px solid #40080b;
     margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Estilos do título h4 exclusivo */
 .sub-section-title {
-    background-color: #40080b; /* Fundo com a cor #40080b */
-    color: white;              /* Texto branco para contraste */
+    background-color: #40080b;
+    color: white;
     padding: 10px;
     width: 100%;
     margin: 0;
+    box-sizing: border-box;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
 }
 
-/* Form-group-edit-sub, mesma lógica de largura flexível */
 .form-group-edit-sub div {
     flex: 1 1 calc(50% - 10px); /* Cada campo com 50% de largura, mas pode quebrar se ultrapassar */
 }
 
+/* CAMPOS DE ENTRADA */
+.form-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 1 1 calc(50% - 20px);
+    padding: 5px;
+    box-sizing: border-box;
+}
 
+.form-input label {
+    color: #3d3d3d;
+    margin-right: 10px;
+    flex: 0 0 auto;
+}
 
+.form-input input,
+.form-input select {
+    flex: 1 1 auto;
+    width: 100%;
+}
 
+.form-input-full {
+    display: block;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
 
+input[type="text"],
+select {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #a3a3a2;
+    border-radius: 4px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+input[type="text"]:focus, 
+select:focus {
+    border-color: #800f17;
+    box-shadow: 0 0 5px rgba(64, 8, 11, 0.5);
+    outline: none;
+}
 
 /* RODAPÉ DO SITE */
 footer {

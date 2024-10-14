@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
-from django.forms import inlineformset_factory
+from django.forms import inlineformset_factory, modelformset_factory
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from .models import Aluno, AlunoContato
@@ -30,7 +30,12 @@ def login_view(request):
     return render(request, 'login.html', {'form': form})
 
 # Defina o formset para AlunoContato
-AlunoContatoFormSet = inlineformset_factory(Aluno, AlunoContato, fields=('tipoContato', 'contato'), extra=1, can_delete=True)
+AlunoContatoFormSet = inlineformset_factory(
+    Aluno,
+    AlunoContato, 
+    fields=('tipoContato', 'contato', 'detalhe'), 
+    extra=1, 
+    can_delete=True)
 
 def aluno_home(request):
     return render(request, 'alunos/aluno_home.html')
@@ -86,6 +91,7 @@ def aluno_detail(request, pk):
     return render(request, 'alunos/aluno_detail.html', {'aluno': aluno, 'contatos': contatos})
 
 def aluno_new(request):
+    cidades = Cidade.objects.select_related('estado').order_by('nome')  # Ordenar por nome
     if request.method == "POST":
         form = AlunoForm(request.POST)
         formset = AlunoContatoFormSet(request.POST)
@@ -97,10 +103,11 @@ def aluno_new(request):
     else:
         form = AlunoForm()
         formset = AlunoContatoFormSet()
-    return render(request, 'alunos/aluno_form.html', {'form': form, 'formset': formset})
+    return render(request, 'alunos/aluno_form.html', {'form': form, 'formset': formset, 'cidades': cidades})
 
 def aluno_update(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)
+    cidades = Cidade.objects.select_related('estado').order_by('nome')  # Ordenar por nome
     if request.method == "POST":
         form = AlunoForm(request.POST, instance=aluno)
         formset = AlunoContatoFormSet(request.POST, instance=aluno)
@@ -111,7 +118,7 @@ def aluno_update(request, pk):
     else:
         form = AlunoForm(instance=aluno)
         formset = AlunoContatoFormSet(instance=aluno)
-    return render(request, 'alunos/aluno_form.html', {'form': form, 'formset': formset})
+    return render(request, 'alunos/aluno_form.html', {'form': form, 'formset': formset, 'cidades': cidades})
 
 def aluno_delete(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)

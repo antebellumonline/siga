@@ -12,11 +12,11 @@
     <div class="form-group-edit">
         <div class="form-group-edit-sub">
             <h4 class="sub-section-title">Dados Cadastrais</h4>
-            <div>
+            <div class="form-input">
                 <label for="id_nome"><strong>Nome: </strong></label>
                 {{ form.nome }}
             </div>
-            <div>
+            <div class="form-input">
                 <label for="id_cpf"><strong>CPF: </strong></label>
                 {{ form.cpf }}
             </div>
@@ -24,48 +24,64 @@
 
         <div class="form-group-edit-sub">
             <h4 class="sub-section-title">Endereço</h4>
-            <div>
+            <div class="form-input">
                 <label for="id_cep"><strong>CEP: </strong></label>
                 {{ form.cep }}
             </div>
-            <div>
+            <div class="form-input">
                 <label for="id_logradouro"><strong>Logradouro: </strong></label>
                 {{ form.endereco }}
             </div>
-            <div>
+            <div class="form-input">
                 <label for="id_numero"><strong>Nº: </strong></label>
                 {{ form.numero }}
             </div>
-            <div>
+            <div class="form-input">
                 <label for="id_complemento"><strong>Complemento: </strong></label>
                 {{ form.complemento }}
             </div>
-            <div>
+            <div class="form-input">
                 <label for="id_bairro"><strong>Bairro: </strong></label>
                 {{ form.bairro }}
             </div>
-            <div>
+            <div class="form-input">
                 <label for="id_cidade"><strong>Cidade / UF: </strong></label>
-                {{ form.cidade }}
+                <select name="cidade" id="select-cidade" class="select-edit">
+                    <option value="">Selecionar cidade</option>
+                    {% for cidade in cidades %}
+                    <option value="{{ cidade.id }}" {% if form.cidade.value == cidade.id %}selected{% endif %}>
+                        {{ cidade.nome }} - {{ cidade.estado.uf }}
+                    </option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
         <!-- Contatos -->
         <div class="form-group-edit-sub">
             <h4 class="sub-section-title">Contatos</h4>
             {{ formset.management_form }}
-            <div id="contato-formset">
-                {% for form in formset %}
-                    <div class="formset-row">
-                        {{ form.as_p }}
-                    </div>
-                {% endfor %}
-            </div>
-            <button type="button" id="add-contact">Adicionar outro contato</button>
-        </div>
-    </div>
-
+            {% for form in formset %}
+                <div class="form-input">
+                    <label for="{{ form.tipoContato.id_for_label }}"><strong>Tipo de Contato:</strong></label>
+                    {{ form.tipoContato }}
+                </div>
+                <div class="form-input">
+                    <label for="{{ form.contato.id_for_label }}"><strong>Contato:</strong></label>
+                    {{ form.contato }}
+                </div>
+                <div class="form-input-full">
+                    <label for="{{ form.contato.id_for_label }}"><strong>Detalhe:</strong></label>
+                    {{ form.detalhe }}
+                </div>
+                <div class="form-input">
+                    <input type="hidden" name="{{ form.DELETE.name }}" id="{{ form.DELETE.id_for_label }}" value="0">
+                    <button type="button" class="btn-delete" onclick="this.previousElementSibling.value='1'; this.closest('.form-input').style.display='none';">Excluir Contato</button>
+                </div>
+        {% endfor %}
+        </div>        
     <!-- Grupo de botões (Salvar e Retornar) -->
     <div class="btn-group">
+        <button type="button" class="btn-new">Adicionar outro contato</button>
         <button class="btn-save" type="submit">Salvar Aluno</button>
         <a class="btn-return" href="{% url 'aluno_home' %}">Retornar</a>
     </div>
