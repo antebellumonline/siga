@@ -7,130 +7,68 @@
 {% block content %}
 <h2 class="page-title">{{ form.instance.pk|yesno:"Editar Aluno,Adicionar Aluno" }}</h2>
 
-<form method="post">
+<form method="post" class="edit-form">
     {% csrf_token %}
-    
-    <!-- Campo Nome -->
-    <div>
-        <label for="id_nome">Nome:</label>
-        {{ form.nome }}
-    </div>
-    
-    <!-- Campo CPF com máscara -->
-    <div>
-        <label for="id_cpf">CPF:</label>
-        {{ form.cpf }}
-    </div>
-    
-    <!-- Campos de endereço -->
-    <div>
-        <label for="id_cep">CEP:</label>
-        {{ form.cep }}
-    </div>
-    <div>
-        <label for="id_logradouro">Logradouro:</label>
-        {{ form.endereco }}
-    </div>
-
-    <!-- Campo Número -->
-    <div>
-        <label for="id_numero">Número:</label>
-        {{ form.numero }}
-    </div>
-
-    <!-- Campo Bairro -->
-    <div>
-        <label for="id_bairro">Bairro:</label>
-        {{ form.bairro }}
-    </div>
-    <div>
-        <label for="id_cidade">Cidade:</label>
-        {{ form.cidade }}
-    </div>
-
-    <!-- Contatos -->
-    <h3>Contatos</h3>
-    {{ formset.management_form }}
-    <div id="contato-formset">
-        {% for form in formset %}
-            <div class="formset-row">
-                {{ form.as_p }}
+    <div class="form-group-edit">
+        <div class="form-group-edit-sub">
+            <h4 class="sub-section-title">Dados Cadastrais</h4>
+            <div>
+                <label for="id_nome"><strong>Nome: </strong></label>
+                {{ form.nome }}
             </div>
-        {% endfor %}
+            <div>
+                <label for="id_cpf"><strong>CPF: </strong></label>
+                {{ form.cpf }}
+            </div>
+        </div>
+
+        <div class="form-group-edit-sub">
+            <h4 class="sub-section-title">Endereço</h4>
+            <div>
+                <label for="id_cep"><strong>CEP: </strong></label>
+                {{ form.cep }}
+            </div>
+            <div>
+                <label for="id_logradouro"><strong>Logradouro: </strong></label>
+                {{ form.endereco }}
+            </div>
+            <div>
+                <label for="id_numero"><strong>Nº: </strong></label>
+                {{ form.numero }}
+            </div>
+            <div>
+                <label for="id_complemento"><strong>Complemento: </strong></label>
+                {{ form.complemento }}
+            </div>
+            <div>
+                <label for="id_bairro"><strong>Bairro: </strong></label>
+                {{ form.bairro }}
+            </div>
+            <div>
+                <label for="id_cidade"><strong>Cidade / UF: </strong></label>
+                {{ form.cidade }}
+            </div>
+        </div>
+        <!-- Contatos -->
+        <div class="form-group-edit-sub">
+            <h4 class="sub-section-title">Contatos</h4>
+            {{ formset.management_form }}
+            <div id="contato-formset">
+                {% for form in formset %}
+                    <div class="formset-row">
+                        {{ form.as_p }}
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="button" id="add-contact">Adicionar outro contato</button>
+        </div>
     </div>
 
-    <!-- Botão Adicionar Contato -->
-    <button type="button" id="add-contact">Adicionar outro contato</button>
-
-    <button type="submit">Salvar</button>
+    <!-- Grupo de botões (Salvar e Retornar) -->
+    <div class="btn-group">
+        <button class="btn-save" type="submit">Salvar Aluno</button>
+        <a class="btn-return" href="{% url 'aluno_home' %}">Retornar</a>
+    </div>
 </form>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const cepInput = document.querySelector('#id_cep');
-        const logradouroInput = document.querySelector('#id_logradouro');
-        const numeroInput = document.querySelector('#id_numero');
-        const bairroInput = document.querySelector('#id_bairro');
-        const cidadeInput = document.querySelector('#id_cidade');
-        const cpfInput = document.querySelector('#id_cpf');
-        const addContactBtn = document.getElementById('add-contact');
-        const contatoFormsetDiv = document.getElementById('contato-formset');
-        let formCount = {{ formset.total_form_count }};  // Quantidade atual de formulários
-
-        // Buscar cidade pelo código IBGE
-        function fetchCidadePorCodigoIBGE(codigo_ibge) {
-            fetch(`/cidades/por-codigo-ibge/${codigo_ibge}/`)
-                .then(response => response.json())
-                .then(data => {
-                    cidadeInput.value = data.cidade_id;
-                });
-        }
-
-        // Evento ao sair do campo CEP
-        cepInput.addEventListener('blur', function() {
-            const cep = this.value.replace(/\D/g, '');  // Remove caracteres não numéricos
-            if (cep.length === 8) {
-                fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.erro) {
-                            logradouroInput.value = data.logradouro;
-                            bairroInput.value = data.bairro;
-                            const codigo_ibge = data.ibge;
-                            fetchCidadePorCodigoIBGE(codigo_ibge);
-                        } else {
-                            alert('CEP não encontrado.');
-                        }
-                    });
-            } else {
-                alert('Formato de CEP inválido.');
-            }
-        });
-
-        // Adicionar novo formulário de contato
-        addContactBtn.addEventListener('click', function() {
-            const newForm = contatoFormsetDiv.children[0].cloneNode(true);
-            const totalFormsInput = document.querySelector('#id_form-TOTAL_FORMS');
-
-            formCount++;
-            newForm.innerHTML = newForm.innerHTML.replace(/form-(\d)-/g, `form-${formCount}-`);
-            contatoFormsetDiv.appendChild(newForm);
-            totalFormsInput.value = formCount;  // Atualiza a contagem total de formulários
-        });
-
-        // Aplicar máscara ao CPF
-        cpfInput.addEventListener('input', function() {
-            let value = cpfInput.value.replace(/\D/g, '');  // Remove tudo que não for dígito
-            if (value.length > 11) value = value.slice(0, 11);  // Limita a 11 dígitos
-
-            // Formato CPF: XXX.XXX.XXX-XX
-            value = value.replace(/(\d{3})(\d)/, '$1.$2');
-            value = value.replace(/(\d{3})(\d)/, '$1.$2');
-            value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-
-            cpfInput.value = value;
-        });
-    });
-</script>
 
 {% endblock %}
