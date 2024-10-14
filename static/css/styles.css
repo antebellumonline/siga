@@ -5,6 +5,73 @@
 /* IMPORTAR O CSS DO SELECT2 */
 @import url('/static/select2/css/select2.min.css');
 
+/* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
+
+/* PÁGINA DE LOGIN */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-box {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.login-form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.login-form-group label {
+    display: block;
+    color: #666;
+    margin-bottom: 5px;
+    font-family: 'Montserrat', sans-serif; /* Montserrat para os rótulos */
+}
+
+.login-form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif; /* Montserrat para os campos de input */
+}
+
+.login-page .btn {
+    background-color: #be1622;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-page .btn:hover {
+    background-color: #a1141d;
+}
+
+.login-image {
+    margin-bottom: 20px;
+}
+
+.login-image img {
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
+
 /* Fonte padrão para o corpo do texto */
 body {
     font-family: 'Montserrat', sans-serif; /* Fonte Montserrat para o corpo */
@@ -178,82 +245,12 @@ h2 {
     text-decoration: underline;
 }
 
-/* Estilos específicos para a tela de login */
-.login-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+/* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
 
-.login-box {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.form-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.form-group label {
-    display: block;
-    color: #666;
-    margin-bottom: 5px;
-    font-family: 'Montserrat', sans-serif; /* Montserrat para os rótulos */
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-family: 'Montserrat', sans-serif; /* Montserrat para os campos de input */
-}
-
-.login-page .btn {
-    background-color: #be1622;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.login-page .btn:hover {
-    background-color: #a1141d;
-}
-
-/* Estilos para o login image */
-.login-image {
-    margin-bottom: 20px;
-}
-
-.login-image img {
-    max-width: 300px;
-    height: auto;
-    border-radius: 8px;
-}
-
-/* Padronização dos títulos e subtítulos das páginas */
+/* TÍTULOS E SUBTÍTULOS DAS PÁGINAS */
 .page-title {
     text-align: center;
     color: #40080b;
-}
-
-/* Centraliza os botões em uma nova linha */
-.btn-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px; /* Espaço entre os botões */
-    margin-top: 10px; /* Margem para separar dos campos de pesquisa */
 }
 
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
@@ -293,6 +290,13 @@ h2 {
     justify-content: flex-end;
     margin-top: 1rem;
     gap: 10px;
+}
+
+.btn-group-center { /* Grupos de Botões Centralizados */
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espaço entre os botões */
+    margin-top: 10px; /* Margem para separar dos campos de pesquisa */
 }
 
 .btn-new,

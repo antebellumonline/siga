@@ -33,13 +33,15 @@ def login_view(request):
 AlunoContatoFormSet = inlineformset_factory(
     Aluno,
     AlunoContato, 
-    fields=('tipoContato', 'contato', 'detalhe'), 
+    fields=('tipoContato', 'contato', 'detalhe'),
     extra=1, 
     can_delete=True)
 
+# Página Inicial de Alunos
 def aluno_home(request):
     return render(request, 'alunos/aluno_home.html')
 
+# Listar Alunos
 def aluno_list(request):
     query = request.GET.get('q')  # Obtém o termo de busca da URL
     inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)

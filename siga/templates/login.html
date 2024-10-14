@@ -19,11 +19,11 @@
             <h2>Acesso ao SIGA</h2>
             <form method="post">
                 {% csrf_token %}
-                <div class="form-group">
+                <div class="login-form-group">
                     <label for="{{ form.username.id_for_label }}">Nome de usuário / E-mail:</label>
                     {{ form.username }}
                 </div>
-                <div class="form-group">
+                <div class="login-form-group">
                     <label for="{{ form.password.id_for_label }}">Senha:</label>
                     {{ form.password }}
                 </div>

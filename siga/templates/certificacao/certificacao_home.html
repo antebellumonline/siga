@@ -1,36 +1,31 @@
+<!-- templates/certificacao/certificacao_home.html -->
+
 {% extends 'base.html' %}
 
+{% block title %}SIGA - Gestão de Certificações e Certificadores{% endblock %}
+
 {% block content %}
-<h2>Certificações</h2>
+<h2 class="page-title">Gestão de Certificações e Certificadores</h2>
 
-<div>
-    <a href="{% url 'certificacao_create' %}">
-        <button type="button">Novo</button>
-    </a>
-    
-    <a href="{% url 'certificacao_list' %}">
-        <button type="button">Localizar</button>
-    </a>
-    
-    <a href="#">
-        <button type="button">Relatórios</button>
-    </a>
-</div>
-
-<h2>Certificadores</h2>
-
-<div>
-    <a href="{% url 'certificador_create' %}">
-        <button type="button">Novo</button>
-    </a>
-    
-    <a href="{% url 'certificador_list' %}">
-        <button type="button">Localizar</button>
-    </a>
-    
-    <a href="#">
-        <button type="button">Relatórios</button>
-    </a>
+<div class="column-container">
+    <div class="row">
+        <div class="column">
+            <h3 class="page-title">Certificadores</h3>
+            <div class="btn-group-center">
+                <a href="{% url 'certificador_new' %}" class="btn-new" aria-label="Criar novo Certificador">Novo</a>
+                <a href="{% url 'certificador_list' %}" class="btn-list" aria-label="Localizar Certificador">Localizar</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <h3 class="page-title">Certificações</h3>
+            <div class="btn-group-center">
+                <a href="{% url 'certificacao_new' %}" class="btn-new" aria-label="Criar nova Certificação">Novo</a>
+                <a href="{% url 'certificacao_list' %}" class="btn-list" aria-label="Localizar Certificação">Localizar</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

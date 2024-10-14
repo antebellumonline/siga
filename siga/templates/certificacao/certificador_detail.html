@@ -1,29 +1,27 @@
-<!-- templates/centroProva/centroProva_detail.html -->
-
 {% extends 'base.html' %}
 
-{% block title %}SIGA - Detalhes do Centro de Provas{% endblock %}
+{% block title %}SIGA - Detalhes do Aluno{% endblock %}
 
 {% block content %}
 
-<h2 class="page-title">Detalhes do Centro de Provas</h2>
+<h2 class="page-title">Detalhes do Certificador</h2>
 
-<p><strong>ID:</strong> {{ centroProva.id }}</p>
-<p><strong>Nome:</strong> {{ centroProva.nome }}</p>
-<p><strong>Inativo:</strong> {{ centroProva.inativo }}</p>
+<p><strong>ID:</strong> {{ certificador.id }}</p>
+<p><strong>Nome:</strong> {{ certificador.descricao }}</p>
+<p><strong>Sigle:</strong> {{ certificador.siglaCertificador }}</p>
+<p><strong>Inativo:</strong> {{ certificador.inativo }}</p>
 <!-- Grupo de botões (Editar, Excluir e Retornar) -->
 <div class="btn-group">
-    <a class="btn-edit" href="{% url 'centroProva_edit' centroProva.pk %}">Editar</a>
-    <a class="btn-delete" id="btn-delete" data-pk="{{ centroProva.pk }}" href="#">Excluir</a>
-    <a class="btn-return" href="{% url 'centroProva_list' %}">Retornar</a>
+    <a class="btn-edit" href="{% url 'certificador_edit' certificador.pk %}">Editar</a>
+    <a class="btn-delete" id="btn-delete" data-pk="{{ certificador.pk }}" href="#">Excluir</a>
+    <a class="btn-return" href="{% url 'certificador_list' %}">Retornar</a>
 </div>
-
 <!-- Modal de Confirmação -->
 <div class="modal-delete" style="display:none;">
     <div class="modal-content">
         <span class="btn-close-modal">&times;</span>
         <h2>Confirmar Exclusão</h2>
-        <p>Tem certeza que deseja excluir o Centro de Provas <strong>{{ centroProva.nome }}</strong>?</p>
+        <p>Tem certeza que deseja excluir o Certificador <strong>{{ certificador.descricao }}</strong>?</p>
         <div class="btn-group-modal">
             <button type="button" class="btn-confirm">Confirmar</button>
             <button type="button" class="btn-cancel">Cancelar</button>
