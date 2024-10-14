@@ -480,6 +480,7 @@ h2 {
     border-left: 0px;
     border-right: 0px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 0;
 }
 
 .tb-list th, .tb-list td {
@@ -595,7 +596,6 @@ h2 {
 .form-group-edit-sub {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
     padding: 0;
     border: 2px solid #40080b;
     margin-bottom: 20px;
@@ -605,7 +605,7 @@ h2 {
 
 .sub-section-title {
     background-color: #40080b;
-    color: white;
+    color: #ffffff;
     padding: 10px;
     width: 100%;
     margin: 0;
@@ -665,6 +665,25 @@ select:focus {
     border-color: #800f17;
     box-shadow: 0 0 5px rgba(64, 8, 11, 0.5);
     outline: none;
+}
+
+.form-input textarea {
+    height: 50px; /* Ajuste a altura conforme necessário */
+    width: 100%; /* Ocupa 100% da div pai */
+    border: 1px solid #a3a3a2; /* Mantendo o estilo padrão */
+    border-radius: 4px;
+    background-color: #ffffff;
+    padding: 10px; /* Para dar algum espaço interno */
+    box-sizing: border-box; /* Para garantir que o padding seja considerado na largura */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.contact-separator {
+    border: none; /* Remove a borda padrão */
+    height: 1px; /* Define a altura da linha */
+    background-color: #40080b; /* Define a cor da linha */
+    margin: 10px 0; /* Espaçamento acima e abaixo da linha */
+    width: 100%; /* Garante que a linha ocupe toda a largura */
 }
 
 /* RODAPÉ DO SITE */

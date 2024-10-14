@@ -60,28 +60,39 @@
         <div class="form-group-edit-sub">
             <h4 class="sub-section-title">Contatos</h4>
             {{ formset.management_form }}
-            {% for form in formset %}
-                <div class="form-input">
-                    <label for="{{ form.tipoContato.id_for_label }}"><strong>Tipo de Contato:</strong></label>
-                    {{ form.tipoContato }}
-                </div>
-                <div class="form-input">
-                    <label for="{{ form.contato.id_for_label }}"><strong>Contato:</strong></label>
-                    {{ form.contato }}
-                </div>
-                <div class="form-input-full">
-                    <label for="{{ form.contato.id_for_label }}"><strong>Detalhe:</strong></label>
-                    {{ form.detalhe }}
-                </div>
-                <div class="form-input">
-                    <input type="hidden" name="{{ form.DELETE.name }}" id="{{ form.DELETE.id_for_label }}" value="0">
-                    <button type="button" class="btn-delete" onclick="this.previousElementSibling.value='1'; this.closest('.form-input').style.display='none';">Excluir Contato</button>
-                </div>
-        {% endfor %}
-        </div>        
+            <table class="tb-list">
+                <thead>
+                    <tr>
+                        <th>Tipo de Contato</th>
+                        <th>Contato</th>
+                        <th>Detalhe</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for form in formset %}
+                        <tr>
+                            <td>
+                                {{ form.tipoContato }}
+                            </td>
+                            <td>
+                                {{ form.contato }}
+                            </td>
+                            <td>
+                                <input type="text" name="{{ form.detalhe.name }}" id="{{ form.detalhe.id_for_label }}" value="{{ form.detalhe.value }}" class="input-detalhe">
+                            </td>
+                            <td>
+                                <input type="hidden" name="{{ form.DELETE.name }}" id="{{ form.DELETE.id_for_label }}" value="0">
+                                <button type="button" class="btn-delete" onclick="this.previousElementSibling.value='1'; this.closest('tr').style.display='none';">Excluir</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
     <!-- Grupo de botões (Salvar e Retornar) -->
     <div class="btn-group">
-        <button type="button" class="btn-new">Adicionar outro contato</button>
         <button class="btn-save" type="submit">Salvar Aluno</button>
         <a class="btn-return" href="{% url 'aluno_home' %}">Retornar</a>
     </div>
