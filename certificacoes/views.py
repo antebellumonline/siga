@@ -2,7 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from django.http import JsonResponse
 from django.contrib import messages
+from django.db.models import Q
 from django.core.paginator import Paginator
 from .models import Certificacao, Certificador
 from .forms import CertificacaoForm, CertificadorForm  # Certifique-se de criar esses formulários
@@ -46,7 +48,7 @@ def certificador_list(request):
     # Aplicar os filtros e pesquisa
     if query:
         certificador = certificador.filter(
-            Q(descricao__icontains=query) | Q(sigla__icontains=query)
+            Q(descricao__icontains=query) | Q(siglaCertificador__icontains=query)
         ) # Pesquisa por descrição ou sigla (parcial)
     if inativo:
         # Converte o valor de 'inativo' para booleano
@@ -89,7 +91,7 @@ def certificador_new(request):
     return render(request, 'certificacao/certificador_form.html', {'form': form})
 
 # Atualizar Certificador
-def certificador_update(request, pk):
+def certificador_edit(request, pk):
     certificador = get_object_or_404(Certificador, pk=pk)
     if request.method == "POST":
         form = CertificadorForm(request.POST, instance=certificador)
@@ -100,13 +102,14 @@ def certificador_update(request, pk):
         form = CertificadorForm(instance=certificador)
     return render(request, 'certificacao/certificador_form.html', {'form': form})
 
-# Excluir Certificador
 def certificador_delete(request, pk):
     certificador = get_object_or_404(Certificador, pk=pk)
     if request.method == "POST":
         certificador.delete()
-        return redirect('certificador_list')
-    return render(request, 'certificacao/certificador_confirm_delete.html', {'certificador': certificador})
+        return JsonResponse({'success': True})  # Retorna um JSON de sucesso para a requisição AJAX
+    else:
+        # Para requisições GET, renderiza a página de confirmação
+        return render(request, 'certificacao/certificador_confirm_delete.html', {'certificador': certificador})
 
 # Listar Certificações
 def certificacao_list(request):

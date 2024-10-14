@@ -49,7 +49,7 @@
         <tr>
             <td>{{ centro.id }}</td>
             <td><a href="{% url 'centroProva_detail' centro.pk %}">{{ centro.nome }}</a></td>
-            <td>{{ centro.inativo|yesno:"Inativo,Ativo" }}</td>
+            <td>{{ centro.inativo|yesno:"Sim,Não" }}</td>
         </tr>
         {% empty %}
         <tr>

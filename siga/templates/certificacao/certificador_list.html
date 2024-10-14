@@ -85,7 +85,7 @@
             <td>{{ certificador.id }}</td>
             <td><a href="{% url 'certificador_detail' certificador.pk %}">{{ certificador.descricao }}</a></td>
             <td>{{ certificador.siglaCertificador }}</td>
-            <td>{{ certificador.inativo|yesno:"Inativo,Ativo" }}</td>
+            <td>{{ certificador.inativo|yesno:"Sim,Não" }}</td>
         </tr>
         {% endfor %}
     </tbody>

@@ -8,12 +8,12 @@
 
 <p><strong>ID:</strong> {{ certificador.id }}</p>
 <p><strong>Nome:</strong> {{ certificador.descricao }}</p>
-<p><strong>Sigle:</strong> {{ certificador.siglaCertificador }}</p>
-<p><strong>Inativo:</strong> {{ certificador.inativo }}</p>
+<p><strong>Sigla:</strong> {{ certificador.siglaCertificador }}</p>
+<p><strong>Inativo:</strong> {{ certificador.inativo|yesno:"Sim,Não" }}</p>
 <!-- Grupo de botões (Editar, Excluir e Retornar) -->
 <div class="btn-group">
     <a class="btn-edit" href="{% url 'certificador_edit' certificador.pk %}">Editar</a>
-    <a class="btn-delete" id="btn-delete" data-pk="{{ certificador.pk }}" href="#">Excluir</a>
+    <a class="btn-delete" data-pk="{{ certificador.pk }}" data-model="Certificador" href="#">Excluir</a>
     <a class="btn-return" href="{% url 'certificador_list' %}">Retornar</a>
 </div>
 <!-- Modal de Confirmação -->
@@ -33,7 +33,7 @@
 <div class="modal-feedback" style="display:none;">
     <div class="modal-content">
         <p class="modal-feedback-message"></p>
-        <button type="button" class="btn-close" data-url="{% url 'centroProva_list' %}">Fechar</button>
+        <button type="button" class="btn-close" data-url="{% url 'certificador_list' %}">Fechar</button>
     </div>
 </div>
 

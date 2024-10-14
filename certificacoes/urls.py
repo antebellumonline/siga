@@ -9,8 +9,8 @@ urlpatterns = [
     # URLS Certificadores
     path('certificador/list/', views.certificador_list, name='certificador_list'),
     path('certificador/<int:pk>/', views.certificador_detail, name='certificador_detail'),
+    path('certificador/<int:pk>/edit/', views.certificador_edit, name='certificador_edit'),
     path('certificador/new/', views.certificador_new, name='certificador_new'),
-    path('certificador/<int:pk>/update/', views.certificador_update, name='certificador_update'),
     path('certificador/<int:pk>/delete/', views.certificador_delete, name='certificador_delete'),
     
     # URLS Certificações

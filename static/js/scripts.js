@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     console.log("Página carregada e scripts prontos para uso!");
 
-    // Adicionar um evento ao selecionar a quantidade de registros a serem exibidos
+    // Adicionar evento ao selecionar a quantidade de registros a serem exibidos
     const recordsSelect = document.getElementById('records_per_page');
     if (recordsSelect) {
         recordsSelect.addEventListener('change', function() {
@@ -56,22 +56,101 @@ $(document).ready(function() {
 
 // -----XXX-----XXX-----XXX-----XXX-----XXX----- //
 
-// Funções para o modal e exclusão via AJAX (que você já possui)
+// Funções para os modais e exclusão via AJAX
 
-// Obtém o modal
-var modal = document.getElementsByClassName("modal-delete")[0];
+// Obtém os modais
+var modalDelete = document.getElementsByClassName("modal-delete")[0];
+var modalFeedback = document.getElementsByClassName("modal-feedback")[0];
 var cancelBtn = document.getElementsByClassName("btn-cancel")[0];
-var span = document.getElementsByClassName("btn-close-modal")[0];
+var spanDelete = document.getElementsByClassName("btn-close-modal")[0];
 
-// Quando o usuário clica no botão Excluir, o modal aparece
+// Quando o usuário clica no botão Excluir, o modal de confirmação aparece
 $(document).on('click', '.btn-delete', function(event) {
     event.preventDefault(); // Impede o link de redirecionar
-    var centroProvaPk = $(this).data('pk'); // Obtém o PK do centro de provas
-    $('.btn-confirm').data('pk', centroProvaPk); // Armazena o PK no botão de confirmação
-    modal.style.display = "block"; // Mostra o modal
+    var itemPk = $(this).data('pk'); // Obtém o PK do item a ser excluído
+    var modelName = $(this).data('model'); // Obtém o nome do modelo a ser excluído
+    var deleteUrl = '/delete/' + modelName + '/' + itemPk + '/'; // Cria a URL de exclusão com base no modelo e PK
+
+    console.log("PK:", itemPk, "Modelo:", modelName, "URL:", deleteUrl); // Adiciona um log para depuração
+    $('.btn-confirm').data('pk', itemPk); // Armazena o PK no botão de confirmação
+    $('.btn-confirm').data('url', deleteUrl); // Armazena a URL de exclusão no botão de confirmação
+    modalDelete.style.display = "block"; // Mostra o modal de confirmação
 });
 
-// Outras funções para modal e AJAX (como você já possui)
+// Função para fechar um modal
+function closeModal(modal) {
+    modal.style.display = "none"; // Esconde o modal
+}
+
+// Evento para o botão de cancelamento do modal de confirmação
+cancelBtn.onclick = function() {
+    closeModal(modalDelete); // Fecha o modal ao clicar no botão cancelar
+};
+
+// Evento para o botão de fechar do modal de confirmação
+spanDelete.onclick = function() {
+    closeModal(modalDelete); // Fecha o modal ao clicar no botão fechar
+};
+
+// Fecha o modal de confirmação ao clicar fora dele
+window.onclick = function(event) {
+    if (event.target === modalDelete) {
+        closeModal(modalDelete);
+    }
+};
+
+// Ação de confirmação da exclusão
+$(document).on('click', '.btn-confirm', function() {
+    var itemPk = $(this).data('pk'); // Obtém o PK do item a ser excluído
+    var deleteUrl = $(this).data('url'); // Usa a URL armazenada no botão de confirmação
+
+    // Realiza a chamada AJAX para excluir o item
+    $.ajax({
+        url: deleteUrl, // Usa a URL armazenada no botão de confirmação
+        type: 'POST', // Usar POST ou DELETE conforme sua configuração
+        data: {
+            'pk': itemPk,
+            'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val() // Captura o token CSRF do formulário
+        },
+        success: function(response) {
+            // Exibe uma mensagem de sucesso
+            showFeedback("Item excluído com sucesso!", true);
+            closeModal(modalDelete); // Fecha o modal após a ação
+            // Atualiza a lista ou a tabela conforme necessário
+        },
+        error: function(xhr, status, error) {
+            // Exibe uma mensagem de erro
+            showFeedback("Erro ao excluir o item: " + error, false);
+        }
+    });
+});
+
+// Função para mostrar feedback
+function showFeedback(message, isSuccess) {
+    modalFeedback.style.display = "block"; // Mostra o modal de feedback
+    modalFeedback.querySelector(".modal-feedback-message").textContent = message;
+
+    // Fecha o modal de feedback após um tempo se for um sucesso
+    if (isSuccess) {
+        setTimeout(function() {
+            closeModal(modalFeedback);
+            // Aqui você pode redirecionar ou executar outra ação, se necessário
+        }, 2000); // Fecha após 2 segundos
+    }
+}
+
+// Evento para o botão de fechar do modal de feedback
+$(document).on('click', '.btn-close', function() {
+    closeModal(modalFeedback); // Fecha o modal de feedback
+});
+
+// Fecha o modal de feedback ao clicar fora dele
+window.onclick = function(event) {
+    if (event.target === modalFeedback) {
+        closeModal(modalFeedback);
+    }
+};
+
 
 // IMPORTAR O JS DO SELECT2
 $.getScript("/static/select2/js/select2.min.js", function() {

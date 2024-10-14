@@ -91,7 +91,7 @@
             <td><a href="{% url 'aluno_detail' aluno.pk %}">{{ aluno.nome }}</a></td>
             <td>{{ aluno.cpf }}</td>
             <td>{{ aluno.cidade.nome }} / {{aluno.cidade.estado.uf}}</td>
-            <td>{{ aluno.inativo|yesno:"Inativo,Ativo" }}</td>
+            <td>{{ aluno.inativo|yesno:"Sim,Não" }}</td>
         </tr>
         {% empty %}
         <tr>
