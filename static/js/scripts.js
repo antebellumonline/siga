@@ -63,6 +63,14 @@ var modalDelete = document.getElementsByClassName("modal-delete")[0];
 var modalFeedback = document.getElementsByClassName("modal-feedback")[0];
 var cancelBtn = document.getElementsByClassName("btn-cancel")[0];
 var spanDelete = document.getElementsByClassName("btn-close-modal")[0];
+var btnBack = document.createElement("button"); // Cria um botão para voltar
+
+btnBack.textContent = "Voltar"; // Define o texto do botão
+btnBack.className = "btn-back"; // Adiciona uma classe ao botão para estilização
+btnBack.style.display = "none"; // Oculta o botão inicialmente
+
+// Adiciona o botão "Voltar" ao modal de feedback
+modalFeedback.querySelector(".modal-feedback-message").appendChild(btnBack);
 
 // Quando o usuário clica no botão Excluir, o modal de confirmação aparece
 $(document).on('click', '.btn-delete', function(event) {
@@ -113,10 +121,14 @@ $(document).on('click', '.btn-confirm', function() {
             'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val() // Captura o token CSRF do formulário
         },
         success: function(response) {
-            // Exibe uma mensagem de sucesso
-            showFeedback("Item excluído com sucesso!", true);
-            closeModal(modalDelete); // Fecha o modal após a ação
-            // Atualiza a lista ou a tabela conforme necessário
+            if (response.success) {
+                // Mostra o feedback de sucesso e exibe o botão "Voltar"
+                showFeedback("Item excluído com sucesso.", true);
+            } else {
+                // Mostra mensagem de erro
+                showFeedback("Erro ao excluir o item: " + response.error, false);
+            }
+            closeModal(modalDelete);
         },
         error: function(xhr, status, error) {
             // Exibe uma mensagem de erro
@@ -130,19 +142,19 @@ function showFeedback(message, isSuccess) {
     modalFeedback.style.display = "block"; // Mostra o modal de feedback
     modalFeedback.querySelector(".modal-feedback-message").textContent = message;
 
-    // Fecha o modal de feedback após um tempo se for um sucesso
     if (isSuccess) {
-        setTimeout(function() {
-            closeModal(modalFeedback);
-            // Aqui você pode redirecionar ou executar outra ação, se necessário
-        }, 2000); // Fecha após 2 segundos
+        btnBack.style.display = "inline-block"; // Mostra o botão "Voltar" se for sucesso
+        spanDelete.style.display = "none"; // Oculta o botão "Fechar"
+    } else {
+        btnBack.style.display = "none"; // Oculta o botão "Voltar" em caso de erro
+        spanDelete.style.display = "inline-block"; // Mostra o botão "Fechar"
     }
 }
 
-// Evento para o botão de fechar do modal de feedback
-$(document).on('click', '.btn-close', function() {
-    closeModal(modalFeedback); // Fecha o modal de feedback
-});
+// Evento para o botão de voltar
+btnBack.onclick = function() {
+    window.history.back(); // Volta para a página anterior
+};
 
 // Fecha o modal de feedback ao clicar fora dele
 window.onclick = function(event) {
@@ -150,7 +162,6 @@ window.onclick = function(event) {
         closeModal(modalFeedback);
     }
 };
-
 
 // IMPORTAR O JS DO SELECT2
 $.getScript("/static/select2/js/select2.min.js", function() {
