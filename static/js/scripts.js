@@ -63,14 +63,6 @@ var modalDelete = document.getElementsByClassName("modal-delete")[0];
 var modalFeedback = document.getElementsByClassName("modal-feedback")[0];
 var cancelBtn = document.getElementsByClassName("btn-cancel")[0];
 var spanDelete = document.getElementsByClassName("btn-close-modal")[0];
-var btnBack = document.createElement("button"); // Cria um botão para voltar
-
-btnBack.textContent = "Voltar"; // Define o texto do botão
-btnBack.className = "btn-back"; // Adiciona uma classe ao botão para estilização
-btnBack.style.display = "none"; // Oculta o botão inicialmente
-
-// Adiciona o botão "Voltar" ao modal de feedback
-modalFeedback.querySelector(".modal-feedback-message").appendChild(btnBack);
 
 // Quando o usuário clica no botão Excluir, o modal de confirmação aparece
 $(document).on('click', '.btn-delete', function(event) {
@@ -83,11 +75,14 @@ $(document).on('click', '.btn-delete', function(event) {
     $('.btn-confirm').data('pk', itemPk); // Armazena o PK no botão de confirmação
     $('.btn-confirm').data('url', deleteUrl); // Armazena a URL de exclusão no botão de confirmação
     modalDelete.style.display = "block"; // Mostra o modal de confirmação
+    modalDelete.style.opacity = 1; // Reseta a opacidade ao mostrar
 });
 
-// Função para fechar um modal
 function closeModal(modal) {
-    modal.style.display = "none"; // Esconde o modal
+    modal.style.opacity = 0; // Inicia a animação de saída
+    setTimeout(function() {
+        modal.style.display = "none"; // Esconde o modal após a animação
+    }, 300); // Tempo da animação
 }
 
 // Evento para o botão de cancelamento do modal de confirmação
@@ -122,7 +117,7 @@ $(document).on('click', '.btn-confirm', function() {
         },
         success: function(response) {
             if (response.success) {
-                // Mostra o feedback de sucesso e exibe o botão "Voltar"
+                // Mostra o feedback de sucesso
                 showFeedback("Item excluído com sucesso.", true);
             } else {
                 // Mostra mensagem de erro
@@ -139,29 +134,41 @@ $(document).on('click', '.btn-confirm', function() {
 
 // Função para mostrar feedback
 function showFeedback(message, isSuccess) {
-    modalFeedback.style.display = "block"; // Mostra o modal de feedback
+    modalFeedback.style.display = "block";
     modalFeedback.querySelector(".modal-feedback-message").textContent = message;
 
-    if (isSuccess) {
-        btnBack.style.display = "inline-block"; // Mostra o botão "Voltar" se for sucesso
-        spanDelete.style.display = "none"; // Oculta o botão "Fechar"
-    } else {
-        btnBack.style.display = "none"; // Oculta o botão "Voltar" em caso de erro
-        spanDelete.style.display = "inline-block"; // Mostra o botão "Fechar"
+    // Exibe a contagem regressiva
+    var countdownElement = modalFeedback.querySelector(".countdown-message");
+    var countdownTime = 5; // Tempo em segundos para a contagem regressiva
+    countdownElement.textContent = "Este pop-up fechará automaticamente em " + countdownTime + " segundos.";
+
+    // Função para atualizar a contagem regressiva
+    var countdownInterval = setInterval(function() {
+        countdownTime--;
+        countdownElement.textContent = "Este pop-up fechará automaticamente em " + countdownTime + " segundos.";
+        
+        if (countdownTime <= 0) {
+            clearInterval(countdownInterval);
+            closeModal(modalFeedback); // Fecha o modal após a contagem
+            if (isSuccess) {
+                // Redireciona para a página anterior após a contagem
+                setTimeout(function() {
+                    window.history.back(); // Retorna à página anterior
+                }, 0); // O redirecionamento imediato após o fechamento
+            }
+        }
+    }, 1000); // Atualiza a cada segundo
+
+    // Se houver um erro, fecha o modal automaticamente após 3 segundos
+    if (!isSuccess) {
+        // Fecha o modal automaticamente após 3 segundos
+        setTimeout(function() {
+            clearInterval(countdownInterval); // Limpa o intervalo
+            closeModal(modalFeedback); // Fecha o modal de feedback
+            closeModal(modalDelete); // Fecha o modal de exclusão também
+        }, 5000); // Tempo em milissegundos
     }
 }
-
-// Evento para o botão de voltar
-btnBack.onclick = function() {
-    window.history.back(); // Volta para a página anterior
-};
-
-// Fecha o modal de feedback ao clicar fora dele
-window.onclick = function(event) {
-    if (event.target === modalFeedback) {
-        closeModal(modalFeedback);
-    }
-};
 
 // IMPORTAR O JS DO SELECT2
 $.getScript("/static/select2/js/select2.min.js", function() {
