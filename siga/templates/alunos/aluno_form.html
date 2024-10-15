@@ -10,6 +10,18 @@
 <form method="post" class="edit-form">
     {% csrf_token %}
     <div class="form-group-edit">
+        {% if form.instance.pk %}
+        <div class="form-group-edit-status">
+            <h4 class="status-section-title">Status do Aluno</h4>
+            <div class="form-input">
+                <label for="id_inativo"><strong>Inativo: </strong></label>
+                <select id="id_inativo" name="inativo">
+                    <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
+                    <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
+                </select>
+            </div>
+        </div>
+        {% endif %}
         <div class="form-group-edit-sub">
             <h4 class="sub-section-title">Dados Cadastrais</h4>
             <div class="form-input">

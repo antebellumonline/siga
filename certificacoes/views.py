@@ -96,7 +96,9 @@ def certificador_edit(request, pk):
     if request.method == "POST":
         form = CertificadorForm(request.POST, instance=certificador)
         if form.is_valid():
-            form.save()
+            inativo_value = request.POST.get('inativo') == 'True'
+            certificador.inativo = inativo_value
+            certificador.save()
             return redirect('certificador_list')
     else:
         form = CertificadorForm(instance=certificador)

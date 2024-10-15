@@ -6,7 +6,7 @@ class CertificadorForm(forms.ModelForm):
         model = Certificador
         fields = ['descricao', 'siglaCertificador', 'inativo']
 
-class CertificacaoForm(forms.ModelForm):
+class CertificacaoForm(forms.ModelForm): 
     class Meta:
         model = Certificacao
         fields = ['idCertificador', 'descricao', 'siglaExame', 'duracao', 'observacao', 'inativo']
