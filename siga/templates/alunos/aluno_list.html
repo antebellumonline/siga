@@ -51,8 +51,8 @@
 <div class="pagination-search">
     <span class="step-links">
         {% if alunos.has_previous %}
-            <a class="btn-first-circle" href="?page=1&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Primeira Página"></a>
-            <a class="btn-previous-circle" href="?page={{ alunos.previous_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Página Anterior"></a>
+            <a class="btn-first-circle" href="?page=1&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&order_by={{ request.GET.order_by }}&descending={{ request.GET.descending }}" title="Primeira Página"></a>
+            <a class="btn-previous-circle" href="?page={{ alunos.previous_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&order_by={{ request.GET.order_by }}&descending={{ request.GET.descending }}" title="Página Anterior"></a>
         {% endif %}
 
         <span class="current">
@@ -60,24 +60,25 @@
         </span>
 
         {% if alunos.has_next %}
-            <a class="btn-next-circle" href="?page={{ alunos.next_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Próxima Página"></a>
-            <a class="btn-last-circle" href="?page={{ alunos.paginator.num_pages }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Última Página"></a>
+            <a class="btn-next-circle" href="?page={{ alunos.next_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&order_by={{ request.GET.order_by }}&descending={{ request.GET.descending }}" title="Próxima Página"></a>
+            <a class="btn-last-circle" href="?page={{ alunos.paginator.num_pages }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&order_by={{ request.GET.order_by }}&descending={{ request.GET.descending }}" title="Última Página"></a>
         {% endif %}
     </span>
 </div>
+
 <!-- Tabela de busca -->
 <table class="tb-list" id="tb-list-alunos">
     <thead>
         <tr>
             <th>
-                <a href="?order_by=uid&descending={% if request.GET.order_by == 'uid' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}">
+                <a href="?order_by=uid&descending={% if request.GET.order_by == 'uid' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&records_per_page={{ request.GET.records_per_page }}">
                     UID {% if request.GET.order_by == 'uid' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                </a>
+                </a>                
             </th>
             <th>
-                <a href="?order_by=nome&descending={% if request.GET.order_by == 'nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}">
+                <a href="?order_by=nome&descending={% if request.GET.order_by == 'nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&records_per_page={{ request.GET.records_per_page }}">
                     Nome {% if request.GET.order_by == 'nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                </a>
+                </a>                
             </th>
             <th>CPF</th>
             <th>Cidade</th>

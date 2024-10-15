@@ -60,12 +60,14 @@ def aluno_list(request):
     if inativo:
         alunos = alunos.filter(inativo=inativo)  # Filtra por status
     if cidade:
-        alunos = alunos.filter(cidade__nome=cidade) # Filtra por Cidade
+        alunos = alunos.filter(cidade__nome=cidade)  # Filtra por Cidade
 
-    # Aplicar ordenação
-    if descending:
-        order_by = f'-{order_by}'
-    alunos = alunos.order_by(order_by)
+    # Aplicar ordenação apenas se o campo de ordenação for válido
+    valid_order_fields = ['uid', 'nome', 'cpf', 'cidade__nome']  # Campos válidos para ordenação
+    if order_by in valid_order_fields:
+        if descending:
+            order_by = f'-{order_by}'
+        alunos = alunos.order_by(order_by)
 
     # Paginação
     records_per_page = request.GET.get('records_per_page', 10)  # Padrão: 10 registros por página
@@ -73,7 +75,7 @@ def aluno_list(request):
         records_per_page = int(records_per_page) if records_per_page else 10
     except ValueError:
         records_per_page = 10
-        
+
     paginator = Paginator(alunos, records_per_page)  # Cria o paginator
 
     page_number = request.GET.get('page')  # Obtém o número da página atual
@@ -85,7 +87,8 @@ def aluno_list(request):
     return render(request, 'alunos/aluno_list.html', {
         'alunos': alunos_page,
         'cidades': cidades,
-        })
+    })
+
 
 def aluno_detail(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)
