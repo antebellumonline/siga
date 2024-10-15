@@ -56,5 +56,25 @@
     <a class="btn" href="{% url 'aluno_delete' aluno.pk %}">Excluir</a>
     <a class="btn" href="{% url 'aluno_list' %}">Voltar para a lista</a>
 </div>
+<!-- Modal de Confirmação -->
+<div class="modal-delete" style="display:none;">
+    <div class="modal-content">
+        <span class="btn-close-modal">&times;</span>
+        <h2>Confirmar Exclusão</h2>
+        <p>Tem certeza que deseja excluir o Aluno <strong>{{ aluno.nome }}</strong>?</p>
+        <div class="btn-group-modal">
+            <button type="button" class="btn-confirm">Confirmar</button>
+            <button type="button" class="btn-cancel">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de feedback de sucesso/erro -->
+<div class="modal-feedback" style="display:none;">
+    <div class="modal-content">
+        <div class="modal-feedback-message"></div>
+        <div class="countdown-message" style="margin-top: 10px;"></div>
+    </div>
+</div>
 
 {% endblock %}

@@ -75,11 +75,14 @@ $(document).on('click', '.btn-delete', function(event) {
     $('.btn-confirm').data('pk', itemPk); // Armazena o PK no botão de confirmação
     $('.btn-confirm').data('url', deleteUrl); // Armazena a URL de exclusão no botão de confirmação
     modalDelete.style.display = "block"; // Mostra o modal de confirmação
+    modalDelete.style.opacity = 1; // Reseta a opacidade ao mostrar
 });
 
-// Função para fechar um modal
 function closeModal(modal) {
-    modal.style.display = "none"; // Esconde o modal
+    modal.style.opacity = 0; // Inicia a animação de saída
+    setTimeout(function() {
+        modal.style.display = "none"; // Esconde o modal após a animação
+    }, 300); // Tempo da animação
 }
 
 // Evento para o botão de cancelamento do modal de confirmação
@@ -113,10 +116,14 @@ $(document).on('click', '.btn-confirm', function() {
             'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val() // Captura o token CSRF do formulário
         },
         success: function(response) {
-            // Exibe uma mensagem de sucesso
-            showFeedback("Item excluído com sucesso!", true);
-            closeModal(modalDelete); // Fecha o modal após a ação
-            // Atualiza a lista ou a tabela conforme necessário
+            if (response.success) {
+                // Mostra o feedback de sucesso
+                showFeedback("Item excluído com sucesso.", true);
+            } else {
+                // Mostra mensagem de erro
+                showFeedback("Erro ao excluir o item: " + response.error, false);
+            }
+            closeModal(modalDelete);
         },
         error: function(xhr, status, error) {
             // Exibe uma mensagem de erro
@@ -127,30 +134,41 @@ $(document).on('click', '.btn-confirm', function() {
 
 // Função para mostrar feedback
 function showFeedback(message, isSuccess) {
-    modalFeedback.style.display = "block"; // Mostra o modal de feedback
+    modalFeedback.style.display = "block";
     modalFeedback.querySelector(".modal-feedback-message").textContent = message;
 
-    // Fecha o modal de feedback após um tempo se for um sucesso
-    if (isSuccess) {
+    // Exibe a contagem regressiva
+    var countdownElement = modalFeedback.querySelector(".countdown-message");
+    var countdownTime = 5; // Tempo em segundos para a contagem regressiva
+    countdownElement.textContent = "Este pop-up fechará automaticamente em " + countdownTime + " segundos.";
+
+    // Função para atualizar a contagem regressiva
+    var countdownInterval = setInterval(function() {
+        countdownTime--;
+        countdownElement.textContent = "Este pop-up fechará automaticamente em " + countdownTime + " segundos.";
+        
+        if (countdownTime <= 0) {
+            clearInterval(countdownInterval);
+            closeModal(modalFeedback); // Fecha o modal após a contagem
+            if (isSuccess) {
+                // Redireciona para a página anterior após a contagem
+                setTimeout(function() {
+                    window.history.back(); // Retorna à página anterior
+                }, 0); // O redirecionamento imediato após o fechamento
+            }
+        }
+    }, 1000); // Atualiza a cada segundo
+
+    // Se houver um erro, fecha o modal automaticamente após 3 segundos
+    if (!isSuccess) {
+        // Fecha o modal automaticamente após 3 segundos
         setTimeout(function() {
-            closeModal(modalFeedback);
-            // Aqui você pode redirecionar ou executar outra ação, se necessário
-        }, 2000); // Fecha após 2 segundos
+            clearInterval(countdownInterval); // Limpa o intervalo
+            closeModal(modalFeedback); // Fecha o modal de feedback
+            closeModal(modalDelete); // Fecha o modal de exclusão também
+        }, 5000); // Tempo em milissegundos
     }
 }
-
-// Evento para o botão de fechar do modal de feedback
-$(document).on('click', '.btn-close', function() {
-    closeModal(modalFeedback); // Fecha o modal de feedback
-});
-
-// Fecha o modal de feedback ao clicar fora dele
-window.onclick = function(event) {
-    if (event.target === modalFeedback) {
-        closeModal(modalFeedback);
-    }
-};
-
 
 // IMPORTAR O JS DO SELECT2
 $.getScript("/static/select2/js/select2.min.js", function() {
