@@ -1,30 +1,107 @@
+<!-- templates/certificacao/certificador_list.html -->
+
 {% extends 'base.html' %}
 
+{% block title %}SIGA - Lista de Certificações{% endblock %}
+
 {% block content %}
-<h2>Lista de Certificações</h2>
-<a href="{% url 'certificacao_create' %}">Adicionar Certificação</a>
-<table>
+
+<h2 class="page-title">Lista de Certificações</h2>
+<!-- Formulário de busca e filtro -->
+<form method="GET" action="{% url 'certificacao_list' %}" class="search-form">
+    <div class="form-group-search">
+        <input type="text" name="q" placeholder="Buscar por Nome, Sigla ou Certificador" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por Nome, Sigla ou Certificador">
+        <div class="checkbox-group-search">
+            <input type="checkbox" name="inativo" value="True" {% if request.GET.inativo %}checked{% endif %}>
+            <label>Mostrar somente inativos</label>
+        </div>
+    </div>
+    <!-- Botões de Ação -->
+    <div class="btn-group-search">
+        <button type="submit" class="btn-list">Buscar</button>
+        <a class="btn-clear" href="{% url 'certificacao_list' %}">Limpar Busca</a>
+    </div>
+</form>
+<!-- Grupo de botões (Novo e Retornar) -->
+<div class="btn-group">
+    <a class="btn-return" href="{% url 'certificacao_home' %}">Retornar</a>
+    <a class="btn-new" href="{% url 'certificacao_new' %}">Novo</a>
+</div>
+<!-- Seletor para escolher quantos registros exibir -->
+<form method="GET" action="{% url 'certificacao_list' %}" class="pagination-form">
+    <label for="records_per_page">Registros para exibir:</label>
+    <select name="records_per_page" id="records_per_page" onchange="this.form.submit()">
+        <option value="10" {% if request.GET.records_per_page == "10" %}selected{% endif %}>10</option>
+        <option value="20" {% if request.GET.records_per_page == "20" %}selected{% endif %}>20</option>
+        <option value="50" {% if request.GET.records_per_page == "50" %}selected{% endif %}>50</option>
+        <option value="100" {% if request.GET.records_per_page == "100" %}selected{% endif %}>100</option>
+        <option value="500" {% if request.GET.records_per_page == "500" %}selected{% endif %}>500</option>
+        <option value="1000" {% if request.GET.records_per_page == "1000" %}selected{% endif %}>1000</option>
+    </select>
+</form>
+<!-- Paginação da Tabela -->
+<div class="pagination">
+    {% include 'includes/pagination.html' with page_obj=certificacoes page=page_number query_params=request.GET %}
+</div>
+<!-- Tabela de busca -->
+<table class="tb-list" id="tb-list-certificacao">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Descrição</th>
-            <th>Ações</th>
+            <th>
+                <a href="?order_by=id&descending={% if request.GET.order_by == 'id' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}">
+                    ID {% if request.GET.order_by == 'id' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?order_by=descricao&descending={% if request.GET.order_by == 'descricao' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}">
+                    Nome da Certificação {% if request.GET.order_by == 'descricao' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?order_by=idCertificador__descricao&descending={% if request.GET.order_by == 'idCertificador__descricao' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}">
+                    Certificador {% if request.GET.order_by == 'idCertificador__descricao' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                </a>
+            </th>
+            <th>
+                <a href="?order_by=siglaExame&descending={% if request.GET.order_by == 'siglaExame' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}">
+                    Sigla {% if request.GET.order_by == 'siglaExame' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                </a>
+            </th>
+            <th>
+                Duração
+            </th>
+            <th>
+                <a href="?order_by=inativo&descending={% if request.GET.order_by == 'inativo' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}">
+                    Inativo {% if request.GET.order_by == 'inativo' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                </a>
+            </th>
         </tr>
     </thead>
     <tbody>
         {% for certificacao in certificacoes %}
         <tr>
             <td>{{ certificacao.id }}</td>
-            <td>{{ certificacao.descricao }}</td>
-            <td>
-                <a href="{% url 'certificacao_update' certificacao.id %}">Editar</a>
-                <form action="{% url 'certificacao_delete' certificacao.id %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">Excluir</button>
-                </form>
-            </td>
+            <td><a href="{% url 'certificacao_detail' certificacao.pk %}">{{ certificacao.descricao }}</a></td>
+            <td>{{ certificacao.idCertificador.descricao }}</td>
+            <td>{{ certificacao.siglaExame }}</td>
+            <td>{{ certificacao.duracao }}</td>
+            <td>{{ certificacao.inativo|yesno:"Sim,Não" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">Nenhuma certificação encontrada.</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+<!-- Paginação da Tabela -->
+<div class="pagination">
+    {% include 'includes/pagination.html' with page_obj=certificacoes page=page_number query_params=request.GET %}
+</div>
+<!-- Grupo de botões (Novo e Retornar) -->
+<div class="btn-group">
+    <a class="btn-return" href="{% url 'certificacao_home' %}">Retornar</a>
+    <a class="btn-new" href="{% url 'certificacao_new' %}">Novo</a>
+</div>
+
 {% endblock %}

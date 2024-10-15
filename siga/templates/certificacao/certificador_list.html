@@ -2,7 +2,7 @@
 
 {% extends 'base.html' %}
 
-{% block title %}SIGA - Certificador{% endblock %}
+{% block title %}SIGA - Lista de Certificadores{% endblock %}
 
 {% block content %}
 
@@ -10,7 +10,7 @@
 <!-- Formulário de busca e filtro -->
 <form method="GET" action="{% url 'certificador_list' %}" class="search-form">
     <div class="form-group-search">
-        <input type="text" name="q" placeholder="Buscar por nome" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por nome">
+        <input type="text" name="q" placeholder="Buscar por Nome ou Sigla" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por Nome ou Sigla">
         <div class="checkbox-group-search">
             <input type="checkbox" name="inativo" value="True" {% if request.GET.inativo %}checked{% endif %}>
             <label>Mostrar somente inativos</label>
@@ -41,21 +41,7 @@
 </form>
 <!-- Paginação da Tabela -->
 <div class="pagination-search">
-    <span class="step-links">
-        {% if certificador.has_previous %}
-            <a class="btn-first-circle" href="?page=1&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Primeira Página"></a>
-            <a class="btn-previous-circle" href="?page={{ certificador.previous_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Página Anterior"></a>
-        {% endif %}
-
-        <span class="current">
-            Página {{ certificador.number }} de {{ certificador.paginator.num_pages }}.
-        </span>
-
-        {% if certificador.has_next %}
-            <a class="btn-next-circle" href="?page={{ certificador.next_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Próxima Página"></a>
-            <a class="btn-last-circle" href="?page={{ certificador.paginator.num_pages }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Última Página"></a>
-        {% endif %}
-    </span>
+    {% include 'includes/pagination.html' with page_obj=certificador page=page_number query_params=request.GET %}
 </div>
 <!-- Tabela de busca -->
 <table class="tb-list" id="tb-list-certificador">
@@ -92,21 +78,7 @@
 </table>
 <!-- Paginação da Tabela -->
 <div class="pagination-search">
-    <span class="step-links">
-        {% if certificador.has_previous %}
-            <a class="btn-first-circle" href="?page=1&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Primeira Página"></a>
-            <a class="btn-previous-circle" href="?page={{ certificador.previous_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Página Anterior"></a>
-        {% endif %}
-
-        <span class="current">
-            Página {{ certificador.number }} de {{ certificador.paginator.num_pages }}.
-        </span>
-
-        {% if certificador.has_next %}
-            <a class="btn-next-circle" href="?page={{ certificador.next_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Próxima Página"></a>
-            <a class="btn-last-circle" href="?page={{ certificador.paginator.num_pages }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Última Página"></a>
-        {% endif %}
-    </span>
+    {% include 'includes/pagination.html' with page_obj=certificador page=page_number query_params=request.GET %}
 </div>
 <!-- Grupo de botões (Novo e Retornar) -->
 <div class="btn-group">

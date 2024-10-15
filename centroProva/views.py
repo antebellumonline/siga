@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import datetime
 from django.urls import reverse
+from django.db.models import Q
 from .models import CentroProva, CentroProvaExame, Aluno, Certificacao
 from .forms import CentroProvaForm, CentroProvaExameForm
 
@@ -56,16 +57,32 @@ def centroProva_list(request):
 
     # Aplicar os filtros e pesquisa
     if query:
-        centroProva = centroProva.filter(nome__icontains=query)  # Pesquisa por nome (parcial)
+        centroProva = centroProva.filter(
+            Q(nome__icontains=query)  # Pesquisa por nome (parcial)
+        )
     if inativo:
-        centroProva = centroProva.filter(inativo=inativo)  # Filtra por status
+        # Converte o valor de 'inativo' para booleano
+        inativo_value = inativo.lower() == 'true'
+        centroProva = centroProva.filter(inativo=inativo_value)
 
     # Aplicar ordenação
     if descending:
         order_by = f'-{order_by}'
     centroProva = centroProva.order_by(order_by)
 
-    return render(request, 'centroProva/centroProva_list.html', {'centroProva': centroProva})
+    # Paginação
+    records_per_page = request.GET.get('records_per_page', 10)  # Padrão: 10 registros por página
+    try:
+        records_per_page = int(records_per_page) if records_per_page else 10
+    except ValueError:
+        records_per_page = 10
+        
+    paginator = Paginator(centroProva, records_per_page)  # Cria o paginator
+
+    page_number = request.GET.get('page')  # Obtém o número da página atual
+    centroProva_page = paginator.get_page(page_number)  # Pega a página solicitada
+
+    return render(request, 'centroProva/centroProva_list.html', {'centroProva': centroProva_page})
 
 def centroProva_detail(request, pk):
     centroProva = get_object_or_404(CentroProva, pk=pk)
