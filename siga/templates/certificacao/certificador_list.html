@@ -28,7 +28,7 @@
     <a class="btn-new" href="{% url 'certificador_new' %}">Novo</a>
 </div>
 <!-- Seletor para escolher quantos registros exibir -->
-<form method="GET" action="{% url 'aluno_list' %}" class="pagination-form">
+<form method="GET" action="{% url 'certificador_list' %}" class="pagination-form">
     <label for="records_per_page">Registros para exibir:</label>
     <select name="records_per_page" id="records_per_page" onchange="this.form.submit()">
         <option value="10" {% if request.GET.records_per_page == "10" %}selected{% endif %}>10</option>
