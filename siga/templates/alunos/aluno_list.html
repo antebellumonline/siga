@@ -49,23 +49,8 @@
 </form>
 <!-- Paginação da Tabela -->
 <div class="pagination-search">
-    <span class="step-links">
-        {% if alunos.has_previous %}
-            <a class="btn-first-circle" href="?page=1&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&order_by={{ request.GET.order_by }}&descending={{ request.GET.descending }}" title="Primeira Página"></a>
-            <a class="btn-previous-circle" href="?page={{ alunos.previous_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&order_by={{ request.GET.order_by }}&descending={{ request.GET.descending }}" title="Página Anterior"></a>
-        {% endif %}
-
-        <span class="current">
-            Página {{ alunos.number }} de {{ alunos.paginator.num_pages }}.
-        </span>
-
-        {% if alunos.has_next %}
-            <a class="btn-next-circle" href="?page={{ alunos.next_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&order_by={{ request.GET.order_by }}&descending={{ request.GET.descending }}" title="Próxima Página"></a>
-            <a class="btn-last-circle" href="?page={{ alunos.paginator.num_pages }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&order_by={{ request.GET.order_by }}&descending={{ request.GET.descending }}" title="Última Página"></a>
-        {% endif %}
-    </span>
+    {% include 'includes/pagination.html' with page_obj=alunos page=page_number query_params=request.GET %}
 </div>
-
 <!-- Tabela de busca -->
 <table class="tb-list" id="tb-list-alunos">
     <thead>
@@ -103,21 +88,7 @@
 </table>
 <!-- Paginação da Tabela -->
 <div class="pagination-search">
-    <span class="step-links">
-        {% if alunos.has_previous %}
-            <a class="btn-first-circle" href="?page=1&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Primeira Página"></a>
-            <a class="btn-previous-circle" href="?page={{ alunos.previous_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Página Anterior"></a>
-        {% endif %}
-
-        <span class="current">
-            Página {{ alunos.number }} de {{ alunos.paginator.num_pages }}.
-        </span>
-
-        {% if alunos.has_next %}
-            <a class="btn-next-circle" href="?page={{ alunos.next_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Próxima Página"></a>
-            <a class="btn-last-circle" href="?page={{ alunos.paginator.num_pages }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}" title="Última Página"></a>
-        {% endif %}
-    </span>
+    {% include 'includes/pagination.html' with page_obj=alunos page=page_number query_params=request.GET %}
 </div>
 <!-- Grupo de botões (Novo e Retornar) -->
 <div class="btn-group">

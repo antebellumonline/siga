@@ -1,0 +1,18 @@
+<!-- templates/includes/pagination.html -->
+<div class="pagination-search">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a class="btn-first-circle" href="?page=1&{{ query_params|urlencode }}" title="Primeira Página"></a>
+            <a class="btn-previous-circle" href="?page={{ page_obj.previous_page_number }}&{{ query_params|urlencode }}" title="Página Anterior"></a>
+        {% endif %}
+
+        <span class="current">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a class="btn-next-circle" href="?page={{ page_obj.next_page_number }}&{{ query_params|urlencode }}" title="Próxima Página"></a>
+            <a class="btn-last-circle" href="?page={{ page_obj.paginator.num_pages }}&{{ query_params|urlencode }}" title="Última Página"></a>
+        {% endif %}
+    </span>
+</div>

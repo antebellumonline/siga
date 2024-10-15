@@ -87,6 +87,7 @@ def aluno_list(request):
     return render(request, 'alunos/aluno_list.html', {
         'alunos': alunos_page,
         'cidades': cidades,
+        'query_params': request.GET,
     })
 
 
