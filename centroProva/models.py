@@ -23,7 +23,9 @@ class CentroProvaExame(models.Model):
     cancelado = models.BooleanField(default=False) # Campo booleano: True para cancelado, False para não cancelado
     observacao = models.TextField(blank=True, null=True)  # Observações sobre o Centro de Provas
     def __str__(self):
-        return f"{self.certificacao} - {self.centroProva} - {self.aluno}"
+        formatted_date = self.data.strftime('%d/%m/%Y %H:%M:%S') if self.data else 'Data não definida'
+        return f"{self.certificacao} - {self.centroProva} - {self.aluno} - {formatted_date}"
     
     class Meta:
         db_table = 'tb_centroProva-exames'
+        unique_together = ('aluno', 'data')

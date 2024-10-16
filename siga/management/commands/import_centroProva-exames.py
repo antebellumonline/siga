@@ -1,12 +1,13 @@
 import pandas as pd
+import logging
+import os
+import pytz
 from django.core.management.base import BaseCommand
 from certificacoes.models import Certificacao
 from alunos.models import Aluno
 from centroProva.models import CentroProva, CentroProvaExame
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
-import logging
-import os
 from datetime import datetime
 
 # Configuração do logging (modificação para salvar na pasta 'logs')
@@ -70,7 +71,9 @@ class Command(BaseCommand):
 
                     # Verificar e formatar a data
                     try:
-                        data_exame = pd.to_datetime(row['data']).date()
+                        data_exame = pd.to_datetime(row['data'], format='%d/%m/%Y %H:%M:%S', dayfirst=True)
+                        local_tz = pytz.timezone('America/Sao_Paulo')
+                        data_exame = local_tz.localize(data_exame)
                     except Exception:
                         raise ValueError(f"Data inválida no exame na linha {index + 1}: {row['data']}")
 
