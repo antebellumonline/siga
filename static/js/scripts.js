@@ -2,6 +2,19 @@
 document.addEventListener("DOMContentLoaded", function() {
     console.log("Página carregada e scripts prontos para uso!");
 
+    // Inicializar o Daterangepicker
+    $('#daterange').daterangepicker({
+        startDate: moment().subtract(6, 'days'), // Data de início (6 dias atrás)
+        endDate: moment(), // Data de fim (hoje)
+        locale: {
+            format: 'DD/MM/YYYY' // Formato da data
+        },
+        opens: 'left' // Abre o calendário à esquerda
+    }, function(start, end) {
+        $('#data_inicio').val(start.format('YYYY-MM-DD')); // Formato YYYY-MM-DD
+        $('#data_fim').val(end.format('YYYY-MM-DD')); // Formato YYYY-MM-DD
+    });
+
     // Adicionar evento ao selecionar a quantidade de registros a serem exibidos
     const recordsSelect = document.getElementById('records_per_page');
     if (recordsSelect) {
@@ -10,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
 
 // Função para enviar o formulário com os parâmetros atuais
 function submitForm() {

@@ -11,12 +11,12 @@
 <form method="GET" action="{% url 'exame_list' %}" class="search-form">
     <div class="form-group-search">
         <input type="text" name="aluno" placeholder="Buscar por aluno" value="{{ request.GET.aluno }}" aria-label="Buscar por aluno">
-        <!-- Campo para Data de Início -->
-        <label for="data_inicio">Data de Início:</label>
-        <input type="date" id="data_inicio" name="data_inicio">
-        <!-- Campo para Data de Fim -->
-        <label for="data_fim">Data de Fim:</label>
-        <input type="date" id="data_fim" name="data_fim">
+        <div class="form-group-search-sub">
+            <label for="daterange">Selecione o Período:</label>
+            <input type="text" id="daterange" class="form-control" placeholder="Selecione as datas">
+            <input type="hidden" id="data_inicio" name="data_inicio">
+            <input type="hidden" id="data_fim" name="data_fim">
+        </div>
         <select name="centroProva" id="select-centroProva" class="select-search">
             <option value="">Selecionar Centro de Prova</option>
             {% for centroProva in centroProva %}

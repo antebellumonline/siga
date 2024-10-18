@@ -123,8 +123,7 @@ def exame_new(request):
 
 def exame_list(request):
     # Obtém os filtros
-    data_inicio = request.GET.get('data_inicio') # Data de início do período
-    data_fim = request.GET.get('data_fim') # Data de fim do período
+    data_range = request.GET.get('daterange')  # Intervalo de datas
     presenca = request.GET.get('presenca')  # Filtro por Presença
     cancelado = request.GET.get('cancelado')  # Filtro de Exame Cancelado
     aluno = request.GET.get('aluno')  # Filtro de Aluno
@@ -139,12 +138,12 @@ def exame_list(request):
     centroProva_exame = CentroProvaExame.objects.select_related('aluno', 'centroProva', 'certificacao')
 
     # Aplicar os filtros e pesquisa
-    if data_inicio and data_fim:
-        centroProva_exame = centroProva_exame.filter(data__range=[data_inicio, data_fim])  # Filtro de Data para um intervalo
-    elif data_inicio:
-        centroProva_exame = centroProva_exame.filter(data__gte=data_inicio)  # Filtro a partir da data de início
-    elif data_fim:
-        centroProva_exame = centroProva_exame.filter(data__lte=data_fim)  # Filtro até a data de fim
+    if data_range:
+        try:
+            data_inicio, data_fim = data_range.split(' - ')
+            centroProva_exame = centroProva_exame.filter(data__range=[data_inicio, data_fim])  # Filtro de Data para um intervalo
+        except ValueError:
+            pass  # Se ocorrer erro na conversão, ignorar filtro
 
     if presenca:
         try:
