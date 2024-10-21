@@ -141,9 +141,12 @@ def exame_list(request):
     if data_range:
         try:
             data_inicio, data_fim = data_range.split(' - ')
-            centroProva_exame = centroProva_exame.filter(data__range=[data_inicio, data_fim])  # Filtro de Data para um intervalo
-        except ValueError:
-            pass  # Se ocorrer erro na conversão, ignorar filtro
+            # Converte o formato de DD/MM/YYYY para YYYY-MM-DD
+            data_inicio = datetime.strptime(data_inicio.strip(), '%d/%m/%Y').date()
+            data_fim = datetime.strptime(data_fim.strip(), '%d/%m/%Y').date()
+            centroProva_exame = centroProva_exame.filter(data__range=[data_inicio, data_fim])
+        except (ValueError, TypeError):
+            pass  # Ignorar filtro em caso de erro
 
     if presenca:
         try:

@@ -131,8 +131,8 @@ LOGGING = {
 # Configuração de linguagem e fuso horário
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'  # Mudei para horário de Brasília
-USE_I18N = False  # Defina como True se você deseja usar a internacionalização
-USE_L10N = False  # Defina como True se você deseja usar a localização
+USE_I18N = True  # Defina como True se você deseja usar a internacionalização
+USE_L10N = True  # Defina como True se você deseja usar a localização
 USE_TZ = True
 
 # Configuração de arquivos estáticos

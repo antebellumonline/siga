@@ -4,15 +4,38 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Inicializar o Daterangepicker
     $('#daterange').daterangepicker({
-        startDate: moment().subtract(6, 'days'), // Data de início (6 dias atrás)
-        endDate: moment(), // Data de fim (hoje)
+        startDate: moment(),
+        endDate: moment(),
         locale: {
-            format: 'DD/MM/YYYY' // Formato da data
+            format: 'DD/MM/YYYY', // Formato da data
+            applyLabel: 'Aplicar', // Texto do botão "Aplicar"
+            cancelLabel: 'Cancelar', // Texto do botão "Cancelar"
+            fromLabel: 'De', // Texto do rótulo "De"
+            toLabel: 'Até', // Texto do rótulo "Até"
+            weekLabel: 'S', // Rótulo da semana
+            customRangeLabel: 'Personalizado', // Texto do rótulo "Personalizado"
+            // Nomes dos meses
+            monthNames: [
+                "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+                "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+            ],
+            // Nomes dos dias
+            daysOfWeek: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+            firstDay: 1 // Primeiro dia da semana (0 para Domingo, 1 para Segunda)
         },
         opens: 'left' // Abre o calendário à esquerda
     }, function(start, end) {
-        $('#data_inicio').val(start.format('YYYY-MM-DD')); // Formato YYYY-MM-DD
-        $('#data_fim').val(end.format('YYYY-MM-DD')); // Formato YYYY-MM-DD
+        // Não usar autoUpdateInput, então só atualize se precisar
+        if (start && end) {
+            $('#daterange').val(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+        } else {
+            $('#daterange').val(''); // Limpa o campo se necessário
+        }
+    });
+
+    // Adicionando evento para limpar o campo
+    $('#daterange').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
     });
 
     // Adicionar evento ao selecionar a quantidade de registros a serem exibidos

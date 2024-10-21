@@ -10,35 +10,42 @@
 <!-- Formulário de busca e filtro -->
 <form method="GET" action="{% url 'exame_list' %}" class="search-form">
     <div class="form-group-search">
-        <input type="text" name="aluno" placeholder="Buscar por aluno" value="{{ request.GET.aluno }}" aria-label="Buscar por aluno">
         <div class="form-group-search-sub">
-            <label for="daterange">Selecione o Período:</label>
-            <input type="text" id="daterange" class="form-control" placeholder="Selecione as datas">
-            <input type="hidden" id="data_inicio" name="data_inicio">
-            <input type="hidden" id="data_fim" name="data_fim">
+            <label for="search-aluno">Buscar por Aluno:</label>
+            <input type="text" name="aluno" placeholder="Buscar por aluno" value="{{ request.GET.aluno }}" aria-label="Buscar por aluno">
         </div>
-        <select name="centroProva" id="select-centroProva" class="select-search">
-            <option value="">Selecionar Centro de Prova</option>
-            {% for centroProva in centroProva %}
-            <option value="{{ centroProva.nome }}" {% if request.GET.centroProva == centroProva.nome %}selected{% endif %}>
-                {{ centroProva.nome }}
-            </option>
-            {% endfor %}
-        </select>
-        <select name="certificacao" id="select-certificacao" class="select-search">
-            <option value="">Selecionar Certificação</option>
-            {% for cert in certificacao %}
-            <option value="{{ cert.nome }}" {% if request.GET.certificacao == cert.nome %}selected{% endif %}>
-                {{ cert.nome }}
-            </option>
-            {% endfor %}
-        </select>
+        <div class="form-group-search-sub">
+            <label for="search-daterange">Selecione o Período de realização:</label>
+            <input type="text" id="daterange" name="daterange" class="form-control" placeholder="Selecione as datas" value="">
+        </div>
+        <div class="form-group-search-sub">
+            <label for="search-daterange">Selecione o Centro de Provas:</label>
+            <select name="centroProva" id="select-centroProva" class="select-search">
+                <option value="">Selecione o Centro de Prova</option>
+                {% for centroProva in centroProva %}
+                <option value="{{ centroProva.id }}" {% if request.GET.centroProva == centroProva.id %}selected{% endif %}>
+                    {{ centroProva.nome }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group-search-sub">
+            <label for="search-daterange">Selecione a Certificação:</label>
+            <select name="certificacao" id="select-certificacao" class="select-search">
+                <option value="">Selecionar Certificação</option>
+                {% for certificacao in certificacao %}
+                <option value="{{ certificacao.id }}" {% if request.GET.certificacao == certificacao.id %}selected{% endif %}>
+                    {{ certificacao.descricao }} ({{ certificacao.siglaExame }})
+                </option>
+                {% endfor %}
+            </select>
+        </div>
         <div class="checkbox-group-search">
             <input type="checkbox" name="presenca" value="True" {% if request.GET.presenca == 'True' %}checked{% endif %}>
             <label>Mostrar apenas presentes</label>
             <input type="checkbox" name="cancelado" value="True" {% if request.GET.cancelado == 'True' %}checked{% endif %}>
             <label>Mostrar apenas cancelados</label>
-        </div>
+        </div>      
     </div>
     <!-- Botões de Ação -->
     <div class="btn-group-search">
@@ -116,8 +123,8 @@
             <td><a href="{% url 'exame_detail' exame.pk %}">{{ exame.aluno.nome }}</a></td>
             <td>{{ exame.centroProva.nome }}</td>
             <td>{{ exame.certificacao.nome }}</td>
-            <td>{{ exame.presenca }}</td>
-            <td>{{ exame.cancelado }}</td>
+            <td>{{ exame.presenca|yesno:"Sim,Não" }}</td>
+            <td>{{ exame.cancelado|yesno:"Sim,Não" }}</td>
         </tr>
         {% empty %}
         <tr>
