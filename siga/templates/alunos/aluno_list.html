@@ -10,15 +10,21 @@
 <!-- Formulário de busca e filtro -->
 <form method="GET" action="{% url 'aluno_list' %}" class="search-form">
     <div class="form-group-search">
-        <input type="text" name="q" placeholder="Buscar por nome" value="{{ request.GET.q }}" aria-label="Buscar por nome">
-        <select name="cidade" id="select-cidade" class="select-search">
-            <option value="">Selecionar cidade</option>
-            {% for cidade in cidades %}
-            <option value="{{ cidade.nome }}" {% if request.GET.cidade == cidade.nome %}selected{% endif %}>
-                {{ cidade.nome }} - {{ cidade.estado.uf }}
-            </option>
-            {% endfor %}
-        </select>
+        <div class="form-group-search-sub">
+            <label for="search-nome">Buscar por Nome, Telefone ou E-mail:</label>
+            <input type="text" name="q" placeholder="Buscar por Nome, Telefone ou E-mail" value="{{ request.GET.q }}" aria-label="Buscar por nome">
+        </div>
+        <div class="form-group-search-sub">
+            <label for="search-cidade">Selecione a Cidade:</label>
+            <select name="cidade" id="select-cidade" class="select-search">
+                <option value="">Selecionar cidade</option>
+                {% for cidade in cidades %}
+                <option value="{{ cidade.nome }}" {% if request.GET.cidade == cidade.nome %}selected{% endif %}>
+                    {{ cidade.nome }} - {{ cidade.estado.uf }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
         <div class="checkbox-group-search">
             <input type="checkbox" name="inativo" value="True" {% if request.GET.inativo %}checked{% endif %}>
             <label>Mostrar somente inativos</label>
