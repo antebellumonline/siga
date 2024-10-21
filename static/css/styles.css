@@ -579,12 +579,17 @@ h2 {
     font-weight: 500;
 }
 
-.checkbox-group-search {
+.select-group-search {
     display: flex;
     align-items: center;
-    justify-content: center;
     width: 100%;
     gap: 0.5rem;
+}
+
+.select-group-search label {
+    text-align: left;
+    font-weight: 500;
+    margin-right: 5px;
 }
 
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */

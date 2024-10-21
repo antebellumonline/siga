@@ -12,7 +12,7 @@
     <div class="form-group-search">
         <div class="form-group-search-sub">
             <label for="search-aluno">Buscar por Aluno:</label>
-            <input type="text" name="aluno" placeholder="Buscar por aluno" value="{{ request.GET.aluno }}" aria-label="Buscar por aluno">
+            <input type="text" name="q" placeholder="Buscar por UID ou Nome do Aluno" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por UID ou Nome do Aluno">
         </div>
         <div class="form-group-search-sub">
             <label for="search-daterange">Selecione o Período de realização:</label>
@@ -40,12 +40,20 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="checkbox-group-search">
-            <input type="checkbox" name="presenca" value="True" {% if request.GET.presenca == 'True' %}checked{% endif %}>
-            <label>Mostrar apenas presentes</label>
-            <input type="checkbox" name="cancelado" value="True" {% if request.GET.cancelado == 'True' %}checked{% endif %}>
-            <label>Mostrar apenas cancelados</label>
-        </div>      
+        <div class="select-group-search">
+            <label for="presenca">Presença:</label>
+            <select name="presenca" id="presenca">
+                <option value="">---</option>
+                <option value="True" {% if request.GET.presenca == 'True' %}selected{% endif %}>Sim</option>
+                <option value="False" {% if request.GET.presenca == 'False' %}selected{% endif %}>Não</option>
+            </select>
+            <label for="cancelado">Cancelado:</label>
+            <select name="cancelado" id="cancelado">
+                <option value="">---</option>
+                <option value="True" {% if request.GET.cancelado == 'True' %}selected{% endif %}>Sim</option>
+                <option value="False" {% if request.GET.cancelado == 'False' %}selected{% endif %}>Não</option>
+            </select>
+        </div> 
     </div>
     <!-- Botões de Ação -->
     <div class="btn-group-search">

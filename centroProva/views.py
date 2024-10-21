@@ -123,10 +123,10 @@ def exame_new(request):
 
 def exame_list(request):
     # Obtém os filtros
+    query = request.GET.get('q')
     data_range = request.GET.get('daterange')  # Intervalo de datas
     presenca = request.GET.get('presenca')  # Filtro por Presença
     cancelado = request.GET.get('cancelado')  # Filtro de Exame Cancelado
-    aluno = request.GET.get('aluno')  # Filtro de Aluno
     centroProva = request.GET.get('centroProva')  # Filtro de Centro de Provas
     certificacao = request.GET.get('certificacao')  # Filtro de Certificação
 
@@ -138,6 +138,11 @@ def exame_list(request):
     centroProva_exame = CentroProvaExame.objects.select_related('aluno', 'centroProva', 'certificacao')
 
     # Aplicar os filtros e pesquisa
+    if query:
+        centroProva_exame = centroProva_exame.filter(
+            Q(aluno__uid__icontains=query) | Q(aluno__nome__icontains=query)
+        )  # Pesquisa por UID ou Nome do Aluno (parcial)
+    
     if data_range:
         try:
             data_inicio, data_fim = data_range.split(' - ')
@@ -148,24 +153,21 @@ def exame_list(request):
         except (ValueError, TypeError):
             pass  # Ignorar filtro em caso de erro
 
-    if presenca:
-        try:
-            presenca = bool(int(presenca))  # Presença precisa ser um valor booleano
-            centroProva_exame = centroProva_exame.filter(presenca=presenca)
-        except (ValueError, TypeError):
-            pass  # Valor inválido, ignorar filtro
+    if presenca is not None and presenca != "":  # Verifica se o filtro foi aplicado
+        if presenca == 'True':
+            centroProva_exame = centroProva_exame.filter(presenca=True)
+        elif presenca == 'False':
+            centroProva_exame = centroProva_exame.filter(presenca=False)
 
-    if cancelado:
-        try:
-            cancelado = bool(int(cancelado))  # Cancelado também como valor booleano
-            centroProva_exame = centroProva_exame.filter(cancelado=cancelado)
-        except (ValueError, TypeError):
-            pass  # Valor inválido, ignorar filtro
+    if cancelado is not None and cancelado != "":  # Verifica se o filtro foi aplicado
+        if cancelado == 'True':
+            centroProva_exame = centroProva_exame.filter(cancelado=True)
+        elif cancelado == 'False':
+            centroProva_exame = centroProva_exame.filter(cancelado=False)
 
-    if aluno:
-        centroProva_exame = centroProva_exame.filter(aluno__uid=aluno)  # Pesquisa por UID de Aluno
     if centroProva:
         centroProva_exame = centroProva_exame.filter(centroProva__id=centroProva)  # Pesquisa por Centro de Prova
+    
     if certificacao:
         centroProva_exame = centroProva_exame.filter(certificacao__id=certificacao)  # Pesquisa por Certificação
 
