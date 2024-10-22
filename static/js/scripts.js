@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Adicionando evento para limpar o campo
+    // Evento para limpar o campo ao cancelar
     $('#daterange').on('cancel.daterangepicker', function(ev, picker) {
         $(this).val('');
     });
@@ -52,6 +52,49 @@ document.addEventListener("DOMContentLoaded", function() {
             placeholder: 'Selecione uma Opção',
             allowClear: true
         });
+    });
+
+    // Função para ativar/desativar campos com toggleField
+    function toggleField(fieldId, isChecked) {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.disabled = !isChecked;
+            if (!isChecked) {
+                field.value = '';
+            }
+        }
+    }
+
+    // Ativação de campos se houver valor inicial ou se a checkbox estiver marcada
+    const fieldsToCheck = [
+        { checkboxId: 'enable-search-aluno', fieldId: 'search-aluno' },
+        { checkboxId: 'enable-search-daterange', fieldId: 'daterange' },
+        { checkboxId: 'enable-search-centroProva', fieldId: 'select-centroProva' },
+        { checkboxId: 'enable-search-certificacao', fieldId: 'select-certificacao' },
+        { checkboxId: 'enable-presenca', fieldId: 'presenca' },
+        { checkboxId: 'enable-cancelado', fieldId: 'cancelado' }
+    ];
+
+    // Desabilitar todos os campos inicialmente
+    fieldsToCheck.forEach(item => {
+        const field = document.getElementById(item.fieldId);
+        if (field) {
+            field.disabled = true; // Desabilitar o campo por padrão
+        }
+    });
+
+    // Verificar o estado das checkboxes e habilitar/desabilitar os campos
+    fieldsToCheck.forEach(item => {
+        const checkbox = document.getElementById(item.checkboxId);
+        if (checkbox) {
+            // Configura o campo baseado no estado da checkbox
+            toggleField(item.fieldId, checkbox.checked);
+
+            // Adiciona um evento para habilitar/desabilitar conforme a checkbox é clicada
+            checkbox.addEventListener('change', function() {
+                toggleField(item.fieldId, checkbox.checked);
+            });
+        }
     });
 });
 
@@ -76,7 +119,7 @@ function submitForm() {
 
 // -----XXX-----XXX-----XXX-----XXX-----XXX----- //
 
-// Funções para os modais e exclusão via AJAX
+// ----- Gerenciamento dos Modais e Exclusão via AJAX -----
 
 // Obtém os modais
 var modalDelete = document.getElementsByClassName("modal-delete")[0];

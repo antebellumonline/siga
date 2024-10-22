@@ -424,8 +424,8 @@ h2 {
     text-decoration: none; /* Remove o sublinhado dos links */
     background-color: #ca555d;
     color: #ffffff; /* Cor do texto */
-    padding: 8px; /* Espaçamento interno nos links */
-    border-radius: 50%; /* Bordas arredondadas nos links */
+    padding: 20px; /* Espaçamento interno nos links */
+    border-radius: 100%; /* Bordas arredondadas nos links */
     transition: background-color 0.3s, color 0.3s; /* Transição suave */
     display: inline-flex; /* Usar flexbox para centralizar o ícone */
     justify-content: center; /* Centraliza o ícone horizontalmente */
@@ -625,6 +625,68 @@ h2 {
     margin: 0 10px; /* Espaçamento ao redor do texto atual */
     font-weight: bold; /* Deixa o texto atual em negrito */
     color: #ffffff; /* Cor do texto atual */
+}
+
+/* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
+
+/* ESTILOS DO SELECT2*/
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-container .select2-selection--single {
+    background-color: #e3e3e1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 38px !important;
+    line-height: 38px;
+    font-family: 'Montserrat', sans-serif;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+/* Texto dentro do Select2 */
+.select2-container .select2-selection--single .select2-selection__rendered {
+    color: #333;
+    font-size: 14px;
+    line-height: 1.5;
+    padding-left: 10px;
+    padding-right: 30px;
+    box-sizing: border-box;
+}
+
+/* Icone dropdown do Select2 */
+.select2-container .select2-selection--single .select2-selection__arrow {
+    height: 100%;
+}
+
+/* Estilo para a área de pesquisa do Select2 */
+.select2-container .select2-dropdown {
+    background-color: #f0f0ef;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Fredoka', sans-serif;
+}
+
+/* Estilo para as opções dentro do dropdown */
+.select2-container .select2-results__option {
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+/* Estilo para a opção selecionada no dropdown */
+.select2-container .select2-results__option--highlighted {
+    background-color: #d3d3d3;
+    color: #333;
+}
+
+/* Estilo para o rótulo do Select2 */
+.select-group-search label {
+    text-align: left;
+    font-weight: 500;
+    font-family: 'Fredoka', sans-serif;
+    margin-right: 5px;
 }
 
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */

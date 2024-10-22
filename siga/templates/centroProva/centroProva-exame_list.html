@@ -11,17 +11,20 @@
 <form method="GET" action="{% url 'exame_list' %}" class="search-form">
     <div class="form-group-search">
         <div class="form-group-search-sub">
-            <label for="search-aluno">Buscar por Aluno:</label>
-            <input type="text" name="q" placeholder="Buscar por UID ou Nome do Aluno" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por UID ou Nome do Aluno">
+            <input type="checkbox" id="enable-search-aluno" onchange="toggleField('search-aluno')">
+            <label for="search-aluno">UID ou Nome do Aluno:</label>
+            <input type="text" id="search-aluno" name="q" placeholder="Busque por UID ou Nome do Aluno" value="{{ request.GET.q }}" class="form-control" aria-label="Busque por UID ou Nome do Aluno">
         </div>
         <div class="form-group-search-sub">
-            <label for="search-daterange">Selecione o Período de realização:</label>
-            <input type="text" id="daterange" name="daterange" class="form-control" placeholder="Selecione as datas" value="">
+            <input type="checkbox" id="enable-search-daterange" onchange="toggleField('daterange')">
+            <label for="search-daterange">Período de realização:</label>
+            <input type="text" id="daterange" name="daterange" class="form-control" placeholder="Selecione o período" value="">
         </div>
         <div class="form-group-search-sub">
-            <label for="search-centroProva">Selecione o Centro de Provas:</label>
+            <input type="checkbox" id="enable-search-centroProva" onchange="toggleField('select-centroProva')">
+            <label for="search-centroProva">Centro de Provas:</label>
             <select name="centroProva" id="select-centroProva" class="select-search">
-                <option value="">Selecione o Centro de Prova</option>
+                <option value="">Selecione o Centro de Provas</option>
                 {% for centroProva in centroProva %}
                 <option value="{{ centroProva.id }}" {% if request.GET.centroProva == centroProva.id %}selected{% endif %}>
                     {{ centroProva.nome }}
@@ -30,7 +33,8 @@
             </select>
         </div>
         <div class="form-group-search-sub">
-            <label for="search-certificacao">Selecione a Certificação:</label>
+            <input type="checkbox" id="enable-search-certificacao" onchange="toggleField('select-certificacao')">
+            <label for="search-certificacao">Certificação:</label>
             <select name="certificacao" id="select-certificacao" class="select-search">
                 <option value="">Selecionar Certificação</option>
                 {% for certificacao in certificacao %}
@@ -41,12 +45,14 @@
             </select>
         </div>
         <div class="select-group-search">
+            <input type="checkbox" id="enable-presenca" onchange="toggleField('presenca')">
             <label for="presenca">Presença:</label>
             <select name="presenca" id="presenca">
                 <option value="">---</option>
                 <option value="True" {% if request.GET.presenca == 'True' %}selected{% endif %}>Sim</option>
                 <option value="False" {% if request.GET.presenca == 'False' %}selected{% endif %}>Não</option>
             </select>
+            <input type="checkbox" id="enable-cancelado" onchange="toggleField('cancelado')">
             <label for="cancelado">Cancelado:</label>
             <select name="cancelado" id="cancelado">
                 <option value="">---</option>
@@ -130,7 +136,7 @@
             <td>{{ exame.data }}</td>
             <td><a href="{% url 'exame_detail' exame.pk %}">{{ exame.aluno.nome }}</a></td>
             <td>{{ exame.centroProva.nome }}</td>
-            <td>{{ exame.certificacao.nome }}</td>
+            <td>{{ exame.certificacao.descricao }} ({{ exame.certificacao.siglaExame }})</td>
             <td>{{ exame.presenca|yesno:"Sim,Não" }}</td>
             <td>{{ exame.cancelado|yesno:"Sim,Não" }}</td>
         </tr>
