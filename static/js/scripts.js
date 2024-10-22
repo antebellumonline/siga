@@ -41,16 +41,6 @@ document.addEventListener("DOMContentLoaded", function() {
         $(this).val('');
     });
 
-    // Aplicar máscara para data no formato DD/MM/YYYY
-    $('#edit-select-dataExame').mask('00/00/0000 00:00', {placeholder: "dd/mm/aaaa hh:mm"});
-    // Adicionar evento ao selecionar a quantidade de registros a serem exibidos
-    const recordsSelect = document.getElementById('records_per_page');
-    if (recordsSelect) {
-        recordsSelect.addEventListener('change', function() {
-            submitForm();
-        });
-    }
-
     // Inicializar o Select2
     $.getScript("/static/select2/js/select2.min.js", function() {
         $('#edit-select-cidade, #edit-select-certificador, #edit-select-certificacao, #edit-select-centroProva, #edit-select-aluno, #list-select-cidade, #list-select-certificador, #list-select-certificacao, #list-select-centroProva, #list-select-aluno').select2({
@@ -101,6 +91,17 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
     });
+
+    // Aplicar máscara para data no formato DD/MM/YYYY
+    $('#edit-select-dataExame').mask('00/00/0000 00:00', {placeholder: "dd/mm/aaaa hh:mm"});
+    // Adicionar evento ao selecionar a quantidade de registros a serem exibidos
+    const recordsSelect = document.getElementById('records_per_page');
+    if (recordsSelect) {
+        recordsSelect.addEventListener('change', function() {
+            submitForm();
+        });
+    }
+
 });
 
 // Função para enviar o formulário com os parâmetros atuais
