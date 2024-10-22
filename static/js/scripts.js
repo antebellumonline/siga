@@ -3,11 +3,14 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("Página carregada e scripts prontos para uso!");
 
     // Inicializar o Daterangepicker
-    $('#daterange').daterangepicker({
+    $('#list-daterange').daterangepicker({
         startDate: moment(),
         endDate: moment(),
+        timePicker: true,
+        timePicker24Hour: true,
+        timePickerIncrement: 30,
         locale: {
-            format: 'DD/MM/YYYY', // Formato da data
+            format: 'DD/MM/YYYY HH:mm', // Formato da data e hora
             applyLabel: 'Aplicar', // Texto do botão "Aplicar"
             cancelLabel: 'Cancelar', // Texto do botão "Cancelar"
             fromLabel: 'De', // Texto do rótulo "De"
@@ -27,17 +30,19 @@ document.addEventListener("DOMContentLoaded", function() {
     }, function(start, end) {
         // Não usar autoUpdateInput, então só atualize se precisar
         if (start && end) {
-            $('#daterange').val(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+            $('#list-daterange').val(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
         } else {
-            $('#daterange').val(''); // Limpa o campo se necessário
+            $('#list-daterange').val(''); // Limpa o campo se necessário
         }
     });
 
     // Evento para limpar o campo ao cancelar
-    $('#daterange').on('cancel.daterangepicker', function(ev, picker) {
+    $('#list-daterange').on('cancel.daterangepicker', function(ev, picker) {
         $(this).val('');
     });
 
+    // Aplicar máscara para data no formato DD/MM/YYYY
+    $('#edit-select-dataExame').mask('00/00/0000 00:00', {placeholder: "dd/mm/aaaa hh:mm"});
     // Adicionar evento ao selecionar a quantidade de registros a serem exibidos
     const recordsSelect = document.getElementById('records_per_page');
     if (recordsSelect) {
@@ -48,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Inicializar o Select2
     $.getScript("/static/select2/js/select2.min.js", function() {
-        $('#select-cidade, #select-certificador, #select-certificacao, #select-centroProva').select2({
+        $('#edit-select-cidade, #edit-select-certificador, #edit-select-certificacao, #edit-select-centroProva, #edit-select-aluno, #list-select-cidade, #list-select-certificador, #list-select-certificacao, #list-select-centroProva, #list-select-aluno').select2({
             placeholder: 'Selecione uma Opção',
             allowClear: true
         });
@@ -67,12 +72,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Ativação de campos se houver valor inicial ou se a checkbox estiver marcada
     const fieldsToCheck = [
-        { checkboxId: 'enable-search-aluno', fieldId: 'search-aluno' },
-        { checkboxId: 'enable-search-daterange', fieldId: 'daterange' },
-        { checkboxId: 'enable-search-centroProva', fieldId: 'select-centroProva' },
-        { checkboxId: 'enable-search-certificacao', fieldId: 'select-certificacao' },
-        { checkboxId: 'enable-presenca', fieldId: 'presenca' },
-        { checkboxId: 'enable-cancelado', fieldId: 'cancelado' }
+        { checkboxId: 'enable-list-aluno', fieldId: 'list-aluno' },
+        { checkboxId: 'enable-list-daterange', fieldId: 'list-daterange' },
+        { checkboxId: 'enable-list-centroProva', fieldId: 'list-select-centroProva' },
+        { checkboxId: 'enable-list-certificacao', fieldId: 'list-select-certificacao' },
+        { checkboxId: 'enable-list-presenca', fieldId: 'list-presenca' },
+        { checkboxId: 'enable-list-cancelado', fieldId: 'list-cancelado' }
     ];
 
     // Desabilitar todos os campos inicialmente

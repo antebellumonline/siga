@@ -33,7 +33,7 @@ def login_view(request):
 def centroProva_home(request):
     return render(request, 'centroProva/centroProva_home.html')
 
-# CRUD Centro de Provas
+# View para Adicionar um Centro de Provas
 def centroProva_new(request):
     if request.method == 'POST':
         form = CentroProvaForm(request.POST)
@@ -44,6 +44,7 @@ def centroProva_new(request):
         form = CentroProvaForm()
     return render(request, 'centroProva/centroProva_form.html', {'form': form})
 
+# View para Listar os Centros de Provas
 def centroProva_list(request):
     query = request.GET.get('q')  # Obtém o termo de busca da URL
     inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)
@@ -84,10 +85,12 @@ def centroProva_list(request):
 
     return render(request, 'centroProva/centroProva_list.html', {'centroProva': centroProva_page})
 
+# View para Visualizar os detalhes de um Centro de Provas
 def centroProva_detail(request, pk):
     centroProva = get_object_or_404(CentroProva, pk=pk)
     return render(request, 'centroProva/centroProva_detail.html', {'centroProva': centroProva})
 
+# View para Editar um Centro de Provas
 def centroProva_edit(request, pk):
     centroProva = get_object_or_404(CentroProva, pk=pk)
     if request.method == "POST":
@@ -99,6 +102,7 @@ def centroProva_edit(request, pk):
         form = CentroProvaForm(instance=centroProva)
     return render(request, 'centroProva/centroProva_form.html', {'form': form})
 
+# View para Excluir um Centro de Provas
 def centroProva_delete(request, pk):
     centroProva = get_object_or_404(CentroProva, pk=pk)
     if request.method == "POST":
@@ -106,21 +110,7 @@ def centroProva_delete(request, pk):
         return redirect('centroProva_list')
     return render(request, 'centroProva/centroProva_confirmDelete.html', {'centroProva': centroProva})
 
-def centroProva_reports(request):
-    # Placeholder para a funcionalidade de relatórios
-    return render(request, 'centroProva/centroProva_reports.html')
-
-# CRUD Exames
-def exame_new(request):
-    if request.method == 'POST':
-        form = CentroProvaExameForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('exame_list'))
-    else:
-        form = CentroProvaExameForm()
-    return render(request, 'centroProva/centroProva-exame_form.html', {'form': form})
-
+# View para Listar os Exames Realizados no Centro de Provas
 def exame_list(request):
     # Obtém os filtros
     query = request.GET.get('q')
@@ -202,10 +192,68 @@ def exame_list(request):
         'certificacao': certificacoes,
     })
 
+# View para Visualizar os Detalhes de um Exame Realizado no Centro de Provas
 def exame_detail(request, pk):
     centroProva_exame = get_object_or_404(CentroProvaExame, pk=pk)
     return render(request, 'centroProva/centroProva-exame_detail.html', {'centroProva_exame': centroProva_exame})
 
-def exame_reports(request):
-    # Placeholder para a funcionalidade de relatórios
-    return render(request, 'centroProva/centroProva-exame_reports.html')
+# View para Adicionar um Exame Realizado no Centro de Provas
+def exame_new(request):
+    alunos = Aluno.objects.order_by('nome')
+    centrosProvas = CentroProva.objects.order_by('nome')
+    certificacoes = Certificacao.objects.order_by('descricao')
+    
+    if request.method == 'POST':
+        form = CentroProvaExameForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('exame_list')
+    else:
+        form = CentroProvaExameForm()
+    
+    return render(
+        request,
+        'centroProva/centroProva-exame_form.html',
+        {
+            'form': form, 
+            'alunos': alunos,
+            'centrosProvas': centrosProvas,
+            'certificacoes': certificacoes
+        }
+    )
+
+# View para Editar um Exame Realizado no Centro de Provas
+def exame_update(request, pk):
+    exame = get_object_or_404(CentroProvaExame, pk=pk)
+    alunos = Aluno.objects.order_by('nome')
+    centrosProvas = CentroProva.objects.order_by('nome')
+    certificacoes = Certificacao.objects.order_by('descricao')
+
+    if request.method == "POST":
+         form = CentroProvaExameForm(request.POST, instance=exame)
+         if form.is_valid():
+             form.save()
+             return redirect('exame_list')
+    else:
+        form = CentroProvaExameForm(instance=exame)
+
+    return render(
+        request,
+        'centroProva/centroProva-exame_form.html',
+        {
+            'form': form, 
+            'alunos': alunos,
+            'centrosProvas': centrosProvas,
+            'certificacoes': certificacoes
+        }
+    )
+
+# View para Excluir um Centro de Provas
+def exame_delete(request, pk):
+    exame = get_object_or_404(CentroProvaExame, pk=pk)
+
+    if request.method == "POST":
+        exame.delete()
+        return redirect('exame_list')
+    
+    return render(request, 'centroProva/centroProva-exame_confirm_delete.html', {'exame': exame})

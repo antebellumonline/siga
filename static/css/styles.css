@@ -764,6 +764,7 @@ h2 {
     color: #3d3d3d;
     margin-right: 10px;
     flex: 0 0 auto;
+    font-weight: 500;
 }
 
 .form-input input,

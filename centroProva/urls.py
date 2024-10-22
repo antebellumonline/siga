@@ -11,11 +11,9 @@ urlpatterns = [
     path('centroProva/<int:pk>/edit/', views.centroProva_edit, name='centroProva_edit'),
     path('centroProva/<int:pk>/delete/', views.centroProva_delete, name='centroProva_delete'),
     path('centroProva/list/', views.centroProva_list, name='centroProva_list'),
-    path('centroProva/reports/', views.centroProva_reports, name='centroProva_reports'),
 
     # URLs Exames Realizados
     path('centroProva/exame/new/', views.exame_new, name='exame_new'),
     path('centroProva/exame/<int:pk>/', views.exame_detail, name='exame_detail'),
     path('centroProva/exame/list/', views.exame_list, name='exame_list'),
-    path('centroProva/exame/reports/', views.exame_reports, name='exame_reports'),
 ]
