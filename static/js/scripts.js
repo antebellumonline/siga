@@ -45,8 +45,15 @@ document.addEventListener("DOMContentLoaded", function() {
             submitForm();
         });
     }
-});
 
+    // Inicializar o Select2
+    $.getScript("/static/select2/js/select2.min.js", function() {
+        $('#select-cidade, #select-certificador, #select-certificacao, #select-centroProva').select2({
+            placeholder: 'Selecione uma Opção',
+            allowClear: true
+        });
+    });
+});
 
 // Função para enviar o formulário com os parâmetros atuais
 function submitForm() {
@@ -66,30 +73,6 @@ function submitForm() {
 
     form.submit(); // Envia o formulário
 }
-
-// Verificar se o jQuery está carregado
-$(document).ready(function() {
-    // Máscara CPF
-    $('#cpf').inputmask('999.999.999-99');
-    
-    // Máscara CEP
-    $('#cep').inputmask('99999-999');
-    
-    // Máscara para telefones e celulares
-    $('.telefone').inputmask({
-        mask: ['(99) 9999-9999', '(99) 99999-9999'], 
-        keepStatic: true
-    });
-
-    // IMPORTAR O JS DO SELECT2
-    $.getScript("/static/select2/js/select2.min.js", function() {
-        // Inicializar o Select2 no campo 'select' de cidade
-        $('select').select2({
-            placeholder: 'Selecione uma opção',
-            allowClear: true
-        });
-    });
-});
 
 // -----XXX-----XXX-----XXX-----XXX-----XXX----- //
 
@@ -206,11 +189,3 @@ function showFeedback(message, isSuccess) {
         }, 5000); // Tempo em milissegundos
     }
 }
-
-// IMPORTAR O JS DO SELECT2
-$.getScript("/static/select2/js/select2.min.js", function() {
-    $('#select-cidade').select2({
-        placeholder: 'Selecione a Cidade / UF',
-        allowClear: true
-    });
-});

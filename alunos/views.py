@@ -90,7 +90,6 @@ def aluno_list(request):
         'query_params': request.GET,
     })
 
-
 def aluno_detail(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)
     contatos = AlunoContato.objects.filter(aluno=aluno)  # Aqui você busca os contatos relacionados ao aluno
