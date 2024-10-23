@@ -9,12 +9,12 @@ from .models import Aluno, AlunoContato
 from cidades.models import Cidade, Estado
 from .forms import AlunoForm
 
-# View para a Página Inicial do Projeto
+# ----- View para a Página Inicial do Projeto -----
 @login_required
 def home(request):
     return render(request, 'home.html')
 
-# View para a Página de Login
+# ----- View para a Página de Login -----
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -29,7 +29,7 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
-# Defina o formset para AlunoContato
+# ----- Definindo o formset para AlunoContato -----
 AlunoContatoFormSet = inlineformset_factory(
     Aluno,
     AlunoContato, 
@@ -37,11 +37,27 @@ AlunoContatoFormSet = inlineformset_factory(
     extra=1, 
     can_delete=True)
 
-# Página Inicial de Alunos
+# ----- View para a Página Inicial de Alunos -----
 def aluno_home(request):
     return render(request, 'alunos/aluno_home.html')
 
-# Listar Alunos
+# ----- View para Adicionar um Aluno -----
+def aluno_new(request):
+    cidades = Cidade.objects.select_related('estado').order_by('nome')  # Ordenar por nome
+    if request.method == "POST":
+        form = AlunoForm(request.POST)
+        formset = AlunoContatoFormSet(request.POST)
+        if form.is_valid() and formset.is_valid():
+            aluno = form.save()  # Salva o aluno
+            formset.instance = aluno  # Define a instância do aluno no formset
+            formset.save()  # Salva os contatos
+            return redirect('aluno_list')
+    else:
+        form = AlunoForm()
+        formset = AlunoContatoFormSet()
+    return render(request, 'alunos/aluno_form.html', {'form': form, 'formset': formset, 'cidades': cidades})
+
+# ----- View para Listar os Alunos -----
 def aluno_list(request):
     query = request.GET.get('q')  # Obtém o termo de busca da URL
     inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)
@@ -90,27 +106,14 @@ def aluno_list(request):
         'query_params': request.GET,
     })
 
+# ----- View para Visualizar os detalhes de um Alluno -----
 def aluno_detail(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)
     contatos = AlunoContato.objects.filter(aluno=aluno)  # Aqui você busca os contatos relacionados ao aluno
     return render(request, 'alunos/aluno_detail.html', {'aluno': aluno, 'contatos': contatos})
 
-def aluno_new(request):
-    cidades = Cidade.objects.select_related('estado').order_by('nome')  # Ordenar por nome
-    if request.method == "POST":
-        form = AlunoForm(request.POST)
-        formset = AlunoContatoFormSet(request.POST)
-        if form.is_valid() and formset.is_valid():
-            aluno = form.save()  # Salva o aluno
-            formset.instance = aluno  # Define a instância do aluno no formset
-            formset.save()  # Salva os contatos
-            return redirect('aluno_list')
-    else:
-        form = AlunoForm()
-        formset = AlunoContatoFormSet()
-    return render(request, 'alunos/aluno_form.html', {'form': form, 'formset': formset, 'cidades': cidades})
-
-def aluno_update(request, pk):
+# ----- View para Editar um Aluno -----
+def aluno_edit(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)
     cidades = Cidade.objects.select_related('estado').order_by('nome')  # Ordenar por nome
     if request.method == "POST":
@@ -125,16 +128,10 @@ def aluno_update(request, pk):
         formset = AlunoContatoFormSet(instance=aluno)
     return render(request, 'alunos/aluno_form.html', {'form': form, 'formset': formset, 'cidades': cidades})
 
+# ----- View para Excluir um Aluno -----
 def aluno_delete(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)
     if request.method == "POST":
         aluno.delete()
         return redirect('aluno_list')
     return render(request, 'alunos/aluno_confirm_delete.html', {'aluno': aluno})
-
-def cidade_por_codigo_ibge(request, codigo_ibge):
-    try:
-        cidade = Cidade.objects.get(codigo_ibge=codigo_ibge)
-        return JsonResponse({'cidade_id': cidade.id})
-    except Cidade.DoesNotExist:
-        return JsonResponse({'erro': 'Cidade não encontrada'}, status=404)

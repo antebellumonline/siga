@@ -7,14 +7,14 @@ from django.contrib import messages
 from django.db.models import Q
 from django.core.paginator import Paginator
 from .models import Certificacao, Certificador
-from .forms import CertificacaoForm, CertificadorForm  # Certifique-se de criar esses formulários
+from .forms import CertificacaoForm, CertificadorForm
 
-# View para a Página Inicial do Projeto
+# ----- View para a Página Inicial do Projeto -----
 @login_required
 def home(request):
     return render(request, 'home.html')
 
-# View para a Página de Login
+# ----- View para a Página de Login -----
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -29,11 +29,22 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
-# Página principal de certificações
+# ----- View para a Página Inicial das Certificações -----
 def certificacao_home(request):
     return render(request, 'certificacao/certificacao_home.html')
 
-# Listar Certificadores
+# ----- View para Adicionar um Certificador -----
+def certificador_new(request):
+    if request.method == "POST":
+        form = CertificadorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('certificador_list')
+    else:
+        form = CertificadorForm()
+    return render(request, 'certificacao/certificador_form.html', {'form': form})
+
+# ----- View para Listar os Certificadores -----
 def certificador_list(request):
     query = request.GET.get('q')  # Obtém o termo de busca da URL
     inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)
@@ -78,23 +89,12 @@ def certificador_list(request):
         'query_params': request.GET,
         })
 
-# Detalhes do Certificador
+# ----- View para Visualizar os detalhes de um Certificador -----
 def certificador_detail(request, pk):
     certificador = get_object_or_404(Certificador, pk=pk)
     return render(request, 'certificacao/certificador_detail.html', {'certificador': certificador})
 
-# Criar Certificador
-def certificador_new(request):
-    if request.method == "POST":
-        form = CertificadorForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('certificador_list')
-    else:
-        form = CertificadorForm()
-    return render(request, 'certificacao/certificador_form.html', {'form': form})
-
-# Atualizar Certificador
+# ----- View para Editar um Certificador -----
 def certificador_edit(request, pk):
     certificador = get_object_or_404(Certificador, pk=pk)
     if request.method == "POST":
@@ -108,16 +108,33 @@ def certificador_edit(request, pk):
         form = CertificadorForm(instance=certificador)
     return render(request, 'certificacao/certificador_form.html', {'form': form})
 
+# ----- View para Excluir um Certificador -----
 def certificador_delete(request, pk):
     certificador = get_object_or_404(Certificador, pk=pk)
     if request.method == "POST":
         certificador.delete()
-        return JsonResponse({'success': True})  # Retorna um JSON de sucesso para a requisição AJAX
+        return JsonResponse({'success': True})
     else:
-        # Para requisições GET, renderiza a página de confirmação
         return render(request, 'certificacao/certificador_confirm_delete.html', {'certificador': certificador})
+    
+# ----- XXXXX ----- XXXXX -----
 
-# Listar Certificações
+# ----- View para Adicionar uma Certificação -----
+def certificacao_new(request):
+    certificadores = Certificador.objects.order_by('descricao')
+    if request.method == "POST":
+        form = CertificacaoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('certificacao_list')
+        else:
+            print(form.errors)
+    else:
+        form = CertificacaoForm()
+
+    return render(request, 'certificacao/certificacao_form.html', {'form': form, 'certificadores': certificadores})
+
+# ----- View para Listar as Certificações -----
 def certificacao_list(request):
     query = request.GET.get('q')  # Obtém o termo de busca da URL
 
@@ -158,27 +175,12 @@ def certificacao_list(request):
         'query_params': request.GET,  # Adiciona os parâmetros da query
     })
 
-# Detalhes da Certificação
+# ----- View para Visualizar os detalhes de uma Certificação -----
 def certificacao_detail(request, pk):
     certificacao = get_object_or_404(Certificacao, id=pk)
     return render(request, 'certificacao/certificacao_detail.html', {'certificacao': certificacao})
 
-# Criar Certificação
-def certificacao_new(request):
-    certificadores = Certificador.objects.order_by('descricao')
-    if request.method == "POST":
-        form = CertificacaoForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('certificacao_list')
-        else:
-            print(form.errors)
-    else:
-        form = CertificacaoForm()
-
-    return render(request, 'certificacao/certificacao_form.html', {'form': form, 'certificadores': certificadores})
-
-# Atualizar Certificação
+# ----- View para Editar uma Certificação -----
 def certificacao_edit(request, pk):
     certificacao = get_object_or_404(Certificacao, pk=pk)
     certificadores = Certificador.objects.order_by('descricao')
@@ -191,7 +193,7 @@ def certificacao_edit(request, pk):
         form = CertificacaoForm(instance=certificacao)
     return render(request, 'certificacao/certificacao_form.html', {'form': form, 'certificadores': certificadores})
 
-# Excluir Certificação
+# ----- View para Excluir uma Certificação -----
 def certificacao_delete(request, pk):
     certificacao = get_object_or_404(Certificacao, pk=pk)
     if request.method == "POST":
