@@ -208,6 +208,8 @@ def exame_new(request):
         if form.is_valid():
             form.save()
             return redirect('exame_list')
+        else:
+            print(form.errors)
     else:
         form = CentroProvaExameForm()
     

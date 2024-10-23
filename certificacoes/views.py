@@ -160,23 +160,28 @@ def certificacao_list(request):
 
 # Detalhes da Certificação
 def certificacao_detail(request, pk):
-    certificacao = get_object_or_404(Certificacao, pk=pk)
+    certificacao = get_object_or_404(Certificacao, id=pk)
     return render(request, 'certificacao/certificacao_detail.html', {'certificacao': certificacao})
 
 # Criar Certificação
 def certificacao_new(request):
+    certificadores = Certificador.objects.order_by('descricao')
     if request.method == "POST":
         form = CertificacaoForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('certificacao_list')
+        else:
+            print(form.errors)
     else:
         form = CertificacaoForm()
-    return render(request, 'certificacao/certificacao_form.html', {'form': form})
+
+    return render(request, 'certificacao/certificacao_form.html', {'form': form, 'certificadores': certificadores})
 
 # Atualizar Certificação
-def certificacao_update(request, pk):
+def certificacao_edit(request, pk):
     certificacao = get_object_or_404(Certificacao, pk=pk)
+    certificadores = Certificador.objects.order_by('descricao')
     if request.method == "POST":
         form = CertificacaoForm(request.POST, instance=certificacao)
         if form.is_valid():
@@ -184,7 +189,7 @@ def certificacao_update(request, pk):
             return redirect('certificacao_list')
     else:
         form = CertificacaoForm(instance=certificacao)
-    return render(request, 'certificacao/certificacao_form.html', {'form': form})
+    return render(request, 'certificacao/certificacao_form.html', {'form': form, 'certificadores': certificadores})
 
 # Excluir Certificação
 def certificacao_delete(request, pk):

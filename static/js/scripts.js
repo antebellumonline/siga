@@ -6,11 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
     $('#list-daterange').daterangepicker({
         startDate: moment(),
         endDate: moment(),
-        timePicker: true,
-        timePicker24Hour: true,
-        timePickerIncrement: 30,
         locale: {
-            format: 'DD/MM/YYYY HH:mm', // Formato da data e hora
+            format: 'DD/MM/YYYY', // Formato da data e hora
             applyLabel: 'Aplicar', // Texto do botão "Aplicar"
             cancelLabel: 'Cancelar', // Texto do botão "Cancelar"
             fromLabel: 'De', // Texto do rótulo "De"

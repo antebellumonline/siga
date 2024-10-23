@@ -78,8 +78,8 @@
 <div class="pagination-search">
     <span class="step-links">
         {% if centroProva_exame.has_previous %}
-            <a class="btn-first-circle" href="?page=1&records_per_page={{ request.GET.records_per_page }}&aluno={{ request.GET.aluno }}&data={{ request.GET.data }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Primeira Página"></a>
-            <a class="btn-previous-circle" href="?page={{ centroProva_exame.previous_page_number }}&records_per_page={{ request.GET.records_per_page }}&aluno={{ request.GET.aluno }}&data={{ request.GET.data }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Página Anterior"></a>
+            <a class="btn-first-circle" href="?page=1&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Primeira Página"></a>
+            <a class="btn-previous-circle" href="?page={{ centroProva_exame.previous_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Página Anterior"></a>        
         {% endif %}
 
         <span class="current">
@@ -87,8 +87,8 @@
         </span>
 
         {% if centroProva_exame.has_next %}
-            <a class="btn-next-circle" href="?page={{ centroProva_exame.next_page_number }}&records_per_page={{ request.GET.records_per_page }}&aluno={{ request.GET.aluno }}&data={{ request.GET.data }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Próxima Página"></a>
-            <a class="btn-last-circle" href="?page={{ centroProva_exame.paginator.num_pages }}&records_per_page={{ request.GET.records_per_page }}&aluno={{ request.GET.aluno }}&data={{ request.GET.data }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Última Página"></a>
+            <a class="btn-next-circle" href="?page={{ centroProva_exame.next_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Próxima Página"></a>
+            <a class="btn-last-circle" href="?page={{ centroProva_exame.paginator.num_pages }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Última Página"></a>        
         {% endif %}
     </span>
 </div>
@@ -141,8 +141,8 @@
 <div class="pagination-search">
     <span class="step-links">
         {% if centroProva_exame.has_previous %}
-            <a class="btn-first-circle" href="?page=1&records_per_page={{ request.GET.records_per_page }}&aluno={{ request.GET.aluno }}&data={{ request.GET.data }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Primeira Página"></a>
-            <a class="btn-previous-circle" href="?page={{ centroProva_exame.previous_page_number }}&records_per_page={{ request.GET.records_per_page }}&aluno={{ request.GET.aluno }}&data={{ request.GET.data }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Página Anterior"></a>
+            <a class="btn-first-circle" href="?page=1&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Primeira Página"></a>
+            <a class="btn-previous-circle" href="?page={{ centroProva_exame.previous_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Página Anterior"></a>        
         {% endif %}
 
         <span class="current">
@@ -150,8 +150,8 @@
         </span>
 
         {% if centroProva_exame.has_next %}
-            <a class="btn-next-circle" href="?page={{ centroProva_exame.next_page_number }}&records_per_page={{ request.GET.records_per_page }}&aluno={{ request.GET.aluno }}&data={{ request.GET.data }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Próxima Página"></a>
-            <a class="btn-last-circle" href="?page={{ centroProva_exame.paginator.num_pages }}&records_per_page={{ request.GET.records_per_page }}&aluno={{ request.GET.aluno }}&data={{ request.GET.data }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Última Página"></a>
+            <a class="btn-next-circle" href="?page={{ centroProva_exame.next_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Próxima Página"></a>
+            <a class="btn-last-circle" href="?page={{ centroProva_exame.paginator.num_pages }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Última Página"></a>        
         {% endif %}
     </span>
 </div>

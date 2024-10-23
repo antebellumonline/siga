@@ -1,11 +1,63 @@
+<!-- templates/certificacao/certificacao_form.html -->
+
 {% extends 'base.html' %}
 
+{% block title %}{{ form.instance.pk|yesno:"Editar Certificação,Adicionar Certificação" }}{% endblock %}
+
 {% block content %}
-<h2>{% if form.instance.pk %}Editar{% else %}Adicionar{% endif %} Certificação</h2>
-<form method="post">
+<h2 class="page-title">{{ form.instance.pk|yesno:"Editar Certificação,Adicionar Certificação" }}</h2>
+
+<form method="post" class="edit-form">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar</button>
+    <div class="form-group-edit">
+        {% if form.instance.pk %}
+        <div class="form-group-edit-status">
+            <h4 class="status-section-title">Status da Certificação</h4>
+            <div class="form-input">
+                <label for="id_inativo">Inativo: </label>
+                <select id="id_inativo" name="inativo">
+                    <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
+                    <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
+                </select>
+            </div>
+        </div>
+        {% endif %}
+        <div class="form-group-edit-sub">
+            <h4 class="sub-section-title">Detalhes da Certificação</h4>
+            <div class="form-input">
+                <label for="id_certificador">Certificador: </label>
+                <select name="idCertificador" id="edit-select-certificador" class="select-edit">
+                    <option value="">Selecionar Certificador</option>
+                    {% for certificador in certificadores %}
+                    <option value="{{ certificador.id }}" {% if form.idCertificador.value == certificador.id %}selected{% endif %}>
+                        {{ certificador.descricao }} ({{ certificador.siglaCertificador }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-input">
+                <label for="id_certificacao">Nome da Certificação: </label>
+                {{ form.descricao }}
+            </div>
+            <div class="form-input">
+                <label for="id_siglaExame">Código da Certificação (Exam Code): </label>
+                {{ form.siglaExame }}
+            </div>
+            <div class="form-input">
+                <label for="id_duracao">Duração do Exame (em minutos): </label>
+                {{ form.duracao }}
+            </div>
+            <div class="form-input">
+                <label for="id_observacao">Observações: </label>
+                {{ form.observacao }}
+            </div>
+        </div>
+    </div>
+    <!-- Grupo de botões (Salvar e Retornar) -->
+    <div class="btn-group">
+        <button class="btn-save" type="submit">Salvar Certificação</button>
+        <a class="btn-return" href="{% url 'certificacao_home' %}">Retornar</a>
+    </div>
 </form>
-<a href="{% url 'certificacao_list' %}">Cancelar</a>
+
 {% endblock %}
