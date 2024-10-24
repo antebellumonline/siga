@@ -485,7 +485,7 @@ h2 {
 
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
 
-/* TABELAS */
+/* TABELAS DO LIST*/
 .tb-list {
     width: 100%; /* Define a largura da tabela */
     border-collapse: collapse; /* Faz com que as bordas se unam */
@@ -543,6 +543,7 @@ h2 {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
 }
+
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
 
 /* FORMULÁRIOS DE BUSCA */
@@ -823,19 +824,21 @@ select:focus {
 .group-detail .label-detail {
     font-family: 'Fredoka', sans-serif;
     font-weight: 500;
+    padding-left: 10px;
 }
 
 .group-detail .value-detail {
     font-family: 'Montserrat', sans-serif;
+    padding-right: 10px;
 }
 
 .group-detail-sub {
     display: flex;
-    flex-wrap: wrap;
-    padding: 0;
-    border: 2px solid #40080b;
+    flex-direction: column;
+    padding-top: 0;
     margin-bottom: 20px;
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
     box-sizing: border-box;
 }
 
@@ -856,6 +859,79 @@ select:focus {
     color: #3d3d3d;
     margin-right: 10px;
     flex: 0 0 auto;
+}
+
+.group-detail-status {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border: 2px solid #3d7319;
+    margin-bottom: 20px;
+    margin: 0 auto;
+    width: 30%;
+    box-sizing: border-box;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.group-detail-status-sub {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.tb-detail {
+    width: 100%; /* Define a largura da tabela */
+    border-collapse: collapse; /* Faz com que as bordas se unam */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 0;
+    font-family: 'Fredoka', sans-serif;
+}
+
+.tb-detail th, 
+.tb-detail td {
+    text-align: left; /* Alinha o texto à esquerda */
+    padding: 8px; /* Espaçamento interno nas células */
+}
+
+.tb-detail thead {
+    background-color: #800f17; /* Cor de fundo do cabeçalho */
+    color: white; /* Cor do texto do cabeçalho */
+}
+
+.tb-detail thead th {
+    border-bottom: none; /* Remove a borda inferior do cabeçalho */
+}
+
+.tb-detail tbody tr:nth-child(odd) {
+    background-color: #e3e3e1; /* Cor de fundo para linhas ímpares */
+}
+
+.tb-detail tbody tr:nth-child(even) {
+    background-color: #ffffff; /* Cor de fundo para linhas pares */
+}
+
+.tb-detail th a {
+    color: white; /* Cor do texto dos links no cabeçalho */
+    text-decoration: none; /* Remove o sublinhado dos links */
+}
+
+.tb-detail th a:hover {
+    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
+.tb-detail td {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
 }
 
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */

@@ -1,3 +1,5 @@
+<!-- templates/alunos/aluno_detail.html -->
+
 {% extends 'base.html' %}
 
 {% block title %}SIGA - Detalhes do Aluno{% endblock %}
@@ -6,55 +8,98 @@
 
 <h2 class="page-title">Detalhes do Aluno</h2>
 
-    <p><strong>UID:</strong> {{ aluno.uid }}</p>
-    <p><strong>Nome:</strong> {{ aluno.nome }}</p>
-    <p><strong>CPF:</strong> <span id="cpf">{{ aluno.cpf }}</span></p>
-    <p><strong>CEP:</strong> <span id="cep">{{ aluno.cep }}</span></p>
-    <p><strong>Endereço:</strong> {{ aluno.endereco }}</p>
-    <p><strong>Número:</strong> {{ aluno.numero|floatformat:0 }}</p>
-    <p><strong>Complemento:</strong> {{ aluno.complemento }}</p>
-    <p><strong>Bairro:</strong> {{ aluno.bairro }}</p>
-    <p><strong>Cidade:</strong> {{ aluno.cidade }}</p>
-    <p><strong>Observação:</strong> {{ aluno.observacao }}</p>
-    <p><strong>Status:</strong> {{ aluno.inativo|yesno:"Inativo,Ativo" }}</p>
-
-<!-- Seção de Contatos -->
-<h3>Contatos</h3>
-
-{% if contatos %}
-    <table>
-        <thead>
-            <tr>
-                <th>Tipo de Contato</th>
-                <th>Contato</th>
-                <th>Detalhe</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for contato in contatos %}
-                <tr>
-                    <td>{{ contato.tipo_contato }}</td>
-                    <td>
-                        {% if contato.tipo_contato == 'Telefone' or contato.tipo_contato == 'Celular' %}
-                            <span class="telefone">{{ contato.contato }}</span>
-                        {% else %}
-                            {{ contato.contato }}
-                        {% endif %}
-                    </td>
-                    <td>{{ contato.detalhe }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-    <p>Este aluno não possui contatos cadastrados.</p>
-{% endif %}
-
-<!-- Botões de ação -->
+<div class="group-detail">
+    <div class="group-detail-status">
+        <h6 class="status-section-title">Status do Aluno</h6>
+        <div class="group-detail-status-sub">
+            <p class="p-detail">
+                <span class="value-detail">{{ aluno.inativo|yesno:"Inativo,Ativo" }}</span>
+            </p>
+        </div>
+    </div>
+    <div class="group-detail-sub">
+        <h6 class="sub-section-title">Dados Pessoais</h6>
+        <p class="p-detail">
+            <span class="label-detail">UID: </span>
+            <span class="value-detail">{{ aluno.uid }}</span>
+        </p>
+        <p class="p-detail">
+            <span class="label-detail">Nome: </span>
+            <span class="value-detail">{{ aluno.nome }}</span>
+        </p>
+        <p class="p-detail">
+            <span class="label-detail">CPF: </span>
+            <span class="value-detail">{{ aluno.cpf }}</span>
+        </p>
+    </div>
+    <div class="group-detail-sub">
+        <h6 class="sub-section-title">Endereço</h6>
+        <p class="p-detail">
+            <span class="label-detail">CEP: </span>
+            <span class="value-detail">{{ aluno.cep }}</span>
+        </p>
+        <p class="p-detail">
+            <span class="label-detail">Endereço: </span>
+            <span class="value-detail">{{ aluno.endereco }}</span>
+        </p>
+        <p class="p-detail">
+            <span class="label-detail">Número: </span>
+            <span class="value-detail">{{ aluno.numero|floatformat:0 }}</span>
+        </p>
+        <p class="p-detail">
+            <span class="label-detail">Complemento: </span>
+            <span class="value-detail">{{ aluno.complemento }}</span>
+        </p>
+        <p class="p-detail">
+            <span class="label-detail">Bairro: </span>
+            <span class="value-detail">{{ aluno.bairro }}</span>
+        </p>
+        <p class="p-detail">
+            <span class="label-detail">Cidade: </span>
+            <span class="value-detail">{{ aluno.cidade }}</span>
+        </p>
+        <p class="p-detail">
+            <span class="label-detail">Observação: </span>
+            <span class="value-detail">{{ aluno.observacao }}</span>
+        </p>
+    </div>
+    <div class="group-detail-sub">
+        <h6 class="sub-section-title">Contatos</h6>
+        {% if contatos %}
+            <table class="tb-detail">
+                <thead>
+                    <tr>
+                        <th>Tipo de Contato</th>
+                        <th>Contato</th>
+                        <th>Detalhe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contato in contatos %}
+                        <tr>
+                            <td>{{ contato.tipoContato }}</td>
+                            <td>
+                                {% if contato.tipo_contato == 'Telefone' or contato.tipo_contato == 'Celular' %}
+                                    <span class="telefone">{{ contato.contato }}</span>
+                                {% else %}
+                                    {{ contato.contato }}
+                                {% endif %}
+                            </td>
+                            <td>{{ contato.detalhe }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Este aluno não possui contatos cadastrados.</p>
+        {% endif %}
+    </div>
+</div>
+<!-- Grupo de botões (Editar, Excluir e Retornar) -->
 <div class="btn-group">
-    <a class="btn" href="{% url 'aluno_update' aluno.pk %}">Editar</a>
-    <a class="btn" href="{% url 'aluno_delete' aluno.pk %}">Excluir</a>
-    <a class="btn" href="{% url 'aluno_list' %}">Voltar para a lista</a>
+    <a class="btn-edit" href="{% url 'aluno_edit' aluno.pk %}">Editar</a>
+    <a class="btn-delete" id="btn-delete" data-pk="{{ aluno.pk }}" href="#">Excluir</a>
+    <a class="btn-return" href="{% url 'aluno_list' %}">Retornar</a>
 </div>
 <!-- Modal de Confirmação -->
 <div class="modal-delete" style="display:none;">
