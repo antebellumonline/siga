@@ -474,13 +474,15 @@ h2 {
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: #ffffff;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     border-radius: 6px;
     width: 400px;
     text-align: center;
+    opacity: 1;
+    transition: opacity 0.3s ease;
 }
 
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
