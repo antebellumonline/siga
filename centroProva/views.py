@@ -241,6 +241,7 @@ def exame_detail(request, pk):
 # ----- View para Editar um Exame Realizado no Centro de Provas -----
 def exame_edit(request, pk):
     exame = get_object_or_404(CentroProvaExame, pk=pk)
+    print(exame.data)
     alunos = Aluno.objects.order_by('nome')
     centrosProvas = CentroProva.objects.order_by('nome')
     certificacoes = Certificacao.objects.order_by('descricao')

@@ -14,7 +14,8 @@
             <h4 class="sub-section-title">Detalhes do Exame</h4>
             <div class="form-input">
                 <label for="id_data">Data do Exame: </label>
-                {{ form.data }}
+                <input type="datetime-local" name="data" id="edit-select-dataExame" 
+                       value="{{ form.data.value|date:'Y-m-d H:i' }}">
             </div>
             <div class="form-input">
                 <label for="id_centroProva">Centro de Provas: </label>
@@ -53,16 +54,16 @@
                 <label for="id_presenca">O Aluno estava Presente?</label>
                 <select name="presenca" id="edit-select-presenca">
                     <option value="">---</option>
-                    <option value="True" {% if request.GET.presenca == 'True' %}selected{% endif %}>Sim</option>
-                    <option value="False" {% if request.GET.presenca == 'False' %}selected{% endif %}>Não</option>
+                    <option value="True" {% if form.presenca.value %}selected{% endif %}>Sim</option>
+                    <option value="False" {% if not form.presenca.value %}selected{% endif %}>Não</option>
                 </select>
             </div>
             <div class="form-input">
                 <label for="id_cancelado">O Exame foi Cancelado?</label>
                 <select name="cancelado" id="edit-select-cancelado">
                     <option value="">---</option>
-                    <option value="True" {% if request.GET.cancelado == 'True' %}selected{% endif %}>Sim</option>
-                    <option value="False" {% if request.GET.cancelado == 'False' %}selected{% endif %}>Não</option>
+                    <option value="True" {% if form.cancelado.value %}selected{% endif %}>Sim</option>
+                    <option value="False" {% if not form.cancelado.value %}selected{% endif %}>Não</option>
                 </select>
             </div>
         </div>
