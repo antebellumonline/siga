@@ -75,44 +75,28 @@
 <!-- Seletor para escolher quantos registros exibir -->
 {% include "includes/records_per_page_selector.html" with action_url=request.path %}
 <!-- Paginação da Tabela -->
-<div class="pagination-search">
-    <span class="step-links">
-        {% if centroProva_exame.has_previous %}
-            <a class="btn-first-circle" href="?page=1&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Primeira Página"></a>
-            <a class="btn-previous-circle" href="?page={{ centroProva_exame.previous_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Página Anterior"></a>        
-        {% endif %}
-
-        <span class="current">
-            Página {{ centroProva_exame.number }} de {{ centroProva_exame.paginator.num_pages }}.
-        </span>
-
-        {% if centroProva_exame.has_next %}
-            <a class="btn-next-circle" href="?page={{ centroProva_exame.next_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Próxima Página"></a>
-            <a class="btn-last-circle" href="?page={{ centroProva_exame.paginator.num_pages }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Última Página"></a>        
-        {% endif %}
-    </span>
-</div>
+{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
 <!-- Tabela de busca -->
 <table class="tb-list" id="tb-list-centroProva-exames">
     <thead>
         <tr>
             <th>
-                <a href="?order_by=data&descending={% if request.GET.order_by == 'data' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&data={{ request.GET.data }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                    Data {% if request.GET.order_by == 'data' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                <a href="?order_by=data&descending={% if request.GET.order_by == 'data' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                    Data e Hora {% if request.GET.order_by == 'data' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
             <th>
-                <a href="?order_by=aluno__nome&descending={% if request.GET.order_by == 'aluno__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&data={{ request.GET.data }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                <a href="?order_by=aluno__nome&descending={% if request.GET.order_by == 'aluno__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
                     Aluno {% if request.GET.order_by == 'aluno__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
             <th>
-                <a href="?order_by=centroProva__nome&descending={% if request.GET.order_by == 'centroProva__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&data={{ request.GET.data }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                <a href="?order_by=centroProva__nome&descending={% if request.GET.order_by == 'centroProva__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
                     Centro de Prova {% if request.GET.order_by == 'centroProva__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
             <th>
-                <a href="?order_by=certificacao__nome&descending={% if request.GET.order_by == 'certificacao__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&data={{ request.GET.data }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                <a href="?order_by=certificacao__nome&descending={% if request.GET.order_by == 'certificacao__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
                     Certificação {% if request.GET.order_by == 'certificacao__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
@@ -121,9 +105,9 @@
         </tr>
     </thead>
     <tbody>
-        {% for exame in centroProva_exame %}
+        {% for exame in page_obj %}
         <tr>
-            <td>{{ exame.data }}</td>
+            <td>{{ exame.data|date:"d/m/Y H:i" }}</td>
             <td><a href="{% url 'exame_detail' exame.pk %}">{{ exame.aluno.nome }}</a></td>
             <td>{{ exame.centroProva.nome }}</td>
             <td>{{ exame.certificacao.descricao }} ({{ exame.certificacao.siglaExame }})</td>
@@ -138,23 +122,7 @@
     </tbody>
 </table>
 <!-- Paginação da Tabela -->
-<div class="pagination-search">
-    <span class="step-links">
-        {% if centroProva_exame.has_previous %}
-            <a class="btn-first-circle" href="?page=1&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Primeira Página"></a>
-            <a class="btn-previous-circle" href="?page={{ centroProva_exame.previous_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Página Anterior"></a>        
-        {% endif %}
-
-        <span class="current">
-            Página {{ centroProva_exame.number }} de {{ centroProva_exame.paginator.num_pages }}.
-        </span>
-
-        {% if centroProva_exame.has_next %}
-            <a class="btn-next-circle" href="?page={{ centroProva_exame.next_page_number }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Próxima Página"></a>
-            <a class="btn-last-circle" href="?page={{ centroProva_exame.paginator.num_pages }}&records_per_page={{ request.GET.records_per_page }}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}" title="Última Página"></a>        
-        {% endif %}
-    </span>
-</div>
+{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
 <!-- Grupo de botões (Novo e Retornar) -->
 <div class="btn-group">
     <a class="btn-return" href="{% url 'centroProva_home' %}">Retornar</a>

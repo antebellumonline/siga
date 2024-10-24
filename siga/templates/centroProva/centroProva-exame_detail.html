@@ -1,0 +1,74 @@
+<!-- templates/centroProva/centroProva-exame_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}SIGA - Detalhes do Exame Realizado no Centro de Provas{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Detalhes do Exame Realizado no Centro de Provas</h2>
+
+<div class="group-detail">
+    <p class="p-detail">
+        <span class="label-detail">ID: </span>
+        <span class="value-detail">{{ centroProva_exame.id }}</span>
+    </p>
+    <p class="p-detail">
+        <span class="label-detail">Data: </span>
+        <span class="value-detail">{{ centroProva_exame.data|date:"d/m/Y H:i" }}</span>
+    </p>
+    <p class="p-detail">
+        <span class="label-detail">Centro de Provas: </span>
+        <span class="value-detail">{{ centroProva_exame.centroProva.nome }}</span>
+    </p>
+    <p class="p-detail">
+        <span class="label-detail">Certificação: </span>
+        <span class="value-detail">{{ centroProva_exame.certificacao.descricao }} 
+            {% if centroProva_exame.certificacao.siglaExame %}
+                ({{ centroProva_exame.certificacao.siglaExame }})
+            {% endif %}
+        </span>
+    </p>
+    <p class="p-detail">
+        <span class="label-detail">Aluno: </span>
+        <span class="value-detail">{{ centroProva_exame.aluno.uid }} - {{ centroProva_exame.aluno.nome }}</span>
+    </p>
+    <p class="p-detail">
+        <span class="label-detail">O aluno estava presente? </span>
+        <span class="value-detail">{{ centroProva_exame.presenca|yesno:"Sim,Não" }}</span>
+    </p>
+    <p class="p-detail">
+        <span class="label-detail">O Exame foi cancelado? </span>
+        <span class="value-detail">{{ centroProva_exame.cancelado|yesno:"Sim,Não" }}</span>
+    </p>
+</div>
+
+<!-- Grupo de botões (Editar, Excluir e Retornar) -->
+<div class="btn-group">
+    <a class="btn-edit" href="{% url 'exame_edit' centroProva_exame.pk %}">Editar</a>
+    <a class="btn-delete" id="btn-delete" data-pk="{{ centroProva_exame.pk }}" href="#">Excluir</a>
+    <a class="btn-return" href="{% url 'exame_list' %}">Retornar</a>
+</div>
+
+<!-- Modal de Confirmação -->
+<div class="modal-delete" style="display:none;">
+    <div class="modal-content">
+        <span class="btn-close-modal">&times;</span>
+        <h2>Confirmar Exclusão</h2>
+        <p>Tem certeza que deseja excluir este Exame?</p>
+        <div class="btn-group-modal">
+            <button type="button" class="btn-confirm">Confirmar</button>
+            <button type="button" class="btn-cancel">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de feedback de sucesso/erro -->
+<div class="modal-feedback" style="display:none;">
+    <div class="modal-content">
+        <div class="modal-feedback-message"></div>
+        <div class="countdown-message" style="margin-top: 10px;"></div>
+    </div>
+</div>
+
+{% endblock %}

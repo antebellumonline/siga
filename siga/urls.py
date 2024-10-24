@@ -10,16 +10,18 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import delete_item
+from .views import delete_item, home
 
 urlpatterns = [
     # Path para a interface Administrativa
     path('admin/', admin.site.urls),
-    # Inclui as URLs do app 'alunos'
+
+    # URL para a Página Inicial do Projeto
+    path('', home, name='home'),
+    
+    # Inclui as URLs dos apps
     path('', include('alunos.urls')),
-    # Inclui as URLs do app 'certificacoes'
     path('', include('certificacoes.urls')),
-    # Inclui as URLs do app 'centroProva'
     path('', include('centroProva.urls')),
     # Path para o logout do usuário
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),

@@ -195,19 +195,29 @@ def exame_list(request):
         order_by = f'-{order_by}'
     centroProva_exame = centroProva_exame.order_by(order_by)
 
-    # Paginação
-    records_per_page = request.GET.get('records_per_page', 10)  # Padrão: 10 registros por página
+    # Quantidade de registros por página (com valor padrão de 20)
+    records_per_page = request.GET.get('records_per_page', 20)
     try:
         records_per_page = int(records_per_page)
     except (ValueError, TypeError):
-        records_per_page = 10  # Caso ocorra erro, volta para o padrão de 10
+        records_per_page = 10
 
-    paginator = Paginator(centroProva_exame, records_per_page)  # Cria o paginator
-    page_number = request.GET.get('page')  # Obtém o número da página atual
+    # Criação do paginator com o queryset e o número de registros por página
+    paginator = Paginator(centroProva_exame, records_per_page)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    # Tratamento de erros para garantir que o objeto de página seja válido
     try:
-        centroProva_exame_page = paginator.get_page(page_number)  # Pega a página solicitada
+        page_obj = paginator.get_page(page_number)
     except (ValueError, TypeError):
-        centroProva_exame_page = paginator.get_page(1)  # Volta para a primeira página em caso de erro
+        page_obj = paginator.get_page(1)  # Volta para a primeira página se o número de página for inválido
+
+    # Renderização do template com o objeto de paginação e os parâmetros de consulta
+    context = {
+        'page_obj': page_obj,  # Objeto de paginação para uso no template
+        'query_params': request.GET.urlencode()  # Parâmetros da URL para preservar na paginação
+    }
 
     # Buscar e ordenar opções de seleção
     alunos = Aluno.objects.order_by('nome')
@@ -215,10 +225,12 @@ def exame_list(request):
     certificacoes = Certificacao.objects.order_by('descricao')
 
     return render(request, 'centroProva/centroProva-exame_list.html', {
-        'centroProva_exame': centroProva_exame_page,
+        'centroProva_exame': centroProva_exame,
+        'page_obj': page_obj,
         'aluno': alunos,
         'centroProva': centrosProva,
         'certificacao': certificacoes,
+        'query_params': request.GET.urlencode(),
     })
 
 # ----- View para Visualizar os Detalhes de um Exame Realizado no Centro de Provas -----

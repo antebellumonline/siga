@@ -1,7 +1,7 @@
 # siga/views.py
 
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.apps import apps
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
@@ -35,3 +35,7 @@ def delete_item(request, model_name, pk):
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
     print('Método não permitido.')
     return JsonResponse({'success': False, 'error': 'Método não permitido'}, status=405)
+
+# ----- View para a Página Inicial do Projeto -----
+def home(request):
+    return render(request, 'home.html')
