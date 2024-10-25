@@ -481,7 +481,7 @@ h2 {
     border-radius: 6px;
     width: 400px;
     text-align: center;
-    opacity: 1;
+    opacity: 1 !important;
     transition: opacity 0.3s ease;
 }
 

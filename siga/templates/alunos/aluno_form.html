@@ -57,7 +57,7 @@
             </div>
             <div class="form-input">
                 <label for="id_cidade">Cidade / UF: </label>
-                <select name="cidade" id="select-cidade" class="select-edit">
+                <select name="cidade" id="select-cidade" class="select-edit select2">
                     <option value="">Selecionar cidade</option>
                     {% for cidade in cidades %}
                     <option value="{{ cidade.id }}" {% if form.cidade.value == cidade.id %}selected{% endif %}>
