@@ -38,53 +38,37 @@ document.addEventListener("DOMContentLoaded", function() {
         $(this).val('');
     });
 
-    // Inicializar o Select2
+    // Inicializar o Select2 para todos os elementos com a classe "select2"
     $.getScript("/static/select2/js/select2.min.js", function() {
-        $('#edit-select-cidade, #edit-select-certificador, #edit-select-certificacao, #edit-select-centroProva, #edit-select-aluno, #list-select-cidade, #list-select-certificador, #list-select-certificacao, #list-select-centroProva, #list-select-aluno').select2({
+        $('.select2').select2({
             placeholder: 'Selecione uma Opção',
             allowClear: true
         });
     });
 
-    // Função para ativar/desativar campos com toggleField
-    function toggleField(fieldId, isChecked) {
-        const field = document.getElementById(fieldId);
+    // Seleciona todos os checkboxes com o atributo data-target
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][data-target]');
+
+    // Função para ativar/desativar campos
+    const toggleField = (field, isChecked) => {
         if (field) {
             field.disabled = !isChecked;
             if (!isChecked) {
                 field.value = '';
             }
         }
-    }
+    };
 
-    // Ativação de campos se houver valor inicial ou se a checkbox estiver marcada
-    const fieldsToCheck = [
-        { checkboxId: 'enable-list-aluno', fieldId: 'list-aluno' },
-        { checkboxId: 'enable-list-daterange', fieldId: 'list-daterange' },
-        { checkboxId: 'enable-list-centroProva', fieldId: 'list-select-centroProva' },
-        { checkboxId: 'enable-list-certificacao', fieldId: 'list-select-certificacao' },
-        { checkboxId: 'enable-list-presenca', fieldId: 'list-presenca' },
-        { checkboxId: 'enable-list-cancelado', fieldId: 'list-cancelado' }
-    ];
+    // Inicializa o estado dos campos e configura os eventos
+    checkboxes.forEach(checkbox => {
+        const targetField = document.getElementById(checkbox.dataset.target);
+        if (targetField) {
+            // Configura o campo inicialmente
+            toggleField(targetField, checkbox.checked);
 
-    // Desabilitar todos os campos inicialmente
-    fieldsToCheck.forEach(item => {
-        const field = document.getElementById(item.fieldId);
-        if (field) {
-            field.disabled = true; // Desabilitar o campo por padrão
-        }
-    });
-
-    // Verificar o estado das checkboxes e habilitar/desabilitar os campos
-    fieldsToCheck.forEach(item => {
-        const checkbox = document.getElementById(item.checkboxId);
-        if (checkbox) {
-            // Configura o campo baseado no estado da checkbox
-            toggleField(item.fieldId, checkbox.checked);
-
-            // Adiciona um evento para habilitar/desabilitar conforme a checkbox é clicada
+            // Adiciona o evento de mudança para o checkbox
             checkbox.addEventListener('change', function() {
-                toggleField(item.fieldId, checkbox.checked);
+                toggleField(targetField, checkbox.checked);
             });
         }
     });

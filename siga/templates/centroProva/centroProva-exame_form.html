@@ -19,7 +19,7 @@
             </div>
             <div class="form-input">
                 <label for="id_centroProva">Centro de Provas: </label>
-                <select name="centroProva" id="edit-select-centroProva" class="select-edit">
+                <select name="centroProva" id="edit-select-centroProva" class="select-edit select2">
                     <option value="">Selecionar Centro de Provas</option>
                     {% for centroProva in centrosProvas %}
                     <option value="{{ centroProva.id }}" {% if form.centroProva.value == centroProva.id %}selected{% endif %}>
@@ -30,7 +30,7 @@
             </div>
             <div class="form-input">
                 <label for="id_certificacao">Certificação: </label>
-                <select name="certificacao" id="edit-select-certificacao" class="select-edit">
+                <select name="certificacao" id="edit-select-certificacao" class="select-edit select2">
                     <option value="">Selecionar Certificação</option>
                     {% for certificacao in certificacoes %}
                     <option value="{{ certificacao.id }}" {% if form.certificacao.value == certificacao.id %}selected{% endif %}>
@@ -41,7 +41,7 @@
             </div>
             <div class="form-input">
                 <label for="id_aluno">Aluno: </label>
-                <select name="aluno" id="edit-select-aluno" class="select-edit">
+                <select name="aluno" id="edit-select-aluno" class="select-edit select2">
                     <option value="">Selecionar Aluno</option>
                     {% for aluno in alunos %}
                     <option value="{{ aluno.uid }}" {% if form.aluno.value == aluno.uid %}selected{% endif %}>
@@ -52,19 +52,21 @@
             </div>
             <div class="form-input">
                 <label for="id_presenca">O Aluno estava Presente?</label>
-                <select name="presenca" id="edit-select-presenca">
-                    <option value="">---</option>
+                <select name="presenca" id="edit-select-presenca" class="select-edit select2">
                     <option value="True" {% if form.presenca.value %}selected{% endif %}>Sim</option>
                     <option value="False" {% if not form.presenca.value %}selected{% endif %}>Não</option>
                 </select>
             </div>
             <div class="form-input">
                 <label for="id_cancelado">O Exame foi Cancelado?</label>
-                <select name="cancelado" id="edit-select-cancelado">
-                    <option value="">---</option>
+                <select name="cancelado" id="edit-select-cancelado" class="select-edit select2">
                     <option value="True" {% if form.cancelado.value %}selected{% endif %}>Sim</option>
                     <option value="False" {% if not form.cancelado.value %}selected{% endif %}>Não</option>
                 </select>
+            </div>
+            <div class="form-input">
+                <label for="id_observacao">Observações: </label>
+                {{ form.observacao }}
             </div>
         </div>
     </div>

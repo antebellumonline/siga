@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.forms import inlineformset_factory, modelformset_factory
 from django.http import JsonResponse
 from django.core.paginator import Paginator
+from django.db.models import Q
 from .models import Aluno, AlunoContato
 from cidades.models import Cidade, Estado
 from .forms import AlunoForm
@@ -64,44 +65,68 @@ def aluno_list(request):
     cidade = request.GET.get('cidade')  # Obtém o filtro de cidade
 
     # Ordenação
-    order_by = request.GET.get('order_by', 'uid')  # Define a ordenação padrão por UID
+    order_by = request.GET.get('order_by', 'nome')  # Define a ordenação padrão por Nome
     descending = request.GET.get('descending', 'False') == 'True'  # Verifica se é para ordenar de forma descendente
 
     # Otimiza a consulta usando select_related para carregar cidade junto com aluno
-    alunos = Aluno.objects.select_related('cidade', 'cidade__estado').all()
+    alunos = Aluno.objects.prefetch_related('contatos', 'cidade', 'cidade__estado').all()
 
     # Aplicar os filtros e pesquisa
     if query:
-        alunos = alunos.filter(nome__icontains=query)  # Pesquisa por nome (parcial)
-    if inativo:
-        alunos = alunos.filter(inativo=inativo)  # Filtra por status
+        alunos = alunos.filter(
+            Q(uid__icontains=query) | 
+            Q(nome__icontains=query) | 
+            Q(contatos__contato__icontains=query) |
+            Q(contatos__detalhe__icontains=query)
+        ).distinct()
+
+    # Filtra por Status
+    if inativo is not None and inativo != "":  # Verifica se o filtro foi aplicado
+        if inativo == 'True':
+            alunos = alunos.filter(inativo=True)
+        elif inativo == 'False':
+            alunos = alunos.filter(inativo=False)
+    
+    # Filtra por Cidade
     if cidade:
         alunos = alunos.filter(cidade__nome=cidade)  # Filtra por Cidade
 
     # Aplicar ordenação apenas se o campo de ordenação for válido
-    valid_order_fields = ['uid', 'nome', 'cpf', 'cidade__nome']  # Campos válidos para ordenação
-    if order_by in valid_order_fields:
-        if descending:
-            order_by = f'-{order_by}'
-        alunos = alunos.order_by(order_by)
+    if descending:
+        order_by = f'-{order_by}'
+    alunos = alunos.order_by(order_by)
 
-    # Paginação
-    records_per_page = request.GET.get('records_per_page', 10)  # Padrão: 10 registros por página
+    # Quantidade de registros por página (com valor padrão de 20)
+    records_per_page = request.GET.get('records_per_page', 20)
     try:
-        records_per_page = int(records_per_page) if records_per_page else 10
-    except ValueError:
+        records_per_page = int(records_per_page)
+    except (ValueError, TypeError):
         records_per_page = 10
 
-    paginator = Paginator(alunos, records_per_page)  # Cria o paginator
+    # Criação do paginator com o queryset e o número de registros por página
+    paginator = Paginator(alunos, records_per_page)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-    page_number = request.GET.get('page')  # Obtém o número da página atual
-    alunos_page = paginator.get_page(page_number)  # Pega a página solicitada
+    # Tratamento de erros para garantir que o objeto de página seja válido
+    try:
+        page_obj = paginator.get_page(page_number)
+    except (ValueError, TypeError):
+        page_obj = paginator.get_page(1)  # Volta para a primeira página se o número de página for inválido
 
-    # Buscar e ordenar as cidades em ordem alfabética junto com o estado (UF)
+    # Renderização do template com o objeto de paginação e os parâmetros de consulta
+    context = {
+        'page_obj': page_obj,  # Objeto de paginação para uso no template
+        'query_params': request.GET.urlencode()  # Parâmetros da URL para preservar na paginação
+    }
+
+    # Buscar e ordenar opções de seleção
     cidades = Cidade.objects.select_related('estado').all().order_by('nome')
 
+    # Renderização do template
     return render(request, 'alunos/aluno_list.html', {
-        'alunos': alunos_page,
+        'alunos': alunos,
+        'page_obj': page_obj,
         'cidades': cidades,
         'query_params': request.GET,
     })

@@ -11,12 +11,14 @@
 <form method="GET" action="{% url 'aluno_list' %}" class="search-form">
     <div class="form-group-search">
         <div class="form-group-search-sub">
-            <label for="search-nome">Buscar por Nome, Telefone ou E-mail:</label>
-            <input type="text" name="q" placeholder="Buscar por Nome, Telefone ou E-mail" value="{{ request.GET.q }}" aria-label="Buscar por nome">
+            <input type="checkbox" id="check-list-aluno-nome-contatos" data-target="list-aluno-nome-contatos">
+            <label for="search-list-aluno-nome-contatos">Buscar por UID, Nome, Telefone ou E-mail:</label>
+            <input type="text" id="list-aluno-nome-contatos" name="q" placeholder="Buscar por UID, Nome, Telefone ou E-mail" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por UID, Nome, Telefone ou E-mail">
         </div>
         <div class="form-group-search-sub">
-            <label for="search-cidade">Selecione a Cidade:</label>
-            <select name="cidade" id="select-cidade" class="select-search">
+            <input type="checkbox" id="check-list-aluno-cidade" data-target="list-aluno-cidade">
+            <label for="list-aluno-cidade">Selecione a Cidade:</label>
+            <select name="cidade" id="list-aluno-cidade" class="select-search select2">
                 <option value="">Selecionar cidade</option>
                 {% for cidade in cidades %}
                 <option value="{{ cidade.nome }}" {% if request.GET.cidade == cidade.nome %}selected{% endif %}>
@@ -25,9 +27,13 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="checkbox-group-search">
-            <input type="checkbox" name="inativo" value="True" {% if request.GET.inativo %}checked{% endif %}>
-            <label>Mostrar somente inativos</label>
+        <div class="select-group-search">
+            <input type="checkbox" id="check-list-aluno-inativo" data-target="list-aluno-inativo">
+            <label for="list-aluno-inativo">Aluno Inativo?</label>
+            <select name="inativo" id="list-aluno-inativo" class="select-search select2">
+                <option value="True" {% if request.GET.inativo == 'True' %}selected{% endif %}>Sim</option>
+                <option value="False" {% if request.GET.inativo == 'False' %}selected{% endif %}>Não</option>
+            </select>
         </div>
     </div>
     <!-- Botões de Ação -->
@@ -42,21 +48,9 @@
     <a class="btn-new" href="{% url 'aluno_new' %}">Novo</a>
 </div>
 <!-- Seletor para escolher quantos registros exibir -->
-<form method="GET" action="{% url 'aluno_list' %}" class="pagination-form">
-    <label for="records_per_page">Registros para exibir:</label>
-    <select name="records_per_page" id="records_per_page" onchange="this.form.submit()">
-        <option value="10" {% if request.GET.records_per_page == "10" %}selected{% endif %}>10</option>
-        <option value="20" {% if request.GET.records_per_page == "20" %}selected{% endif %}>20</option>
-        <option value="50" {% if request.GET.records_per_page == "50" %}selected{% endif %}>50</option>
-        <option value="100" {% if request.GET.records_per_page == "100" %}selected{% endif %}>100</option>
-        <option value="500" {% if request.GET.records_per_page == "500" %}selected{% endif %}>500</option>
-        <option value="1000" {% if request.GET.records_per_page == "1000" %}selected{% endif %}>1000</option>
-    </select>
-</form>
+{% include "includes/records_per_page_selector.html" with action_url=request.path %}
 <!-- Paginação da Tabela -->
-<div class="pagination-search">
-    {% include 'includes/pagination.html' with page_obj=alunos page=page_number query_params=request.GET %}
-</div>
+{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
 <!-- Tabela de busca -->
 <table class="tb-list" id="tb-list-alunos">
     <thead>
@@ -93,9 +87,7 @@
     </tbody>
 </table>
 <!-- Paginação da Tabela -->
-<div class="pagination-search">
-    {% include 'includes/pagination.html' with page_obj=alunos page=page_number query_params=request.GET %}
-</div>
+{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
 <!-- Grupo de botões (Novo e Retornar) -->
 <div class="btn-group">
     <a class="btn-return" href="{% url 'aluno_home' %}">Retornar</a>

@@ -11,19 +11,19 @@
 <form method="GET" action="{% url 'exame_list' %}" class="search-form">
     <div class="form-group-search">
         <div class="form-group-search-sub">
-            <input type="checkbox" id="enable-list-aluno" onchange="toggleField('search-aluno')">
-            <label for="search-aluno">UID ou Nome do Aluno:</label>
-            <input type="text" id="list-aluno" name="q" placeholder="Busque por UID ou Nome do Aluno" value="{{ request.GET.q }}" class="form-control" aria-label="Busque por UID ou Nome do Aluno">
+            <input type="checkbox" id="check-list-exame-aluno" data-target="list-exame-aluno">
+            <label for="search-list-exame-aluno">UID ou Nome do Aluno:</label>
+            <input type="text" id="list-exame-aluno" name="q" placeholder="Busque por UID ou Nome do Aluno" value="{{ request.GET.q }}" class="form-control" aria-label="Busque por UID ou Nome do Aluno">
         </div>
         <div class="form-group-search-sub">
-            <input type="checkbox" id="enable-list-daterange" onchange="toggleField('daterange')">
-            <label for="search-daterange">Período de realização:</label>
-            <input type="text" id="list-daterange" name="daterange" class="form-control" placeholder="Selecione o período" value="">
+            <input type="checkbox" id="check-list-exame-daterange" data-target="list-exame-daterange">
+            <label for="search-list-exame-daterange">Período de realização:</label>
+            <input type="text" id="list-exame-daterange" name="daterange" class="form-control" placeholder="Selecione o período" value="">
         </div>
         <div class="form-group-search-sub">
-            <input type="checkbox" id="enable-list-centroProva" onchange="toggleField('select-centroProva')">
-            <label for="search-centroProva">Centro de Provas:</label>
-            <select name="centroProva" id="list-select-centroProva" class="select-search">
+            <input type="checkbox" id="check-list-exame-centroProva" data-target="list-exame-centroProva">
+            <label for="search-list-exame-centroProva">Centro de Provas:</label>
+            <select name="centroProva" id="list-exame-centroProva" class="select-search select2">
                 <option value="">Selecione o Centro de Provas</option>
                 {% for centroProva in centroProva %}
                 <option value="{{ centroProva.id }}" {% if request.GET.centroProva == centroProva.id %}selected{% endif %}>
@@ -33,9 +33,9 @@
             </select>
         </div>
         <div class="form-group-search-sub">
-            <input type="checkbox" id="enable-list-certificacao" onchange="toggleField('select-certificacao')">
-            <label for="search-certificacao">Certificação:</label>
-            <select name="certificacao" id="list-select-certificacao" class="select-search">
+            <input type="checkbox" id="check-list-exame-certificacao" data-target="list-exame-certificacao">
+            <label for="search-list-exame-certificacao">Certificação:</label>
+            <select name="certificacao" id="list-exame-certificacao" class="select-search select2">
                 <option value="">Selecionar Certificação</option>
                 {% for certificacao in certificacao %}
                 <option value="{{ certificacao.id }}" {% if request.GET.certificacao == certificacao.id %}selected{% endif %}>
@@ -45,17 +45,15 @@
             </select>
         </div>
         <div class="select-group-search">
-            <input type="checkbox" id="enable-list-presenca" onchange="toggleField('presenca')">
-            <label for="presenca">Presença:</label>
-            <select name="presenca" id="list-presenca">
-                <option value="">---</option>
+            <input type="checkbox" id="check-list-exame-presenca" data-target="list-exame-presenca">
+            <label for="search-list-exame-presenca">Presença:</label>
+            <select name="presenca" id="list-exame-presenca" class="select-search select2">
                 <option value="True" {% if request.GET.presenca == 'True' %}selected{% endif %}>Sim</option>
                 <option value="False" {% if request.GET.presenca == 'False' %}selected{% endif %}>Não</option>
             </select>
-            <input type="checkbox" id="enable-list-cancelado" onchange="toggleField('cancelado')">
-            <label for="cancelado">Cancelado:</label>
-            <select name="cancelado" id="list-cancelado">
-                <option value="">---</option>
+            <input type="checkbox" id="check-list-exame-cancelado" data-target="list-exame-cancelado">
+            <label for="search-list-exame-cancelado">Cancelado:</label>
+            <select name="cancelado" id="list-exame-cancelado" class="select-search select2">
                 <option value="True" {% if request.GET.cancelado == 'True' %}selected{% endif %}>Sim</option>
                 <option value="False" {% if request.GET.cancelado == 'False' %}selected{% endif %}>Não</option>
             </select>
