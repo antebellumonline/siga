@@ -109,8 +109,13 @@ def centroProva_list(request):
 
 # ----- View para Visualizar os detalhes de um Centro de Provas -----
 def centroProva_detail(request, pk):
+    # Obtém os filtros
     centroProva = get_object_or_404(CentroProva, pk=pk)
-    return render(request, 'centroProva/centroProva_detail.html', {'centroProva': centroProva})
+
+    # Renderização do template
+    return render(request, 'centroProva/centroProva_detail.html', {
+        'centroProva': centroProva
+    })
 
 # ----- View para Editar um Centro de Provas -----
 def centroProva_edit(request, pk):

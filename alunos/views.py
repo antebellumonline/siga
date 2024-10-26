@@ -134,9 +134,15 @@ def aluno_list(request):
 
 # ----- View para Visualizar os detalhes de um Alluno -----
 def aluno_detail(request, pk):
+    # Obtém os filtros
     aluno = get_object_or_404(Aluno, pk=pk)
-    contatos = AlunoContato.objects.filter(aluno=aluno)  # Aqui você busca os contatos relacionados ao aluno
-    return render(request, 'alunos/aluno_detail.html', {'aluno': aluno, 'contatos': contatos})
+    contatos = AlunoContato.objects.filter(aluno=aluno).order_by('tipoContato__descricao')
+    
+    # Renderização do template
+    return render(request, 'alunos/aluno_detail.html', {
+        'aluno': aluno,
+        'contatos': contatos
+    })
 
 # ----- View para Editar um Aluno -----
 def aluno_edit(request, pk):

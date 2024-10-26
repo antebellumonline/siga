@@ -8,9 +8,26 @@
 
 <h2 class="page-title">Detalhes do Centro de Provas</h2>
 
-<p><strong>ID:</strong> {{ centroProva.id }}</p>
-<p><strong>Nome:</strong> {{ centroProva.nome }}</p>
-<p><strong>Inativo:</strong> {{ centroProva.inativo }}</p>
+<div class="group-detail">
+    <div class="group-detail-sub">
+        <table class="tb-detail">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Inativo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ centroProva.id }}</td>
+                    <td>{{ centroProva.nome }}</td>
+                    <td>{{ centroProva.inativo|yesno:"Sim,Não" }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 <!-- Grupo de botões (Editar, Excluir e Retornar) -->
 <div class="btn-group">
     <a class="btn-edit" href="{% url 'centroProva_edit' centroProva.pk %}">Editar</a>
@@ -18,25 +35,7 @@
     <a class="btn-return" href="{% url 'centroProva_list' %}">Retornar</a>
 </div>
 
-<!-- Modal de Confirmação -->
-<div class="modal-delete" style="display:none;">
-    <div class="modal-content">
-        <span class="btn-close-modal">&times;</span>
-        <h2>Confirmar Exclusão</h2>
-        <p>Tem certeza que deseja excluir o Centro de Provas <strong>{{ centroProva.nome }}</strong>?</p>
-        <div class="btn-group-modal">
-            <button type="button" class="btn-confirm">Confirmar</button>
-            <button type="button" class="btn-cancel">Cancelar</button>
-        </div>
-    </div>
-</div>
-
-<!-- Modal de feedback de sucesso/erro -->
-<div class="modal-feedback" style="display:none;">
-    <div class="modal-content">
-        <div class="modal-feedback-message"></div>
-        <div class="countdown-message" style="margin-top: 10px;"></div>
-    </div>
-</div>
+<!-- Modal Pop-up -->
+{% include 'includes/modals.html' %}
 
 {% endblock %}
