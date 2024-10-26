@@ -60,6 +60,7 @@ def aluno_new(request):
 
 # ----- View para Listar os Alunos -----
 def aluno_list(request):
+    # Obtém os filtros
     query = request.GET.get('q')  # Obtém o termo de busca da URL
     inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)
     cidade = request.GET.get('cidade')  # Obtém o filtro de cidade
@@ -91,7 +92,7 @@ def aluno_list(request):
     if cidade:
         alunos = alunos.filter(cidade__nome=cidade)  # Filtra por Cidade
 
-    # Aplicar ordenação apenas se o campo de ordenação for válido
+    # Aplicar ordenação
     if descending:
         order_by = f'-{order_by}'
     alunos = alunos.order_by(order_by)

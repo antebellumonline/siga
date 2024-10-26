@@ -46,6 +46,7 @@ def centroProva_new(request):
 
 # ----- View para Listar os Centros de Provas -----
 def centroProva_list(request):
+    # Obtém os filtros
     query = request.GET.get('q')  # Obtém o termo de busca da URL
     inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)
 
@@ -59,31 +60,52 @@ def centroProva_list(request):
     # Aplicar os filtros e pesquisa
     if query:
         centroProva = centroProva.filter(
-            Q(nome__icontains=query)  # Pesquisa por nome (parcial)
+            Q(id__icontains=query) |
+            Q(nome__icontains=query)
         )
-    if inativo:
-        # Converte o valor de 'inativo' para booleano
-        inativo_value = inativo.lower() == 'true'
-        centroProva = centroProva.filter(inativo=inativo_value)
+    
+    # Filtra por Status
+    if inativo is not None and inativo != "":  # Verifica se o filtro foi aplicado
+        if inativo == 'True':
+            centroProva = centroProva.filter(inativo=True)
+        elif inativo == 'False':
+            centroProva = centroProva.filter(inativo=False)
 
     # Aplicar ordenação
     if descending:
         order_by = f'-{order_by}'
     centroProva = centroProva.order_by(order_by)
 
-    # Paginação
-    records_per_page = request.GET.get('records_per_page', 10)  # Padrão: 10 registros por página
+    # Quantidade de registros por página (com valor padrão de 20)
+    records_per_page = request.GET.get('records_per_page', 20)
     try:
-        records_per_page = int(records_per_page) if records_per_page else 10
-    except ValueError:
+        records_per_page = int(records_per_page)
+    except (ValueError, TypeError):
         records_per_page = 10
         
-    paginator = Paginator(centroProva, records_per_page)  # Cria o paginator
+    # Criação do paginator com o queryset e o número de registros por página
+    paginator = Paginator(centroProva, records_per_page)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-    page_number = request.GET.get('page')  # Obtém o número da página atual
-    centroProva_page = paginator.get_page(page_number)  # Pega a página solicitada
+    # Tratamento de erros para garantir que o objeto de página seja válido
+    try:
+        page_obj = paginator.get_page(page_number)
+    except (ValueError, TypeError):
+        page_obj = paginator.get_page(1)  # Volta para a primeira página se o número de página for inválido
 
-    return render(request, 'centroProva/centroProva_list.html', {'centroProva': centroProva_page})
+    # Renderização do template com o objeto de paginação e os parâmetros de consulta
+    context = {
+        'page_obj': page_obj,  # Objeto de paginação para uso no template
+        'query_params': request.GET.urlencode()  # Parâmetros da URL para preservar na paginação
+    }
+
+    # Renderização do template
+    return render(request, 'centroProva/centroProva_list.html', {
+        'centroProva': centroProva,
+        'page_obj': page_obj,
+        'query_params': request.GET,
+        })
 
 # ----- View para Visualizar os detalhes de um Centro de Provas -----
 def centroProva_detail(request, pk):
@@ -159,9 +181,11 @@ def exame_list(request):
     # Aplicar os filtros e pesquisa
     if query:
         centroProva_exame = centroProva_exame.filter(
-            Q(aluno__uid__icontains=query) | Q(aluno__nome__icontains=query)
-        )  # Pesquisa por UID ou Nome do Aluno (parcial)
+            Q(aluno__uid__icontains=query) | 
+            Q(aluno__nome__icontains=query)
+        )
     
+    # Filtra por Período
     if data_range:
         try:
             data_inicio, data_fim = data_range.split(' - ')
@@ -171,24 +195,22 @@ def exame_list(request):
             centroProva_exame = centroProva_exame.filter(data__range=[data_inicio, data_fim])
         except (ValueError, TypeError):
             pass  # Ignorar filtro em caso de erro
-
-    if presenca is not None and presenca != "":  # Verifica se o filtro foi aplicado
-        if presenca == 'True':
-            centroProva_exame = centroProva_exame.filter(presenca=True)
-        elif presenca == 'False':
-            centroProva_exame = centroProva_exame.filter(presenca=False)
-
-    if cancelado is not None and cancelado != "":  # Verifica se o filtro foi aplicado
-        if cancelado == 'True':
-            centroProva_exame = centroProva_exame.filter(cancelado=True)
-        elif cancelado == 'False':
-            centroProva_exame = centroProva_exame.filter(cancelado=False)
-
-    if centroProva:
-        centroProva_exame = centroProva_exame.filter(centroProva__id=centroProva)  # Pesquisa por Centro de Prova
     
+    # Filtra por Presença
+    if presenca in ['True', 'False']:
+        centroProva_exame = centroProva_exame.filter(presenca=(presenca == 'True'))
+
+    # Filtra por Cancelado
+    if cancelado in ['True', 'False']:
+        centroProva_exame = centroProva_exame.filter(cancelado=(cancelado == 'True'))
+
+    # Filtra por Centro de Prova
+    if centroProva:
+        centroProva_exame = centroProva_exame.filter(centroProva__id=centroProva)
+    
+    # Filtra por Certificação
     if certificacao:
-        centroProva_exame = centroProva_exame.filter(certificacao__id=certificacao)  # Pesquisa por Certificação
+        centroProva_exame = centroProva_exame.filter(certificacao__id=certificacao)
 
     # Aplicar ordenação
     if descending:
@@ -200,7 +222,7 @@ def exame_list(request):
     try:
         records_per_page = int(records_per_page)
     except (ValueError, TypeError):
-        records_per_page = 10
+        records_per_page = 20
 
     # Criação do paginator com o queryset e o número de registros por página
     paginator = Paginator(centroProva_exame, records_per_page)

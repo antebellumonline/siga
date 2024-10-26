@@ -10,10 +10,18 @@
 <!-- Formulário de busca e filtro -->
 <form method="GET" action="{% url 'centroProva_list' %}" class="search-form">
     <div class="form-group-search">
-        <input type="text" name="q" placeholder="Buscar por Nome" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por Nome">
-        <div class="checkbox-group-search">
-            <input type="checkbox" name="inativo" value="True" {% if request.GET.inativo %}checked{% endif %}>
-            <label>Mostrar somente inativos</label>
+        <div class="form-group-search-sub">
+            <input type="checkbox" id="check-list-centroProva-nome" data-target="list-centroProva-nome">
+            <label for="search-list-centroProva-nome">ID ou Nome:</label>
+            <input type="text" id="list-centroProva-nome" name="q" placeholder="Busque por ID ou Nome do Centro de Provas" value="{{ request.GET.q }}" class="form-control" aria-label="Busque por ID ou Nome do Centro de Provas">
+        </div>
+        <div class="select-group-search">
+            <input type="checkbox" id="check-list-centroProva-inativo" data-target="list-centroProva-inativo">
+            <label for="search-list-centroProva-inativo">Inativo:</label>
+            <select name="inativo" id="list-centroProva-inativo" class="select-search select2">
+                <option value="True" {% if request.GET.inativo == 'True' %}selected{% endif %}>Sim</option>
+                <option value="False" {% if request.GET.inativo == 'False' %}selected{% endif %}>Não</option>
+            </select>
         </div>
     </div>
     <!-- Botões de Ação -->
@@ -28,21 +36,9 @@
     <a class="btn-new" href="{% url 'centroProva_new' %}">Novo</a>
 </div>
 <!-- Seletor para escolher quantos registros exibir -->
-<form method="GET" action="{% url 'centroProva_list' %}" class="pagination-form">
-    <label for="records_per_page">Registros para exibir:</label>
-    <select name="records_per_page" id="records_per_page" onchange="this.form.submit()">
-        <option value="10" {% if request.GET.records_per_page == "10" %}selected{% endif %}>10</option>
-        <option value="20" {% if request.GET.records_per_page == "20" %}selected{% endif %}>20</option>
-        <option value="50" {% if request.GET.records_per_page == "50" %}selected{% endif %}>50</option>
-        <option value="100" {% if request.GET.records_per_page == "100" %}selected{% endif %}>100</option>
-        <option value="500" {% if request.GET.records_per_page == "500" %}selected{% endif %}>500</option>
-        <option value="1000" {% if request.GET.records_per_page == "1000" %}selected{% endif %}>1000</option>
-    </select>
-</form>
+{% include "includes/records_per_page_selector.html" with action_url=request.path %}
 <!-- Paginação da Tabela -->
-<div class="pagination-search">
-    {% include 'includes/pagination.html' with page_obj=centroProva page=page_number query_params=request.GET %}
-</div>
+{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
 <!-- Tabela de busca -->
 <table class="tb-list" id="tb-list-centroProva">
     <thead>
@@ -61,7 +57,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for centro in centroProva %}
+        {% for centro in page_obj %}
         <tr>
             <td>{{ centro.id }}</td>
             <td><a href="{% url 'centroProva_detail' centro.pk %}">{{ centro.nome }}</a></td>
@@ -75,9 +71,7 @@
     </tbody>
 </table>
 <!-- Paginação da Tabela -->
-<div class="pagination-search">
-    {% include 'includes/pagination.html' with page_obj=centroProva page=page_number query_params=request.GET %}
-</div>
+{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
 <!-- Grupo de botões (Novo e Retornar) -->
 <div class="btn-group">
     <a class="btn-return" href="{% url 'centroProva_home' %}">Retornar</a>

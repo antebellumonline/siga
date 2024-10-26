@@ -46,6 +46,7 @@ def certificador_new(request):
 
 # ----- View para Listar os Certificadores -----
 def certificador_list(request):
+    # Obtém os filtros
     query = request.GET.get('q')  # Obtém o termo de busca da URL
     inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)
 
@@ -59,34 +60,48 @@ def certificador_list(request):
     # Aplicar os filtros e pesquisa
     if query:
         certificador = certificador.filter(
-            Q(descricao__icontains=query) | Q(siglaCertificador__icontains=query)
-        ) # Pesquisa por descrição ou sigla (parcial)
-    if inativo:
-        # Converte o valor de 'inativo' para booleano
-        inativo_value = inativo.lower() == 'true'
-        certificador = certificador.filter(inativo=inativo_value)
+            Q(id__icontains=query) |
+            Q(descricao__icontains=query) |
+            Q(siglaCertificador__icontains=query)
+        )
+    
+    # Filtra por Status
+    if inativo in ['True', 'False']:
+        certificador = certificador.filter(inativo=(inativo == 'True'))
 
     # Aplicar ordenação
     if descending:
         order_by = f'-{order_by}'
     certificador = certificador.order_by(order_by)
 
-    # Paginação
-    records_per_page = request.GET.get('records_per_page', 10)  # Padrão: 10 registros por página
+    # Quantidade de registros por página (com valor padrão de 20)
+    records_per_page = request.GET.get('records_per_page', 20)
     try:
-        records_per_page = int(records_per_page) if records_per_page else 10
-    except ValueError:
-        records_per_page = 10
+        records_per_page = int(records_per_page)
+    except (ValueError, TypeError):
+        records_per_page = 20
         
-    paginator = Paginator(certificador, records_per_page)  # Cria o paginator
+    # Criação do paginator com o queryset e o número de registros por página
+    paginator = Paginator(certificador, records_per_page)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-    page_number = request.GET.get('page')  # Obtém o número da página atual
-    certificador_page = paginator.get_page(page_number)  # Pega a página solicitada
+    # Tratamento de erros para garantir que o objeto de página seja válido
+    try:
+        page_obj = paginator.get_page(page_number)
+    except (ValueError, TypeError):
+        page_obj = paginator.get_page(1)  # Volta para a primeira página se o número de página for inválido
+
+    # Renderização do template com o objeto de paginação e os parâmetros de consulta
+    context = {
+        'page_obj': page_obj,  # Objeto de paginação para uso no template
+        'query_params': request.GET.urlencode()  # Parâmetros da URL para preservar na paginação
+    }
 
     return render(request, 'certificacao/certificador_list.html', {
-        'certificador': certificador_page,
-        'page-number': page_number,
-        'query_params': request.GET,
+        'certificador': certificador,
+        'page_obj': page_obj,
+        'query_params': request.GET.urlencode(),
         })
 
 # ----- View para Visualizar os detalhes de um Certificador -----
@@ -136,43 +151,71 @@ def certificacao_new(request):
 
 # ----- View para Listar as Certificações -----
 def certificacao_list(request):
+    #Obtém os filtros
     query = request.GET.get('q')  # Obtém o termo de busca da URL
+    certificador = request.GET.get('certificador')  # Filtro de Certificador
+    inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)
 
     # Ordenação
     order_by = request.GET.get('order_by', 'descricao')  # Define a ordenação padrão por Descrição
     descending = request.GET.get('descending', 'False') == 'True'  # Verifica se é para ordenar de forma descendente
 
-    # Inicializa a variável certificacoes com select_related para otimizar a consulta
-    certificacoes = Certificacao.objects.select_related('idCertificador').all()
+    # Otimização de Consulta
+    certificacao = Certificacao.objects.select_related('idCertificador')
 
     # Aplicar os filtros e pesquisa
     if query:
-        certificacoes = certificacoes.filter(
-            Q(descricao__icontains=query) | Q(siglaExame__icontains=query) |
-            Q(idCertificador__descricao__icontains=query)
-        )  # Pesquisa por descrição, sigla ou descrição do certificador (parcial)
+        certificacao = certificacao.filter(
+            Q(id__icontains=query) |
+            Q(descricao__icontains=query) |
+            Q(siglaExame__icontains=query)
+        )
+    # Filtra por Status
+    if inativo in ['True', 'False']:
+        certificacao = certificacao.filter(inativo=(inativo == 'True'))
+
+    # Filtra por Certificador
+    if certificador:
+        certificacao = certificacao.filter(idCertificador=certificador)
 
     # Aplicar ordenação
     if descending:
         order_by = f'-{order_by}'
-    certificacoes = certificacoes.order_by(order_by)
+    certificacao = certificacao.order_by(order_by)
 
-    # Paginação
-    records_per_page = request.GET.get('records_per_page', 10)  # Padrão: 10 registros por página
+    # Quantidade de registros por página (com valor padrão de 20)
+    records_per_page = request.GET.get('records_per_page', 20)
     try:
-        records_per_page = int(records_per_page) if records_per_page else 10
-    except ValueError:
+        records_per_page = int(records_per_page)
+    except (ValueError, TypeError):
         records_per_page = 10
+        
+    # Criação do paginator com o queryset e o número de registros por página
+    paginator = Paginator(certificacao, records_per_page)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-    paginator = Paginator(certificacoes, records_per_page)  # Cria o paginator
+    # Tratamento de erros para garantir que o objeto de página seja válido
+    try:
+        page_obj = paginator.get_page(page_number)
+    except (ValueError, TypeError):
+        page_obj = paginator.get_page(1)  # Volta para a primeira página se o número de página for inválido
 
-    page_number = request.GET.get('page')  # Obtém o número da página atual
-    certificacoes_page = paginator.get_page(page_number)  # Pega a página solicitada
+    # Renderização do template com o objeto de paginação e os parâmetros de consulta
+    context = {
+        'page_obj': page_obj,  # Objeto de paginação para uso no template
+        'query_params': request.GET.urlencode()  # Parâmetros da URL para preservar na paginação
+    }
 
+    # Buscar e ordenar opções de seleção
+    certificador = Certificador.objects.order_by('descricao')
+
+    # Renderização do template
     return render(request, 'certificacao/certificacao_list.html', {
-        'certificacoes': certificacoes_page,
-        'page_number': page_number,  # Adiciona o número da página ao contexto
-        'query_params': request.GET,  # Adiciona os parâmetros da query
+        'certificacao': certificacao,
+        'certificador': certificador,
+        'page_obj': page_obj,
+        'query_params': request.GET,
     })
 
 # ----- View para Visualizar os detalhes de uma Certificação -----

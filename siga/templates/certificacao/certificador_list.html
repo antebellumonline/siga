@@ -10,10 +10,18 @@
 <!-- Formulário de busca e filtro -->
 <form method="GET" action="{% url 'certificador_list' %}" class="search-form">
     <div class="form-group-search">
-        <input type="text" name="q" placeholder="Buscar por Nome ou Sigla" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por Nome ou Sigla">
-        <div class="checkbox-group-search">
-            <input type="checkbox" name="inativo" value="True" {% if request.GET.inativo %}checked{% endif %}>
-            <label>Mostrar somente inativos</label>
+        <div class="form-group-search-sub">
+            <input type="checkbox" id="check-list-certificador-descricao" data-target="list-certificador-descricao">
+            <label for="search-list-certificador-descricao">ID, Sigla ou Nome:</label>
+            <input type="text" id="list-certificador-descricao" name="q" placeholder="Busque por ID, Sigla ou Nome do Certificador" value="{{ request.GET.q }}" class="form-control" aria-label="Busque por ID, Sigla ou Nome do Certificador">
+        </div>
+        <div class="select-group-search">
+            <input type="checkbox" id="check-list-certificador-inativo" data-target="list-certificador-inativo">
+            <label for="search-list-certificador-inativo">Inativo:</label>
+            <select name="inativo" id="list-certificador-inativo" class="select-search select2">
+                <option value="True" {% if request.GET.inativo == 'True' %}selected{% endif %}>Sim</option>
+                <option value="False" {% if request.GET.inativo == 'False' %}selected{% endif %}>Não</option>
+            </select>
         </div>
     </div>
     <!-- Botões de Ação -->
@@ -28,21 +36,9 @@
     <a class="btn-new" href="{% url 'certificador_new' %}">Novo</a>
 </div>
 <!-- Seletor para escolher quantos registros exibir -->
-<form method="GET" action="{% url 'certificador_list' %}" class="pagination-form">
-    <label for="records_per_page">Registros para exibir:</label>
-    <select name="records_per_page" id="records_per_page" onchange="this.form.submit()">
-        <option value="10" {% if request.GET.records_per_page == "10" %}selected{% endif %}>10</option>
-        <option value="20" {% if request.GET.records_per_page == "20" %}selected{% endif %}>20</option>
-        <option value="50" {% if request.GET.records_per_page == "50" %}selected{% endif %}>50</option>
-        <option value="100" {% if request.GET.records_per_page == "100" %}selected{% endif %}>100</option>
-        <option value="500" {% if request.GET.records_per_page == "500" %}selected{% endif %}>500</option>
-        <option value="1000" {% if request.GET.records_per_page == "1000" %}selected{% endif %}>1000</option>
-    </select>
-</form>
+{% include "includes/records_per_page_selector.html" with action_url=request.path %}
 <!-- Paginação da Tabela -->
-<div class="pagination-search">
-    {% include 'includes/pagination.html' with page_obj=certificador page=page_number query_params=request.GET %}
-</div>
+{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
 <!-- Tabela de busca -->
 <table class="tb-list" id="tb-list-certificador">
     <thead>
@@ -66,7 +62,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for certificador in certificador %}
+        {% for certificador in page_obj %}
         <tr>
             <td>{{ certificador.id }}</td>
             <td><a href="{% url 'certificador_detail' certificador.pk %}">{{ certificador.descricao }}</a></td>
@@ -77,9 +73,7 @@
     </tbody>
 </table>
 <!-- Paginação da Tabela -->
-<div class="pagination-search">
-    {% include 'includes/pagination.html' with page_obj=certificador page=page_number query_params=request.GET %}
-</div>
+{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
 <!-- Grupo de botões (Novo e Retornar) -->
 <div class="btn-group">
     <a class="btn-return" href="{% url 'certificacao_home' %}">Retornar</a>
