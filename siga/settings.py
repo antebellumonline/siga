@@ -40,6 +40,25 @@ DATABASES = {
     }
 }
 
+# Configuração de cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',  # Endereço do servidor Memcached
+    }
+}
+
+# Configuração de cache em memória para ambiente de desenvolvimento
+if DEBUG:
+    CACHES['default'] = {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',  # Identificador único para o cache em memória
+    }
+
+# Configuração de sessão
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'  # O alias do cache definido anteriormente
+
 # Configuração dos aplicativos instalados (INSTALLED_APPS)
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -111,7 +130,7 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
 
-# Configurações de depuração SQL
+# Configurações de logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -120,11 +139,21 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
         },
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'django_errors.log'),
+        },
     },
     'loggers': {
         'django.db.backends': {
             'handlers': ['console'],
             'level': 'DEBUG' if DEBUG else 'INFO',
+        },
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
         },
     },
 }
