@@ -13,18 +13,22 @@ from django.conf.urls.static import static
 from .views import delete_item, home
 
 urlpatterns = [
-    # Path para a interface Administrativa
+    # URL para a interface Administrativa Django
     path('admin/', admin.site.urls),
 
     # URL para a Página Inicial do Projeto
     path('', home, name='home'),
+
+    # URLs de Login e Logout do Usuário
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     
-    # Inclui as URLs dos apps
+    # URLs dos apps
     path('', include('alunos.urls')),
     path('', include('certificacoes.urls')),
     path('', include('centroProva.urls')),
-    # Path para o logout do usuário
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    
+    
     # Path para eclusão de registros
     path('delete/<str:model_name>/<int:pk>/', delete_item, name='delete_item'),
 ]

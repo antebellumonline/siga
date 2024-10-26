@@ -21,9 +21,17 @@
 /* PÁGINA DE LOGIN */
 .login-page {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .login-box {
@@ -44,31 +52,18 @@
 
 .login-form-group label {
     display: block;
-    color: #666;
+    color: #3d3d3d;
     margin-bottom: 5px;
     font-family: 'Montserrat', sans-serif; /* Montserrat para os rótulos */
 }
 
 .login-form-group input {
-    width: 100%;
+    width: 100% !important;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-family: 'Montserrat', sans-serif; /* Montserrat para os campos de input */
-}
-
-.login-page .btn {
-    background-color: #be1622;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.login-page .btn:hover {
-    background-color: #a1141d;
+    box-sizing: border-box;
 }
 
 .login-image {
@@ -76,9 +71,11 @@
 }
 
 .login-image img {
+    display: block;
     max-width: 300px;
     height: auto;
     border-radius: 8px;
+    margin: 0 auto;
 }
 
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
@@ -320,7 +317,8 @@ h2 {
 .btn-confirm,
 .btn-cancel,
 .btn-close,
-.btn-clear {
+.btn-clear,
+.btn-access {
     text-decoration: none;
     display: inline-block;
     background-color: #be1622;
@@ -348,7 +346,8 @@ h2 {
 .btn-confirm:hover,
 .btn-cancel:hover,
 .btn-close:hover,
-.btn-clear:hover {
+.btn-clear:hover,
+.btn-access:hover {
     background-color: #bf9d2a;
     transform: scale(1.1);
     z-index: 2;
@@ -365,7 +364,8 @@ h2 {
 .btn-confirm::before,
 .btn-cancel::before,
 .btn-close::before,
-.btn-clear::before {
+.btn-clear::before,
+.btn-access::before {
     font-family: 'Font Awesome 6 Free'; /* Fonte do Font Awesome */
     font-weight: 900; /* Peso necessário para ícones sólidos */
     margin-right: 8px; /* Espaçamento entre o ícone e o texto */
@@ -413,6 +413,10 @@ h2 {
 
 .btn-clear::before {
     content: "\f55a"; /* Código do ícone para "delete-left" */
+}
+
+.btn-access::before {
+    content: "\f2f6"; /* Código do ícone para "right-to-bracket" */
 }
 
 .btn-first-circle,
