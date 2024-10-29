@@ -22,18 +22,9 @@ class AlunoForm(forms.ModelForm):
         """
         model = Aluno # Modelo relacionado ao formulário
         fields = [
-            'uid', 
-            'nome', 
-            'cpf', 
-            'cep', 
-            'endereco', 
-            'numero', 
-            'complemento', 
-            'bairro', 
-            'cidade', 
-            'observacao', 
-            'inativo'
-            ]
+            'uid', 'nome', 'cpf', 'cep', 'endereco', 'numero', 'complemento',
+            'bairro', 'cidade', 'observacao', 'inativo'
+        ]
         widgets = {
             'cidade': forms.Select(attrs={'class': 'form-control'}),  # Dropdown de cidade
             'cep': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'CEP'}),
@@ -42,13 +33,19 @@ class AlunoForm(forms.ModelForm):
         }
 
 class AlunoContatoForm(forms.ModelForm):
+    """
+    Formulário para cadastro e edição de contatos de alunos.
+
+    Este formulário é baseado no modelo AlunoContato e define os campos necessários para
+    adicionar ou atualizar informações de contato do aluno, utilizando widgets personalizados.
+    """
+
     class Meta:
+        """
+        Configurações meta do formulário AlunoContatoForm.
+        """
         model = AlunoContato
-        fields = [
-            'aluno',
-            'tipoContato',
-            'contato',
-            'detalhe']
+        fields = ['aluno', 'tipoContato', 'contato', 'detalhe']
         widgets = {
             'aluno': forms.Select(attrs={'class': 'form-control'}),
             'tipoContato': forms.Select(attrs={'class': 'form-control'}),

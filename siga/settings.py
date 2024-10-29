@@ -5,8 +5,8 @@ Este módulo contém as configurações para o projeto Django siga, incluindo
 configurações para o banco de dados, aplicativos instalados, middlewares e muito mais.
 """
 
-import environ
 import os
+import environ
 
 # Inicializa o django-environ
 env = environ.Env()

@@ -15,17 +15,17 @@ class Aluno(models.Model):
     O campo 'cidade' é uma chave estrangeira para a tabela de cidades, 
     estabelecendo uma relação de um para muitos.
     """
-    uid = models.AutoField(primary_key=True)  # Código único
-    nome = models.CharField(max_length=255)  # Nome completo do aluno
-    cpf = models.CharField(max_length=11, blank=True, null=True)  # CPF do aluno
-    cep = models.CharField(max_length=8, blank=True, null=True)  # CEP
-    endereco = models.CharField(max_length=255, blank=True, null=True)  # Endereço
-    numero = models.CharField(max_length=10, blank=True, null=True)  # Número da residência
-    complemento = models.CharField(max_length=255, blank=True, null=True)  # Complemento (opcional)
-    bairro = models.CharField(max_length=255, blank=True, null=True)  # Bairro
-    cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, blank=True, null=True)  # Código da cidade
-    observacao = models.TextField(blank=True, null=True)  # Observações sobre o aluno
-    inativo = models.BooleanField(default=False)  # Status: 0 Ativo, 1 Inativo
+    uid = models.AutoField(primary_key=True)
+    nome = models.CharField(max_length=255)
+    cpf = models.CharField(max_length=11, blank=True, null=True)
+    cep = models.CharField(max_length=8, blank=True, null=True)
+    endereco = models.CharField(max_length=255, blank=True, null=True)
+    numero = models.CharField(max_length=10, blank=True, null=True)
+    complemento = models.CharField(max_length=255, blank=True, null=True)
+    bairro = models.CharField(max_length=255, blank=True, null=True)
+    cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, blank=True, null=True)
+    observacao = models.TextField(blank=True, null=True)
+    inativo = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         """
@@ -67,8 +67,8 @@ class ConfigTpContato(models.Model):
     Cada tipo de contato possui uma descrição única (ex: Celular Pessoal, E-mail Corporativo).
     """
     id = models.AutoField(primary_key=True)
-    descricao = models.CharField(max_length=255, unique=True)  # Exemplo: "Celular Pessoal", "E-mail Corporativo"
-    inativo = models.BooleanField(default=False)  # Status: 0 Ativo, 1 Inativo
+    descricao = models.CharField(max_length=255, unique=True)
+    inativo = models.BooleanField(default=False)
 
     def __str__(self):
         """
@@ -89,10 +89,10 @@ class AlunoContato(models.Model):
     seus contatos também serão.
     """
     id = models.AutoField(primary_key=True)
-    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='contatos')  # Relaciona com a tabela Aluno
-    tipoContato = models.ForeignKey(ConfigTpContato, on_delete=models.CASCADE)  # Relaciona com a tabela ConfigTpContato
-    contato = models.CharField(max_length=255)  # Celular, telefone ou e-mail
-    detalhe = models.TextField(blank=True, null=True)  # Observações adicionais
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='contatos')
+    tipoContato = models.ForeignKey(ConfigTpContato, on_delete=models.CASCADE)
+    contato = models.CharField(max_length=255)
+    detalhe = models.TextField(blank=True, null=True)
 
     def __str__(self):
         """

@@ -22,13 +22,12 @@ urlpatterns = [
     # URLs de Login e Logout do Usuário
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    
+
     # URLs dos apps
     path('', include('alunos.urls')),
     path('', include('certificacoes.urls')),
     path('', include('centroProva.urls')),
-    
-    
+
     # Path para eclusão de registros
     path('delete/<str:model_name>/<int:pk>/', delete_item, name='delete_item'),
 ]

@@ -1,3 +1,5 @@
+# apps/alunos/admin.py
+
 """
 Este módulo configura a interface administrativa para o app de Alunos.
 
