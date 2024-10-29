@@ -45,10 +45,12 @@ class AlunoContatoForm(forms.ModelForm):
     class Meta:
         model = AlunoContato
         fields = [
+            'aluno',
             'tipoContato',
             'contato',
             'detalhe']
         widgets = {
+            'aluno': forms.Select(attrs={'class': 'form-control'}),
             'tipoContato': forms.Select(attrs={'class': 'form-control'}),
             'contato': forms.TextInput(attrs={'class': 'form-control'}),
             'detalhe': forms.Textarea(attrs={'class': 'form-control'}),

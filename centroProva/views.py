@@ -109,7 +109,7 @@ def centroProva_list(request):
 
 # ----- View para Visualizar os detalhes de um Centro de Provas -----
 def centroProva_detail(request, pk):
-    # Obtém os filtros
+    # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
     centroProva = get_object_or_404(CentroProva, pk=pk)
 
     # Renderização do template
@@ -119,14 +119,21 @@ def centroProva_detail(request, pk):
 
 # ----- View para Editar um Centro de Provas -----
 def centroProva_edit(request, pk):
+    # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
     centroProva = get_object_or_404(CentroProva, pk=pk)
+    
+    # Verifica se a requisição é do tipo POST (submissão de formulário)
     if request.method == "POST":
         form = CentroProvaForm(request.POST, instance=centroProva)
+        
+        # Se o formulário for válido, salva as alterações no objeto
         if form.is_valid():
             form.save()
             return redirect('centroProva_list')
     else:
         form = CentroProvaForm(instance=centroProva)
+    
+    # Renderização do template
     return render(request, 'centroProva/centroProva_form.html', {'form': form})
 
 # ----- View para Excluir um Centro de Provas -----
@@ -155,16 +162,12 @@ def exame_new(request):
     else:
         form = CentroProvaExameForm()
     
-    return render(
-        request,
-        'centroProva/centroProva-exame_form.html',
-        {
-            'form': form, 
-            'alunos': alunos,
-            'centrosProvas': centrosProvas,
-            'certificacoes': certificacoes
-        }
-    )
+    return render(request, 'centroProva/centroProva-exame_form.html', {
+        'form': form, 
+        'alunos': alunos,
+        'centrosProvas': centrosProvas,
+        'certificacoes': certificacoes
+    })
 
 # ----- View para Listar os Exames Realizados no Centro de Provas -----
 def exame_list(request):
@@ -262,35 +265,41 @@ def exame_list(request):
 
 # ----- View para Visualizar os Detalhes de um Exame Realizado no Centro de Provas -----
 def exame_detail(request, pk):
+    # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
     centroProva_exame = get_object_or_404(CentroProvaExame, pk=pk)
-    return render(request, 'centroProva/centroProva-exame_detail.html', {'centroProva_exame': centroProva_exame})
+    
+    # Renderização do template
+    return render(request, 'centroProva/centroProva-exame_detail.html', {
+        'centroProva_exame': centroProva_exame
+    })
 
 # ----- View para Editar um Exame Realizado no Centro de Provas -----
 def exame_edit(request, pk):
+    # Obtém os filtros
     exame = get_object_or_404(CentroProvaExame, pk=pk)
     print(exame.data)
     alunos = Aluno.objects.order_by('nome')
     centrosProvas = CentroProva.objects.order_by('nome')
     certificacoes = Certificacao.objects.order_by('descricao')
 
+    # Verifica se a requisição é do tipo POST (submissão de formulário)
     if request.method == "POST":
          form = CentroProvaExameForm(request.POST, instance=exame)
+
+        # Se o formulário for válido, salva as alterações no objeto
          if form.is_valid():
              form.save()
              return redirect('exame_list')
     else:
         form = CentroProvaExameForm(instance=exame)
 
-    return render(
-        request,
-        'centroProva/centroProva-exame_form.html',
-        {
-            'form': form, 
-            'alunos': alunos,
-            'centrosProvas': centrosProvas,
-            'certificacoes': certificacoes
-        }
-    )
+    # Renderização do template
+    return render(request, 'centroProva/centroProva-exame_form.html', {
+        'form': form, 
+        'alunos': alunos,
+        'centrosProvas': centrosProvas,
+        'certificacoes': certificacoes
+    })
 
 # ----- View para Excluir um Centro de Provas -----
 def exame_delete(request, pk):

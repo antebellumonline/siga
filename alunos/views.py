@@ -148,17 +148,37 @@ def aluno_detail(request, pk):
 def aluno_edit(request, pk):
     aluno = get_object_or_404(Aluno, pk=pk)
     cidades = Cidade.objects.select_related('estado').order_by('nome')  # Ordenar por nome
+
+    form = AlunoForm(instance=aluno)
+    formset = AlunoContatoFormSet(instance=aluno)
+
     if request.method == "POST":
         form = AlunoForm(request.POST, instance=aluno)
         formset = AlunoContatoFormSet(request.POST, instance=aluno)
+
+        # Verifica se ambos os formulários são válidos
         if form.is_valid() and formset.is_valid():
-            form.save()
-            formset.save()
-            return redirect('aluno_list')
-    else:
-        form = AlunoForm(instance=aluno)
-        formset = AlunoContatoFormSet(instance=aluno)
-    return render(request, 'alunos/aluno_form.html', {'form': form, 'formset': formset, 'cidades': cidades})
+            form.save() # Salva os dados do aluno
+            formset.save() # Salva os dados de contato do aluno
+            return redirect('aluno_list') # Redireciona para a lista de alunos
+        
+        # Se os formulários não forem válidos, imprime os erros para debug
+        else:
+            print("Dados POST:", request.POST)
+            print("Form Errors:", form.errors)
+            print("Formset Errors:", formset.errors)
+
+            # Verifica se há campos vazios no formset e trata
+            for form in formset:
+                if not form.cleaned_data.get('tipoContato') or not form.cleaned_data.get('contato'):
+                    form.add_error('tipoContato', 'Este campo é obrigatório.')
+                    form.add_error('contato', 'Este campo é obrigatório.')
+
+    return render(request, 'alunos/aluno_form.html', {
+        'form': form,
+        'formset': formset,
+        'cidades': cidades
+    })
 
 # ----- View para Excluir um Aluno -----
 def aluno_delete(request, pk):

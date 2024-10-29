@@ -82,21 +82,17 @@
                 </thead>
                 <tbody>
                     {% for form in formset %}
-                        <tr>
-                            <td>
-                                {{ form.tipoContato }}
-                            </td>
-                            <td>
-                                {{ form.contato }}
-                            </td>
-                            <td>
-                                <input type="text" name="{{ form.detalhe.name }}" id="{{ form.detalhe.id_for_label }}" value="{{ form.detalhe.value }}" class="input-detalhe">
-                            </td>
-                            <td>
-                                <input type="hidden" name="{{ form.DELETE.name }}" id="{{ form.DELETE.id_for_label }}" value="0">
-                                <button type="button" class="btn-delete" onclick="this.previousElementSibling.value='1'; this.closest('tr').style.display='none';">Excluir</button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>{{ form.tipoContato }}</td>
+                        <td>{{ form.contato }}</td>
+                        <td>
+                            <input type="text" name="contatos-{{ forloop.counter0 }}-detalhe" id="{{ form.detalhe.id_for_label }}" value="{{ form.detalhe.value }}" class="input-detalhe">
+                            <input type="hidden" name="contatos-{{ forloop.counter0 }}-id" value="{{ form.id.value }}">
+                        </td>
+                        <td>
+                            <button class="btn-delete" type="submit" name="delete_{{ forloop.counter0 }}" value="1">Excluir</button>
+                        </td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>

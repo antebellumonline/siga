@@ -8,10 +8,34 @@
 
 <h2 class="page-title">{{ form.instance.pk|yesno:"Editar Centro de Provas,Adicionar Centro de Provas" }}</h2>
 
-<form method="post">
+<form method="post" class="edit-form">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar</button>
+    <div class="form-group-edit">
+        {% if form.instance.pk %}
+        <div class="form-group-edit-status">
+            <h4 class="status-section-title">Status da Centro de Provas</h4>
+            <div class="form-input">
+                <label for="id_inativo">Inativo: </label>
+                <select id="id_inativo" name="inativo">
+                    <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
+                    <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
+                </select>
+            </div>
+        </div>
+        {% endif %}
+        <div class="form-group-edit-sub">
+            <h4 class="sub-section-title">Detalhes do Centro de Provas</h4>
+            <div class="form-input">
+                <label for="id_nome">Nome do Centro de Provas: </label>
+                {{ form.nome }}
+            </div>
+        </div>
+    </div>
+    <!-- Grupo de botões (Salvar e Retornar) -->
+    <div class="btn-group">
+        <button class="btn-save" type="submit">Salvar Centro de Provas</button>
+        <a class="btn-return" href="{% url 'centroProva_home' %}">Retornar</a>
+    </div>
 </form>
 
 {% endblock %}
