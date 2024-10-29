@@ -1,4 +1,11 @@
 #!/usr/bin/env python
+
+"""
+Este script inicializa a aplicação Django configurando o ambiente e executando
+comandos de gerenciamento. Carrega variáveis de ambiente do arquivo .env e
+configura o módulo de configurações do Django.
+"""
+
 import os
 import sys
 from dotenv import load_dotenv
