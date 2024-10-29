@@ -1,36 +1,55 @@
 # siga/views.py
 
+"""
+Este módulo define as views da aplicação, incluindo funções para exclusão de 
+itens e exibição da página inicial. A função `delete_item` exclui um item 
+específico de um modelo identificado pelo nome e PK, enquanto `home` renderiza
+a página inicial do projeto.
+"""
+
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.apps import apps
-from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-from django.urls import reverse, NoReverseMatch
 
 @csrf_exempt  # Use com cautela
 def delete_item(request, model_name, pk):
-    print(f'Requisição recebida: {request.method}, Modelo: {model_name}, PK: {pk}')  # Adicione este print
+    """
+    Exclui um item de um modelo específico baseado no nome do modelo e na chave primária (PK).
+
+    Parâmetros:
+    - request: Objeto HttpRequest representando a requisição HTTP recebida.
+    - model_name (str): Nome do modelo do qual o item será excluído.
+    - pk (int): Chave primária do item a ser excluído.
+
+    Retorna:
+    - JsonResponse: Resposta JSON indicando sucesso ou falha na operação.
+    """
+    print(f'Requisição recebida: {request.method}, Modelo: {model_name}, PK: {pk}')
     if request.method == "POST":
         try:
-            Model = None
+            model = None
             for app in apps.get_app_configs():
                 try:
-                    Model = app.get_model(model_name)
+                    model = app.get_model(model_name)
                     break
                 except LookupError:
                     continue
-            if not Model:
+            if not model:
                 print('Modelo não encontrado.')  # Modelo não encontrado
-                return JsonResponse({'success': False, 'error': 'Modelo não encontrado'}, status=404)
-            
+                return JsonResponse({
+                    'success': False,
+                    'error': 'Modelo não encontrado'
+                }, status=404)
+
             # Obter o item e excluir
-            item = get_object_or_404(Model, pk=pk)
+            item = get_object_or_404(model, pk=pk)
             item.delete()
             print(f'Item excluído: {item}')  # Adicione este print
-            
+
             # Retornar uma resposta de sucesso sem redirecionar
             return JsonResponse({'success': True})
-        except Exception as e:
+        except ImportError as e:
             print(f'Erro ao excluir o item: {e}')
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
     print('Método não permitido.')
@@ -38,4 +57,13 @@ def delete_item(request, model_name, pk):
 
 # ----- View para a Página Inicial do Projeto -----
 def home(request):
+    """
+    Renderiza a página inicial do projeto.
+
+    Parâmetros:
+    - request: Objeto HttpRequest representando a requisição HTTP recebida.
+
+    Retorna:
+    - HttpResponse: Resposta HTTP que renderiza o template da página inicial.
+    """
     return render(request, 'home.html')
