@@ -6,7 +6,11 @@ configurações para o banco de dados, aplicativos instalados, middlewares e mui
 """
 
 import os
+import pymysql
 import environ
+
+# Inicializa o pymysql
+pymysql.install_as_MySQLdb()
 
 # Inicializa o django-environ
 env = environ.Env()
@@ -27,16 +31,12 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['127.0.0.1', 'localhost'] if 
 # Configuração do banco de dados
 DATABASES = {
     'default': {
-        'ENGINE': 'mssql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': env('DB_NAME'),
         'USER': env('DB_USER'),
         'PASSWORD': env('DB_PASSWORD'),
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
-        'OPTIONS': {
-            'driver': 'ODBC Driver 18 for SQL Server',
-            'extra_params': 'TrustServerCertificate=yes;Encrypt=no;',
-        },
     }
 }
 
