@@ -8,6 +8,8 @@ configurações para o banco de dados, aplicativos instalados, middlewares e mui
 import os
 import pymysql
 import environ
+from django.db.backends.signals import connection_created
+from django.dispatch import receiver
 
 # Inicializa o pymysql
 pymysql.install_as_MySQLdb()
@@ -173,3 +175,12 @@ STATICFILES_DIRS = [
 
 # Configuração do STATIC_ROOT para produção
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+@receiver(connection_created)
+def set_strict_mode(connection, **_):
+    """
+    Configura o modo SQL para STRICT_TRANS_TABLES e NO_ENGINE_SUBSTITUTION
+    para melhorar a integridade dos dados no MariaDB.
+    """
+    with connection.cursor() as cursor:
+        cursor.execute("SET SESSION sql_mode='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION';")
