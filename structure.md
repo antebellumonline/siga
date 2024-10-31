@@ -17,15 +17,13 @@
 │   ├── urls.py
 │   ├── views.py
 │   ├── __init__.py
+├── atualizar-requirements.md
 ├── centroProva
 │   ├── admin.py
 │   ├── apps.py
 │   ├── forms.py
 │   ├── migrations
 │   │   ├── 0001_initial.py
-│   │   ├── 0002_centroprovaexame_observacao.py
-│   │   ├── 0003_remove_centroprovaexame_inativo.py
-│   │   ├── 0004_alter_centroprovaexame_aluno_and_more.py
 │   │   ├── __init__.py
 │   ├── models.py
 │   ├── sql
@@ -43,6 +41,8 @@
 │   │   ├── 0001_initial.py
 │   │   ├── 0002_alter_certificacao_duracao_and_more.py
 │   │   ├── 0003_alter_certificacao_duracao.py
+│   │   ├── 0004_alter_certificacao_idcertificador.py
+│   │   ├── 0005_alter_certificador_siglacertificador.py
 │   │   ├── __init__.py
 │   ├── models.py
 │   ├── tests.py
@@ -60,21 +60,66 @@
 │   ├── views.py
 │   ├── __init__.py
 ├── deploy.sh
+├── django_errors.log
+├── docs
+│   ├── build
+│   │   ├── doctrees
+│   │   │   ├── environment.pickle
+│   │   │   └── index.doctree
+│   │   └── html
+│   │       ├── genindex.html
+│   │       ├── index.html
+│   │       ├── objects.inv
+│   │       ├── search.html
+│   │       ├── searchindex.js
+│   │       ├── _sources
+│   │       │   └── index.rst.txt
+│   │       └── _static
+│   │           ├── alabaster.css
+│   │           ├── base-stemmer.js
+│   │           ├── basic.css
+│   │           ├── custom.css
+│   │           ├── doctools.js
+│   │           ├── documentation_options.js
+│   │           ├── file.png
+│   │           ├── github-banner.svg
+│   │           ├── language_data.js
+│   │           ├── minus.png
+│   │           ├── plus.png
+│   │           ├── portuguese-stemmer.js
+│   │           ├── pygments.css
+│   │           ├── searchtools.js
+│   │           ├── sphinx_highlight.js
+│   │           └── translations.js
+│   ├── make.bat
+│   ├── Makefile
+│   └── source
+│       ├── conf.py
+│       ├── index.rst
+│       ├── _static
+│       └── _templates
 ├── generate_docs.py
 ├── inicializacao_do_projeto.md
 ├── LICENSE
 ├── logs
-│   ├── import_alunos-log.txt
-│   ├── import_aluno_contatos-log.txt
-│   ├── import_centroProva-exames-log.txt
-│   ├── import_centroProva-log.txt
-│   ├── import_certificacoes-log.txt
-│   ├── import_certificador-log.txt
 │   ├── import_cidades-log.txt
 │   ├── import_tpContato-log.txt
 │   └── import_uf-log.txt
 ├── manage.py
 ├── README.md
+├── reports
+│   ├── admin.py
+│   ├── apps.py
+│   ├── migrations
+│   │   ├── __init__.py
+│   ├── models.py
+│   ├── templates
+│   │   ├── alunos
+│   │   ├── centroProva
+│   │   └── certificacoes
+│   ├── tests.py
+│   ├── views.py
+│   ├── __init__.py
 ├── requirements.txt
 ├── siga
 │   ├── asgi.py
@@ -101,6 +146,7 @@
 │   │   │   └── aluno_list.html
 │   │   ├── base.html
 │   │   ├── centroProva
+│   │   │   ├── centroProva-exame_detail.html
 │   │   │   ├── centroProva-exame_form.html
 │   │   │   ├── centroProva-exame_list.html
 │   │   │   ├── centroProva_confirmDelete.html
@@ -110,20 +156,100 @@
 │   │   │   └── centroProva_list.html
 │   │   ├── certificacao
 │   │   │   ├── certificacao_confirm_delete.html
+│   │   │   ├── certificacao_detail.html
 │   │   │   ├── certificacao_form.html
 │   │   │   ├── certificacao_home.html
 │   │   │   ├── certificacao_list.html
 │   │   │   ├── certificador_confirm_delete.html
+│   │   │   ├── certificador_detail.html
 │   │   │   ├── certificador_form.html
 │   │   │   └── certificador_list.html
 │   │   ├── home.html
-│   │   └── login.html
+│   │   ├── includes
+│   │   │   ├── modals.html
+│   │   │   ├── pagination.html
+│   │   │   └── records_per_page_selector.html
+│   │   └── registration
+│   │       └── login.html
+│   ├── templatetags
+│   │   ├── custom_filters.py
+│   │   ├── __init__.py
 │   ├── urls.py
+│   ├── views.py
 │   ├── wsgi.py
 │   ├── __init__.py
 ├── static
+│   ├── bootstrap
+│   │   ├── css
+│   │   │   ├── bootstrap-grid.css
+│   │   │   ├── bootstrap-grid.css.map
+│   │   │   ├── bootstrap-grid.min.css
+│   │   │   ├── bootstrap-grid.min.css.map
+│   │   │   ├── bootstrap-grid.rtl.css
+│   │   │   ├── bootstrap-grid.rtl.css.map
+│   │   │   ├── bootstrap-grid.rtl.min.css
+│   │   │   ├── bootstrap-grid.rtl.min.css.map
+│   │   │   ├── bootstrap-reboot.css
+│   │   │   ├── bootstrap-reboot.css.map
+│   │   │   ├── bootstrap-reboot.min.css
+│   │   │   ├── bootstrap-reboot.min.css.map
+│   │   │   ├── bootstrap-reboot.rtl.css
+│   │   │   ├── bootstrap-reboot.rtl.css.map
+│   │   │   ├── bootstrap-reboot.rtl.min.css
+│   │   │   ├── bootstrap-reboot.rtl.min.css.map
+│   │   │   ├── bootstrap-utilities.css
+│   │   │   ├── bootstrap-utilities.css.map
+│   │   │   ├── bootstrap-utilities.min.css
+│   │   │   ├── bootstrap-utilities.min.css.map
+│   │   │   ├── bootstrap-utilities.rtl.css
+│   │   │   ├── bootstrap-utilities.rtl.css.map
+│   │   │   ├── bootstrap-utilities.rtl.min.css
+│   │   │   ├── bootstrap-utilities.rtl.min.css.map
+│   │   │   ├── bootstrap.css
+│   │   │   ├── bootstrap.css.map
+│   │   │   ├── bootstrap.min.css
+│   │   │   ├── bootstrap.min.css.map
+│   │   │   ├── bootstrap.rtl.css
+│   │   │   ├── bootstrap.rtl.css.map
+│   │   │   ├── bootstrap.rtl.min.css
+│   │   │   └── bootstrap.rtl.min.css.map
+│   │   └── js
+│   │       ├── bootstrap.bundle.js
+│   │       ├── bootstrap.bundle.js.map
+│   │       ├── bootstrap.bundle.min.js
+│   │       ├── bootstrap.bundle.min.js.map
+│   │       ├── bootstrap.esm.js
+│   │       ├── bootstrap.esm.js.map
+│   │       ├── bootstrap.esm.min.js
+│   │       ├── bootstrap.esm.min.js.map
+│   │       ├── bootstrap.js
+│   │       ├── bootstrap.js.map
+│   │       ├── bootstrap.min.js
+│   │       └── bootstrap.min.js.map
+│   ├── bootstrap-datepicker
+│   │   ├── css
+│   │   │   ├── bootstrap-datepicker.css
+│   │   │   ├── bootstrap-datepicker.css.map
+│   │   │   ├── bootstrap-datepicker.min.css
+│   │   │   ├── bootstrap-datepicker.standalone.css
+│   │   │   ├── bootstrap-datepicker.standalone.css.map
+│   │   │   ├── bootstrap-datepicker.standalone.min.css
+│   │   │   ├── bootstrap-datepicker3.css
+│   │   │   ├── bootstrap-datepicker3.css.map
+│   │   │   ├── bootstrap-datepicker3.min.css
+│   │   │   ├── bootstrap-datepicker3.standalone.css
+│   │   │   ├── bootstrap-datepicker3.standalone.css.map
+│   │   │   └── bootstrap-datepicker3.standalone.min.css
+│   │   └── js
+│   │       ├── bootstrap-datepicker.js
+│   │       └── bootstrap-datepicker.min.js
 │   ├── css
 │   │   └── styles.css
+│   ├── daterangepicker
+│   │   ├── css
+│   │   │   └── daterangepicker.css
+│   │   └── js
+│   │       └── daterangepicker.js
 │   ├── fontawesome
 │   │   ├── css
 │   │   │   ├── all.css
@@ -2275,7 +2401,12 @@
 │   │       ├── fa-solid-900.woff2
 │   │       ├── fa-v4compatibility.ttf
 │   │       └── fa-v4compatibility.woff2
+│   ├── fonts
+│   │   ├── Fredoka.ttf
+│   │   └── Montserrat.ttf
 │   ├── js
+│   │   ├── jquery.js
+│   │   ├── moment.js
 │   │   └── scripts.js
 │   └── select2
 │       ├── css
