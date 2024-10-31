@@ -6,7 +6,7 @@ Ele define os formulários para cadastro, edição e outras operações relacion
 """
 
 from django import forms
-from .models import Aluno, AlunoContato
+from .models import Aluno, AlunoContato, ConfigTpContato
 
 class AlunoForm(forms.ModelForm):
     """
@@ -26,7 +26,7 @@ class AlunoForm(forms.ModelForm):
             'bairro', 'cidade', 'observacao', 'inativo'
         ]
         widgets = {
-            'cidade': forms.Select(attrs={'class': 'form-control'}),  # Dropdown de cidade
+            'cidade': forms.Select(attrs={'class': 'form-control'}),
             'cep': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'CEP'}),
             'observacao': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
             'inativo': forms.CheckboxInput()
@@ -39,6 +39,12 @@ class AlunoContatoForm(forms.ModelForm):
     Este formulário é baseado no modelo AlunoContato e define os campos necessários para
     adicionar ou atualizar informações de contato do aluno, utilizando widgets personalizados.
     """
+    # Define o queryset para tipoContato para garantir que os valores são válidos e ativos
+    tipoContato = forms.ModelChoiceField(
+        queryset=ConfigTpContato.objects.filter(inativo=False),
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        required=True
+    )
 
     class Meta:
         """

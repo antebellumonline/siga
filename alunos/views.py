@@ -2,12 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
-from django.forms import inlineformset_factory, modelformset_factory
-from django.http import JsonResponse
+from django.forms import inlineformset_factory
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Aluno, AlunoContato
-from cidades.models import Cidade, Estado
+from cidades.models import Cidade
 from .forms import AlunoForm
 
 # ----- View para a Página Inicial do Projeto -----
@@ -30,33 +29,28 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
-# ----- Definindo o formset para AlunoContato -----
-AlunoContatoFormSet = inlineformset_factory(
-    Aluno,
-    AlunoContato, 
-    fields=('tipoContato', 'contato', 'detalhe'),
-    extra=1, 
-    can_delete=True)
-
 # ----- View para a Página Inicial de Alunos -----
 def aluno_home(request):
     return render(request, 'alunos/aluno_home.html')
 
 # ----- View para Adicionar um Aluno -----
 def aluno_new(request):
-    cidades = Cidade.objects.select_related('estado').order_by('nome')  # Ordenar por nome
+    cidades = Cidade.objects.select_related('estado').order_by('nome')
+
+    form = AlunoForm()
+    
     if request.method == "POST":
         form = AlunoForm(request.POST)
-        formset = AlunoContatoFormSet(request.POST)
-        if form.is_valid() and formset.is_valid():
-            aluno = form.save()  # Salva o aluno
-            formset.instance = aluno  # Define a instância do aluno no formset
-            formset.save()  # Salva os contatos
+        if form.is_valid():
+            form.save()
             return redirect('aluno_list')
-    else:
-        form = AlunoForm()
-        formset = AlunoContatoFormSet()
-    return render(request, 'alunos/aluno_form.html', {'form': form, 'formset': formset, 'cidades': cidades})
+        else:
+            print(form.errors)
+
+    return render(request, 'alunos/aluno_form.html', {
+        'form': form,
+        'cidades': cidades
+    })
 
 # ----- View para Listar os Alunos -----
 def aluno_list(request):
