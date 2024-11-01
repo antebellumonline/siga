@@ -1,3 +1,5 @@
+# apps/centroProva/views.py
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
@@ -63,7 +65,7 @@ def centroProva_list(request):
             Q(id__icontains=query) |
             Q(nome__icontains=query)
         )
-    
+
     # Filtra por Status
     if inativo is not None and inativo != "":  # Verifica se o filtro foi aplicado
         if inativo == 'True':
@@ -82,7 +84,7 @@ def centroProva_list(request):
         records_per_page = int(records_per_page)
     except (ValueError, TypeError):
         records_per_page = 10
-        
+
     # Criação do paginator com o queryset e o número de registros por página
     paginator = Paginator(centroProva, records_per_page)
     page_number = request.GET.get('page')
@@ -121,18 +123,18 @@ def centroProva_detail(request, pk):
 def centroProva_edit(request, pk):
     # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
     centroProva = get_object_or_404(CentroProva, pk=pk)
-    
+
     # Verifica se a requisição é do tipo POST (submissão de formulário)
     if request.method == "POST":
         form = CentroProvaForm(request.POST, instance=centroProva)
-        
+
         # Se o formulário for válido, salva as alterações no objeto
         if form.is_valid():
             form.save()
             return redirect('centroProva_list')
     else:
         form = CentroProvaForm(instance=centroProva)
-    
+
     # Renderização do template
     return render(request, 'centroProva/centroProva_form.html', {'form': form})
 
@@ -151,7 +153,7 @@ def exame_new(request):
     alunos = Aluno.objects.order_by('nome')
     centrosProvas = CentroProva.objects.order_by('nome')
     certificacoes = Certificacao.objects.order_by('descricao')
-    
+
     if request.method == 'POST':
         form = CentroProvaExameForm(request.POST)
         if form.is_valid():
@@ -161,7 +163,7 @@ def exame_new(request):
             print(form.errors)
     else:
         form = CentroProvaExameForm()
-    
+
     return render(request, 'centroProva/centroProva-exame_form.html', {
         'form': form, 
         'alunos': alunos,
@@ -189,10 +191,10 @@ def exame_list(request):
     # Aplicar os filtros e pesquisa
     if query:
         centroProva_exame = centroProva_exame.filter(
-            Q(aluno__uid__icontains=query) | 
+            Q(aluno__uid__icontains=query) |
             Q(aluno__nome__icontains=query)
         )
-    
+
     # Filtra por Período
     if data_range:
         try:
@@ -203,7 +205,7 @@ def exame_list(request):
             centroProva_exame = centroProva_exame.filter(data__range=[data_inicio, data_fim])
         except (ValueError, TypeError):
             pass  # Ignorar filtro em caso de erro
-    
+
     # Filtra por Presença
     if presenca in ['True', 'False']:
         centroProva_exame = centroProva_exame.filter(presenca=(presenca == 'True'))
@@ -215,7 +217,7 @@ def exame_list(request):
     # Filtra por Centro de Prova
     if centroProva:
         centroProva_exame = centroProva_exame.filter(centroProva__id=centroProva)
-    
+
     # Filtra por Certificação
     if certificacao:
         centroProva_exame = centroProva_exame.filter(certificacao__id=certificacao)
@@ -236,7 +238,7 @@ def exame_list(request):
     paginator = Paginator(centroProva_exame, records_per_page)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
+
     # Tratamento de erros para garantir que o objeto de página seja válido
     try:
         page_obj = paginator.get_page(page_number)
@@ -267,7 +269,7 @@ def exame_list(request):
 def exame_detail(request, pk):
     # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
     centroProva_exame = get_object_or_404(CentroProvaExame, pk=pk)
-    
+
     # Renderização do template
     return render(request, 'centroProva/centroProva-exame_detail.html', {
         'centroProva_exame': centroProva_exame
@@ -284,12 +286,12 @@ def exame_edit(request, pk):
 
     # Verifica se a requisição é do tipo POST (submissão de formulário)
     if request.method == "POST":
-         form = CentroProvaExameForm(request.POST, instance=exame)
+        form = CentroProvaExameForm(request.POST, instance=exame)
 
         # Se o formulário for válido, salva as alterações no objeto
-         if form.is_valid():
-             form.save()
-             return redirect('exame_list')
+        if form.is_valid():
+            form.save()
+            return redirect('exame_list')
     else:
         form = CentroProvaExameForm(instance=exame)
 
@@ -308,5 +310,5 @@ def exame_delete(request, pk):
     if request.method == "POST":
         exame.delete()
         return redirect('exame_list')
-    
+
     return render(request, 'centroProva/centroProva-exame_confirm_delete.html', {'exame': exame})

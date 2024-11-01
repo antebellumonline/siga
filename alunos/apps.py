@@ -2,6 +2,7 @@
 
 """
 Configuração do aplicativo 'alunos' para a aplicação Django.
+
 Define a configuração padrão e o nome do aplicativo.
 """
 

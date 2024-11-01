@@ -38,7 +38,7 @@ def aluno_new(request):
     cidades = Cidade.objects.select_related('estado').order_by('nome')
 
     form = AlunoForm()
-    
+
     if request.method == "POST":
         form = AlunoForm(request.POST)
         if form.is_valid():
@@ -60,8 +60,8 @@ def aluno_list(request):
     cidade = request.GET.get('cidade')  # Obtém o filtro de cidade
 
     # Ordenação
-    order_by = request.GET.get('order_by', 'nome')  # Define a ordenação padrão por Nome
-    descending = request.GET.get('descending', 'False') == 'True'  # Verifica se é para ordenar de forma descendente
+    order_by = request.GET.get('order_by', 'nome')
+    descending = request.GET.get('descending', 'False') == 'True'
 
     # Otimiza a consulta usando select_related para carregar cidade junto com aluno
     alunos = Aluno.objects.prefetch_related('contatos', 'cidade', 'cidade__estado').all()
@@ -69,8 +69,8 @@ def aluno_list(request):
     # Aplicar os filtros e pesquisa
     if query:
         alunos = alunos.filter(
-            Q(uid__icontains=query) | 
-            Q(nome__icontains=query) | 
+            Q(uid__icontains=query) |
+            Q(nome__icontains=query) |
             Q(contatos__contato__icontains=query) |
             Q(contatos__detalhe__icontains=query)
         ).distinct()
@@ -81,7 +81,7 @@ def aluno_list(request):
             alunos = alunos.filter(inativo=True)
         elif inativo == 'False':
             alunos = alunos.filter(inativo=False)
-    
+
     # Filtra por Cidade
     if cidade:
         alunos = alunos.filter(cidade__nome=cidade)  # Filtra por Cidade
@@ -107,7 +107,7 @@ def aluno_list(request):
     try:
         page_obj = paginator.get_page(page_number)
     except (ValueError, TypeError):
-        page_obj = paginator.get_page(1)  # Volta para a primeira página se o número de página for inválido
+        page_obj = paginator.get_page(1)
 
     # Renderização do template com o objeto de paginação e os parâmetros de consulta
     context = {
@@ -131,7 +131,7 @@ def aluno_detail(request, pk):
     # Obtém os filtros
     aluno = get_object_or_404(Aluno, pk=pk)
     contatos = AlunoContato.objects.filter(aluno=aluno).order_by('tipoContato__descricao')
-    
+
     # Renderização do template
     return render(request, 'alunos/aluno_detail.html', {
         'aluno': aluno,
@@ -155,7 +155,7 @@ def aluno_edit(request, pk):
             form.save() # Salva os dados do aluno
             formset.save() # Salva os dados de contato do aluno
             return redirect('aluno_list') # Redireciona para a lista de alunos
-        
+
         # Se os formulários não forem válidos, imprime os erros para debug
         else:
             print("Dados POST:", request.POST)

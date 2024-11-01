@@ -1,29 +1,37 @@
 # apps/alunos/forms.py
 
 """
-Este módulo contém os formulários utilizados para o aplicativo de alunos.
-Ele define os formulários para cadastro, edição e outras operações relacionadas aos alunos.
+Este módulo contém os formulários utilizados para o aplicativo de Alunos.
+Ele define os formulários para cadastro, edição e outras operações relacionadas aos Alunos.
 """
 
 from django import forms
-from .models import Aluno, AlunoContato, ConfigTpContato
+from .models import Aluno, AlunoContato
 
 class AlunoForm(forms.ModelForm):
     """
-    Formulário para cadastro e edição de alunos.
+    Formulário para cadastro e edição de Alunos.
 
     Este formulário é baseado no modelo Aluno e define os campos que serão exibidos no formulário, 
     além de customizar a aparência dos campos utilizando widgets.
     """
-
     class Meta:
         """
         Configurações meta do formulário.
         """
         model = Aluno # Modelo relacionado ao formulário
         fields = [
-            'uid', 'nome', 'cpf', 'cep', 'endereco', 'numero', 'complemento',
-            'bairro', 'cidade', 'observacao', 'inativo'
+            'uid',
+            'nome',
+            'cpf',
+            'cep',
+            'endereco',
+            'numero',
+            'complemento',
+            'bairro',
+            'cidade',
+            'observacao',
+            'inativo'
         ]
         widgets = {
             'cidade': forms.Select(attrs={'class': 'form-control'}),
@@ -39,19 +47,17 @@ class AlunoContatoForm(forms.ModelForm):
     Este formulário é baseado no modelo AlunoContato e define os campos necessários para
     adicionar ou atualizar informações de contato do aluno, utilizando widgets personalizados.
     """
-    # Define o queryset para tipoContato para garantir que os valores são válidos e ativos
-    tipoContato = forms.ModelChoiceField(
-        queryset=ConfigTpContato.objects.filter(inativo=False),
-        widget=forms.Select(attrs={'class': 'form-control'}),
-        required=True
-    )
-
     class Meta:
         """
         Configurações meta do formulário AlunoContatoForm.
         """
         model = AlunoContato
-        fields = ['aluno', 'tipoContato', 'contato', 'detalhe']
+        fields = [
+            'aluno',
+            'tipoContato',
+            'contato',
+            'detalhe'
+        ]
         widgets = {
             'aluno': forms.Select(attrs={'class': 'form-control'}),
             'tipoContato': forms.Select(attrs={'class': 'form-control'}),

@@ -1,5 +1,7 @@
+# apps/centroProva/admin.py
+
 """
-Este módulo configura a interface administrativa para o app de Centro de Provas.
+Configuração da interface administrativa para o app 'centroProva'.
 
 Ele registra os modelos para que possam ser gerenciados através do painel administrativo do Django,
 definindo quais campos serão exibidos, quais podem ser pesquisados, 
@@ -30,8 +32,8 @@ class CentroProvaExameAdmin(admin.ModelAdmin):
     """
     Configuração do modelo CentroProvaExame no painel administrativo.
 
-    Exibe os seguintes campos em formato de lista: ID, certificação, centro de prova, aluno, data do exame, 
-    presença, status de cancelamento e status de inatividade.
+    Exibe os seguintes campos em formato de lista: ID, certificação, centro de prova, aluno,
+    data do exame, presença, status de cancelamento e status de inatividade.
     Permite pesquisar por certificação, aluno e centro de prova.
     Permite filtrar os resultados por presença, status de cancelamento e status de inatividade.
     """

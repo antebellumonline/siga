@@ -1,9 +1,14 @@
+# apps/centroProva/models.py
+
 """
-Este módulo contém os modelos para o app de Alunos. 
-Ele define as tabelas e relacionamentos no banco de dados.
+Definições dos modelos do aplicativo 'alunos'.
+
+Este arquivo contém as classes de modelos usadas para representar e manipular
+os dados relacionados aos alunos no banco de dados.
 """
 
 from django.db import models
+from django.db.models import Manager
 from cidades.models import Cidade
 
 class Aluno(models.Model):
@@ -26,6 +31,8 @@ class Aluno(models.Model):
     cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, blank=True, null=True)
     observacao = models.TextField(blank=True, null=True)
     inativo = models.BooleanField(default=False)
+
+    objects: Manager['Aluno'] = Manager()
 
     def save(self, *args, **kwargs):
         """
@@ -57,6 +64,7 @@ class Aluno(models.Model):
         return f'Aluno {self.uid}; {self.nome}'
 
     class Meta:
+        """Meta-informações para o modelo Aluno."""
         db_table = 'tb_aluno'
 
 
@@ -74,9 +82,10 @@ class ConfigTpContato(models.Model):
         """
         Retorna a descrição do tipo de contato.
         """
-        return self.descricao
+        return str(self.descricao)
 
     class Meta:
+        """Meta-informações para o modelo ConfigTpContato."""
         db_table = 'tb_config-tpContato'
 
 
@@ -98,7 +107,9 @@ class AlunoContato(models.Model):
         """
         Retorna uma string com o tipo de contato e o contato.
         """
+        # pylint: disable=no-member
         return f'Contato de {self.aluno.nome}: {self.tipoContato.descricao} - {self.contato}'
 
     class Meta:
+        """Meta-informações para o modelo AlunoContato."""
         db_table = 'tb_aluno-contato'

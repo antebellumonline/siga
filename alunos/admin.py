@@ -1,7 +1,7 @@
 # apps/alunos/admin.py
 
 """
-Este módulo configura a interface administrativa para o app de Alunos.
+Configuração da interface administrativa para o app 'alunos'.
 
 Ele registra os modelos para que possam ser gerenciados através do painel administrativo do Django,
 definindo quais campos serão exibidos, quais podem ser pesquisados, 

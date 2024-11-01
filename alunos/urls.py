@@ -1,7 +1,8 @@
 # apps/alunos/urls.py
 
 """
-Este módulo define as URLs para o aplicativo de alunos. 
+Definição das URLs para o aplicativo 'alunos'.
+
 Ele mapeia as requisições HTTP para as respectivas views, 
 permitindo a navegação e interação com o sistema.
 """

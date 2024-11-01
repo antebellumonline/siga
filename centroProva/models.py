@@ -1,31 +1,52 @@
+# apps/centroProva/models.py
+
+"""
+Definições dos modelos do aplicativo 'centroProva'.
+
+Este arquivo contém as classes de modelos usadas para representar e manipular
+os dados relacionados aos alunos no banco de dados.
+"""
+from datetime import datetime
+
 from django.db import models
 from certificacoes.models import Certificacao
 from alunos.models import Aluno
 
 class CentroProva(models.Model):
+    """Modelo que representa um Centro de Provas."""
+
     id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=255)
     inativo = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.nome
-    
+        return str(self.nome)
+
     class Meta:
+        """Meta-informações para o modelo CentroProva."""
         db_table = 'tb_centroProva'
-    
+
 class CentroProvaExame(models.Model):
+    """Modelo que representa um Exame Realizado no Centro de Prova."""
+
     id = models.AutoField(primary_key=True)
-    certificacao = models.ForeignKey(Certificacao, on_delete=models.PROTECT) # Referencia a tabela tb_certificacao
-    centroProva = models.ForeignKey(CentroProva, on_delete=models.PROTECT) # Referencia a tabela tb_centroProva
-    aluno = models.ForeignKey(Aluno, on_delete=models.PROTECT) # Referencia a tabela tb_aluno
-    data = models.DateTimeField() # Data e hora do exame
-    presenca = models.BooleanField(default=False) # Campo booleano: True para presente, False para ausente
-    cancelado = models.BooleanField(default=False) # Campo booleano: True para cancelado, False para não cancelado
-    observacao = models.TextField(blank=True, null=True)  # Observações sobre o Centro de Provas
+    certificacao = models.ForeignKey(Certificacao, on_delete=models.PROTECT)
+    centroProva = models.ForeignKey(CentroProva, on_delete=models.PROTECT)
+    aluno = models.ForeignKey(Aluno, on_delete=models.PROTECT)
+    data = models.DateTimeField()
+    presenca = models.BooleanField(default=False)
+    cancelado = models.BooleanField(default=False)
+    observacao = models.TextField(blank=True, null=True)
+
     def __str__(self):
-        formatted_date = self.data.strftime('%d/%m/%Y %H:%M:%S') if self.data else 'Data não definida'
+        if isinstance(self.data, datetime):
+            formatted_date = self.data.strftime('%d/%m/%Y %H:%M:%S')
+        else:
+            formatted_date = 'Data não definida'
+
         return f"{self.certificacao} - {self.centroProva} - {self.aluno} - {formatted_date}"
-    
+
     class Meta:
+        """Meta-informações para o modelo CentroProvaExame."""
         db_table = 'tb_centroProva-exames'
         unique_together = ('aluno', 'data')
