@@ -12,14 +12,14 @@ from . import views
 
 urlpatterns = [
     #URL página Principal do Centro de Provas
-    path('centroProva/', views.centroProva_home, name='centroProva_home'),
+    path('centroProva/', views.centroprova_home, name='centroprova_home'),
 
     # URLs Centro de Provas
-    path('centroProva/new/', views.centroProva_new, name='centroProva_new'),
-    path('centroProva/list/', views.centroProva_list, name='centroProva_list'),
-    path('centroProva/<int:pk>/', views.centroProva_detail, name='centroProva_detail'),
-    path('centroProva/<int:pk>/edit/', views.centroProva_edit, name='centroProva_edit'),
-    path('centroProva/<int:pk>/delete/', views.centroProva_delete, name='centroProva_delete'),
+    path('centroProva/new/', views.centroprova_new, name='centroprova_new'),
+    path('centroProva/list/', views.centroprova_list, name='centroprova_list'),
+    path('centroProva/<int:pk>/', views.centroprova_detail, name='centroprova_detail'),
+    path('centroProva/<int:pk>/edit/', views.centroprova_edit, name='centroprova_edit'),
+    path('centroProva/<int:pk>/delete/', views.centroprova_delete, name='centroprova_delete'),
 
     # URLs Exames Realizados
     path('centroProva/exame/new/', views.exame_new, name='exame_new'),
