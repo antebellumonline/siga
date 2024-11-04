@@ -173,6 +173,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+# Configurações de Segurança
+SESSION_COOKIE_SECURE = True  # Envia o cookie de sessão apenas por HTTPS
+SESSION_COOKIE_HTTPONLY = True  # Impede que o cookie seja acessado via JavaScript
+SESSION_COOKIE_SAMESITE = 'Lax'  # Reduz o risco de vazamento de cookies em requisições cross-site
+
 # Configuração do STATIC_ROOT para produção
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
