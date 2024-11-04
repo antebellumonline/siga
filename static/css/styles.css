@@ -80,80 +80,87 @@
 
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
 
-/* Fonte padrão para o corpo do texto */
-body {
-    font-family: 'Montserrat', sans-serif; /* Fonte Montserrat para o corpo */
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #575756;
-}
-
-/* Estilos para títulos */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Fredoka', sans-serif; /* Fonte Fredoka para títulos */
-}
-
-/* Estilos para o header e navegação */
+/* CABEÇALHO DO SITE */
 header {
-    background-color: #1A4F45;
+    background-color: #000000;
     color: white;
-    padding: 15px 0;
+    padding: 10px 0;
     text-align: center;
 }
 
-.nav-container {
+.menu-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-.logo {
-    font-size: 2em;
-    margin: 0;
-    font-family: 'Fredoka', sans-serif;
-}
-
-nav ul {
-    list-style: none;
+.menu ul {
+    list-style-type: none;
     padding: 0;
     text-align: center;
 }
 
-nav ul li {
-    border: 1px solid transparent;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #3FB081;
+.menu > ul > li {
+    position: relative;
     display: inline-block;
-    margin-right: 15px;
+    margin-right: 10px;
+    border-radius: 4px;
+    background-color: #3FB081;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-nav ul li:hover {
-    background-color: #E6B510;
+.menu > ul > li:hover {
+    background: #E6B510;
 }
 
-nav ul li a {
-    color: white;
+.menu > ul > li > a {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
     text-decoration: none;
     text-transform: uppercase;
-    font-family: 'Fredoka', sans-serif;
+    color: #000000;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
-nav ul li a i {
+.menu > ul > li > a i {
+    margin-right: 8px;
     font-size: 24px;
     display: block;
     margin-bottom: 5px;
 }
 
-/* Container de conteúdo */
+.menu > ul > li.active {
+    background-color: #E6B510;
+    color: #000000;
+}
+
+/* Estilo de inatividade */
+.inactive > a {
+    color: #999;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
+
+/* CORPO DO SITE */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 900;
+}
+
 .container {
     width: 100%;
     max-width: 1200px;
     margin: 10px auto;
     padding: 20px;
+    border-radius: 4px;
     background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(26, 79, 69, 0.3);
 }
 
 /* Padronização das páginas de duas ou mais colunas */
@@ -174,7 +181,6 @@ nav ul li a i {
     min-height: 100px; /* Altura mínima para garantir que as colunas sejam iguais */
     margin: 0 5px; /* Adiciona margem entre as colunas */
     box-sizing: border-box; /* Inclui o padding no cálculo da largura */
-    
 }
 
 /* Margem entre colunas */
@@ -202,55 +208,6 @@ h2 {
     color: #000000;
     text-align: center;
     text-transform: uppercase;
-}
-
-.image-container {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.image-container img {
-    max-width: 300px;
-    height: auto;
-}
-
-.btn {
-    background-color: #3FB081;
-    color: white;
-    margin: 30px 10px 20px;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    font-family: 'Fredoka', sans-serif; /* Fonte Fredoka para botões */
-}
-
-.btn:hover {
-    background-color: #a1141d;
-}
-
-.logout {
-    margin-top: 20px;
-    display: inline-block;
-}
-
-.project-list {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.project-list li {
-    margin-bottom: 10px;
-}
-
-.project-list a {
-    color: #3FB081;
-    text-decoration: none;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.project-list a:hover {
-    text-decoration: underline;
 }
 
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
@@ -307,6 +264,10 @@ h2 {
     margin-top: 10px; /* Margem para separar dos campos de pesquisa */
 }
 
+.btn-first,
+.btn-last,
+.btn-previous,
+.btn-next,
 .btn-new,
 .btn-list,
 .btn-reports,
@@ -318,7 +279,8 @@ h2 {
 .btn-cancel,
 .btn-close,
 .btn-clear,
-.btn-access {
+.btn-access,
+.btn-exit {
     text-decoration: none;
     display: inline-block;
     background-color: #1A4F45;
@@ -336,6 +298,10 @@ h2 {
     z-index: 1;
 }
 
+.btn-first:hover,
+.btn-last:hover,
+.btn-previous:hover,
+.btn-next:hover,
 .btn-new:hover,
 .btn-list:hover,
 .btn-reports:hover,
@@ -347,13 +313,15 @@ h2 {
 .btn-cancel:hover,
 .btn-close:hover,
 .btn-clear:hover,
-.btn-access:hover {
+.btn-access:hover,
+.btn-exit:hover {
     background-color: #3FB081;
-    transform: scale(1.1);
-    z-index: 2;
-    transform-origin: center;
 }
 
+.btn-first::before,
+.btn-last::before,
+.btn-previous::before,
+.btn-next::before,
 .btn-new::before, 
 .btn-list::before, 
 .btn-reports::before,
@@ -365,103 +333,57 @@ h2 {
 .btn-cancel::before,
 .btn-close::before,
 .btn-clear::before,
-.btn-access::before {
-    font-family: 'Font Awesome 6 Free'; /* Fonte do Font Awesome */
-    font-weight: 900; /* Peso necessário para ícones sólidos */
-    margin-right: 8px; /* Espaçamento entre o ícone e o texto */
+.btn-access::before,
+.btn-exit::before {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
 }
 
-.btn-new::before {
-    content: "\2b"; /* Código do ícone (Font Awesome) para o ícone "plus" */
+/* Códigos dos ícones para cada botão */
+.btn-first::before {content: "\f049";}
+.btn-last::before {content: "\f050";}
+.btn-previous::before {content: "\f048";}
+.btn-next::before {content: "\f051";}
+.btn-new::before { content: "\2b"; }
+.btn-list::before { content: "\f002"; }
+.btn-reports::before { content: "\f56c"; }
+.btn-save::before { content: "\f0c7"; }
+.btn-edit::before { content: "\f044"; }
+.btn-delete::before { content: "\f1f8"; }
+.btn-return::before { content: "\f060"; }
+.btn-confirm::before { content: "\f00c"; }
+.btn-cancel::before { content: "\f05e"; }
+.btn-close::before { content: "\f00d"; }
+.btn-clear::before { content: "\f55a"; }
+.btn-access::before { content: "\f2f6"; }
+.btn-exit::before { content: "\f2f5"; }
+
+/* Estilo para botões circulares */
+.btn-circle {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: none;
 }
 
-.btn-list::before {
-    content: "\f002"; /* Código do ícone para "search" */
+.btn-circle::before {
+    margin-right: 0;
 }
 
-.btn-reports::before {
-    content: "\f56c"; /* Código do ícone para "file-alt" */
-}
-
-.btn-save::before {
-    content: "\f0c7"; /* Código do ícone para "save" */
-}
-
-.btn-edit::before {
-    content: "\f044"; /* Código do ícone para "edit" */
-}
-
-.btn-delete::before {
-    content: "\f1f8"; /* Código do ícone para "trash" */
-}
-
-.btn-return::before {
-    content: "\f060"; /* Código do ícone para "arrow-left" */
-}
-
-.btn-confirm::before {
-    content: "\f00c"; /* Código do ícone para "check" */
-}
-
-.btn-cancel::before {
-    content: "\f05e"; /* Código do ícone para "stop" */
-}
-
-.btn-close::before {
-    content: "\f00d"; /* Código do ícone para "stop" */
-}
-
-.btn-clear::before {
-    content: "\f55a"; /* Código do ícone para "delete-left" */
-}
-
-.btn-access::before {
-    content: "\f2f6"; /* Código do ícone para "right-to-bracket" */
-}
-
-.btn-first-circle,
-.btn-last-circle,
-.btn-previous-circle,
-.btn-next-circle {
-    font-family: 'Font Awesome 6 Free'; /* Fonte do Font Awesome */
-    font-weight: 900; /* Peso necessário para ícones sólidos */
-    text-decoration: none; /* Remove o sublinhado dos links */
+.btn-dark {
     background-color: #3FB081;
-    color: #ffffff; /* Cor do texto */
-    padding: 20px; /* Espaçamento interno nos links */
-    border-radius: 100%; /* Bordas arredondadas nos links */
-    transition: background-color 0.3s, color 0.3s; /* Transição suave */
-    display: inline-flex; /* Usar flexbox para centralizar o ícone */
-    justify-content: center; /* Centraliza o ícone horizontalmente */
-    align-items: center; /* Centraliza o ícone verticalmente */
-    width: 20px; /* Largura fixa */
-    height: 20px; /* Altura fixa */
 }
 
-.btn-first-circle::before {
-    content: "\f049";
+.btn-dark:hover {
+    background-color: #E6B510;
 }
-
-.btn-last-circle::before {
-    content: "\f050";
-}
-
-.btn-previous-circle::before {
-    content: "\f048";
-}
-
-.btn-next-circle::before {
-    content: "\f051";
-}
-
-.btn-first-circle:hover,
-.btn-last-circle:hover,
-.btn-previous-circle:hover,
-.btn-next-circle:hover {
-    background-color: #E6B510; /* Cor de fundo ao passar o mouse */
-    color: white; /* Cor do texto ao passar o mouse */
-}
-
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
 
 /*MODAL POP-UP */
@@ -512,7 +434,7 @@ h2 {
 }
 
 .tb-list thead {
-    background-color: #3FB081; /* Cor de fundo do cabeçalho */
+    background-color: #1A4F45; /* Cor de fundo do cabeçalho */
     color: white; /* Cor do texto do cabeçalho */
 }
 

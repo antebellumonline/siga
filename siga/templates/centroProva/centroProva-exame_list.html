@@ -25,9 +25,9 @@
             <label for="search-list-exame-centroProva">Centro de Provas:</label>
             <select name="centroProva" id="list-exame-centroProva" class="select-search select2">
                 <option value="">Selecione o Centro de Provas</option>
-                {% for centroProva in centroProva %}
-                <option value="{{ centroProva.id }}" {% if request.GET.centroProva == centroProva.id %}selected{% endif %}>
-                    {{ centroProva.nome }}
+                {% for centroprova in centrosprova %}
+                <option value="{{ centroprova.id }}" {% if request.GET.centroprova == centroprova.id %}selected{% endif %}>
+                    {{ centroprova.nome }}
                 </option>
                 {% endfor %}
             </select>
@@ -37,7 +37,7 @@
             <label for="search-list-exame-certificacao">Certificação:</label>
             <select name="certificacao" id="list-exame-certificacao" class="select-search select2">
                 <option value="">Selecionar Certificação</option>
-                {% for certificacao in certificacao %}
+                {% for certificacao in certificacoes %}
                 <option value="{{ certificacao.id }}" {% if request.GET.certificacao == certificacao.id %}selected{% endif %}>
                     {{ certificacao.descricao }} ({{ certificacao.siglaExame }})
                 </option>
@@ -61,8 +61,8 @@
     </div>
     <!-- Botões de Ação -->
     <div class="btn-group-search">
-        <button type="submit" class="btn-list">Buscar</button>
-        <a class="btn-clear" href="{% url 'exame_list' %}">Limpar Busca</a>
+        <button type="submit" class="btn-list btn-circle"></button>
+        <a class="btn-clear btn-circle" href="{% url 'exame_list' %}"></a>
     </div>
 </form>
 <!-- Grupo de botões (Novo e Retornar) -->

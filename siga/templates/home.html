@@ -6,32 +6,14 @@
 
 {% block content %}
 <h2 class="page-title">SIGA - Sistema Integrado de Gestão Administrativa</h2>
-<!-- Imagem descritiva -->
-<div class="image-container">
-    <img src="https://antebellum.com.br/wp-content/uploads/2022/09/Logo-Antebellum-2-Linhas.png" alt="Logotipo ANTEBELLUM" class="main-image">
-</div>
 
 {% if request.user.is_authenticated %}
     <p>Você está logado como <strong>{{ request.user.username }}</strong>.</p>
 
-    <!-- Se o usuário for administrador -->
-    {% if request.user.is_staff %}
-        <h3>Painel Administrativo</h3>
-        <p><a class="btn" href="/admin">Acessar o Painel Administrativo</a></p>
-    {% endif %}
-
-    <!-- Projetos do usuário -->
-    <h3>Aplicativos Disponíveis</h3>
-    <ul class="project-list">
-        <li><a href="/alunos">Ver Alunos</a></li>
-        <li><a href="/cidades">Ver Cidades</a></li>
-        <!-- Adicione outros links conforme necessário -->
-    </ul>
-
     <!-- Formulário de logout -->
     <form action="{% url 'logout' %}" method="post" style="display:inline;">
         {% csrf_token %}
-        <button type="submit" class="btn logout">Logout</button>
+        <button type="submit" class="btn-exit">Logout</button>
     </form>
 {% else %}
     <p>Você não está autenticado. <a href="{% url 'login' %}">Login</a></p>

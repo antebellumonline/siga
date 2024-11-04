@@ -7,73 +7,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}SIGA{% endblock %} - Sistema Integrado de Gestão Administrativa</title>
     {% load static %}
-
     <!-- Fontes e estilos -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'select2/css/select2.min.css' %}">
-
     <!-- CSS do Bootstrap -->
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    
     <!-- CSS do Bootstrap Daterangepicker -->
     <link rel="stylesheet" href="{% static 'daterangepicker/css/daterangepicker.css' %}">
-    
     <!-- Meta tags de segurança -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://antebellum.com.br; script-src 'self' https://cdnjs.cloudflare.com">
-
 </head>
 <body>
     <!-- Cabeçalho Comum -->
     <header>
-        <div class="nav-container">
+        <div class="menu-container">
             <h1 class="logo">Sistema Integrado de Gestão Administrativa - SIGA</h1>
-            <nav>
+            <nav class="menu">
                 <ul>
-                    <li>
-                        <a href="/" aria-label="Home">
-                            <i class="fa fa-home" aria-hidden="true"></i><br>
-                            Home
-                        </a>
+                    <li class="{% if request.path == '/' %}active{% endif %}">
+                        <a href="/" aria-label="Home"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
                     </li>
+                    {% if request.user.is_staff %}
+                        <li class="{% if request.path == '/admin' %}active{% endif %}">
+                            <a href="/admin" aria-label="Painel Administrativo"><i class="fa fa-gear"></i>Administração</a>
+                        </li>
+                    {% endif %}
                     {% if request.user.is_authenticated %}
-                        <li>
-                            <a href="/alunos" aria-label="Alunos">
-                                <i class="fa fa-user-graduate"></i><br>
-                                Alunos
-                            </a>
+                        <li class="{% if request.path == '/alunos/' %}active{% endif %}">
+                            <a href="/alunos" aria-label="Alunos"><i class="fa fa-user-graduate"></i>Alunos</a>
                         </li>
-                        <li>
-                            <a href="/certificacao" aria-label="Certificações">
-                                <i class="fa fa-graduation-cap"></i><br>
-                                Certificações
-                            </a>
+                        <li class="{% if request.path == '/certificacao/' %}active{% endif %}">
+                            <a href="/certificacao" aria-label="Certificações"><i class="fa fa-graduation-cap"></i>Certificações</a>
                         </li>
-                        <li>
-                            <a href="/centroProva" aria-label="Centro de Provas">
-                                <i class="fa fa-certificate"></i><br>
-                                Centro de Provas
-                            </a>
+                        <li class="{% if request.path == '/centroProva/' %}active{% endif %}">
+                            <a href="/centroProva" aria-label="Centro de Provas"><i class="fa fa-certificate"></i>Centro de Provas</a>
                         </li>
                     {% endif %}
                 </ul>
             </nav>
         </div>
     </header>
-
     <!-- Container principal para conteúdo específico de cada página -->
     <div class="container">
         {% block content %}
         <!-- Aqui vai o conteúdo específico de cada página -->
         {% endblock %}
     </div>
-
     <!-- Rodapé Comum -->
     <footer>
         <p>&copy; 2024 SIGA - Sistema Integrado de Gestão Administrativa</p>
     </footer>
-
     <!-- Scripts no final para melhor performance -->
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/moment.js' %}"></script>

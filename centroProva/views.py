@@ -290,7 +290,7 @@ def exame_list(request):
         'page_obj': page_obj,
         'aluno': alunos,
         'centrosprova': centrosprova,
-        'certificacao': certificacoes,
+        'certificacoes': certificacoes,
         'query_params': request.GET.urlencode(),
     })
 
