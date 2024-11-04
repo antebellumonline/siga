@@ -138,13 +138,6 @@ header {
     color: #000000;
 }
 
-/* Estilo de inatividade */
-.inactive > a {
-    color: #999;
-    pointer-events: none;
-    cursor: not-allowed;
-}
-
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
 
 /* CORPO DO SITE */
