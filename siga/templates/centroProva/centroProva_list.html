@@ -8,7 +8,7 @@
 
 <h2 class="page-title">Lista de Centros de Provas</h2>
 <!-- Formulário de busca e filtro -->
-<form method="GET" action="{% url 'centroProva_list' %}" class="search-form">
+<form method="GET" action="{% url 'centroprova_list' %}" class="search-form">
     <div class="form-group-search">
         <div class="form-group-search-sub">
             <input type="checkbox" id="check-list-centroProva-nome" data-target="list-centroProva-nome">
@@ -27,13 +27,13 @@
     <!-- Botões de Ação -->
     <div class="btn-group-search">
         <button type="submit" class="btn-list">Buscar</button>
-        <a class="btn-clear" href="{% url 'centroProva_list' %}">Limpar Busca</a>
+        <a class="btn-clear" href="{% url 'centroprova_list' %}">Limpar Busca</a>
     </div>
 </form>
 <!-- Grupo de botões (Novo e Retornar) -->
 <div class="btn-group">
-    <a class="btn-return" href="{% url 'centroProva_home' %}">Retornar</a>
-    <a class="btn-new" href="{% url 'centroProva_new' %}">Novo</a>
+    <a class="btn-return" href="{% url 'centroprova_home' %}">Retornar</a>
+    <a class="btn-new" href="{% url 'centroprova_new' %}">Novo</a>
 </div>
 <!-- Seletor para escolher quantos registros exibir -->
 {% include "includes/records_per_page_selector.html" with action_url=request.path %}
@@ -60,7 +60,7 @@
         {% for centro in page_obj %}
         <tr>
             <td>{{ centro.id }}</td>
-            <td><a href="{% url 'centroProva_detail' centro.pk %}">{{ centro.nome }}</a></td>
+            <td><a href="{% url 'centroprova_detail' centro.pk %}">{{ centro.nome }}</a></td>
             <td>{{ centro.inativo|yesno:"Sim,Não" }}</td>
         </tr>
         {% empty %}
@@ -74,8 +74,8 @@
 {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
 <!-- Grupo de botões (Novo e Retornar) -->
 <div class="btn-group">
-    <a class="btn-return" href="{% url 'centroProva_home' %}">Retornar</a>
-    <a class="btn-new" href="{% url 'centroProva_new' %}">Novo</a>
+    <a class="btn-return" href="{% url 'centroprova_home' %}">Retornar</a>
+    <a class="btn-new" href="{% url 'centroprova_new' %}">Novo</a>
 </div>
 
 {% endblock %}

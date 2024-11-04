@@ -11,42 +11,42 @@
 <div class="group-detail">
     <p class="p-detail">
         <span class="label-detail">ID: </span>
-        <span class="value-detail">{{ centroProva_exame.id }}</span>
+        <span class="value-detail">{{ centroprova_exame.id }}</span>
     </p>
     <p class="p-detail">
         <span class="label-detail">Data: </span>
-        <span class="value-detail">{{ centroProva_exame.data|date:"d/m/Y H:i" }}</span>
+        <span class="value-detail">{{ centroprova_exame.data|date:"d/m/Y H:i" }}</span>
     </p>
     <p class="p-detail">
         <span class="label-detail">Centro de Provas: </span>
-        <span class="value-detail">{{ centroProva_exame.centroProva.nome }}</span>
+        <span class="value-detail">{{ centroprova_exame.centroProva.nome }}</span>
     </p>
     <p class="p-detail">
         <span class="label-detail">Certificação: </span>
-        <span class="value-detail">{{ centroProva_exame.certificacao.descricao }} 
-            {% if centroProva_exame.certificacao.siglaExame %}
-                ({{ centroProva_exame.certificacao.siglaExame }})
+        <span class="value-detail">{{ centroprova_exame.certificacao.descricao }} 
+            {% if centroprova_exame.certificacao.siglaExame %}
+                ({{ centroprova_exame.certificacao.siglaExame }})
             {% endif %}
         </span>
     </p>
     <p class="p-detail">
         <span class="label-detail">Aluno: </span>
-        <span class="value-detail">{{ centroProva_exame.aluno.uid }} - {{ centroProva_exame.aluno.nome }}</span>
+        <span class="value-detail">{{ centroprova_exame.aluno.uid }} - {{ centroprova_exame.aluno.nome }}</span>
     </p>
     <p class="p-detail">
         <span class="label-detail">O aluno estava presente? </span>
-        <span class="value-detail">{{ centroProva_exame.presenca|yesno:"Sim,Não" }}</span>
+        <span class="value-detail">{{ centroprova_exame.presenca|yesno:"Sim,Não" }}</span>
     </p>
     <p class="p-detail">
         <span class="label-detail">O Exame foi cancelado? </span>
-        <span class="value-detail">{{ centroProva_exame.cancelado|yesno:"Sim,Não" }}</span>
+        <span class="value-detail">{{ centroprova_exame.cancelado|yesno:"Sim,Não" }}</span>
     </p>
 </div>
 
 <!-- Grupo de botões (Editar, Excluir e Retornar) -->
 <div class="btn-group">
-    <a class="btn-edit" href="{% url 'exame_edit' centroProva_exame.pk %}">Editar</a>
-    <a class="btn-delete" id="btn-delete" data-pk="{{ centroProva_exame.pk }}" href="#">Excluir</a>
+    <a class="btn-edit" href="{% url 'exame_edit' centroprova_exame.pk %}">Editar</a>
+    <a class="btn-delete" id="btn-delete" data-pk="{{ centroprova_exame.pk }}" href="#">Excluir</a>
     <a class="btn-return" href="{% url 'exame_list' %}">Retornar</a>
 </div>
 

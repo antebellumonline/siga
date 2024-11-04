@@ -20,9 +20,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ centroProva.id }}</td>
-                    <td>{{ centroProva.nome }}</td>
-                    <td>{{ centroProva.inativo|yesno:"Sim,Não" }}</td>
+                    <td>{{ centroprova.id }}</td>
+                    <td>{{ centroprova.nome }}</td>
+                    <td>{{ centroprova.inativo|yesno:"Sim,Não" }}</td>
                 </tr>
             </tbody>
         </table>
@@ -30,9 +30,9 @@
 </div>
 <!-- Grupo de botões (Editar, Excluir e Retornar) -->
 <div class="btn-group">
-    <a class="btn-edit" href="{% url 'centroProva_edit' centroProva.pk %}">Editar</a>
-    <a class="btn-delete" id="btn-delete" data-pk="{{ centroProva.pk }}" href="#">Excluir</a>
-    <a class="btn-return" href="{% url 'centroProva_list' %}">Retornar</a>
+    <a class="btn-edit" href="{% url 'centroprova_edit' centroprova.pk %}">Editar</a>
+    <a class="btn-delete" id="btn-delete" data-pk="{{ centroprova.pk }}" href="#">Excluir</a>
+    <a class="btn-return" href="{% url 'centroprova_list' %}">Retornar</a>
 </div>
 
 <!-- Modal Pop-up -->

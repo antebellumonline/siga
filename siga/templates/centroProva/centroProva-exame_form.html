@@ -22,9 +22,9 @@
                 <label for="id_centroProva">Centro de Provas: </label>
                 <select name="centroProva" id="edit-select-centroProva" class="select-edit select2">
                     <option value="">Selecionar Centro de Provas</option>
-                    {% for centroProva in centrosProvas %}
-                    <option value="{{ centroProva.id }}" {% if form.centroProva.value == centroProva.id %}selected{% endif %}>
-                        {{ centroProva.nome }}
+                    {% for centroprova in centrosprovas %}
+                    <option value="{{ centroprova.id }}" {% if form.centroprova.value == centroprova.id %}selected{% endif %}>
+                        {{ centroprova.nome }}
                     </option>
                     {% endfor %}
                 </select>

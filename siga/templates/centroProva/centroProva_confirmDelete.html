@@ -6,11 +6,11 @@
 
 {% block content %}
 
-<h2 class="page-title">Tem certeza que deseja excluir o Centro de Provas {{ centroProva.nome }}?</h2>
+<h2 class="page-title">Tem certeza que deseja excluir o Centro de Provas {{ centroprova.nome }}?</h2>
 <form method="post">
     {% csrf_token %}
     <button type="submit">Confirmar</button>
-    <a href="{% url 'aluno_list' %}">Cancelar</a>
+    <a href="{% url 'centroprova_list' %}">Cancelar</a>
 </form>
 
 {% endblock %}
