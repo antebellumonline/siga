@@ -1,0 +1,18 @@
+<!-- templates/centroProva/centroProva-exame_confirmDelete.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}SIGA - Confirmar exclusão do Exame Realizado no Centro de Provas{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Excluir Exame Realizado no Centro de Provas</h2>
+
+<p>Tem certeza que deseja excluir este Exame Realizado no Centro de Provas?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar</button>
+    <a href="{% url 'centroprova-exame_list' %}">Cancelar</a>
+</form>
+
+{% endblock %}

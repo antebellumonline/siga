@@ -654,6 +654,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-wrap: wrap;
     padding: 0;
     border: 2px solid #3FB081;
+    margin-top: 20px;
     margin-bottom: 20px;
     margin: 0 auto;
     width: 30%;
@@ -741,6 +742,7 @@ select:focus {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 

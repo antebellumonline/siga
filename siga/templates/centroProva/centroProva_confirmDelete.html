@@ -6,7 +6,9 @@
 
 {% block content %}
 
-<h2 class="page-title">Tem certeza que deseja excluir o Centro de Provas {{ centroprova.nome }}?</h2>
+<h2 class="page-title">Excluir Centro de Provas</h2>
+
+<p>Tem certeza que deseja excluir o Centro de Provas {{ centroprova.nome }}?</p>
 <form method="post">
     {% csrf_token %}
     <button type="submit">Confirmar</button>

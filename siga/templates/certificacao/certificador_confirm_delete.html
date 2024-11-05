@@ -1,11 +1,18 @@
+<!-- templates/certificador/certificador_confirmDelete.html -->
+
 {% extends 'base.html' %}
 
+{% block title %}SIGA - Confirmar exclusão do Certificador{% endblock %}
+
 {% block content %}
-<h2>Excluir Certificador</h2>
-<p>Você tem certeza que deseja excluir "{{ certificador.descricao }}"?</p>
+
+<h2 class="page-title">Excluir Certificador</h2>
+
+<p>Tem certeza que deseja excluir o Certificador {{ certificador.descricao }}?</p>
 <form method="post">
     {% csrf_token %}
-    <button type="submit">Sim, Excluir</button>
+    <button type="submit">Confirmar</button>
+    <a href="{% url 'certificador_list' %}">Cancelar</a>
 </form>
-<a href="{% url 'certificador_list' %}">Cancelar</a>
+
 {% endblock %}
