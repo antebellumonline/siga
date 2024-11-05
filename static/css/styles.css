@@ -54,7 +54,7 @@
     display: block;
     color: black;
     margin-bottom: 5px;
-    font-family: 'Montserrat', sans-serif; /* Montserrat para os rótulos */
+    font-family: 'Montserrat', sans-serif;
 }
 
 .login-form-group input {
@@ -62,7 +62,7 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-family: 'Montserrat', sans-serif; /* Montserrat para os campos de input */
+    font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
 }
 
@@ -417,7 +417,7 @@ h1, h2, h3, h4, h5, h6 {
     border-right: 0px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-top: 0;
-    font-family: 'Fredoka', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .tb-list th, 
@@ -474,8 +474,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: 0.5rem;
     font-family: 'Montserrat', sans-serif;
     background-color: #e3e3e1;
-    padding: 10px;
-    border-radius: 4px;
+    padding: 20px;
 }
 
 .form-group-search {
@@ -495,9 +494,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .form-group-search-sub label {
-    flex-shrink: 0; /* Evita que o rótulo diminua */
-    min-width: 150px; /* Largura mínima para o rótulo */
-    text-align: left; /* Alinhamento à esquerda */
+    flex-shrink: 0;
+    min-width: 150px;
+    text-align: left;
     font-weight: 500;
 }
 
@@ -523,7 +522,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 10px;
     width: 100%;
     gap: 1rem;
-    font-family: 'Montserrat', sans-serif;
 }
 
 .pagination-form select {
@@ -535,18 +533,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .pagination-search {
-    display: flex; /* Usar flexbox para centralizar */
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
-    padding: 10px; /* Espaçamento interno */
-    background-color: #1A4F45; /* Cor de fundo suave */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #1A4F45;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Montserrat', sans-serif;
 }
 
 .step-links .current {
-    margin: 0 10px; /* Espaçamento ao redor do texto atual */
-    font-weight: bold; /* Deixa o texto atual em negrito */
-    color: white; /* Cor do texto atual */
+    margin: 0 10px;
+    font-weight: bold;
+    color: white;
 }
 
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
@@ -557,25 +556,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .select2-container .select2-selection--single {
-    background-color: #e3e3e1;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    background-color: white;
+    border: 1px solid #e3e3e1 !important;
+    border-radius: 4px !important;
     height: 38px !important;
-    line-height: 38px;
-    font-family: 'Montserrat', sans-serif;
-    padding: 5px;
-    display: flex;
-    align-items: center;
+    line-height: 38px !important;
+    font-family: 'Fredoka', sans-serif !important;
+    font-weight: 400 !important;
+    padding: 0 10px !important;
+    display: flex !important;
+    align-items: center !important;
 }
 
 /* Texto dentro do Select2 */
 .select2-container .select2-selection--single .select2-selection__rendered {
-    color: #333;
-    font-size: 14px;
-    line-height: 1.5;
-    padding-left: 10px;
-    padding-right: 30px;
-    box-sizing: border-box;
+    color: black !important;
+    line-height: 1.5 !important;
+    padding-left: 10px !important;
+    padding-right: 30px !important;
+    box-sizing: border-box !important;
 }
 
 /* Icone dropdown do Select2 */
@@ -585,8 +584,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Estilo para a área de pesquisa do Select2 */
 .select2-container .select2-dropdown {
-    background-color: #f0f0ef;
-    border: 1px solid #ccc;
+    background-color: white;
+    border: 1px solid #e3e3e1;
     border-radius: 4px;
     font-family: 'Fredoka', sans-serif;
 }
@@ -599,8 +598,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Estilo para a opção selecionada no dropdown */
 .select2-container .select2-results__option--highlighted {
-    background-color: #d3d3d3;
-    color: #333;
+    background-color: #3FB081 !important;
+    color: black !important;
 }
 
 /* Estilo para o rótulo do Select2 */
@@ -681,7 +680,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: row;
     align-items: center;
     flex: 1 1 calc(50% - 20px);
-    padding: 5px;
+    padding: 10px;
     box-sizing: border-box;
 }
 
@@ -701,8 +700,8 @@ h1, h2, h3, h4, h5, h6 {
 input[type="text"],
 select {
     width: 90%;
-    padding: 10px;
-    border: 1px solid #a3a3a2;
+    padding: 5px;
+    border: 1px solid #e3e3e1;
     border-radius: 4px;
     background-color: white;
     box-sizing: border-box;
@@ -717,22 +716,22 @@ select:focus {
 }
 
 .form-input textarea {
-    height: 50px; /* Ajuste a altura conforme necessário */
-    width: 100%; /* Ocupa 100% da div pai */
-    border: 1px solid #a3a3a2; /* Mantendo o estilo padrão */
+    height: 50px;
+    width: 100%;
+    border: 1px solid #e3e3e1;
     border-radius: 4px;
     background-color: white;
-    padding: 10px; /* Para dar algum espaço interno */
-    box-sizing: border-box; /* Para garantir que o padding seja considerado na largura */
+    padding: 10px;
+    box-sizing: border-box;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .contact-separator {
-    border: none; /* Remove a borda padrão */
-    height: 1px; /* Define a altura da linha */
-    background-color: #1A4F45; /* Define a cor da linha */
-    margin: 10px 0; /* Espaçamento acima e abaixo da linha */
-    width: 100%; /* Garante que a linha ocupe toda a largura */
+    border: none;
+    height: 1px;
+    background-color: #1A4F45;
+    margin: 10px 0;
+    width: 100%;
 }
 
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
@@ -819,7 +818,7 @@ select:focus {
     border-right: 0px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-top: 0;
-    font-family: 'Fredoka', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .tb-detail th, 

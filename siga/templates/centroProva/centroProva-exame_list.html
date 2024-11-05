@@ -90,7 +90,7 @@
             </th>
             <th>
                 <a href="?order_by=centroProva__nome&descending={% if request.GET.order_by == 'centroProva__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                    Centro de Prova {% if request.GET.order_by == 'centroProva__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                    Centro de Provas {% if request.GET.order_by == 'centroProva__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
             <th>
