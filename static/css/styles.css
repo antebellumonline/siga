@@ -444,7 +444,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .tb-list th a {
-    color: white; /* Cor do texto dos links no cabeçalho */
+    color: black; /* Cor do texto dos links no cabeçalho */
     text-decoration: none; /* Remove o sublinhado dos links */
 }
 
@@ -844,7 +844,7 @@ select:focus {
 }
 
 .tb-detail th a {
-    color: white; /* Cor do texto dos links no cabeçalho */
+    color: black; /* Cor do texto dos links no cabeçalho */
     text-decoration: none; /* Remove o sublinhado dos links */
 }
 
