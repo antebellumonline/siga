@@ -490,6 +490,10 @@ footer {
     font-weight: 400;
 }
 
+.tb-list td a {
+    color: #1A4F45;
+}
+
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
 
 /* FORMULÁRIOS DE BUSCA */
