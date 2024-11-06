@@ -6,7 +6,8 @@ Ele define os formulários para cadastro, edição e outras operações relacion
 """
 
 from django import forms
-from .models import Aluno, AlunoContato
+from django.forms import inlineformset_factory
+from .models import Aluno, AlunoContato, ConfigTpContato
 
 class AlunoForm(forms.ModelForm):
     """
@@ -19,9 +20,8 @@ class AlunoForm(forms.ModelForm):
         """
         Configurações meta do formulário.
         """
-        model = Aluno # Modelo relacionado ao formulário
+        model = Aluno
         fields = [
-            'uid',
             'nome',
             'cpf',
             'cep',
@@ -53,14 +53,27 @@ class AlunoContatoForm(forms.ModelForm):
         """
         model = AlunoContato
         fields = [
-            'aluno',
+            'id',
             'tipoContato',
             'contato',
             'detalhe'
         ]
         widgets = {
             'aluno': forms.Select(attrs={'class': 'form-control'}),
-            'tipoContato': forms.Select(attrs={'class': 'form-control'}),
+            'tipoContato': forms.Select(attrs={'class': 'form-control select2'}),
             'contato': forms.TextInput(attrs={'class': 'form-control'}),
-            'detalhe': forms.Textarea(attrs={'class': 'form-control'}),
+            'detalhe': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['tipoContato'].queryset = ConfigTpContato.objects.order_by('descricao')
+
+# FormSet para contatos do aluno
+AlunoContatoFormSet = inlineformset_factory(
+    Aluno,
+    AlunoContato,
+    form=AlunoContatoForm,
+    extra=4,
+    can_delete=True
+)

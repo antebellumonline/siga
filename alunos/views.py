@@ -1,21 +1,36 @@
+# apps/alunos/views.py
+
+"""
+Definição das views para o aplicativo 'alunos'.
+
+As views utilizam Django para gerenciar as requisições HTTP 
+e interagir com os modelos de dados.
+"""
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
-from django.forms import inlineformset_factory
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .models import Aluno, AlunoContato
+
 from cidades.models import Cidade
-from .forms import AlunoForm
+from .models import Aluno, AlunoContato
+from .forms import AlunoForm, AlunoContatoFormSet
 
 # ----- View para a Página Inicial do Projeto -----
 @login_required
 def home(request):
+    """
+    View para a Página Inicial do Projeto
+    """
     return render(request, 'home.html')
 
 # ----- View para a Página de Login -----
 def login_view(request):
+    """
+    View para a Página de Login
+    """
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -29,35 +44,44 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
-# ----- View para a Página Inicial de Alunos -----
 def aluno_home(request):
+    """
+    View para a Página Inicial de Alunos
+    """
     return render(request, 'alunos/aluno_home.html')
 
-# ----- View para Adicionar um Aluno -----
 def aluno_new(request):
+    """
+    View para Adicionar um Aluno
+    """
     cidades = Cidade.objects.select_related('estado').order_by('nome')
-
-    form = AlunoForm()
 
     if request.method == "POST":
         form = AlunoForm(request.POST)
-        if form.is_valid():
-            form.save()
+        formset = AlunoContatoFormSet(request.POST)
+        if form.is_valid() and formset.is_valid():
+            aluno = form.save()
+            formset.instance = aluno
+            formset.save()
             return redirect('aluno_list')
-        else:
-            print(form.errors)
+    else:
+        form = AlunoForm()
+        formset = AlunoContatoFormSet()
 
     return render(request, 'alunos/aluno_form.html', {
         'form': form,
+        'formset': formset,
         'cidades': cidades
     })
 
-# ----- View para Listar os Alunos -----
 def aluno_list(request):
+    """
+    View para Listar os Alunos
+    """
     # Obtém os filtros
-    query = request.GET.get('q')  # Obtém o termo de busca da URL
-    inativo = request.GET.get('inativo')  # Obtém o filtro de status (inativo)
-    cidade = request.GET.get('cidade')  # Obtém o filtro de cidade
+    query = request.GET.get('q')
+    inativo = request.GET.get('inativo')
+    cidade = request.GET.get('cidade')
 
     # Ordenação
     order_by = request.GET.get('order_by', 'nome')
@@ -109,12 +133,6 @@ def aluno_list(request):
     except (ValueError, TypeError):
         page_obj = paginator.get_page(1)
 
-    # Renderização do template com o objeto de paginação e os parâmetros de consulta
-    context = {
-        'page_obj': page_obj,  # Objeto de paginação para uso no template
-        'query_params': request.GET.urlencode()  # Parâmetros da URL para preservar na paginação
-    }
-
     # Buscar e ordenar opções de seleção
     cidades = Cidade.objects.select_related('estado').all().order_by('nome')
 
@@ -126,8 +144,10 @@ def aluno_list(request):
         'query_params': request.GET,
     })
 
-# ----- View para Visualizar os detalhes de um Alluno -----
 def aluno_detail(request, pk):
+    """
+    View para Visualizar os detalhes de um Aluno
+    """
     # Obtém os filtros
     aluno = get_object_or_404(Aluno, pk=pk)
     contatos = AlunoContato.objects.filter(aluno=aluno).order_by('tipoContato__descricao')
@@ -138,35 +158,30 @@ def aluno_detail(request, pk):
         'contatos': contatos
     })
 
-# ----- View para Editar um Aluno -----
 def aluno_edit(request, pk):
+    """
+    View para Editar um Aluno
+    """
     aluno = get_object_or_404(Aluno, pk=pk)
-    cidades = Cidade.objects.select_related('estado').order_by('nome')  # Ordenar por nome
-
-    form = AlunoForm(instance=aluno)
-    formset = AlunoContatoFormSet(instance=aluno)
+    cidades = Cidade.objects.select_related('estado').order_by('nome')
 
     if request.method == "POST":
         form = AlunoForm(request.POST, instance=aluno)
         formset = AlunoContatoFormSet(request.POST, instance=aluno)
 
-        # Verifica se ambos os formulários são válidos
+        print(request.POST)  # Adicionado para depuração
+
         if form.is_valid() and formset.is_valid():
-            form.save() # Salva os dados do aluno
-            formset.save() # Salva os dados de contato do aluno
-            return redirect('aluno_list') # Redireciona para a lista de alunos
-
-        # Se os formulários não forem válidos, imprime os erros para debug
+            form.save()
+            formset.save()
+            return redirect('aluno_list')
         else:
-            print("Dados POST:", request.POST)
-            print("Form Errors:", form.errors)
-            print("Formset Errors:", formset.errors)
-
-            # Verifica se há campos vazios no formset e trata
-            for form in formset:
-                if not form.cleaned_data.get('tipoContato') or not form.cleaned_data.get('contato'):
-                    form.add_error('tipoContato', 'Este campo é obrigatório.')
-                    form.add_error('contato', 'Este campo é obrigatório.')
+            print(form.errors)
+            for contato_form in formset:
+                print(contato_form.errors)
+    else:
+        form = AlunoForm(instance=aluno)
+        formset = AlunoContatoFormSet(instance=aluno)
 
     return render(request, 'alunos/aluno_form.html', {
         'form': form,
@@ -174,8 +189,10 @@ def aluno_edit(request, pk):
         'cidades': cidades
     })
 
-# ----- View para Excluir um Aluno -----
 def aluno_delete(request, pk):
+    """
+    View para Excluir um Aluno
+    """
     aluno = get_object_or_404(Aluno, pk=pk)
     if request.method == "POST":
         aluno.delete()

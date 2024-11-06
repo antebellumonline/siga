@@ -81,17 +81,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for form in formset %}
+                    {% for contato_form in formset %}
                     <tr>
-                        <td>{{ form.tipoContato }}</td>
-                        <td>{{ form.contato }}</td>
+                        <td>{{ contato_form.id }}{{ contato_form.tipoContato }}</td>
+                        <td>{{ contato_form.contato }}</td>
+                        <td>{{ contato_form.detalhe }}</td>
                         <td>
-                            <input type="text" name="contatos-{{ forloop.counter0 }}-detalhe" id="{{ form.detalhe.id_for_label }}" value="{{ form.detalhe.value }}" class="input-detalhe">
-                            <input type="hidden" name="contatos-{{ forloop.counter0 }}-id" value="{{ form.id.value }}">
+                            {% if formset.can_delete %}
+                                {{ contato_form.DELETE }} Excluir
+                            {% endif %}
                         </td>
-                        <td>
-                            <button class="btn-delete" type="submit" name="delete_{{ forloop.counter0 }}" value="1">Excluir</button>
-                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">Nenhum contato adicionado.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -104,5 +107,31 @@
         <a class="btn-return" href="{% url 'aluno_home' %}">Retornar</a>
     </div>
 </form>
+
+<!-- Exibir erros no formulário -->
+{% if form.errors %}
+    <div class="form-errors">
+        {% for field in form %}
+            {% if field.errors %}
+                <div class="error">
+                    <strong>{{ field.label }}:</strong> {{ field.errors }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
+
+<!-- Exibir erros no formset -->
+{% if formset.errors %}
+    <div class="form-errors">
+        {% for form in formset %}
+            {% if form.errors %}
+                <div class="error">
+                    <strong>{{ form.instance }}:</strong> {{ form.errors }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
 
 {% endblock %}
