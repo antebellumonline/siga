@@ -251,7 +251,7 @@ def exame_list(request):
 
     # Filtra por Centro de Prova
     if centroprova:
-        centroprova_exame = centroprova_exame.filter(centroprova__id=centroprova)
+        centroprova_exame = centroprova_exame.filter(centroProva__id=centroprova)
 
     # Filtra por Certificação
     if certificacao:
