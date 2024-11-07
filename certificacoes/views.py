@@ -1,33 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
-from django.contrib import messages
 from django.db.models import Q
 from django.core.paginator import Paginator
 from .models import Certificacao, Certificador
 from .forms import CertificacaoForm, CertificadorForm
-
-# ----- View para a Página Inicial do Projeto -----
-@login_required
-def home(request):
-    return render(request, 'home.html')
-
-# ----- View para a Página de Login -----
-def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('home')  # Redireciona para a página inicial
-    else:
-        form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
 
 # ----- View para a Página Inicial das Certificações -----
 def certificacao_home(request):

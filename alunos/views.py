@@ -8,41 +8,12 @@ e interagir com os modelos de dados.
 """
 
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import AuthenticationForm
 from django.core.paginator import Paginator
 from django.db.models import Q
 
 from cidades.models import Cidade
 from .models import Aluno, AlunoContato
 from .forms import AlunoForm, AlunoContatoFormSet
-
-# ----- View para a Página Inicial do Projeto -----
-@login_required
-def home(request):
-    """
-    View para a Página Inicial do Projeto
-    """
-    return render(request, 'home.html')
-
-# ----- View para a Página de Login -----
-def login_view(request):
-    """
-    View para a Página de Login
-    """
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('home')  # Redireciona para a página inicial
-    else:
-        form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
 
 def aluno_home(request):
     """
