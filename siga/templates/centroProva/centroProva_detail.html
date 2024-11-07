@@ -31,7 +31,7 @@
 <!-- Grupo de botões (Editar, Excluir e Retornar) -->
 <div class="btn-group">
     <a class="btn-edit" href="{% url 'centroprova_edit' centroprova.pk %}">Editar</a>
-    <a class="btn-delete" id="btn-delete" data-pk="{{ centroprova.pk }}" href="#">Excluir</a>
+    <a class="btn-delete" id="btn-delete" data-model="centroprova" data-pk="{{ centroprova.pk }}" href="#">Excluir</a>
     <a class="btn-return" href="{% url 'centroprova_list' %}">Retornar</a>
 </div>
 

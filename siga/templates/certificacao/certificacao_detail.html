@@ -48,7 +48,7 @@
 <!-- Grupo de botões (Editar, Excluir e Retornar) -->
 <div class="btn-group">
     <a class="btn-edit" href="{% url 'certificacao_edit' certificacao.pk %}">Editar</a>
-    <a class="btn-delete" id="btn-delete" data-pk="{{ certificacao.pk }}" href="#">Excluir</a>
+    <a class="btn-delete" id="btn-delete" data-model="certificacao" data-pk="{{ certificacao.pk }}" href="#">Excluir</a>
     <a class="btn-return" href="{% url 'certificacao_list' %}">Retornar</a>
 </div>
 

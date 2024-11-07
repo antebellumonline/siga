@@ -98,7 +98,7 @@
 <!-- Grupo de botões (Editar, Excluir e Retornar) -->
 <div class="btn-group">
     <a class="btn-edit" href="{% url 'aluno_edit' aluno.pk %}">Editar</a>
-    <a class="btn-delete" id="btn-delete" data-pk="{{ aluno.pk }}" href="#">Excluir</a>
+    <a class="btn-delete" id="btn-delete" data-model="Aluno" data-pk="{{ aluno.pk }}" href="#">Excluir</a>
     <a class="btn-return" href="{% url 'aluno_list' %}">Retornar</a>
 </div>
 
