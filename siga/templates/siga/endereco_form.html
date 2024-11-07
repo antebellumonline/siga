@@ -1,0 +1,43 @@
+<!-- templates/siga/endereco_form.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Buscar Endereço{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Buscar Endereço</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_cep">CEP:</label>
+        {{ form.cep }}
+    </div>
+    <div class="form-group">
+        <label for="id_logradouro">Logradouro:</label>
+        {{ form.logradouro }}
+    </div>
+    <div class="form-group">
+        <label for="id_bairro">Bairro:</label>
+        {{ form.bairro }}
+    </div>
+    <div class="form-group">
+        <label for="id_cidade">Cidade:</label>
+        {{ form.cidade }}
+    </div>
+    <button type="submit">Buscar Endereço</button>
+</form>
+
+{% if form.errors %}
+    <div class="form-errors">
+        {% for field in form %}
+            {% if field.errors %}
+                <div class="error">
+                    <strong>{{ field.label }}:</strong> {{ field.errors }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

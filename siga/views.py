@@ -11,6 +11,20 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.apps import apps
 from django.views.decorators.csrf import csrf_exempt
+from .forms import EnderecoForm
+
+# ----- View para a Página Inicial do Projeto -----
+def home(request):
+    """
+    Renderiza a página inicial do projeto.
+
+    Parâmetros:
+    - request: Objeto HttpRequest representando a requisição HTTP recebida.
+
+    Retorna:
+    - HttpResponse: Resposta HTTP que renderiza o template da página inicial.
+    """
+    return render(request, 'home.html')
 
 @csrf_exempt  # Use com cautela
 def delete_item(request, model_name, pk):
@@ -55,15 +69,11 @@ def delete_item(request, model_name, pk):
     print('Método não permitido.')
     return JsonResponse({'success': False, 'error': 'Método não permitido'}, status=405)
 
-# ----- View para a Página Inicial do Projeto -----
-def home(request):
-    """
-    Renderiza a página inicial do projeto.
-
-    Parâmetros:
-    - request: Objeto HttpRequest representando a requisição HTTP recebida.
-
-    Retorna:
-    - HttpResponse: Resposta HTTP que renderiza o template da página inicial.
-    """
-    return render(request, 'home.html')
+def buscar_endereco(request):
+    if request.method == 'POST':
+        form = EnderecoForm(request.POST)
+        if form.is_valid():
+            return render(request, 'siga/endereco_form.html', {'form': form})
+    else:
+        form = EnderecoForm()
+    return render(request, 'siga/endereco_form.html', {'form': form})

@@ -108,30 +108,4 @@
     </div>
 </form>
 
-<!-- Exibir erros no formulário -->
-{% if form.errors %}
-    <div class="form-errors">
-        {% for field in form %}
-            {% if field.errors %}
-                <div class="error">
-                    <strong>{{ field.label }}:</strong> {{ field.errors }}
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-{% endif %}
-
-<!-- Exibir erros no formset -->
-{% if formset.errors %}
-    <div class="form-errors">
-        {% for form in formset %}
-            {% if form.errors %}
-                <div class="error">
-                    <strong>{{ form.instance }}:</strong> {{ form.errors }}
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
-{% endif %}
-
 {% endblock %}
