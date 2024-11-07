@@ -120,7 +120,7 @@ def aluno_list(request):
     try:
         records_per_page = int(records_per_page)
     except (ValueError, TypeError):
-        records_per_page = 10
+        records_per_page = 20
 
     # Criação do paginator com o queryset e o número de registros por página
     paginator = Paginator(alunos, records_per_page)

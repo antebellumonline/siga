@@ -50,6 +50,8 @@
 </div>
 <!-- Seletor para escolher quantos registros exibir -->
 {% include "includes/records_per_page_selector.html" with action_url=request.path %}
+<!-- Contador de registros -->
+{% include 'includes/record_counter.html' with page_obj=page_obj %}
 <!-- Paginação da Tabela -->
 {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
 <!-- Tabela de busca -->
@@ -105,6 +107,8 @@
 </table>
 <!-- Paginação da Tabela -->
 {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
+<!-- Contador de registros -->
+{% include 'includes/record_counter.html' with page_obj=page_obj %}
 <!-- Grupo de botões (Novo e Retornar) -->
 <div class="btn-group">
     <a class="btn-return" href="{% url 'certificacao_home' %}">Retornar</a>

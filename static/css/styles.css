@@ -545,8 +545,18 @@ footer {
 
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
 
+/* CONTADOR DE REGISTROS*/
+.record-counter {
+    margin: 10px 0;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
+/* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
+
 /* FORMULÁRIO E DIV DE PAGINAÇÃO DE BUSCA*/
 .pagination-form {
+    font-family: 'Montserrat', sans-serif;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
