@@ -1,4 +1,4 @@
-# myproject/middleware.py
+# siga/middleware.py
 
 from django.shortcuts import redirect
 from django.urls import reverse, NoReverseMatch

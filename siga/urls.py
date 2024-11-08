@@ -1,3 +1,5 @@
+# siga/urls.py
+
 """
 URLs do projeto siga.
 
@@ -10,7 +12,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import delete_item, home, buscar_endereco
+from .views import delete_item, home
 
 urlpatterns = [
     # URL para a interface Administrativa Django
@@ -31,8 +33,6 @@ urlpatterns = [
     # Path para eclusão de registros
     path('delete/<str:model_name>/<int:pk>/', delete_item, name='delete_item'),
 
-    # Path para buscar endereço
-    path('buscar-endereco/', buscar_endereco, name='buscar_endereco'),
 ]
 
 if settings.DEBUG:

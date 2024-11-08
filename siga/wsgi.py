@@ -1,3 +1,5 @@
+# siga/wsgi.py
+
 """
 Configuração WSGI para o projeto siga.
 

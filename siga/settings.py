@@ -1,3 +1,5 @@
+# siga/settings.py
+
 """
 Configurações do Django para o projeto siga.
 
@@ -70,11 +72,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'siga',
-    'reports',
-    'cidades',
     'alunos',
+    'apis',
+    'cidades',
     'certificacoes',
     'centroProva',
+    'reports',
 ]
 
 # Configuração dos middlewares (MIDDLEWARE)
