@@ -1,4 +1,6 @@
-f"""
+# apps/cidades/admin.py
+
+"""
 Este módulo configura a interface administrativa para o app de Cidades.
 Ele registra os modelos para que possam ser gerenciados através do painel administrativo do Django.
 """
