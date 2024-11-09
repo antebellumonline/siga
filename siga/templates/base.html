@@ -16,8 +16,7 @@
     <!-- CSS do Bootstrap Daterangepicker -->
     <link rel="stylesheet" href="{% static 'daterangepicker/css/daterangepicker.css' %}">
     <!-- Meta tags de segurança -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://antebellum.com.br; script-src 'self' https://cdnjs.cloudflare.com">
+    {% include 'csp_policy.html' %}
 </head>
 <body>
     <!-- Cabeçalho Comum -->

@@ -26,6 +26,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
     # URLs dos apps
+    path('apis/', include('apis.urls')),
     path('', include('alunos.urls')),
     path('', include('certificacoes.urls')),
     path('', include('centroProva.urls')),

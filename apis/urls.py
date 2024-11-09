@@ -8,8 +8,8 @@ permitindo a navegação e interação com o sistema.
 """
 
 from django.urls import path
-from .views import busca_cep
+from .import views
 
 urlpatterns = [
-    path('busca-cep/', busca_cep, name='busca_cep'),
+    path('buscacep/<str:cep>/', views.busca_cep, name='busca_cep'),
 ]
