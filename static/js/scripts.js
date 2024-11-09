@@ -46,6 +46,18 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+    // Adicionar evento de blur ao campo de CEP
+    const cepInput = document.getElementById('cep');
+    if (cepInput) {
+        console.log("Campo CEP encontrado, adicionando evento blur");
+        cepInput.addEventListener('blur', function() {
+            console.log("Evento blur acionado!");
+            buscaEndereco();
+        });
+    } else {
+        console.log("Campo CEP não encontrado");
+    }
+
     // Seleciona todos os checkboxes com o atributo data-target
     const checkboxes = document.querySelectorAll('input[type="checkbox"][data-target]');
 
@@ -83,17 +95,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Adicionar evento de blur ao campo de CEP
-    const cepInput = document.getElementById('cep');
-    if (cepInput) {
-        console.log("Campo CEP encontrado, adicionando evento blur");
-        cepInput.addEventListener('blur', function() {
-            console.log("Evento blur acionado!");
-            buscaEndereco();
-        });
-    } else {
-        console.log("Campo CEP não encontrado");
-    }
 });
 
 // Função para enviar o formulário com os parâmetros atuais
@@ -118,24 +119,26 @@ function submitForm() {
 // Função para buscar o endereço pelo CEP
 function buscaEndereco() {
     var cep = document.getElementById("cep").value;
-    console.log("CEP digitado:", cep); // Verifica o CEP digitado
-    fetch(`/apis/buscacep/${cep}/`)  // Certifique-se de que a URL está correta
+    console.log("CEP digitado:", cep);
+    fetch(`/apis/buscacep/${cep}/`)
         .then(response => {
-            console.log("Resposta da API:", response); // Verifica a resposta da API
+            console.log("Resposta da API:", response);
             return response.json();
         })
         .then(data => {
-            console.log("Dados recebidos:", data); // Verifica os dados recebidos
-            if (data.resultado === "1") {
-                document.getElementById("logradouro").value = data.tipo_logradouro + " " + data.logradouro;
+            console.log("Dados recebidos:", data);
+            if (data.ibge) {
+                document.getElementById("logradouro").value = data.logradouro;
                 document.getElementById("bairro").value = data.bairro;
-                document.getElementById("cidade").value = data.cidade;
+                const selectCidade = $('#select-cidade');
+                console.log("Código IBGE recebido:", data.ibge);
+                selectCidade.val(data.ibge).trigger('change');
             } else {
                 alert("CEP não encontrado!");
             }
         })
         .catch(error => {
-            console.error("Erro na busca do CEP:", error); // Captura e exibe erros
+            console.error("Erro na busca do CEP:", error);
         });
 }
 

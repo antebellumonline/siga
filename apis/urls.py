@@ -11,5 +11,5 @@ from django.urls import path
 from .import views
 
 urlpatterns = [
-    path('buscacep/<str:cep>/', views.busca_cep, name='busca_cep'),
+    path('buscacep/<str:cep>/', views.busca_cep_view, name='busca_cep'),
 ]
