@@ -1,4 +1,4 @@
-# apps/alunos/urls.py
+# alunos/urls.py
 
 """
 Definição das URLs para o aplicativo 'alunos'.

@@ -1,4 +1,4 @@
-# apps/centroProva/models.py
+# centroProva/models.py
 
 """
 Definições dos modelos do aplicativo 'centroProva'.

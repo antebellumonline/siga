@@ -1,4 +1,4 @@
-# apps/apis/urls.py
+# apis/urls.py
 
 """
 Definição das URLs para o aplicativo 'apis'.

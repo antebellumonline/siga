@@ -1,4 +1,4 @@
-# apps/alunos/apps.py
+# alunos/apps.py
 
 """
 Configuração do aplicativo 'alunos' para a aplicação Django.

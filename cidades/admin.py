@@ -1,4 +1,4 @@
-# apps/cidades/admin.py
+# cidades/admin.py
 
 """
 Este módulo configura a interface administrativa para o app de Cidades.

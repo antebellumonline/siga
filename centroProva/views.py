@@ -1,4 +1,4 @@
-# apps/centroProva/views.py
+# centroProva/views.py
 
 """
 Definição das views para o aplicativo 'centroProva'.

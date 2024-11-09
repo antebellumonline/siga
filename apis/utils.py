@@ -1,4 +1,4 @@
-# apps/apis/utils.py
+# apis/utils.py
 
 import requests
 

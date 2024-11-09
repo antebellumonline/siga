@@ -1,4 +1,4 @@
-# apps/apis/views.py
+# apis/views.py
 
 """
 Definição das views para o aplicativo 'apis'.

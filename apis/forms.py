@@ -1,4 +1,4 @@
-# apps/apis/forms.py
+# apis/forms.py
 
 """
 Este módulo contém os formulários utilizados para o aplicativo 'apis'.

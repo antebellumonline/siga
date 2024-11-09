@@ -1,1 +1,1 @@
-# apps/centroProva/tests.py
+# centroProva/tests.py

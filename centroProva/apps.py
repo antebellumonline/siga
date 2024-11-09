@@ -1,4 +1,4 @@
-# apps/centroProva/apps.py
+# centroProva/apps.py
 
 """
 Configuração do aplicativo 'centroProva' para a aplicação Django.

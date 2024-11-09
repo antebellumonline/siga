@@ -1,4 +1,4 @@
-# apps/alunos/admin.py
+# alunos/admin.py
 
 """
 Configuração da interface administrativa para o app 'alunos'.

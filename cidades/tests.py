@@ -1,1 +1,1 @@
-# apps/cidades/tests.py
+# cidades/tests.py

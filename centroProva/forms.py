@@ -1,4 +1,4 @@
-# apps/centroProva/forms.py
+# centroProva/forms.py
 
 """
 Este módulo contém os formulários utilizados para o aplicativo Centro de Provas.

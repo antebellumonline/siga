@@ -1,4 +1,4 @@
-# apps/cidades/models.py
+# cidades/models.py
 
 """
 Definições dos modelos do aplicativo 'alunos'.

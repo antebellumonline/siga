@@ -1,4 +1,4 @@
-# apps/cidades/forms.py
+# cidades/forms.py
 
 """
 Este módulo contém os formulários utilizados para o aplicativo cidades.
