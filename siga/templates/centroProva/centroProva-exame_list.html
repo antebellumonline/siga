@@ -12,8 +12,15 @@
     <div class="form-group-search">
         <div class="form-group-search-sub">
             <input type="checkbox" id="check-list-exame-aluno" data-target="list-exame-aluno">
-            <label for="search-list-exame-aluno">UID ou Nome do Aluno:</label>
-            <input type="text" id="list-exame-aluno" name="q" placeholder="Busque por UID ou Nome do Aluno" value="{{ request.GET.q }}" class="form-control" aria-label="Busque por UID ou Nome do Aluno">
+            <label for="search-list-exame-aluno">Aluno:</label>
+            <select name="aluno" id="list-exame-aluno" class="select-search select2">
+                <option value="">Selecionar Aluno</option>
+                {% for aluno in aluno %}
+                <option value="{{ aluno.uid }}" {% if request.GET.aluno == aluno.uid %}selected{% endif %}>
+                    {{ aluno.uid }} - {{ aluno.nome }}
+                </option>
+                {% endfor %}
+            </select>
         </div>
         <div class="form-group-search-sub">
             <input type="checkbox" id="check-list-exame-daterange" data-target="list-exame-daterange">
@@ -81,23 +88,23 @@
     <thead>
         <tr>
             <th>
-                <a href="?order_by=data&descending={% if request.GET.order_by == 'data' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                <a href="?order_by=data&descending={% if request.GET.order_by == 'data' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
                     Data e Hora {% if request.GET.order_by == 'data' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
             <th>
-                <a href="?order_by=aluno__nome&descending={% if request.GET.order_by == 'aluno__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                <a href="?order_by=aluno__nome&descending={% if request.GET.order_by == 'aluno__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
                     Aluno {% if request.GET.order_by == 'aluno__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
             <th>
-                <a href="?order_by=centroProva__nome&descending={% if request.GET.order_by == 'centroProva__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                <a href="?order_by=centroProva__nome&descending={% if request.GET.order_by == 'centroProva__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
                     Centro de Provas {% if request.GET.order_by == 'centroProva__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
             <th>
-                <a href="?order_by=certificacao__nome&descending={% if request.GET.order_by == 'certificacao__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                    Certificação {% if request.GET.order_by == 'certificacao__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                <a href="?order_by=certificacao__descricao&descending={% if request.GET.order_by == 'certificacao__descricao' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                    Certificação {% if request.GET.order_by == 'certificacao__descricao' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
             <th>Presença</th>

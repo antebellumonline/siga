@@ -176,7 +176,7 @@ def exame_list(request):
     View para Listar os Exames Realizados no Centro de Provas
     """
     # Obtém os filtros
-    query = request.GET.get('q')
+    aluno = request.GET.get('aluno')
     data_range = request.GET.get('daterange')
     presenca = request.GET.get('presenca')
     cancelado = request.GET.get('cancelado')
@@ -194,12 +194,9 @@ def exame_list(request):
         'certificacao'
     )
 
-    # Aplicar os filtros e pesquisa
-    if query:
-        centroprova_exame = centroprova_exame.filter(
-            Q(aluno__uid__icontains=query) |
-            Q(aluno__nome__icontains=query)
-        )
+    # Filtra por Aluno
+    if aluno:
+        centroprova_exame = centroprova_exame.filter(aluno__uid=aluno)
 
     # Filtra por Período
     if data_range:

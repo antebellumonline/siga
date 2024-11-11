@@ -178,10 +178,6 @@ footer {
     text-align: center;
 }
 
-.footer-dark {
-    color: white;
-}
-
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
 
 /* PÁGINA INICIAL DOS APPS */
@@ -202,6 +198,7 @@ footer {
     min-height: 100px;
     box-sizing: border-box;
     border: 2px solid #1A4F45;
+    background-color: #e3e3e1;
     border-radius: 4px;
 }
 
