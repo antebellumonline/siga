@@ -38,19 +38,3 @@ class Cidade(models.Model):
     class Meta:
         """Meta-informações para o modelo Cidade."""
         db_table = 'tb_uf-cidade'
-
-class Endereco(models.Model):
-    """
-    Modelo que representa um Endereço no sistema.
-    """
-    cep = models.CharField(primary_key=True, max_length=8, unique=True)
-    logradouro = models.CharField(max_length=255)
-    bairro = models.CharField(max_length=100)
-    cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return f'{self.logradouro}, {self.bairro}, {self.cidade.nome} - {self.cidade.estado.uf}'
-
-    class Meta:
-        """Meta-informações para o modelo Endereco."""
-        db_table = 'tb_endereco'
