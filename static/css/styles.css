@@ -956,3 +956,10 @@ select:focus {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
 }
+
+/* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
+
+/* MÁSCARA DOS CAMPOS */
+.cep-mask::placeholder {
+    content: "XX.XXX-XXX";
+}

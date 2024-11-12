@@ -40,7 +40,7 @@ class AlunoForm(forms.ModelForm):
                 'name': 'cidade'
             }),
             'cep': forms.TextInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control cep-mask',
                 'placeholder': 'CEP',
                 'id': 'cep',
                 'name': 'cep'
