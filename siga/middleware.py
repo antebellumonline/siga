@@ -1,5 +1,9 @@
 # siga/middleware.py
 
+"""
+Middleware para garantir que o usuário esteja autenticado antes de acessar certas URLs.
+"""
+
 from django.shortcuts import redirect
 from django.urls import reverse, NoReverseMatch
 
@@ -16,6 +20,9 @@ except NoReverseMatch:
     pass
 
 class LoginRequiredMiddleware:
+    """
+    Middleware que redireciona usuários não autenticados para a página de login.
+    """
     def __init__(self, get_response):
         self.get_response = get_response
 

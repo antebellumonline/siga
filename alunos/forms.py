@@ -34,13 +34,41 @@ class AlunoForm(forms.ModelForm):
             'inativo'
         ]
         widgets = {
-            'cidade': forms.Select(attrs={'class': 'form-control', 'id': 'cidade', 'name': 'cidade'}),
-            'cep': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'CEP', 'id': 'cep', 'name': 'cep'}),
-            'endereco': forms.TextInput(attrs={'class': 'form-control', 'id': 'logradouro', 'name': 'logradouro'}),
-            'numero': forms.TextInput(attrs={'class': 'form-control', 'id': 'numero', 'name': 'numero'}),
-            'complemento': forms.TextInput(attrs={'class': 'form-control', 'id': 'complemento', 'name': 'complemento'}),
-            'bairro': forms.TextInput(attrs={'class': 'form-control', 'id': 'bairro', 'name': 'bairro'}),
-            'observacao': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
+            'cidade': forms.Select(attrs={
+                'class': 'form-control',
+                'id': 'cidade',
+                'name': 'cidade'
+            }),
+            'cep': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'CEP',
+                'id': 'cep',
+                'name': 'cep'
+            }),
+            'endereco': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'logradouro',
+                'name': 'logradouro'
+            }),
+            'numero': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'numero',
+                'name': 'numero'
+            }),
+            'complemento': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'complemento',
+                'name': 'complemento'
+            }),
+            'bairro': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'bairro',
+                'name': 'bairro'
+            }),
+            'observacao': forms.Textarea(attrs={
+                'rows': 4,
+                'cols': 40
+            }),
             'inativo': forms.CheckboxInput()
         }
 
