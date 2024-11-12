@@ -11,6 +11,11 @@
 <form method="GET" action="{% url 'exame_list' %}" class="search-form">
     <div class="form-group-search">
         <div class="form-group-search-sub">
+            <input type="checkbox" id="check-list-exame-daterange" data-target="list-exame-daterange">
+            <label for="search-list-exame-daterange">Período de realização:</label>
+            <input type="text" id="list-exame-daterange" name="daterange" class="form-control daterange" placeholder="Selecione o período" value="">
+        </div>
+        <div class="form-group-search-sub">
             <input type="checkbox" id="check-list-exame-aluno" data-target="list-exame-aluno">
             <label for="search-list-exame-aluno">Aluno:</label>
             <select name="aluno" id="list-exame-aluno" class="select-search select2">
@@ -21,11 +26,6 @@
                 </option>
                 {% endfor %}
             </select>
-        </div>
-        <div class="form-group-search-sub">
-            <input type="checkbox" id="check-list-exame-daterange" data-target="list-exame-daterange">
-            <label for="search-list-exame-daterange">Período de realização:</label>
-            <input type="text" id="list-exame-daterange" name="daterange" class="form-control daterange" placeholder="Selecione o período" value="">
         </div>
         <div class="form-group-search-sub">
             <input type="checkbox" id="check-list-exame-centroProva" data-target="list-exame-centroProva">
