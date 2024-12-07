@@ -185,7 +185,7 @@ def exame_list(request):
 
     # Ordenação
     order_by = request.GET.get('order_by', 'data')
-    descending = request.GET.get('descending', 'False') == 'True'
+    descending = request.GET.get('descending', 'True') == 'False'
 
     # Otimização de Consulta
     centroprova_exame = CentroProvaExame.objects.select_related(
