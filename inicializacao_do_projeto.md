@@ -6,7 +6,7 @@
 No terminal, digite:
 
 ```bash
-venv\Scripts\activate
+sigaenv\Scripts\activate
 ```
 
 ---
