@@ -7,14 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}SIGA{% endblock %} - Sistema Integrado de Gestão Administrativa</title>
     {% load static %}
-    <!-- Fontes e estilos -->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
-    <link rel="stylesheet" href="{% static 'select2/css/select2.min.css' %}">
-    <!-- CSS do Bootstrap -->
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    <!-- CSS do Bootstrap Daterangepicker -->
-    <link rel="stylesheet" href="{% static 'daterangepicker/css/daterangepicker.css' %}">
+    <!-- Fontes e estilos CSS -->
+    {% include 'css_includes.html' %}
     <!-- Meta tags de segurança -->
     {% include 'csp_policy.html' %}
 </head>

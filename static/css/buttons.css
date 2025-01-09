@@ -1,0 +1,164 @@
+/* BOTÕES */
+.btn-group-modal {
+    margin: 10px;
+    justify-content: center;
+    text-align: right;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.btn-close-modal:hover,
+.btn-close-modal:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-group {
+    margin: 10px;
+    text-align: right;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-group-search {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    gap: 10px;
+}
+
+.btn-group-center { /* Grupos de Botões Centralizados */
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espaço entre os botões */
+    margin-top: 10px; /* Margem para separar dos campos de pesquisa */
+}
+
+.btn-first,
+.btn-last,
+.btn-previous,
+.btn-next,
+.btn-new,
+.btn-list,
+.btn-reports,
+.btn-save,
+.btn-edit,
+.btn-delete,
+.btn-return,
+.btn-confirm,
+.btn-cancel,
+.btn-close,
+.btn-clear,
+.btn-access,
+.btn-exit {
+    text-decoration: none;
+    display: inline-block;
+    background-color: #1A4F45;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-first:hover,
+.btn-last:hover,
+.btn-previous:hover,
+.btn-next:hover,
+.btn-new:hover,
+.btn-list:hover,
+.btn-reports:hover,
+.btn-save:hover,
+.btn-edit:hover,
+.btn-delete:hover,
+.btn-return:hover,
+.btn-confirm:hover,
+.btn-cancel:hover,
+.btn-close:hover,
+.btn-clear:hover,
+.btn-access:hover,
+.btn-exit:hover {
+    background-color: #3FB081;
+}
+
+.btn-first::before,
+.btn-last::before,
+.btn-previous::before,
+.btn-next::before,
+.btn-new::before, 
+.btn-list::before, 
+.btn-reports::before,
+.btn-save::before,
+.btn-edit::before,
+.btn-delete::before,
+.btn-return::before,
+.btn-confirm::before,
+.btn-cancel::before,
+.btn-close::before,
+.btn-clear::before,
+.btn-access::before,
+.btn-exit::before {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+}
+
+/* Códigos dos ícones para cada botão */
+.btn-first::before {content: "\f049";}
+.btn-last::before {content: "\f050";}
+.btn-previous::before {content: "\f048";}
+.btn-next::before {content: "\f051";}
+.btn-new::before { content: "\2b"; }
+.btn-list::before { content: "\f002"; }
+.btn-reports::before { content: "\f56c"; }
+.btn-save::before { content: "\f0c7"; }
+.btn-edit::before { content: "\f044"; }
+.btn-delete::before { content: "\f1f8"; }
+.btn-return::before { content: "\f060"; }
+.btn-confirm::before { content: "\f00c"; }
+.btn-cancel::before { content: "\f05e"; }
+.btn-close::before { content: "\f00d"; }
+.btn-clear::before { content: "\f55a"; }
+.btn-access::before { content: "\f2f6"; }
+.btn-exit::before { content: "\f2f5"; }
+
+/* Estilo para botões circulares */
+.btn-circle {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: none;
+}
+
+.btn-circle::before {
+    margin-right: 0;
+}
+
+.btn-dark {
+    background-color: #3FB081;
+}
+
+.btn-dark:hover {
+    background-color: #E6B510;
+}
