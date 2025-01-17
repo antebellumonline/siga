@@ -7,12 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGA - Login</title>
     {% load static %}
-    <!-- Fontes e estilos -->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+    <!-- Fontes e estilos CSS -->
+    {% include 'css_includes.html' %}
     <!-- Meta tags de segurança -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://antebellum.com.br; script-src 'self' https://cdnjs.cloudflare.com">
+    {% include 'csp_policy.html' %}
 </head>
 <body class="login-page">
     <div class="login-container">
