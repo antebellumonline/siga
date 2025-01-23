@@ -9,7 +9,7 @@ os dados relacionados aos alunos no banco de dados.
 
 from django.db import models
 from django.db.models import Manager
-from cidades.models import Cidade
+from apps.cidades.models import Cidade
 
 class Aluno(models.Model):
     """

@@ -11,7 +11,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.db.models import Q
 
-from cidades.models import Cidade
+from apps.cidades.models import Cidade
 from .models import Aluno, AlunoContato
 from .forms import AlunoForm, AlunoContatoFormSet
 

@@ -14,4 +14,4 @@ class LocalidadesConfig(AppConfig):
     Classe de configuração para o aplicativo 'cidades'.
     Define o campo de chave primária padrão e o nome do aplicativo.
     """
-    name = 'cidades'
+    name = 'apps.cidades'

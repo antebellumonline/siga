@@ -9,8 +9,8 @@ os dados relacionados aos alunos no banco de dados.
 from datetime import datetime
 
 from django.db import models
-from certificacoes.models import Certificacao
-from alunos.models import Aluno
+from apps.certificacoes.models import Certificacao
+from apps.alunos.models import Aluno
 
 class CentroProva(models.Model):
     """Modelo que representa um Centro de Provas."""

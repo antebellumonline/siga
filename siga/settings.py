@@ -73,11 +73,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'siga',
-    'alunos',
+    'apps.alunos',
+    'apps.cidades',
+    'apps.certificacoes',
+    'apps.centroProva',
     'apis',
-    'cidades',
-    'certificacoes',
-    'centroProva',
     'reports',
 ]
 
