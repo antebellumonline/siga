@@ -27,4 +27,8 @@ urlpatterns = [
     path('centroProva/exame/<int:pk>/', views.exame_detail, name='exame_detail'),
     path('centroProva/exame/<int:pk>/edit/', views.exame_edit, name='exame_edit'),
     path('centroProva/exame/<int:pk>/delete/', views.exame_delete, name='exame_delete'),
+
+    # URLs Relatórios
+    path('centroProva/exame/relatorio/pdf/', views.exame_report_pdf, name='exame_report_pdf'),
+    path('centroProva/exame/relatorio/excel/', views.exame_report_xlsx, name='exame_report_xlsx'),
 ]

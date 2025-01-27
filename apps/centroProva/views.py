@@ -14,6 +14,14 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from django.db.models import Q
 
+from reportlab.lib.pagesizes import A4, landscape
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.lib import colors
+from reportlab.lib.units import inch
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from django.http import HttpResponse
+import openpyxl
+
 from .models import CentroProva, CentroProvaExame, Aluno, Certificacao
 from .forms import CentroProvaForm, CentroProvaExameForm
 
@@ -317,3 +325,137 @@ def exame_delete(request, pk):
     return render(request, 'centroProva/centroProva-exame_confirm_delete.html', {
         'exame': exame
     })
+
+def exame_get_filter(request):
+    """
+    Função auxiliar para obter exames filtrados com base nos parâmetros da requisição.
+    """
+    aluno = request.GET.get('aluno')
+    data_range = request.GET.get('daterange')
+    presenca = request.GET.get('presenca')
+    cancelado = request.GET.get('cancelado')
+    centroprova = request.GET.get('centroProva')
+    certificacao = request.GET.get('certificacao')
+
+    centroprova_exame = CentroProvaExame.objects.select_related(
+        'aluno', 'centroProva', 'certificacao'
+    )
+
+    if aluno:
+        centroprova_exame = centroprova_exame.filter(aluno__uid=aluno)
+    if data_range:
+        try:
+            data_inicio, data_fim = data_range.split(' - ')
+            data_inicio = datetime.strptime(data_inicio.strip(), '%d/%m/%Y').date()
+            data_fim = datetime.strptime(data_fim.strip(), '%d/%m/%Y').date()
+            centroprova_exame = centroprova_exame.filter(data__range=[data_inicio, data_fim])
+        except (ValueError, TypeError):
+            pass
+    if presenca in ['True', 'False']:
+        centroprova_exame = centroprova_exame.filter(presenca=presenca == 'True')
+    if cancelado in ['True', 'False']:
+        centroprova_exame = centroprova_exame.filter(cancelado=cancelado == 'True')
+    if centroprova:
+        centroprova_exame = centroprova_exame.filter(centroProva__id=centroprova)
+    if certificacao:
+        centroprova_exame = centroprova_exame.filter(certificacao__id=certificacao)
+
+    return centroprova_exame
+
+def exame_report_pdf(request):
+    """
+    View para Gerar Relatório de Exames em PDF com Filtros Aplicados e Personalização
+    """
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="Exames Realizados no Centro de Provas.pdf"'
+
+    # Definir a orientação para paisagem e reduzir margens
+    doc = SimpleDocTemplate(response, pagesize=landscape(A4), 
+                            leftMargin=0.5 * inch, rightMargin=0.5 * inch, 
+                            topMargin=0.5 * inch, bottomMargin=0.5 * inch)
+    elements = []
+
+    # Título
+    styles = getSampleStyleSheet()
+    title = Paragraph("Relatório de Exames", styles['Title'])
+    elements.append(title)
+
+    # Subtítulo com data de geração
+    subtitle = Paragraph(f"Gerado em: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}", styles['Heading2'])
+    elements.append(subtitle)
+
+    # Dados dos exames
+    exames = exame_get_filter(request)
+    data = [['Certificação', 'Centro de Prova', 'Aluno', 'Data', 'Presença', 'Cancelado', 'Observação']]
+    
+    # Estilo para as células da tabela com quebra automática de linha
+    cell_style = ParagraphStyle(name='Normal', wordWrap='CJK')
+
+    for exame in exames:
+        data.append([
+            Paragraph(str(exame.certificacao), cell_style),
+            Paragraph(str(exame.centroProva), cell_style),
+            Paragraph(str(exame.aluno), cell_style),
+            Paragraph(exame.data.strftime('%d/%m/%Y %H:%M:%S'), cell_style),
+            Paragraph('Sim' if exame.presenca else 'Não', cell_style),
+            Paragraph('Sim' if exame.cancelado else 'Não', cell_style),
+            Paragraph(exame.observacao or '', cell_style)
+        ])
+
+    # Calcular a largura disponível e ajustar as colunas
+    page_width = landscape(A4)[0] - 1 * inch  # Subtrair margens (ajuste conforme necessário)
+    col_widths = [page_width / len(data[0])] * len(data[0])
+
+    # Criar a tabela com larguras ajustadas para as colunas
+    table = Table(data, colWidths=col_widths)
+    
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#E6B510')),  # Cor de fundo do cabeçalho
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),  # Cor do texto do cabeçalho
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),  # Alinhar texto à esquerda
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),  # Fonte da tabela
+        ('FONTSIZE', (0, 0), (-1, -1), 10),  # Tamanho da fonte
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),  # Espaçamento inferior no cabeçalho
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),  # Cor de fundo das linhas ímpares
+        ('BACKGROUND', (1, 2), (-1, -2), colors.HexColor('#e3e3e1')),  # Cor de fundo das linhas pares
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),  # Grade da tabela
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),  # Alinhamento vertical no topo
+        ('BOX', (0, 0), (-1, -1), 2, colors.black)  # Borda da tabela
+    ]))
+    
+    elements.append(table)
+
+    doc.build(elements)
+    return response
+
+def exame_report_xlsx(request):
+    """
+    View para Gerar Relatório de Exames em Excel com Filtros Aplicados
+    """
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="relatorio_exames.xlsx"'
+
+    # Criar o Workbook
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Relatório de Exames"
+
+    # Adicionar cabeçalhos
+    headers = ['Certificação', 'Centro de Prova', 'Aluno', 'Data', 'Presença', 'Cancelado', 'Observação']
+    ws.append(headers)
+
+    # Adicionar dados dos exames filtrados
+    exames = exame_get_filter(request)
+    for exame in exames:
+        ws.append([
+            str(exame.certificacao),
+            str(exame.centroProva),
+            str(exame.aluno),
+            exame.data.strftime('%d/%m/%Y %H:%M:%S'),
+            'Sim' if exame.presenca else 'Não',
+            'Sim' if exame.cancelado else 'Não',
+            exame.observacao or ''
+        ])
+
+    wb.save(response)
+    return response

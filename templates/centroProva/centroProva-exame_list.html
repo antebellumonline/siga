@@ -70,6 +70,8 @@
     <div class="btn-group-search">
         <button type="submit" class="btn-list btn-circle"></button>
         <a class="btn-clear btn-circle" href="{% url 'exame_list' %}"></a>
+        <a href="{% url 'exame_report_pdf' %}?{{ query_params }}">Exportar para PDF</a>
+        <a href="{% url 'exame_report_xlsx' %}?{{ query_params }}">Exportar para Excel</a>
     </div>
 </form>
 <!-- Grupo de botões (Novo e Retornar) -->
