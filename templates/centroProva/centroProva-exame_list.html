@@ -70,14 +70,14 @@
     <div class="btn-group-search">
         <button type="submit" class="btn-list btn-circle"></button>
         <a class="btn-clear btn-circle" href="{% url 'exame_list' %}"></a>
-        <a href="{% url 'exame_report_pdf' %}?{{ query_params }}">Exportar para PDF</a>
-        <a href="{% url 'exame_report_xlsx' %}?{{ query_params }}">Exportar para Excel</a>
     </div>
 </form>
 <!-- Grupo de botões (Novo e Retornar) -->
 <div class="btn-group">
     <a class="btn-return" href="{% url 'centroprova_home' %}">Retornar</a>
     <a class="btn-new" href="{% url 'exame_new' %}">Novo</a>
+    <a class="btn-pdf" href="{% url 'exame_report_pdf' %}?{{ query_params }}">Exportar para PDF</a>
+    <a class="btn-excel" href="{% url 'exame_report_xlsx' %}?{{ query_params }}">Exportar para Excel</a>
 </div>
 <!-- Seletor para escolher quantos registros exibir -->
 {% include "includes/records_per_page_selector.html" with action_url=request.path %}
