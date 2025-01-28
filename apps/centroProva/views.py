@@ -356,6 +356,9 @@ def exame_get_filter(request):
     if certificacao:
         centroprova_exame = centroprova_exame.filter(certificacao__id=certificacao)
 
+    # Adiciona a ordenação pela data do exame em ordem crescente
+    centroprova_exame = centroprova_exame.order_by('data')
+
     return centroprova_exame
 
 def exame_report_pdf(request):
