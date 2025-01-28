@@ -363,17 +363,31 @@ def exame_report_pdf(request):
     View para Gerar Relatório de Exames em PDF com Filtros Aplicados e Personalização
     """
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="Exames Realizados no Centro de Provas.pdf"'
+    response['Content-Disposition'] = (
+        'attachment; filename="Exames Realizados no Centro de Provas.pdf"'
+    )
 
     # Dados dos exames
     exames = exame_get_filter(request)
-    data = [['Data do Exame', 'Centro de Provas', 'Certificação', 'Aluno', 'Presença', 'Cancelado', 'Observação']]
+    data = [[
+        'Data do Exame',
+        'Centro de Provas',
+        'Certificação',
+        'Aluno',
+        'Presença',
+        'Cancelado',
+        'Observação'
+        ]]
 
     # Estilo para as células da tabela com quebra automática de linha
     cell_style = ParagraphStyle(name='Normal', wordWrap='CJK')
 
     for exame in exames:
-        certificacao_text = f"{exame.certificacao.descricao} ({exame.certificacao.siglaExame})" if exame.certificacao.siglaExame else exame.certificacao.descricao
+        certificacao_text = (
+            f"{exame.certificacao.descricao} ({exame.certificacao.siglaExame})"
+            if exame.certificacao.siglaExame
+            else exame.certificacao.descricao
+        )
         aluno_text = f"{exame.aluno.uid} - {exame.aluno.nome}"
         presenca_text = "Presente" if exame.presenca else "Ausente"
 
@@ -393,7 +407,9 @@ def exame_report_xlsx(request):
     """
     View para Gerar Relatório de Exames em Excel com Filtros Aplicados
     """
-    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
     response['Content-Disposition'] = 'attachment; filename="relatorio_exames.xlsx"'
 
     # Criar o Workbook
@@ -402,7 +418,14 @@ def exame_report_xlsx(request):
     ws.title = "Relatório de Exames"
 
     # Adicionar cabeçalhos
-    headers = ['Certificação', 'Centro de Prova', 'Aluno', 'Data', 'Presença', 'Cancelado', 'Observação']
+    headers = [
+        'Certificação',
+        'Centro de Prova',
+        'Aluno',
+        'Data',
+        'Presença',
+        'Cancelado',
+        'Observação']
     ws.append(headers)
 
     # Adicionar dados dos exames filtrados
