@@ -394,8 +394,8 @@ def exame_report_pdf(request):
 
     # Definir a orientação para paisagem e reduzir margens
     doc = SimpleDocTemplate(response, pagesize=landscape(A4), 
-                            leftMargin=0.5 * inch, rightMargin=0.5 * inch, 
-                            topMargin=0.5 * inch, bottomMargin=1 * inch)  # Ajustar margem inferior para rodapé
+                            leftMargin=0.5 * inch, rightMargin=0.5 * inch,
+                            topMargin=0.5 * inch, bottomMargin=0.5 * inch)
     elements = []
 
     # Título
@@ -435,7 +435,7 @@ def exame_report_pdf(request):
 
     # Criar a tabela com larguras ajustadas para as colunas
     table = Table(data, colWidths=col_widths)
-    
+
     # Estilo da tabela
     table_style = TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#E6B510')),  # Cor de fundo do cabeçalho
@@ -456,7 +456,7 @@ def exame_report_pdf(request):
         table_style.add('BACKGROUND', (0, i), (-1, i), bg_color)
 
     table.setStyle(table_style)
-    
+
     elements.append(table)
 
     doc.build(elements, canvasmaker=FooterCanvas)
