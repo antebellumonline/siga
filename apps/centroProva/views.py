@@ -16,7 +16,7 @@ from django.urls import reverse
 from django.db.models import Q
 
 from django.http import HttpResponse
-from reports.utils.pdf_utils import report_create_pdf, Paragraph, ParagraphStyle
+from reports.utils.pdf_utils import report_create_pdf
 
 from .models import CentroProva, CentroProvaExame, Aluno, Certificacao
 from .forms import CentroProvaForm, CentroProvaExameForm
@@ -382,9 +382,6 @@ def exame_report_pdf(request):
         'Observação'
         ]]
 
-    # Estilo para as células da tabela com quebra automática de linha
-    cell_style = ParagraphStyle(name='Normal', wordWrap='CJK')
-
     for exame in exames:
         certificacao_text = (
             f"{exame.certificacao.descricao} ({exame.certificacao.siglaExame})"
@@ -395,13 +392,13 @@ def exame_report_pdf(request):
         presenca_text = "Presente" if exame.presenca else "Ausente"
 
         data.append([
-            Paragraph(exame.data.strftime('%d/%m/%Y %H:%M:%S'), cell_style),
-            Paragraph(str(exame.centroProva), cell_style),
-            Paragraph(certificacao_text, cell_style),
-            Paragraph(aluno_text, cell_style),
-            Paragraph(presenca_text, cell_style),
-            Paragraph('Sim' if exame.cancelado else 'Não', cell_style),
-            Paragraph(exame.observacao or '', cell_style)
+            exame.data.strftime('%d/%m/%Y %H:%M:%S'),
+            str(exame.centroProva),
+            certificacao_text,
+            aluno_text,
+            presenca_text,
+            'Sim' if exame.cancelado else 'Não',
+            exame.observacao or ''
         ])
 
     return report_create_pdf(response, "Exames Realizados no Centro de Provas", data)
