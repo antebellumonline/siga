@@ -8,53 +8,9 @@ from datetime import datetime
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, landscape
-from reportlab.pdfgen import canvas as reportlab_canvas
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image
 from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-class FooterCanvas(reportlab_canvas.Canvas):
-    """
-    Canvas personalizado para adicionar rodapé em cada página do PDF.
-    """
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.page_count = 0  # Contador de páginas
-
-    def draw_footer(self, total_pages):
-        """
-        Desenha o rodapé na página atual.
-        """
-        page_text = f"Página {self._pageNumber} de {total_pages}"
-        self.setFont("Helvetica", 10)
-        self.drawRightString(landscape(A4)[0] - inch, 0.75 * inch, page_text)
-
-    def showPage(self):
-        """
-        Incrementa o contador de páginas e desenha o rodapé antes de mudar para a próxima página.
-        """
-        self.page_count += 1
-        super().showPage()
-
-    def save(self):
-        """
-        Sobrescreve o método save para garantir que o rodapé seja desenhado em todas as páginas.
-        """
-        total_pages = len(self._pages) + 1
-        for page in self._pages:
-            self.__dict__.update(page)
-            self.draw_footer(total_pages)
-            super().showPage()
-        super().save()
-
-    def inkAnnotation(self, *args, **kwargs):
-        """
-        Implementação do método abstrato inkAnnotation.
-        """
-
-    def inkAnnotation0(self, *args, **kwargs): # pylint: disable=invalid-name
-        """
-        Implementação do método abstrato inkAnnotation0.
-        """
 
 def draw_header(canvas, doc, title):
     """
@@ -73,16 +29,16 @@ def draw_header(canvas, doc, title):
     canvas.rect(0, page_height - header_height, page_width, header_height, fill=True, stroke=False)
 
     # Espaço para a logo (comentado até ser definida)
-    # logo_path = "caminho/para/sua/logo.png"
-    # logo = Image(logo_path, width=logo_width - padding, height=header_height - padding)
-    # logo.drawOn(canvas, padding, page_height - header_height + padding)
+    #logo_path = "caminho/para/sua/logo.png"
+    #logo = Image(logo_path, width=logo_width - padding, height=header_height - padding)
+    #logo.drawOn(canvas, padding, page_height - header_height + padding)
 
     # Ajuste automático do tamanho do título
     max_font_size = 22
     min_font_size = 12
-    font_name = "Helvetica-Bold"  # Alternativa ao Arial Black
+    font_name = "Helvetica-Bold"
     text_x = logo_width + padding
-    text_y = page_height - (header_height / 2)  # Centralizado verticalmente
+    text_y = page_height - (header_height / 2)
     text_max_width = text_width - 2 * padding
 
     font_size = max_font_size
@@ -96,6 +52,24 @@ def draw_header(canvas, doc, title):
 
     canvas.restoreState()
 
+def draw_footer(c, page_number, total_pages):
+    """Desenha o rodapé em todas as páginas."""
+    page_text = f"Página {page_number} de {total_pages}"
+
+    # Cor de fundo do rodapé
+    c.setFillColor(colors.HexColor("#1a4f45"))
+    c.rect(0, 0, landscape(A4)[0], 0.5 * inch, fill=True, stroke=False)
+
+    # Cor do texto do rodapé
+    c.setFillColor(colors.white)
+    c.setFont("Helvetica-Bold", 10)
+    c.drawRightString(landscape(A4)[0] - inch, 0.25 * inch, page_text)
+
+def on_page(c, doc, title, total_pages):
+    """Desenha o cabeçalho e o rodapé na página."""
+    draw_header(c, doc, title)
+    draw_footer(c, doc.page, total_pages)
+
 def report_create_pdf(response, title, data):
     """
     Gera o relatório em PDF com cabeçalho padronizado e tabela formatada.
@@ -105,8 +79,7 @@ def report_create_pdf(response, title, data):
                             leftMargin=0.5 * inch,
                             rightMargin=0.5 * inch,
                             topMargin=1.8 * inch,
-                            bottomMargin=0.5 * inch,
-                            canvasmaker=FooterCanvas
+                            bottomMargin=0.5 * inch
                             )
     elements = []
 
@@ -144,10 +117,11 @@ def report_create_pdf(response, title, data):
     table.setStyle(table_style)
     elements.append(table)
 
-    # Adicionar cabeçalho nas páginas
-    def on_page(c, d):
-        draw_header(c, d, title)
+    # Total de páginas
+    total_pages = len(elements)  # Simulação do número de páginas para o rodapé
 
-    doc.build(elements, onFirstPage=on_page, onLaterPages=on_page)
+    # Adicionando cabeçalho e rodapé em cada página
+    doc.build(elements, onFirstPage=lambda c, d: on_page(c, d, title, total_pages),
+                     onLaterPages=lambda c, d: on_page(c, d, title, total_pages))
 
     return response
