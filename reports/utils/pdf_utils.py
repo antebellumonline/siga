@@ -56,7 +56,10 @@ def draw_header(canvas, doc, title):
 def draw_footer(c, page_number):
     """Desenha o rodapé em todas as páginas."""
     now = datetime.now()
-    generated_text = f"Gerado em: {format_datetime(now, 'd \'de\' MMMM \'de\' y \'às\' HH:mm:ss', locale='pt_BR')}"
+    generated_text = (
+        f"Gerado em: {format_datetime(now, 'd \'de\' MMMM \'de\' y \'às\' HH:mm:ss',
+        locale='pt_BR')}"
+    )
     page_text = f"{page_number}"
 
     # Cor de fundo do rodapé
@@ -88,24 +91,29 @@ def report_create_pdf(response, title, data):
                             pagesize=landscape(A4),
                             leftMargin=0.5 * inch,
                             rightMargin=0.5 * inch,
-                            topMargin=1.2 * inch,
+                            topMargin=1.2 * inch,  # Reduzido de 1.8 para 1.2 polegadas
                             bottomMargin=0.5 * inch
                             )
     elements = []
 
     # Estilo das células da tabela
     cell_style = ParagraphStyle(name='Normal', wordWrap='CJK')
-    data = [[Paragraph(str(cell), cell_style) for cell in row] for row in data]
+    header_style = ParagraphStyle(name='Header', fontName='Helvetica-Bold', wordWrap='CJK')
+    data = [
+        [Paragraph(str(cell), header_style if i == 0 else cell_style) for cell in row]
+        for i, row in enumerate(data)
+    ]
 
     # Criar tabela
     col_widths = [landscape(A4)[0] / len(data[0])] * len(data[0])
-    table = Table(data, colWidths=col_widths)
+    table = Table(data, colWidths=col_widths, repeatRows=1)  # Adicionar repeatRows=1
 
     table_style = TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#E6B510')),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),  # Título em negrito
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),  # Restante da tabela
         ('FONTSIZE', (0, 0), (-1, -1), 10),
         ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
         ('VALIGN', (0, 0), (-1, -1), 'TOP')
