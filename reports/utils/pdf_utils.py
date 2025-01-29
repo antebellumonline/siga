@@ -5,12 +5,13 @@ Módulo para gerar relatórios em PDF para os apps do projeto.
 """
 
 from datetime import datetime
+from babel.dates import format_datetime
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, landscape
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
 from reportlab.lib.units import inch
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.styles import ParagraphStyle
 
 def draw_header(canvas, doc, title):
     """
@@ -29,9 +30,9 @@ def draw_header(canvas, doc, title):
     canvas.rect(0, page_height - header_height, page_width, header_height, fill=True, stroke=False)
 
     # Espaço para a logo (comentado até ser definida)
-    #logo_path = "caminho/para/sua/logo.png"
-    #logo = Image(logo_path, width=logo_width - padding, height=header_height - padding)
-    #logo.drawOn(canvas, padding, page_height - header_height + padding)
+    # logo_path = "caminho/para/sua/logo.png"
+    # logo = Image(logo_path, width=logo_width - padding, height=header_height - padding)
+    # logo.drawOn(canvas, padding, page_height - header_height + padding)
 
     # Ajuste automático do tamanho do título
     max_font_size = 22
@@ -52,9 +53,11 @@ def draw_header(canvas, doc, title):
 
     canvas.restoreState()
 
-def draw_footer(c, page_number, total_pages):
+def draw_footer(c, page_number):
     """Desenha o rodapé em todas as páginas."""
-    page_text = f"Página {page_number} de {total_pages}"
+    now = datetime.now()
+    generated_text = f"Gerado em: {format_datetime(now, 'd \'de\' MMMM \'de\' y \'às\' HH:mm:ss', locale='pt_BR')}"
+    page_text = f"{page_number}"
 
     # Cor de fundo do rodapé
     c.setFillColor(colors.HexColor("#1a4f45"))
@@ -63,12 +66,19 @@ def draw_footer(c, page_number, total_pages):
     # Cor do texto do rodapé
     c.setFillColor(colors.white)
     c.setFont("Helvetica-Bold", 10)
-    c.drawRightString(landscape(A4)[0] - inch, 0.25 * inch, page_text)
+    c.drawString(inch, 0.25 * inch, generated_text)
 
-def on_page(c, doc, title, total_pages):
+    # Desenhar círculo com número da página
+    c.setFillColor(colors.HexColor("#E6B510"))
+    c.circle(landscape(A4)[0] - inch, 0.25 * inch, 0.2 * inch, fill=True, stroke=False)
+    c.setFillColor(colors.black)
+    c.setFont("Helvetica-Bold", 10)
+    c.drawCentredString(landscape(A4)[0] - inch, 0.25 * inch - 0.05 * inch, page_text)
+
+def on_page(c, doc, title):
     """Desenha o cabeçalho e o rodapé na página."""
     draw_header(c, doc, title)
-    draw_footer(c, doc.page, total_pages)
+    draw_footer(c, doc.page)
 
 def report_create_pdf(response, title, data):
     """
@@ -78,18 +88,10 @@ def report_create_pdf(response, title, data):
                             pagesize=landscape(A4),
                             leftMargin=0.5 * inch,
                             rightMargin=0.5 * inch,
-                            topMargin=1.8 * inch,
+                            topMargin=1.2 * inch,
                             bottomMargin=0.5 * inch
                             )
     elements = []
-
-    # Subtítulo com data de geração
-    styles = getSampleStyleSheet()
-    subtitle = Paragraph(
-        f"Gerado em: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}",
-        styles['Normal']
-    )
-    elements.append(subtitle)
 
     # Estilo das células da tabela
     cell_style = ParagraphStyle(name='Normal', wordWrap='CJK')
@@ -117,11 +119,8 @@ def report_create_pdf(response, title, data):
     table.setStyle(table_style)
     elements.append(table)
 
-    # Total de páginas
-    total_pages = len(elements)  # Simulação do número de páginas para o rodapé
-
     # Adicionando cabeçalho e rodapé em cada página
-    doc.build(elements, onFirstPage=lambda c, d: on_page(c, d, title, total_pages),
-                     onLaterPages=lambda c, d: on_page(c, d, title, total_pages))
+    doc.build(elements, onFirstPage=lambda c, d: on_page(c, d, title),
+                     onLaterPages=lambda c, d: on_page(c, d, title))
 
     return response
