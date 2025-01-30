@@ -17,6 +17,9 @@ def draw_header(canvas, doc, title):
     """
     Desenha o cabeçalho do relatório com fundo colorido, espaço para logo e título ajustável.
     """
+    # O argumento 'doc' é necessário para compatibilidade com outras partes do código
+    _ = doc
+
     canvas.saveState()
 
     page_width, page_height = landscape(A4)
