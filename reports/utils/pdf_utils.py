@@ -94,7 +94,7 @@ def report_create_pdf(response, title, data):
                             pagesize=landscape(A4),
                             leftMargin=0.5 * inch,
                             rightMargin=0.5 * inch,
-                            topMargin=1.2 * inch,  # Reduzido de 1.8 para 1.2 polegadas
+                            topMargin=1.2 * inch,
                             bottomMargin=0.5 * inch
                             )
     elements = []
