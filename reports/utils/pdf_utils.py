@@ -24,7 +24,7 @@ def draw_header(canvas, doc, title, pagesize):
     canvas.saveState()
 
     page_width, page_height = pagesize
-    header_height = 1.2 * inch
+    header_height = 0.9 * inch
     logo_width = page_width * 0.25  # 25% da largura
     text_width = page_width * 0.75  # 75% da largura
     padding = 0.2 * inch  # Espaçamento interno
@@ -55,7 +55,7 @@ def draw_header(canvas, doc, title, pagesize):
     logo.drawOn(canvas, padding, page_height - header_height + padding)
 
     # Ajuste automático do tamanho do título
-    max_font_size = 22
+    max_font_size = 18
     min_font_size = 12
     font_name = "Helvetica-Bold"
     text_x = logo_width + padding
@@ -77,7 +77,7 @@ def draw_footer(c, page_number, pagesize):
     """Desenha o rodapé em todas as páginas."""
     now = datetime.now()
     generated_text = (
-        f"Gerado em: {format_datetime(now, 'd \'de\' MMMM \'de\' y \'às\' HH:mm:ss',
+        f"Gerado em {format_datetime(now, 'd \'de\' MMMM \'de\' y \'às\' HH:mm:ss',
         locale='pt_BR')}"
     )
     page_text = f"{page_number}"
@@ -116,7 +116,7 @@ def report_create_pdf(response, title, data, orientation='landscape'):
                             pagesize=pagesize,
                             leftMargin=0.5 * inch,
                             rightMargin=0.5 * inch,
-                            topMargin=1.2 * inch,
+                            topMargin=0.9 * inch,
                             bottomMargin=0.5 * inch
                             )
     elements = []
@@ -124,15 +124,13 @@ def report_create_pdf(response, title, data, orientation='landscape'):
     # Estilo das células da tabela
     cell_style = ParagraphStyle(
         name='Normal',
-        fontSize=8,
-        wordWrap='CJK'
+        fontSize=8
     )
     header_style = ParagraphStyle(
         name='Header',
         fontName='Helvetica-Bold',
-        fontSize=10,
-        alignment=1,
-        wordWrap='CJK'
+        fontSize=8,
+        alignment=1
     )
     data = [
         [Paragraph(str(cell), header_style if i == 0 else cell_style) for cell in row]
