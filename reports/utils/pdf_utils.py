@@ -8,13 +8,13 @@ from datetime import datetime
 from babel.dates import format_datetime
 
 from reportlab.lib import colors
-from reportlab.lib.pagesizes import A4, landscape
+from reportlab.lib.pagesizes import A4, landscape, portrait
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image
 from reportlab.lib.units import inch
 from reportlab.lib.utils import ImageReader
 from reportlab.lib.styles import ParagraphStyle
 
-def draw_header(canvas, doc, title):
+def draw_header(canvas, doc, title, pagesize):
     """
     Desenha o cabeçalho do relatório com fundo colorido, espaço para logo e título ajustável.
     """
@@ -23,7 +23,7 @@ def draw_header(canvas, doc, title):
 
     canvas.saveState()
 
-    page_width, page_height = landscape(A4)
+    page_width, page_height = pagesize
     header_height = 1.2 * inch
     logo_width = page_width * 0.25  # 25% da largura
     text_width = page_width * 0.75  # 75% da largura
@@ -73,7 +73,7 @@ def draw_header(canvas, doc, title):
 
     canvas.restoreState()
 
-def draw_footer(c, page_number):
+def draw_footer(c, page_number, pagesize):
     """Desenha o rodapé em todas as páginas."""
     now = datetime.now()
     generated_text = (
@@ -84,7 +84,7 @@ def draw_footer(c, page_number):
 
     # Cor de fundo do rodapé
     c.setFillColor(colors.HexColor("#1a4f45"))
-    c.rect(0, 0, landscape(A4)[0], 0.5 * inch, fill=True, stroke=False)
+    c.rect(0, 0, pagesize[0], 0.5 * inch, fill=True, stroke=False)
 
     # Cor do texto do rodapé
     c.setFillColor(colors.white)
@@ -93,22 +93,27 @@ def draw_footer(c, page_number):
 
     # Desenhar círculo com número da página
     c.setFillColor(colors.HexColor("#E6B510"))
-    c.circle(landscape(A4)[0] - inch, 0.25 * inch, 0.2 * inch, fill=True, stroke=False)
+    c.circle(pagesize[0] - inch, 0.25 * inch, 0.2 * inch, fill=True, stroke=False)
     c.setFillColor(colors.black)
     c.setFont("Helvetica-Bold", 10)
-    c.drawCentredString(landscape(A4)[0] - inch, 0.25 * inch - 0.05 * inch, page_text)
+    c.drawCentredString(pagesize[0] - inch, 0.25 * inch - 0.05 * inch, page_text)
 
-def on_page(c, doc, title):
+def on_page(c, doc, title, pagesize):
     """Desenha o cabeçalho e o rodapé na página."""
-    draw_header(c, doc, title)
-    draw_footer(c, doc.page)
+    draw_header(c, doc, title, pagesize)
+    draw_footer(c, doc.page, pagesize)
 
-def report_create_pdf(response, title, data):
+def report_create_pdf(response, title, data, orientation='landscape'):
     """
     Gera o relatório em PDF com cabeçalho padronizado e tabela formatada.
     """
+    if orientation == 'landscape':
+        pagesize = landscape(A4)
+    else:
+        pagesize = portrait(A4)
+
     doc = SimpleDocTemplate(response,
-                            pagesize=landscape(A4),
+                            pagesize=pagesize,
                             leftMargin=0.5 * inch,
                             rightMargin=0.5 * inch,
                             topMargin=1.2 * inch,
@@ -125,7 +130,7 @@ def report_create_pdf(response, title, data):
     ]
 
     # Criar tabela
-    col_widths = [landscape(A4)[0] / len(data[0])] * len(data[0])
+    col_widths = [pagesize[0] / len(data[0])] * len(data[0])
     table = Table(data, colWidths=col_widths, repeatRows=1)
 
     table_style = TableStyle([
@@ -139,7 +144,6 @@ def report_create_pdf(response, title, data):
         ('VALIGN', (0, 0), (-1, -1), 'TOP')
     ])
 
-    # Adicionar cores alternadas nas linhas
     for i in range(1, len(data)):
         bg_color = colors.HexColor('#e3e3e1') if i % 2 == 0 else colors.white
         table_style.add('BACKGROUND', (0, i), (-1, i), bg_color)
@@ -148,7 +152,7 @@ def report_create_pdf(response, title, data):
     elements.append(table)
 
     # Adicionando cabeçalho e rodapé em cada página
-    doc.build(elements, onFirstPage=lambda c, d: on_page(c, d, title),
-                     onLaterPages=lambda c, d: on_page(c, d, title))
+    doc.build(elements, onFirstPage=lambda c, d: on_page(c, d, title, pagesize),
+                     onLaterPages=lambda c, d: on_page(c, d, title, pagesize))
 
     return response

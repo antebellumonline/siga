@@ -401,7 +401,7 @@ def exame_report_pdf(request):
             exame.observacao or ''
         ])
 
-    return report_create_pdf(response, "Exames Realizados no Centro de Provas", data)
+    return report_create_pdf(response, "Exames Realizados no Centro de Provas", data, orientation='portrait')
 
 def exame_report_xlsx(request):
     """
