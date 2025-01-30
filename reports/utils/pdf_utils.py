@@ -122,8 +122,18 @@ def report_create_pdf(response, title, data, orientation='landscape'):
     elements = []
 
     # Estilo das células da tabela
-    cell_style = ParagraphStyle(name='Normal', wordWrap='CJK')
-    header_style = ParagraphStyle(name='Header', fontName='Helvetica-Bold', wordWrap='CJK')
+    cell_style = ParagraphStyle(
+        name='Normal',
+        fontSize=8,
+        wordWrap='CJK'
+    )
+    header_style = ParagraphStyle(
+        name='Header',
+        fontName='Helvetica-Bold',
+        fontSize=10,
+        alignment=1,
+        wordWrap='CJK'
+    )
     data = [
         [Paragraph(str(cell), header_style if i == 0 else cell_style) for cell in row]
         for i, row in enumerate(data)
