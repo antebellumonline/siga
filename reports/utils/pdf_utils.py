@@ -9,8 +9,9 @@ from babel.dates import format_datetime
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, landscape
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image
 from reportlab.lib.units import inch
+from reportlab.lib.utils import ImageReader
 from reportlab.lib.styles import ParagraphStyle
 
 def draw_header(canvas, doc, title):
@@ -32,10 +33,26 @@ def draw_header(canvas, doc, title):
     canvas.setFillColor(colors.HexColor("#1a4f45"))
     canvas.rect(0, page_height - header_height, page_width, header_height, fill=True, stroke=False)
 
-    # Espaço para a logo (comentado até ser definida)
-    # logo_path = "caminho/para/sua/logo.png"
-    # logo = Image(logo_path, width=logo_width - padding, height=header_height - padding)
-    # logo.drawOn(canvas, padding, page_height - header_height + padding)
+    # Caminho para a imagem
+    logo_path = "static/images/logo-antebellum-horizontal-2linhas-negativo-verdeEscuro.png"
+
+    # Carregar a imagem usando ImageReader
+    logo_image = ImageReader(logo_path)
+    original_width, original_height = logo_image.getSize()
+
+    # Calcular a nova largura e altura mantendo a proporção
+    aspect_ratio = original_width / original_height
+    new_width = logo_width - padding
+    new_height = new_width / aspect_ratio
+
+    # Verificar se a nova altura excede o limite permitido
+    if new_height > (header_height - padding):
+        new_height = header_height - padding
+        new_width = new_height * aspect_ratio
+
+    # Inserir a imagem no canvas
+    logo = Image(logo_path, width=new_width, height=new_height)
+    logo.drawOn(canvas, padding, page_height - header_height + padding)
 
     # Ajuste automático do tamanho do título
     max_font_size = 22
@@ -109,15 +126,15 @@ def report_create_pdf(response, title, data):
 
     # Criar tabela
     col_widths = [landscape(A4)[0] / len(data[0])] * len(data[0])
-    table = Table(data, colWidths=col_widths, repeatRows=1)  # Adicionar repeatRows=1
+    table = Table(data, colWidths=col_widths, repeatRows=1)
 
     table_style = TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#E6B510')),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),  # Título em negrito
-        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),  # Restante da tabela
-        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 0), (-1, -1), 8),
         ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
         ('VALIGN', (0, 0), (-1, -1), 'TOP')
     ])
