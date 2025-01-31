@@ -52,13 +52,8 @@
     <footer>
         <p>&copy; 2024 SIGA - Sistema Integrado de Gestão Administrativa</p>
     </footer>
-    <!-- Scripts no final para melhor performance -->
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <script src="{% static 'js/moment.js' %}"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'daterangepicker/js/daterangepicker.js' %}"></script>
-    <script src="{% static 'select2/js/select2.min.js' %}"></script>
-    <script src="{% static 'js/scripts.js' %}"></script>
+    <!-- Scripts -->
+    {% include 'js_includes.html' %}
 </body>
 {% csrf_token %}
 </html>
