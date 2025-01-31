@@ -37,13 +37,13 @@ def busca_cep_view(request, cep):
         return JsonResponse({'resultado': '0'}, status=404)
     except ValueError as e:
         logger.error("Erro de valor ao buscar CEP: %s", e)
-        return JsonResponse({'erro': str(e)}, status=400)
+        return JsonResponse({'erro': 'An internal error has occurred.'}, status=400)
     except KeyError as e:
         logger.error("Erro de chave ao buscar CEP: %s", e)
-        return JsonResponse({'erro': str(e)}, status=400)
+        return JsonResponse({'erro': 'An internal error has occurred.'}, status=400)
     except TypeError as e:
         logger.error("Erro de tipo ao buscar CEP: %s", e)
-        return JsonResponse({'erro': str(e)}, status=400)
+        return JsonResponse({'erro': 'An internal error has occurred.'}, status=400)
     except RuntimeError as e:
         logger.error("Erro de execução ao buscar CEP: %s", e)
-        return JsonResponse({'erro': str(e)}, status=500)
+        return JsonResponse({'erro': 'An internal error has occurred.'}, status=500)
