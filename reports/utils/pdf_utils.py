@@ -9,10 +9,10 @@ from babel.dates import format_datetime
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, landscape, portrait
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Image, Spacer
 from reportlab.lib.units import inch
 from reportlab.lib.utils import ImageReader
-from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 
 def draw_header(canvas, doc, title, pagesize):
     """
@@ -121,7 +121,15 @@ def report_create_pdf(response, title, data, orientation='landscape'):
                             )
     elements = []
 
-    # Estilo das células da tabela
+    # Estilos do relatório
+    styles = getSampleStyleSheet()
+    bold_style = ParagraphStyle(
+        'Bold',
+        parent=styles['Normal'],
+        fontName='Helvetica-Bold',
+        fontSize=10,
+        textColor=colors.white
+    )
     cell_style = ParagraphStyle(
         name='Normal',
         fontSize=8
@@ -148,7 +156,8 @@ def report_create_pdf(response, title, data, orientation='landscape'):
         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
         ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
         ('FONTSIZE', (0, 0), (-1, -1), 8),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('TOPPADDING', (0, 0), (-1, 0), 4),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 4),
         ('VALIGN', (0, 0), (-1, -1), 'TOP')
     ])
 
@@ -158,6 +167,34 @@ def report_create_pdf(response, title, data, orientation='landscape'):
 
     table.setStyle(table_style)
     elements.append(table)
+
+    # Adicionando contador de registros ao final da tabela
+    total_records = len(data) - 1  # Subtrai 1 para não contar o cabeçalho
+    record_counter_text = f"Total de registros neste relatório: {total_records}"
+    record_counter = Paragraph(
+        record_counter_text,
+        ParagraphStyle(
+            'RightAligned',
+            parent=bold_style,
+            alignment=2
+        )
+    )
+
+    elements.append(Spacer(1, 6))
+
+    # Tabela do contador de registros
+    record_counter_table = Table([[record_counter]], colWidths=[pagesize[0]])
+    record_counter_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor('#3FB081')),
+        ('TEXTCOLOR', (0, 0), (-1, -1), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'RIGHT'),
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+        ('TOPPADDING', (0, 0), (-1, -1), 4),
+    ]))
+
+    elements.append(record_counter_table)
 
     # Adicionando cabeçalho e rodapé em cada página
     doc.build(elements, onFirstPage=lambda c, d: on_page(c, d, title, pagesize),
