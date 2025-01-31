@@ -31,6 +31,8 @@ def busca_cep_view(request, cep):
     try:
         dados = busca_cep_util(cep)
         if dados:
+            if 'erro' in dados:
+                return JsonResponse({'erro': dados['erro']}, status=400)
             return JsonResponse(dados)
         return JsonResponse({'resultado': '0'}, status=404)
     except ValueError as e:

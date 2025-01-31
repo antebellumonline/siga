@@ -48,5 +48,6 @@ def busca_cep(cep):
                     "ibge": data.get("ibge")
                 }
     except requests.exceptions.RequestException as e:
-        return {"erro": str(e)}
+        logger.error("Erro ao buscar CEP: %s", e)
+        return {"erro": "Erro ao buscar informações do CEP"}
     return None
