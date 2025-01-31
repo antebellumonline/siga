@@ -7,7 +7,7 @@ As views utilizam Django para gerenciar as requisições HTTP
 e interagir com os modelos de dados.
 """
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import openpyxl
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -209,6 +209,8 @@ def exame_list(request):
             # Converte o formato de DD/MM/YYYY para YYYY-MM-DD
             data_inicio = datetime.strptime(data_inicio.strip(), '%d/%m/%Y').date()
             data_fim = datetime.strptime(data_fim.strip(), '%d/%m/%Y').date()
+            # Adiciona um dia ao data_fim para incluir o último dia completo
+            data_fim += timedelta(days=1)
             centroprova_exame = centroprova_exame.filter(data__range=[data_inicio, data_fim])
         except (ValueError, TypeError):
             pass  # Ignorar filtro em caso de erro
@@ -401,7 +403,12 @@ def exame_report_pdf(request):
             exame.observacao or ''
         ])
 
-    return report_create_pdf(response, "Exames Realizados no Centro de Provas", data, orientation='portrait')
+    return report_create_pdf(
+        response,
+        "Exames Realizados no Centro de Provas",
+        data,
+        orientation='portrait'
+    )
 
 def exame_report_xlsx(request):
     """
