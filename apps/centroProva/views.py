@@ -8,7 +8,6 @@ e interagir com os modelos de dados.
 """
 
 from datetime import datetime, timedelta
-import openpyxl
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
@@ -17,6 +16,7 @@ from django.db.models import Q
 
 from django.http import HttpResponse
 from reports.utils.pdf_utils import report_create_pdf
+from reports.utils.excel_utils import report_create_xlsx
 
 from .models import CentroProva, CentroProvaExame, Aluno, Certificacao
 from .forms import CentroProvaForm, CentroProvaExameForm
@@ -414,39 +414,42 @@ def exame_report_xlsx(request):
     """
     View para Gerar Relatório de Exames em Excel com Filtros Aplicados
     """
-    response = HttpResponse(
-        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        )
-    response['Content-Disposition'] = 'attachment; filename="relatorio_exames.xlsx"'
+    # Dados dos exames
+    exames = exame_get_filter(request)
 
-    # Criar o Workbook
-    wb = openpyxl.Workbook()
-    ws = wb.active
-    ws.title = "Relatório de Exames"
-
-    # Adicionar cabeçalhos
+    # Cabeçalhos do relatório
     headers = [
+        'Data do Exame',
+        'Centro de Provas',
         'Certificação',
-        'Centro de Prova',
         'Aluno',
-        'Data',
         'Presença',
         'Cancelado',
-        'Observação']
-    ws.append(headers)
+        'Observação'
+    ]
 
-    # Adicionar dados dos exames filtrados
-    exames = exame_get_filter(request)
-    for exame in exames:
-        ws.append([
-            str(exame.certificacao),
-            str(exame.centroProva),
-            str(exame.aluno),
+    # Nome do arquivo
+    filename = "Exames Realizados no Centro de Provas"
+
+    # Função para formatar cada linha de dados
+    def format_row(exame):
+        certificacao_text = (
+            f"{exame.certificacao.descricao} ({exame.certificacao.siglaExame})"
+            if exame.certificacao.siglaExame
+            else exame.certificacao.descricao
+        )
+        aluno_text = f"{exame.aluno.uid} - {exame.aluno.nome}"
+        presenca_text = "Presente" if exame.presenca else "Ausente"
+
+        return [
             exame.data.strftime('%d/%m/%Y %H:%M:%S'),
-            'Sim' if exame.presenca else 'Não',
+            str(exame.centroProva),
+            certificacao_text,
+            aluno_text,
+            presenca_text,
             'Sim' if exame.cancelado else 'Não',
             exame.observacao or ''
-        ])
+        ]
 
-    wb.save(response)
-    return response
+    # Gerar e retornar o relatório em Excel
+    return report_create_xlsx(exames, headers, filename, format_row)
