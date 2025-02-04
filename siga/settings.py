@@ -30,11 +30,9 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
 
 # Configuração dos hosts permitidos (ALLOWED_HOSTS) para produção
-ALLOWED_HOSTS = env.list(
+ALLOWED_HOSTS = env(
     'ALLOWED_HOSTS',
-    default=['127.0.0.1',
-             'localhost'] if DEBUG else ['siga-app.azurewebsites.net', 'siga.antebellum.com.br']
-)
+    default='127.0.0.1,localhost' if DEBUG else 'siga-app.azurewebsites.net,siga.antebellum.com.br').split(',')
 
 # Configuração das origens confiáveis para CSRF
 CSRF_TRUSTED_ORIGINS = ['https://siga-app.azurewebsites.net', 'https://siga.antebellum.com.br']
