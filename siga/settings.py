@@ -35,6 +35,9 @@ ALLOWED_HOSTS = env.list(
     default=['127.0.0.1', 'localhost'] if DEBUG else ['siga-app.azurewebsites.net']
 )
 
+# Configuração das origens confiáveis para CSRF
+CSRF_TRUSTED_ORIGINS = ['https://siga-app.azurewebsites.net']
+
 # Configuração do banco de dados
 DATABASES = {
     'default': {
