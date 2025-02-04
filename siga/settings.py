@@ -37,7 +37,7 @@ ALLOWED_HOSTS = env.list(
 )
 
 # Configuração das origens confiáveis para CSRF
-CSRF_TRUSTED_ORIGINS = ['https://siga-app.azurewebsites.net', 'https://siga.antebellum.com.br/']
+CSRF_TRUSTED_ORIGINS = ['https://siga-app.azurewebsites.net', 'https://siga.antebellum.com.br']
 
 # Configuração do banco de dados
 DATABASES = {
