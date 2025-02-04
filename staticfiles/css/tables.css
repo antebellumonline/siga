@@ -1,0 +1,62 @@
+/* TABELAS DO LIST*/
+.tb-list {
+    width: 100%; /* Define a largura da tabela */
+    border-collapse: collapse; /* Faz com que as bordas se unam */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.tb-list th, 
+.tb-list td {
+    text-align: left; /* Alinha o texto à esquerda */
+    padding: 8px; /* Espaçamento interno nas células */
+}
+
+.tb-list thead {
+    background-color: #E6B510; /* Cor de fundo do cabeçalho */
+    color: black; /* Cor do texto do cabeçalho */
+}
+
+.tb-list thead th {
+    border-bottom: none; /* Remove a borda inferior do cabeçalho */
+}
+
+.tb-list tbody tr:nth-child(odd) {
+    background-color: #e3e3e1; /* Cor de fundo para linhas ímpares */
+}
+
+.tb-list tbody tr:nth-child(even) {
+    background-color: white; /* Cor de fundo para linhas pares */
+}
+
+.tb-list th a {
+    color: black; /* Cor do texto dos links no cabeçalho */
+    text-decoration: none; /* Remove o sublinhado dos links */
+}
+
+.tb-list th a[data-order="ascending"]:after {
+    content: '▲';
+}
+
+.tb-list th a[data-order="descending"]:after {
+    content: '▼';
+}
+
+.tb-list th a:hover {
+    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
+.tb-list td {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+
+.tb-list td a {
+    color: #1A4F45;
+}

@@ -15,7 +15,6 @@ __pycache__/
 *.pyo
 db.sqlite3
 /media/
-staticfiles/
 
 # Ignore migration files, except for the __init__.py
 **/migrations/*.py

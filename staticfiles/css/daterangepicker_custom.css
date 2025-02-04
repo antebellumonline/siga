@@ -1,0 +1,59 @@
+/* DATERANGEPICKER */
+.daterangepicker {
+    background-color: white !important;
+    color: black !important;
+    border: 2px solid #3FB081 !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.daterangepicker .calendar-table th,
+.daterangepicker .calendar-table td {
+    border-radius: 0px !important;
+    border-color: #e3e3e1 !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.daterangepicker .calendar-table td:hover {
+    background-color: #E6B510 !important;
+    color: black !important;
+}
+
+.daterangepicker .ranges li.active,
+.daterangepicker .ranges li:hover {
+    background-color: #3FB081 !important;
+    color: white !important;
+    border-radius: 4px !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.daterangepicker .drp-buttons .btn {
+    background-color: #1A4F45 !important;
+    color: white !important;
+    border: 0px;
+    border-radius: 4px !important;
+    padding: 10px !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.daterangepicker .drp-buttons .btn:hover {
+    background-color: #E6B510 !important;
+    color: black !important;
+}
+.daterangepicker td.active,
+.daterangepicker td.active:hover {
+    background-color: #E6B510 !important;
+    color: black !important;
+}
+
+.daterangepicker td.in-range {
+    background-color: #3FB081 !important;
+    color: white !important;
+}
+
+.daterangepicker td.start-date,
+.daterangepicker td.end-date {
+    background-color: #1A4F45 !important;
+    color: white !important;
+}
