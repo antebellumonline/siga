@@ -1,5 +1,9 @@
 # reports/utils/excel_utils.py
 
+"""
+Módulo para gerar relatórios em Excel para os apps do projeto.
+"""
+
 import openpyxl
 from django.http import HttpResponse
 
