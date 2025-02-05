@@ -1,111 +1,94 @@
 # Estrutura do Projeto Django
 
 ```plaintext
-├── alunos
+├── apis
 │   ├── admin.py
 │   ├── apps.py
 │   ├── forms.py
 │   ├── migrations
-│   │   ├── 0001_initial.py
 │   │   ├── __init__.py
 │   ├── models.py
-│   ├── sql
-│   │   ├── create_tb_aluno.sql
-│   │   ├── create_tb_aluno_contato.sql
-│   │   └── create_tb_config_tpContato.sql
 │   ├── tests.py
 │   ├── urls.py
+│   ├── utils.py
 │   ├── views.py
 │   ├── __init__.py
+├── apps
+│   ├── alunos
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── forms.py
+│   │   ├── migrations
+│   │   │   ├── 0001_initial.py
+│   │   │   ├── __init__.py
+│   │   ├── models.py
+│   │   ├── sql
+│   │   ├── tests.py
+│   │   ├── urls.py
+│   │   ├── views.py
+│   │   ├── __init__.py
+│   ├── centroProva
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── forms.py
+│   │   ├── migrations
+│   │   │   ├── 0001_initial.py
+│   │   │   ├── __init__.py
+│   │   ├── models.py
+│   │   ├── sql
+│   │   ├── tests.py
+│   │   ├── urls.py
+│   │   ├── views.py
+│   │   ├── __init__.py
+│   ├── certificacoes
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── forms.py
+│   │   ├── migrations
+│   │   │   ├── 0001_initial.py
+│   │   │   ├── 0002_alter_certificacao_duracao_and_more.py
+│   │   │   ├── 0003_alter_certificacao_duracao.py
+│   │   │   ├── 0004_alter_certificacao_idcertificador.py
+│   │   │   ├── 0005_alter_certificador_siglacertificador.py
+│   │   │   ├── __init__.py
+│   │   ├── models.py
+│   │   ├── tests.py
+│   │   ├── urls.py
+│   │   ├── views.py
+│   │   ├── __init__.py
+│   └── cidades
+│       ├── admin.py
+│       ├── apps.py
+│       ├── forms.py
+│       ├── migrations
+│       │   ├── 0001_initial.py
+│       │   ├── 0002_endereco.py
+│       │   ├── 0003_remove_endereco_estado.py
+│       │   ├── 0004_remove_endereco_id_alter_endereco_cep.py
+│       │   ├── 0005_delete_endereco.py
+│       │   ├── __init__.py
+│       ├── models.py
+│       ├── tests.py
+│       ├── views.py
+│       ├── __init__.py
 ├── atualizar-requirements.md
-├── centroProva
-│   ├── admin.py
-│   ├── apps.py
-│   ├── forms.py
-│   ├── migrations
-│   │   ├── 0001_initial.py
-│   │   ├── __init__.py
-│   ├── models.py
-│   ├── sql
-│   │   ├── create_tb_centroProva-exames.sql
-│   │   └── create_tb_centroProva.sql
-│   ├── tests.py
-│   ├── urls.py
-│   ├── views.py
-│   ├── __init__.py
-├── certificacoes
-│   ├── admin.py
-│   ├── apps.py
-│   ├── forms.py
-│   ├── migrations
-│   │   ├── 0001_initial.py
-│   │   ├── 0002_alter_certificacao_duracao_and_more.py
-│   │   ├── 0003_alter_certificacao_duracao.py
-│   │   ├── 0004_alter_certificacao_idcertificador.py
-│   │   ├── 0005_alter_certificador_siglacertificador.py
-│   │   ├── __init__.py
-│   ├── models.py
-│   ├── tests.py
-│   ├── urls.py
-│   ├── views.py
-│   ├── __init__.py
-├── cidades
-│   ├── admin.py
-│   ├── apps.py
-│   ├── migrations
-│   │   ├── 0001_initial.py
-│   │   ├── __init__.py
-│   ├── models.py
-│   ├── tests.py
-│   ├── views.py
-│   ├── __init__.py
 ├── deploy.sh
-├── django_errors.log
 ├── docs
-│   ├── build
-│   │   ├── doctrees
-│   │   │   ├── environment.pickle
-│   │   │   └── index.doctree
-│   │   └── html
-│   │       ├── genindex.html
-│   │       ├── index.html
-│   │       ├── objects.inv
-│   │       ├── search.html
-│   │       ├── searchindex.js
-│   │       ├── _sources
-│   │       │   └── index.rst.txt
-│   │       └── _static
-│   │           ├── alabaster.css
-│   │           ├── base-stemmer.js
-│   │           ├── basic.css
-│   │           ├── custom.css
-│   │           ├── doctools.js
-│   │           ├── documentation_options.js
-│   │           ├── file.png
-│   │           ├── github-banner.svg
-│   │           ├── language_data.js
-│   │           ├── minus.png
-│   │           ├── plus.png
-│   │           ├── portuguese-stemmer.js
-│   │           ├── pygments.css
-│   │           ├── searchtools.js
-│   │           ├── sphinx_highlight.js
-│   │           └── translations.js
-│   ├── make.bat
-│   ├── Makefile
 │   └── source
 │       ├── conf.py
 │       ├── index.rst
+│       ├── models.rst
 │       ├── _static
 │       └── _templates
 ├── generate_docs.py
 ├── inicializacao_do_projeto.md
-├── LICENSE
 ├── logs
 │   ├── import_cidades-log.txt
+│   ├── import_enderecos-log.txt
 │   ├── import_tpContato-log.txt
 │   └── import_uf-log.txt
 ├── manage.py
+├── media
 ├── README.md
 ├── reports
 │   ├── admin.py
@@ -118,11 +101,15 @@
 │   │   ├── centroProva
 │   │   └── certificacoes
 │   ├── tests.py
+│   ├── utils
+│   │   ├── excel_utils.py
+│   │   ├── pdf_utils.py
 │   ├── views.py
 │   ├── __init__.py
 ├── requirements.txt
 ├── siga
 │   ├── asgi.py
+│   ├── forms.py
 │   ├── management
 │   │   ├── commands
 │   │   │   ├── import_aluno-contatos.py
@@ -133,47 +120,13 @@
 │   │   │   ├── import_certificador.py
 │   │   │   ├── import_cidades.py
 │   │   │   ├── import_config-tpContato.py
+│   │   │   ├── import_enderecos.py
 │   │   │   ├── import_uf.py
 │   │   │   ├── test_db_connection.py
+│   │   │   ├── __init__.py
 │   │   ├── __init__.py
+│   ├── middleware.py
 │   ├── settings.py
-│   ├── templates
-│   │   ├── alunos
-│   │   │   ├── aluno_confirm_delete.html
-│   │   │   ├── aluno_detail.html
-│   │   │   ├── aluno_form.html
-│   │   │   ├── aluno_home.html
-│   │   │   └── aluno_list.html
-│   │   ├── base.html
-│   │   ├── centroProva
-│   │   │   ├── centroProva-exame_detail.html
-│   │   │   ├── centroProva-exame_form.html
-│   │   │   ├── centroProva-exame_list.html
-│   │   │   ├── centroProva_confirmDelete.html
-│   │   │   ├── centroProva_detail.html
-│   │   │   ├── centroProva_form.html
-│   │   │   ├── centroProva_home.html
-│   │   │   └── centroProva_list.html
-│   │   ├── certificacao
-│   │   │   ├── certificacao_confirm_delete.html
-│   │   │   ├── certificacao_detail.html
-│   │   │   ├── certificacao_form.html
-│   │   │   ├── certificacao_home.html
-│   │   │   ├── certificacao_list.html
-│   │   │   ├── certificador_confirm_delete.html
-│   │   │   ├── certificador_detail.html
-│   │   │   ├── certificador_form.html
-│   │   │   └── certificador_list.html
-│   │   ├── home.html
-│   │   ├── includes
-│   │   │   ├── modals.html
-│   │   │   ├── pagination.html
-│   │   │   └── records_per_page_selector.html
-│   │   └── registration
-│   │       └── login.html
-│   ├── templatetags
-│   │   ├── custom_filters.py
-│   │   ├── __init__.py
 │   ├── urls.py
 │   ├── views.py
 │   ├── wsgi.py
@@ -182,69 +135,50 @@
 │   ├── bootstrap
 │   │   ├── css
 │   │   │   ├── bootstrap-grid.css
-│   │   │   ├── bootstrap-grid.css.map
 │   │   │   ├── bootstrap-grid.min.css
-│   │   │   ├── bootstrap-grid.min.css.map
 │   │   │   ├── bootstrap-grid.rtl.css
-│   │   │   ├── bootstrap-grid.rtl.css.map
 │   │   │   ├── bootstrap-grid.rtl.min.css
-│   │   │   ├── bootstrap-grid.rtl.min.css.map
 │   │   │   ├── bootstrap-reboot.css
-│   │   │   ├── bootstrap-reboot.css.map
 │   │   │   ├── bootstrap-reboot.min.css
-│   │   │   ├── bootstrap-reboot.min.css.map
 │   │   │   ├── bootstrap-reboot.rtl.css
-│   │   │   ├── bootstrap-reboot.rtl.css.map
 │   │   │   ├── bootstrap-reboot.rtl.min.css
-│   │   │   ├── bootstrap-reboot.rtl.min.css.map
 │   │   │   ├── bootstrap-utilities.css
-│   │   │   ├── bootstrap-utilities.css.map
 │   │   │   ├── bootstrap-utilities.min.css
-│   │   │   ├── bootstrap-utilities.min.css.map
 │   │   │   ├── bootstrap-utilities.rtl.css
-│   │   │   ├── bootstrap-utilities.rtl.css.map
 │   │   │   ├── bootstrap-utilities.rtl.min.css
-│   │   │   ├── bootstrap-utilities.rtl.min.css.map
 │   │   │   ├── bootstrap.css
-│   │   │   ├── bootstrap.css.map
 │   │   │   ├── bootstrap.min.css
-│   │   │   ├── bootstrap.min.css.map
 │   │   │   ├── bootstrap.rtl.css
-│   │   │   ├── bootstrap.rtl.css.map
 │   │   │   ├── bootstrap.rtl.min.css
-│   │   │   └── bootstrap.rtl.min.css.map
 │   │   └── js
 │   │       ├── bootstrap.bundle.js
-│   │       ├── bootstrap.bundle.js.map
 │   │       ├── bootstrap.bundle.min.js
-│   │       ├── bootstrap.bundle.min.js.map
 │   │       ├── bootstrap.esm.js
-│   │       ├── bootstrap.esm.js.map
 │   │       ├── bootstrap.esm.min.js
-│   │       ├── bootstrap.esm.min.js.map
 │   │       ├── bootstrap.js
-│   │       ├── bootstrap.js.map
 │   │       ├── bootstrap.min.js
-│   │       └── bootstrap.min.js.map
 │   ├── bootstrap-datepicker
 │   │   ├── css
 │   │   │   ├── bootstrap-datepicker.css
-│   │   │   ├── bootstrap-datepicker.css.map
 │   │   │   ├── bootstrap-datepicker.min.css
 │   │   │   ├── bootstrap-datepicker.standalone.css
-│   │   │   ├── bootstrap-datepicker.standalone.css.map
 │   │   │   ├── bootstrap-datepicker.standalone.min.css
 │   │   │   ├── bootstrap-datepicker3.css
-│   │   │   ├── bootstrap-datepicker3.css.map
 │   │   │   ├── bootstrap-datepicker3.min.css
 │   │   │   ├── bootstrap-datepicker3.standalone.css
-│   │   │   ├── bootstrap-datepicker3.standalone.css.map
 │   │   │   └── bootstrap-datepicker3.standalone.min.css
 │   │   └── js
 │   │       ├── bootstrap-datepicker.js
 │   │       └── bootstrap-datepicker.min.js
 │   ├── css
-│   │   └── styles.css
+│   │   ├── buttons.css
+│   │   ├── daterangepicker_custom.css
+│   │   ├── forms.css
+│   │   ├── login.css
+│   │   ├── modals.css
+│   │   ├── select2_custom.css
+│   │   ├── styles.css
+│   │   └── tables.css
 │   ├── daterangepicker
 │   │   ├── css
 │   │   │   └── daterangepicker.css
@@ -286,54 +220,9 @@
 │   │   │   ├── v4-shims.js
 │   │   │   └── v4-shims.min.js
 │   │   ├── less
-│   │   │   ├── brands.less
-│   │   │   ├── fontawesome.less
-│   │   │   ├── regular.less
-│   │   │   ├── solid.less
-│   │   │   ├── v4-shims.less
-│   │   │   ├── _animated.less
-│   │   │   ├── _bordered-pulled.less
-│   │   │   ├── _core.less
-│   │   │   ├── _fixed-width.less
-│   │   │   ├── _icons.less
-│   │   │   ├── _list.less
-│   │   │   ├── _mixins.less
-│   │   │   ├── _rotated-flipped.less
-│   │   │   ├── _screen-reader.less
-│   │   │   ├── _shims.less
-│   │   │   ├── _sizing.less
-│   │   │   ├── _stacked.less
-│   │   │   └── _variables.less
 │   │   ├── LICENSE.txt
 │   │   ├── metadata
-│   │   │   ├── categories.yml
-│   │   │   ├── icon-families.json
-│   │   │   ├── icon-families.yml
-│   │   │   ├── icons.json
-│   │   │   ├── icons.yml
-│   │   │   ├── shims.json
-│   │   │   ├── shims.yml
-│   │   │   └── sponsors.yml
 │   │   ├── scss
-│   │   │   ├── brands.scss
-│   │   │   ├── fontawesome.scss
-│   │   │   ├── regular.scss
-│   │   │   ├── solid.scss
-│   │   │   ├── v4-shims.scss
-│   │   │   ├── _animated.scss
-│   │   │   ├── _bordered-pulled.scss
-│   │   │   ├── _core.scss
-│   │   │   ├── _fixed-width.scss
-│   │   │   ├── _functions.scss
-│   │   │   ├── _icons.scss
-│   │   │   ├── _list.scss
-│   │   │   ├── _mixins.scss
-│   │   │   ├── _rotated-flipped.scss
-│   │   │   ├── _screen-reader.scss
-│   │   │   ├── _shims.scss
-│   │   │   ├── _sizing.scss
-│   │   │   ├── _stacked.scss
-│   │   │   └── _variables.scss
 │   │   ├── sprites
 │   │   │   ├── brands.svg
 │   │   │   ├── regular.svg
@@ -436,6 +325,7 @@
 │   │   │   │   ├── creative-commons-zero.svg
 │   │   │   │   ├── creative-commons.svg
 │   │   │   │   ├── critical-role.svg
+│   │   │   │   ├── css.svg
 │   │   │   │   ├── css3-alt.svg
 │   │   │   │   ├── css3.svg
 │   │   │   │   ├── cuttlefish.svg
@@ -485,6 +375,7 @@
 │   │   │   │   ├── fedex.svg
 │   │   │   │   ├── fedora.svg
 │   │   │   │   ├── figma.svg
+│   │   │   │   ├── files-pinwheel.svg
 │   │   │   │   ├── firefox-browser.svg
 │   │   │   │   ├── firefox.svg
 │   │   │   │   ├── first-order-alt.svg
@@ -707,6 +598,7 @@
 │   │   │   │   ├── speaker-deck.svg
 │   │   │   │   ├── spotify.svg
 │   │   │   │   ├── square-behance.svg
+│   │   │   │   ├── square-bluesky.svg
 │   │   │   │   ├── square-dribbble.svg
 │   │   │   │   ├── square-facebook.svg
 │   │   │   │   ├── square-font-awesome-stroke.svg
@@ -1255,6 +1147,7 @@
 │   │   │       ├── chart-area.svg
 │   │   │       ├── chart-bar.svg
 │   │   │       ├── chart-column.svg
+│   │   │       ├── chart-diagram.svg
 │   │   │       ├── chart-gantt.svg
 │   │   │       ├── chart-line.svg
 │   │   │       ├── chart-pie.svg
@@ -1348,6 +1241,7 @@
 │   │   │       ├── comment-dollar.svg
 │   │   │       ├── comment-dots.svg
 │   │   │       ├── comment-medical.svg
+│   │   │       ├── comment-nodes.svg
 │   │   │       ├── comment-slash.svg
 │   │   │       ├── comment-sms.svg
 │   │   │       ├── comment.svg
@@ -1510,6 +1404,8 @@
 │   │   │       ├── file-csv.svg
 │   │   │       ├── file-excel.svg
 │   │   │       ├── file-export.svg
+│   │   │       ├── file-fragment.svg
+│   │   │       ├── file-half-dashed.svg
 │   │   │       ├── file-image.svg
 │   │   │       ├── file-import.svg
 │   │   │       ├── file-invoice-dollar.svg
@@ -1661,6 +1557,8 @@
 │   │   │       ├── helicopter.svg
 │   │   │       ├── helmet-safety.svg
 │   │   │       ├── helmet-un.svg
+│   │   │       ├── hexagon-nodes-bolt.svg
+│   │   │       ├── hexagon-nodes.svg
 │   │   │       ├── highlighter.svg
 │   │   │       ├── hill-avalanche.svg
 │   │   │       ├── hill-rockslide.svg
@@ -2125,6 +2023,7 @@
 │   │   │       ├── spray-can-sparkles.svg
 │   │   │       ├── spray-can.svg
 │   │   │       ├── square-arrow-up-right.svg
+│   │   │       ├── square-binary.svg
 │   │   │       ├── square-caret-down.svg
 │   │   │       ├── square-caret-left.svg
 │   │   │       ├── square-caret-right.svg
@@ -2404,239 +2303,135 @@
 │   ├── fonts
 │   │   ├── Fredoka.ttf
 │   │   └── Montserrat.ttf
+│   ├── images
+│   │   ├── logo-antebellum-horizontal-2linhas-fundoEscuro-preto.png
+│   │   └── logo-antebellum-horizontal-2linhas-negativo-verdeEscuro.png
 │   ├── js
+│   │   ├── cep.js
+│   │   ├── checkbox-toggle.js
+│   │   ├── daterangepicker.js
 │   │   ├── jquery.js
+│   │   ├── modal.js
 │   │   ├── moment.js
-│   │   └── scripts.js
-│   └── select2
-│       ├── css
-│       │   ├── select2.css
-│       │   └── select2.min.css
-│       └── js
-│           ├── i18n
-│           │   ├── af.js
-│           │   ├── ar.js
-│           │   ├── az.js
-│           │   ├── bg.js
-│           │   ├── bn.js
-│           │   ├── bs.js
-│           │   ├── ca.js
-│           │   ├── cs.js
-│           │   ├── da.js
-│           │   ├── de.js
-│           │   ├── dsb.js
-│           │   ├── el.js
-│           │   ├── en.js
-│           │   ├── eo.js
-│           │   ├── es.js
-│           │   ├── et.js
-│           │   ├── eu.js
-│           │   ├── fa.js
-│           │   ├── fi.js
-│           │   ├── fr.js
-│           │   ├── gl.js
-│           │   ├── he.js
-│           │   ├── hi.js
-│           │   ├── hr.js
-│           │   ├── hsb.js
-│           │   ├── hu.js
-│           │   ├── hy.js
-│           │   ├── id.js
-│           │   ├── is.js
-│           │   ├── it.js
-│           │   ├── ja.js
-│           │   ├── ka.js
-│           │   ├── km.js
-│           │   ├── ko.js
-│           │   ├── lt.js
-│           │   ├── lv.js
-│           │   ├── mk.js
-│           │   ├── ms.js
-│           │   ├── nb.js
-│           │   ├── ne.js
-│           │   ├── nl.js
-│           │   ├── pa.js
-│           │   ├── pl.js
-│           │   ├── ps.js
-│           │   ├── pt-BR.js
-│           │   ├── pt.js
-│           │   ├── ro.js
-│           │   ├── ru.js
-│           │   ├── sk.js
-│           │   ├── sl.js
-│           │   ├── sq.js
-│           │   ├── sr-Cyrl.js
-│           │   ├── sr.js
-│           │   ├── sv.js
-│           │   ├── te.js
-│           │   ├── th.js
-│           │   ├── tk.js
-│           │   ├── tr.js
-│           │   ├── uk.js
-│           │   ├── vi.js
-│           │   ├── zh-CN.js
-│           │   └── zh-TW.js
-│           ├── select2.full.js
-│           ├── select2.full.min.js
-│           ├── select2.js
-│           └── select2.min.js
-├── staticfiles
-│   ├── admin
+│   │   ├── pagination.js
+│   │   └── select2.js
+│   ├── select2
 │   │   ├── css
-│   │   │   ├── autocomplete.css
-│   │   │   ├── base.css
-│   │   │   ├── changelists.css
-│   │   │   ├── dark_mode.css
-│   │   │   ├── dashboard.css
-│   │   │   ├── fonts.css
-│   │   │   ├── forms.css
-│   │   │   ├── login.css
-│   │   │   ├── nav_sidebar.css
-│   │   │   ├── responsive.css
-│   │   │   ├── responsive_rtl.css
-│   │   │   ├── rtl.css
-│   │   │   ├── vendor
-│   │   │   │   └── select2
-│   │   │   │       ├── LICENSE-SELECT2.md
-│   │   │   │       ├── select2.css
-│   │   │   │       └── select2.min.css
-│   │   │   └── widgets.css
-│   │   ├── fonts
-│   │   │   ├── LICENSE.txt
-│   │   │   ├── README.txt
-│   │   │   ├── Roboto-Bold-webfont.woff
-│   │   │   ├── Roboto-Light-webfont.woff
-│   │   │   └── Roboto-Regular-webfont.woff
-│   │   ├── img
-│   │   │   ├── calendar-icons.svg
-│   │   │   ├── gis
-│   │   │   │   ├── move_vertex_off.svg
-│   │   │   │   └── move_vertex_on.svg
-│   │   │   ├── icon-addlink.svg
-│   │   │   ├── icon-alert.svg
-│   │   │   ├── icon-calendar.svg
-│   │   │   ├── icon-changelink.svg
-│   │   │   ├── icon-clock.svg
-│   │   │   ├── icon-deletelink.svg
-│   │   │   ├── icon-hidelink.svg
-│   │   │   ├── icon-no.svg
-│   │   │   ├── icon-unknown-alt.svg
-│   │   │   ├── icon-unknown.svg
-│   │   │   ├── icon-viewlink.svg
-│   │   │   ├── icon-yes.svg
-│   │   │   ├── inline-delete.svg
-│   │   │   ├── LICENSE
-│   │   │   ├── README.txt
-│   │   │   ├── search.svg
-│   │   │   ├── selector-icons.svg
-│   │   │   ├── sorting-icons.svg
-│   │   │   ├── tooltag-add.svg
-│   │   │   └── tooltag-arrowright.svg
+│   │   │   ├── select2.css
+│   │   │   └── select2.min.css
 │   │   └── js
-│   │       ├── actions.js
-│   │       ├── actions.min.js
-│   │       ├── admin
-│   │       │   ├── DateTimeShortcuts.js
-│   │       │   └── RelatedObjectLookups.js
-│   │       ├── autocomplete.js
-│   │       ├── calendar.js
-│   │       ├── cancel.js
-│   │       ├── change_form.js
-│   │       ├── collapse.js
-│   │       ├── collapse.min.js
-│   │       ├── core.js
-│   │       ├── filters.js
-│   │       ├── inlines.js
-│   │       ├── inlines.min.js
-│   │       ├── jquery.init.js
-│   │       ├── nav_sidebar.js
-│   │       ├── popup_response.js
-│   │       ├── prepopulate.js
-│   │       ├── prepopulate.min.js
-│   │       ├── prepopulate_init.js
-│   │       ├── SelectBox.js
-│   │       ├── SelectFilter2.js
-│   │       ├── theme.js
-│   │       ├── timeparse.js
-│   │       ├── urlify.js
-│   │       └── vendor
-│   │           ├── jquery
-│   │           │   ├── jquery.js
-│   │           │   ├── jquery.min.js
-│   │           │   └── LICENSE.txt
-│   │           ├── select2
-│   │           │   ├── i18n
-│   │           │   │   ├── af.js
-│   │           │   │   ├── ar.js
-│   │           │   │   ├── az.js
-│   │           │   │   ├── bg.js
-│   │           │   │   ├── bn.js
-│   │           │   │   ├── bs.js
-│   │           │   │   ├── ca.js
-│   │           │   │   ├── cs.js
-│   │           │   │   ├── da.js
-│   │           │   │   ├── de.js
-│   │           │   │   ├── dsb.js
-│   │           │   │   ├── el.js
-│   │           │   │   ├── en.js
-│   │           │   │   ├── es.js
-│   │           │   │   ├── et.js
-│   │           │   │   ├── eu.js
-│   │           │   │   ├── fa.js
-│   │           │   │   ├── fi.js
-│   │           │   │   ├── fr.js
-│   │           │   │   ├── gl.js
-│   │           │   │   ├── he.js
-│   │           │   │   ├── hi.js
-│   │           │   │   ├── hr.js
-│   │           │   │   ├── hsb.js
-│   │           │   │   ├── hu.js
-│   │           │   │   ├── hy.js
-│   │           │   │   ├── id.js
-│   │           │   │   ├── is.js
-│   │           │   │   ├── it.js
-│   │           │   │   ├── ja.js
-│   │           │   │   ├── ka.js
-│   │           │   │   ├── km.js
-│   │           │   │   ├── ko.js
-│   │           │   │   ├── lt.js
-│   │           │   │   ├── lv.js
-│   │           │   │   ├── mk.js
-│   │           │   │   ├── ms.js
-│   │           │   │   ├── nb.js
-│   │           │   │   ├── ne.js
-│   │           │   │   ├── nl.js
-│   │           │   │   ├── pl.js
-│   │           │   │   ├── ps.js
-│   │           │   │   ├── pt-BR.js
-│   │           │   │   ├── pt.js
-│   │           │   │   ├── ro.js
-│   │           │   │   ├── ru.js
-│   │           │   │   ├── sk.js
-│   │           │   │   ├── sl.js
-│   │           │   │   ├── sq.js
-│   │           │   │   ├── sr-Cyrl.js
-│   │           │   │   ├── sr.js
-│   │           │   │   ├── sv.js
-│   │           │   │   ├── th.js
-│   │           │   │   ├── tk.js
-│   │           │   │   ├── tr.js
-│   │           │   │   ├── uk.js
-│   │           │   │   ├── vi.js
-│   │           │   │   ├── zh-CN.js
-│   │           │   │   └── zh-TW.js
-│   │           │   ├── LICENSE.md
-│   │           │   ├── select2.full.js
-│   │           │   └── select2.full.min.js
-│   │           └── xregexp
-│   │               ├── LICENSE.txt
-│   │               ├── xregexp.js
-│   │               └── xregexp.min.js
-│   ├── css
-│   │   ├── style.css
-│   │   └── styles.css
-│   └── js
-│       └── scripts.js
-├── structure.md
-├── test.py
+│   │       ├── i18n
+│   │       │   ├── af.js
+│   │       │   ├── ar.js
+│   │       │   ├── az.js
+│   │       │   ├── bg.js
+│   │       │   ├── bn.js
+│   │       │   ├── bs.js
+│   │       │   ├── ca.js
+│   │       │   ├── cs.js
+│   │       │   ├── da.js
+│   │       │   ├── de.js
+│   │       │   ├── dsb.js
+│   │       │   ├── el.js
+│   │       │   ├── en.js
+│   │       │   ├── eo.js
+│   │       │   ├── es.js
+│   │       │   ├── et.js
+│   │       │   ├── eu.js
+│   │       │   ├── fa.js
+│   │       │   ├── fi.js
+│   │       │   ├── fr.js
+│   │       │   ├── gl.js
+│   │       │   ├── he.js
+│   │       │   ├── hi.js
+│   │       │   ├── hr.js
+│   │       │   ├── hsb.js
+│   │       │   ├── hu.js
+│   │       │   ├── hy.js
+│   │       │   ├── id.js
+│   │       │   ├── is.js
+│   │       │   ├── it.js
+│   │       │   ├── ja.js
+│   │       │   ├── ka.js
+│   │       │   ├── km.js
+│   │       │   ├── ko.js
+│   │       │   ├── lt.js
+│   │       │   ├── lv.js
+│   │       │   ├── mk.js
+│   │       │   ├── ms.js
+│   │       │   ├── nb.js
+│   │       │   ├── ne.js
+│   │       │   ├── nl.js
+│   │       │   ├── pa.js
+│   │       │   ├── pl.js
+│   │       │   ├── ps.js
+│   │       │   ├── pt-BR.js
+│   │       │   ├── pt.js
+│   │       │   ├── ro.js
+│   │       │   ├── ru.js
+│   │       │   ├── sk.js
+│   │       │   ├── sl.js
+│   │       │   ├── sq.js
+│   │       │   ├── sr-Cyrl.js
+│   │       │   ├── sr.js
+│   │       │   ├── sv.js
+│   │       │   ├── te.js
+│   │       │   ├── th.js
+│   │       │   ├── tk.js
+│   │       │   ├── tr.js
+│   │       │   ├── uk.js
+│   │       │   ├── vi.js
+│   │       │   ├── zh-CN.js
+│   │       │   └── zh-TW.js
+│   │       ├── select2.full.js
+│   │       ├── select2.full.min.js
+│   │       ├── select2.js
+│   │       └── select2.min.js
+│   └── videos
+├── templates
+│   ├── alunos
+│   │   ├── aluno_confirm_delete.html
+│   │   ├── aluno_detail.html
+│   │   ├── aluno_form.html
+│   │   ├── aluno_home.html
+│   │   └── aluno_list.html
+│   ├── apis
+│   │   └── busca_cep.html
+│   ├── base.html
+│   ├── centroProva
+│   │   ├── centroProva-exame_confirmDelete.html
+│   │   ├── centroProva-exame_detail.html
+│   │   ├── centroProva-exame_form.html
+│   │   ├── centroProva-exame_list.html
+│   │   ├── centroProva_confirmDelete.html
+│   │   ├── centroProva_detail.html
+│   │   ├── centroProva_form.html
+│   │   ├── centroProva_home.html
+│   │   └── centroProva_list.html
+│   ├── certificacao
+│   │   ├── certificacao_confirm_delete.html
+│   │   ├── certificacao_detail.html
+│   │   ├── certificacao_form.html
+│   │   ├── certificacao_home.html
+│   │   ├── certificacao_list.html
+│   │   ├── certificador_confirm_delete.html
+│   │   ├── certificador_detail.html
+│   │   ├── certificador_form.html
+│   │   └── certificador_list.html
+│   ├── csp_policy.html
+│   ├── css_includes.html
+│   ├── home.html
+│   ├── includes
+│   │   ├── modals.html
+│   │   ├── pagination.html
+│   │   ├── records_per_page_selector.html
+│   │   └── record_counter.html
+│   ├── js_includes.html
+│   ├── registration
+│   │   └── login.html
+│   └── siga
+│       └── endereco_form.html
+└── templatetags
+    ├── custom_filters.py
+    ├── __init__.py
 ```

@@ -22,7 +22,42 @@ def generate_tree(directory, prefix=''):
     items = os.listdir(directory)
 
     # Lista de extensões e nomes de arquivos a ignorar
-    ignore_files = ['.git', '__pycache__', '.DS_Store', 'venv', 'env', 'node_modules']
+    ignore_files = ['.git',
+                    '__pycache__',
+                    '.DS_Store',
+                    'venv',
+                    'env',
+                    'node_modules',
+                    'sigaenv',
+                    'build',
+                    'dist',
+                    'htmlcov',
+                    'coverage',
+                    'structure.md',
+                    'staticfiles'
+                ]
+
+    # Lista de extensões e nomes de arquivos a incluir
+    include_files = ['.py',
+                     '.md',
+                     '.sh',
+                     '.txt',
+                     '.rst',
+                     '.html',
+                     '.css',
+                     '.js',
+                     '.png',
+                     '.jpg',
+                     '.jpeg',
+                     '.gif',
+                     '.svg',
+                     '.woff',
+                     '.woff2',
+                     '.ttf',
+                     '.eot',
+                     '.mp4',
+                     '.webm'
+                    ]
 
     for index, item in enumerate(items):
         path = os.path.join(directory, item)
@@ -31,13 +66,15 @@ def generate_tree(directory, prefix=''):
         if item in ignore_files or item.startswith('.'):
             continue
 
-        is_last = index == len(items) - 1
-        connector = '└── ' if is_last else '├── '
-        tree_str += prefix + connector + item + '\n'
+        # Verifica se o item é um diretório ou um arquivo com extensão permitida
+        if os.path.isdir(path) or any(item.endswith(ext) for ext in include_files):
+            is_last = index == len(items) - 1
+            connector = '└── ' if is_last else '├── '
+            tree_str += prefix + connector + item + '\n'
 
-        if os.path.isdir(path):
-            # Chama recursivamente para subdiretórios
-            tree_str += generate_tree(path, prefix + ('    ' if is_last else '│   '))
+            if os.path.isdir(path):
+                # Chama recursivamente para subdiretórios
+                tree_str += generate_tree(path, prefix + ('    ' if is_last else '│   '))
 
     return tree_str
 
