@@ -59,16 +59,17 @@ header {
     font-weight: 600;
     text-decoration: none;
     text-transform: uppercase;
-    color: #3FB081;
+    color: #ffffff;
     padding: 10px 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
+    flex-direction: column;
 }
 
 .menu > ul > li > a i {
-    margin-right: 8px;
+    margin-bottom: 8px;
     font-size: 24px;
     display: block;
     margin-bottom: 5px;
