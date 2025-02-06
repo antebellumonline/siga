@@ -154,9 +154,9 @@ def exame_new(request):
     """
     View para Adicionar um Exame Realizado no Centro de Provas
     """
-    alunos = Aluno.objects.order_by('nome')
+    alunos = Aluno.objects.filter(inativo=False).order_by('nome')
     centrosprovas = CentroProva.objects.order_by('nome')
-    certificacoes = Certificacao.objects.order_by('descricao')
+    certificacoes = Certificacao.objects.filter(inativo=False).order_by('descricao')
 
     if request.method == 'POST':
         form = CentroProvaExameForm(request.POST)
