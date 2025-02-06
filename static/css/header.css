@@ -29,13 +29,29 @@ header {
 .menu > ul > li {
     position: relative;
     margin-right: 10px;
-    border-radius: 4px;
-    background-color: #3FB081;
-    transition: background-color 0.5s ease, color 0.5s ease;
+    transition: color 0.5s ease;
 }
 
 .menu > ul > li:hover {
-    background: #E6B510;
+    color: #E6B510;
+}
+
+.menu > ul > li:hover::before,
+.menu > ul > li:hover::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #3FB081;
+}
+
+.menu > ul > li:hover::before {
+    top: 0;
+}
+
+.menu > ul > li:hover::after {
+    bottom: 0;
 }
 
 .menu > ul > li > a {
@@ -43,7 +59,7 @@ header {
     font-weight: 600;
     text-decoration: none;
     text-transform: uppercase;
-    color: black;
+    color: #3FB081;
     padding: 10px 20px;
     display: flex;
     align-items: center;
@@ -56,11 +72,17 @@ header {
     font-size: 24px;
     display: block;
     margin-bottom: 5px;
+    color: #3FB081;
+    transition: color 0.5s ease;
+}
+
+.menu > ul > li:hover > a,
+.menu > ul > li:hover > a i {
+    color: #E6B510;
 }
 
 .menu > ul > li.active {
-    background-color: #E6B510;
-    color: black;
+    color: #E6B510;
 }
 
 .hamburger-menu {
