@@ -64,6 +64,10 @@ def delete_item(request, model_name, pk):
             return JsonResponse({'success': True})
         except ImportError as e:
             print(f'Erro ao excluir o item: {e}')
-            return JsonResponse({'success': False, 'error': 'Ocorreu um erro interno ao excluir o item.'}, status=500)
+            return JsonResponse(
+                {'success': False,
+                'error': 'Ocorreu um erro interno ao excluir o item.'},
+                status=50
+            )
     print('Método não permitido.')
     return JsonResponse({'success': False, 'error': 'Método não permitido'}, status=405)
