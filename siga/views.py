@@ -67,7 +67,7 @@ def delete_item(request, model_name, pk):
             return JsonResponse(
                 {'success': False,
                 'error': 'Ocorreu um erro interno ao excluir o item.'},
-                status=50
+                status=500
             )
     print('Método não permitido.')
     return JsonResponse({'success': False, 'error': 'Método não permitido'}, status=405)
