@@ -9,18 +9,25 @@ header {
 .menu-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    max-width: 200px;
+    height: auto;
 }
 
 .menu ul {
     list-style-type: none;
     padding: 0;
-    text-align: center;
+    display: flex;
+    align-items: center;
 }
 
 .menu > ul > li {
     position: relative;
-    display: inline-block;
     margin-right: 10px;
     border-radius: 4px;
     background-color: #3FB081;
@@ -54,4 +61,31 @@ header {
 .menu > ul > li.active {
     background-color: #E6B510;
     color: black;
+}
+
+.hamburger-menu {
+    display: none;
+    cursor: pointer;
+}
+
+.hamburger-menu i {
+    font-size: 24px;
+    color: white;
+}
+
+/* Estilos para dispositivos móveis */
+@media (max-width: 768px) {
+    .menu ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .menu ul.active {
+        display: flex;
+    }
+
+    .hamburger-menu {
+        display: block;
+    }
 }
