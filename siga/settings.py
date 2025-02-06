@@ -141,15 +141,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#Configuração de login/logout Microsoft
+# Configuração de login/logout Microsoft
 MICROSOFT = {
-    'app_id': '41c47b6e-edfb-4f70-9349-7217cdc5a4d1',
-    'app_secret': '3b9b3045-5f75-4cd6-8243-1fe4b6b9656f',
-    'redirect': 'http://localhost:8000/microsoft_authentication/callback',
-    'scopes': ['user.read'],
-    'authority': 'https://login.microsoftonline.com/common',
-    'valid_email_domains': ['antebellum.com.br'],
-    'logout_uri': 'http://localhost:8000/admin/logout'
+    'app_id': os.getenv('MICROSOFT_APP_ID'),
+    'app_secret': os.getenv('MICROSOFT_APP_SECRET'),
+    'redirect': os.getenv('MICROSOFT_REDIRECT'),
+    'scopes': os.getenv('MICROSOFT_SCOPES').split(','),
+    'authority': os.getenv('MICROSOFT_AUTHORITY'),
+    'valid_email_domains': os.getenv('MICROSOFT_VALID_EMAIL_DOMAINS').split(','),
+    'logout_uri': os.getenv('MICROSOFT_LOGOUT_URI')
 }
 
 # Configuração de login/logout
