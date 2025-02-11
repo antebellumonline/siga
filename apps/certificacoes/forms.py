@@ -1,4 +1,4 @@
-# certificacoes/forms.py
+# apps/certificacoes/forms.py
 
 """
 Este módulo contém os formulários utilizados para o aplicativo de Certificações.

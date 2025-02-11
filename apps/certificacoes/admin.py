@@ -1,4 +1,4 @@
-# certificacoes/admin.py
+# apps/certificacoes/admin.py
 
 """
 Configuração da interface administrativa para o app 'certificacoes'.

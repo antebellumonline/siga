@@ -1,4 +1,4 @@
-# certificacoes/apps.py
+# apps/certificacoes/apps.py
 
 """
 Configuração do aplicativo 'certificacoes' para a aplicação Django.

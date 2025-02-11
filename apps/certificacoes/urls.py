@@ -1,4 +1,4 @@
-# certificacoes/urls.py
+# apps/certificacoes/urls.py
 
 from django.urls import path
 from . import views

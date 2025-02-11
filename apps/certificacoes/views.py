@@ -1,4 +1,4 @@
-# certificacoes/views.py
+# apps/certificacoes/views.py
 
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
