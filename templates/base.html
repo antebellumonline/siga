@@ -32,10 +32,13 @@
                             <a href="/alunos" aria-label="Alunos"><i class="fa fa-user-graduate"></i>Alunos</a>
                         </li>
                         <li class="{% if request.path == '/certificacao/' %}active{% endif %}">
-                            <a href="/certificacao" aria-label="Certificações"><i class="fa fa-graduation-cap"></i>Certificações</a>
+                            <a href="/certificacao" aria-label="Certificações"><i class="fa fa-trophy"></i>Certificações</a>
+                        </li>
+                        <li class="{% if request.path == '/curso/' %}active{% endif %}">
+                            <a href="/curso" aria-label="Cursos"><i class="fa fa-graduation-cap"></i>Cursos</a>
                         </li>
                         <li class="{% if request.path == '/centroProva/' %}active{% endif %}">
-                            <a href="/centroProva" aria-label="Centro de Provas"><i class="fa fa-certificate"></i>Centro de Provas</a>
+                            <a href="/centroProva" aria-label="Centro de Provas"><i class="fa fa-clipboard-check"></i>Centro de Provas</a>
                         </li>
                     {% endif %}
                 </ul>

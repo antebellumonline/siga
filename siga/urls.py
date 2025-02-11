@@ -34,6 +34,7 @@ urlpatterns = [
     path('', include('apps.alunos.urls')),
     path('', include('apps.certificacoes.urls')),
     path('', include('apps.centroProva.urls')),
+    path('', include('apps.cursos.urls')),
 
     # Path para eclusão de registros
     path('delete/<str:model_name>/<int:pk>/', delete_item, name='delete_item'),
