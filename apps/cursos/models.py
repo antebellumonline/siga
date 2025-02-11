@@ -36,12 +36,17 @@ class CursoCatergoria(models.Model):
 class Curso(models.Model):
     """Modelo que representa um Curso."""
 
-    id = models.AutoField(primary_key=True)
+    id = models.CharField(max_length=6, primary_key=True)
     nome = models.CharField(max_length=255)
     certificador = models.ForeignKey(Certificador, on_delete=models.SET_NULL, blank=True, null=True)
     categoria = models.ForeignKey(CursoCatergoria, on_delete=models.SET_NULL, blank=True, null=True)
     carga_horaria = models.PositiveIntegerField()
     inativo = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if not self.id and self.categoria:
+            self.id = f"{self.categoria.sigla}{self.pk or ''}"
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.nome)
@@ -67,7 +72,8 @@ class TrainingBlocksTopico(models.Model):
 class TrainingBlocks(models.Model):
     """Modelo que representa um Bloco de Treinamento."""
 
-    id = models.AutoField(primary_key=True)
+    id = models.CharField(max_length=10, primary_key=True)
+    duracao = models.DurationField(default='00:00:00')
     descricao = models.CharField(max_length=255)
     topico = models.ForeignKey(
         TrainingBlocksTopico,
@@ -77,6 +83,13 @@ class TrainingBlocks(models.Model):
         )
     obsevacao = models.TextField(blank=True, null=True)
     inativo = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if not self.id and self.topico:
+            # Gerar o ID no formato correto
+            ultimo_id = TrainingBlocks.objects.filter(topico=self.topico).count() + 1
+            self.id = f"{self.topico.id}.{ultimo_id:02d}"
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.descricao)
@@ -91,12 +104,15 @@ class CursoTrainingBlocks(models.Model):
     id = models.AutoField(primary_key=True)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     trainingBlocks = models.ForeignKey(TrainingBlocks, on_delete=models.CASCADE)
+    topico = models.ForeignKey(TrainingBlocksTopico, on_delete=models.CASCADE)
+    ordem = models.PositiveIntegerField()
+    observacao = models.TextField(blank=True, null=True)
     inativo = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.curso} - {self.trainingBlocks}"
+        return f"{self.curso} - {self.trainingBlocks} - {self.ordem}"
 
     class Meta:
         """Meta-informações para o modelo CursoTrainingBlocks."""
         db_table = 'tb_curso-trainingBlocks'
-        unique_together = ('curso', 'trainingBlocks')
+        unique_together = ('curso', 'trainingBlocks', 'ordem')

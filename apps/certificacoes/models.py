@@ -12,7 +12,7 @@ class Certificador(models.Model):
 
     def __str__(self):
         return self.descricao
-    
+
     def save(self, *args, **kwargs):
         self.siglaCertificador = self.siglaCertificador.upper()  # Converte para maiúsculas
         super().save(*args, **kwargs)  # Chama o método save da classe pai
@@ -35,7 +35,6 @@ class Certificacao(models.Model):
 
     class Meta:
         db_table = 'tb_certificacao'
-
 
 @receiver(pre_save, sender=Certificacao)
 def gerar_id_certificacao(sender, instance, **kwargs):
