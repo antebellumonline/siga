@@ -10,7 +10,7 @@ os dados relacionados aos alunos no banco de dados.
 from django.db import models
 from apps.certificacoes.models import Certificador
 
-class CursoCatergoria(models.Model):
+class CursoCategoria(models.Model):
     """Modelo que representa uma Categoria de Curso."""
 
     id = models.AutoField(primary_key=True)
@@ -39,7 +39,7 @@ class Curso(models.Model):
     id = models.CharField(max_length=6, primary_key=True)
     nome = models.CharField(max_length=255)
     certificador = models.ForeignKey(Certificador, on_delete=models.SET_NULL, blank=True, null=True)
-    categoria = models.ForeignKey(CursoCatergoria, on_delete=models.SET_NULL, blank=True, null=True)
+    categoria = models.ForeignKey(CursoCategoria, on_delete=models.SET_NULL, blank=True, null=True)
     carga_horaria = models.PositiveIntegerField()
     inativo = models.BooleanField(default=False)
 
