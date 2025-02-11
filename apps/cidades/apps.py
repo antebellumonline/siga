@@ -1,4 +1,4 @@
-# cidades/apps.py
+# apps/cidades/apps.py
 
 """
 Configuração do aplicativo 'cidades' para a aplicação Django.
