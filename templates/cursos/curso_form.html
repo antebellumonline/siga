@@ -1,0 +1,60 @@
+<!-- templates/cursos/curso_form.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}{{ form.instance.pk|yesno:"Editar Curso,Adicionar Curso" }}{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">{{ form.instance.pk|yesno:"Editar Curso,Adicionar Curso" }}</h2>
+
+<form method="post" class="edit-form">
+    {% csrf_token %}
+    <div class="form-group-edit">
+        {% if form.instance.pk %}
+        <div class="form-group-edit-status">
+            <h4 class="status-section-title">Status do Curso</h4>
+            <div class="form-input">
+                <label for="id_inativo">Inativo: </label>
+                <select id="id_inativo" name="inativo">
+                    <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
+                    <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
+                </select>
+            </div>
+        </div>
+        {% endif %}
+        <div class="form-group-edit-sub">
+            <h4 class="sub-section-title">Detalhes do Curso</h4>
+            <div class="form-input">
+                <label for="id_id">Código numérico: </label>
+                {{ form.id }}
+            </div>
+            <div class="form-input">
+                <label for="id_nome">Nome: </label>
+                {{ form.nome }}
+            </div>
+            <div class="form-input">
+                <label for="id_cargaHoraria">Carga-horária: </label>
+                {{ form.carga_horaria }}
+            </div>
+            <div class="form-input">
+                <label for="id_curso-categoria">Categoria: </label>
+                <select name="curso-categoria" id="edit-select-curso-categoria" class="select-edit select2">
+                    <option value="">Selecionar Categoria</option>
+                    {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}" {% if form.categoria.value == categoria.id %}selected{% endif %}>
+                        {{ categoria.nome }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <!-- Grupo de botões (Salvar e Retornar) -->
+    <div class="btn-group">
+        <button class="btn-save" type="submit">Salvar Curso</button>
+        <a class="btn-return" href="{% url 'curso_list' %}">Retornar</a>
+    </div>
+</form>
+
+{% endblock %}

@@ -25,6 +25,7 @@ def curso_new(request):
     """
     View para Adicionar um Curso
     """
+    categorias = CursoCategoria.objects.filter(inativo=False).order_by('nome')
     if request.method == "POST":
         form = CursoForm(request.POST)
         if form.is_valid():
@@ -32,10 +33,10 @@ def curso_new(request):
             return redirect('curso_list')
     else:
         form = CursoForm()
-    return render(request,
-                  'cursos/curso_form.html',
-                  {'form': form}
-                )
+    return render(request, 'cursos/curso_form.html',{
+        'form': form,
+        'categorias': categorias
+    })
 
 # ----- View para Listar os Cursos -----
 def curso_list(request):
@@ -108,3 +109,16 @@ def curso_list(request):
         'page_obj': page_obj,
         'query_params': request.GET.urlencode(),
         })
+
+# ----- View para Visualizar os detalhes de um Curso -----
+def curso_detail(request, pk):
+    """
+    View para Visualizar os Detalhes de um Curso
+    """
+    # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
+    curso = get_object_or_404(Curso, pk=pk)
+
+    # Renderização do template
+    return render(request, 'cursos/curso.html', {
+        'curso': curso
+    })
