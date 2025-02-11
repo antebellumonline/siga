@@ -1,4 +1,4 @@
-# centroProva/admin.py
+# apps/centroProva/admin.py
 
 """
 Configuração da interface administrativa para o app 'centroProva'.

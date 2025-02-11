@@ -1,4 +1,4 @@
-# centroProva/urls.py
+# apps/centroProva/urls.py
 
 """
 Definição das URLs para o aplicativo 'centroProva'.
