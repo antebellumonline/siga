@@ -1,6 +1,6 @@
 import pandas as pd
 from django.core.management.base import BaseCommand
-from centroProva.models import CentroProva
+from apps.centroProva.models import CentroProva
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 import logging

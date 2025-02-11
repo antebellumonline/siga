@@ -10,7 +10,7 @@ from django.core.management.base import BaseCommand
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'siga.settings')
 django.setup()
 
-from cidades.models import Estado, Cidade, Endereco
+from apps.cidades.models import Estado, Cidade, Endereco
 
 # Configuração do logging
 log_dir = os.path.join(os.getcwd(), 'logs')

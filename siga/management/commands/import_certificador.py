@@ -1,6 +1,6 @@
 import pandas as pd
 from django.core.management.base import BaseCommand
-from certificacoes.models import Certificador
+from apps.certificacoes.models import Certificador
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 import logging

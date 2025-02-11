@@ -1,6 +1,6 @@
 import pandas as pd
 from django.core.management.base import BaseCommand
-from alunos.models import Aluno, AlunoContato, ConfigTpContato
+from apps.alunos.models import Aluno, AlunoContato, ConfigTpContato
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 import logging

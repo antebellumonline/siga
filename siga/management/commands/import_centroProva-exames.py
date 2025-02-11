@@ -3,9 +3,9 @@ import logging
 import os
 import pytz
 from django.core.management.base import BaseCommand
-from certificacoes.models import Certificacao
-from alunos.models import Aluno
-from centroProva.models import CentroProva, CentroProvaExame
+from apps.certificacoes.models import Certificacao
+from apps.alunos.models import Aluno
+from apps.centroProva.models import CentroProva, CentroProvaExame
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 from datetime import datetime
