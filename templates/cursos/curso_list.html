@@ -116,16 +116,16 @@
     <tbody>
         {% for curso in page_obj %}
         <tr>
-            <td>{{ exame.data|date:"d/m/Y H:i" }}</td>
-            <td><a href="{% url 'exame_detail' exame.pk %}">{{ exame.aluno.nome }}</a></td>
-            <td>{{ exame.centroProva.nome }}</td>
-            <td>{{ exame.certificacao.descricao }} ({{ exame.certificacao.siglaExame }})</td>
-            <td>{{ exame.presenca|yesno:"Sim,Não" }}</td>
+            <td>{{ curso.id }}</td>
+            <td><a href="{% url 'curso_detail' curso.pk %}">{{ curso.nome }}</a></td>
+            <td>{{ curso.carga_horaria }}</td>
+            <td>{{ curso.categoria.nome }}</td>
+            <td>{{ curso.certificador.descricao }}</td>
             <td>{{ exame.cancelado|yesno:"Sim,Não" }}</td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="6">Nenhum exame encontrado.</td>
+            <td colspan="6">Nenhum curso encontrado.</td>
         </tr>
         {% endfor %}
     </tbody>
@@ -136,7 +136,7 @@
 {% include 'includes/record_counter.html' with page_obj=page_obj %}
 <!-- Grupo de botões (Novo e Retornar) -->
 <div class="btn-group">
-    <a class="btn-return" href="{% url 'centroprova_home' %}">Retornar</a>
+    <a class="btn-return" href="{% url 'curso_home' %}">Retornar</a>
     <a class="btn-new" href="{% url 'exame_new' %}">Novo</a>
 </div>
 
