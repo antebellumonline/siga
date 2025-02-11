@@ -287,9 +287,9 @@ def exame_edit(request, pk):
     # Obtém os filtros
     exame = get_object_or_404(CentroProvaExame, pk=pk)
     print(exame.data)
-    alunos = Aluno.objects.order_by('nome')
+    alunos = Aluno.objects.filter(inativo=False).order_by('nome')
     centrosprovas = CentroProva.objects.order_by('nome')
-    certificacoes = Certificacao.objects.order_by('descricao')
+    certificacoes = Certificacao.objects.filter(inativo=False).order_by('descricao')
 
     # Verifica se a requisição é do tipo POST (submissão de formulário)
     if request.method == "POST":
