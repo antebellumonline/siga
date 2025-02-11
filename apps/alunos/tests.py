@@ -1,1 +1,1 @@
-# alunos/tests.py
+# apps/alunos/tests.py

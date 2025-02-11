@@ -1,4 +1,4 @@
-# alunos/forms.py
+# apps/alunos/forms.py
 
 """
 Este módulo contém os formulários utilizados para o aplicativo de Alunos.

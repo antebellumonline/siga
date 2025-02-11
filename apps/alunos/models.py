@@ -1,4 +1,4 @@
-# alunos/models.py
+# apps/alunos/models.py
 
 """
 Definições dos modelos do aplicativo 'alunos'.

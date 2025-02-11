@@ -1,4 +1,4 @@
-# alunos/views.py
+# apps/alunos/views.py
 
 """
 Definição das views para o aplicativo 'alunos'.
