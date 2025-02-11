@@ -13,14 +13,12 @@ from django.db.models import Q
 from .models import Curso, CursoCategoria
 from .forms import CursoForm
 
-# ----- View para a Página Inicial do App Cursos -----
 def curso_home(request):
     """
     View para a Página Inicial do App Cursos
     """
     return render(request, 'cursos/curso_home.html')
 
-# ----- View para Adicionar um Curso -----
 def curso_new(request):
     """
     View para Adicionar um Curso
@@ -38,7 +36,6 @@ def curso_new(request):
         'categorias': categorias
     })
 
-# ----- View para Listar os Cursos -----
 def curso_list(request):
     """
     View para Listar os Cursos
@@ -110,7 +107,6 @@ def curso_list(request):
         'query_params': request.GET.urlencode(),
         })
 
-# ----- View para Visualizar os detalhes de um Curso -----
 def curso_detail(request, pk):
     """
     View para Visualizar os Detalhes de um Curso
@@ -120,5 +116,45 @@ def curso_detail(request, pk):
 
     # Renderização do template
     return render(request, 'cursos/curso.html', {
+        'curso': curso
+    })
+
+def curso_edit(request, pk):
+    """
+    View para Editar um Curso
+    """
+    # Obtém os filtros
+    curso = get_object_or_404(Curso, pk=pk)
+    print(curso.nome)
+    categorias = CursoCategoria.objects.filter(inativo=False).order_by('nome')
+
+    # Verifica se a requisição é do tipo POST (submissão de formulário)
+    if request.method == "POST":
+        form = CursoForm(request.POST, instance=curso)
+
+        # Se o formulário for válido, salva as alterações no objeto
+        if form.is_valid():
+            form.save()
+            return redirect('curso_list')
+    else:
+        form = CursoForm(instance=curso)
+
+    # Renderização do template
+    return render(request, 'cursos/curso_form.html', {
+        'form': form, 
+        'categorias': categorias
+    })
+
+def curso_delete(request, pk):
+    """
+    View para Excluir um Curso
+    """
+    curso = get_object_or_404(Curso, pk=pk)
+
+    if request.method == "POST":
+        curso.delete()
+        return redirect('curso_list')
+
+    return render(request, 'cursos/curso_confirm_delete.html', {
         'curso': curso
     })
