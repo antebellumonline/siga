@@ -37,15 +37,16 @@ class Curso(models.Model):
     """Modelo que representa um Curso."""
 
     id = models.CharField(max_length=6, primary_key=True)
+    codigo = models.CharField(max_length=3, unique=True, default='000')
     nome = models.CharField(max_length=255)
     certificador = models.ForeignKey(Certificador, on_delete=models.SET_NULL, blank=True, null=True)
     categoria = models.ForeignKey(CursoCategoria, on_delete=models.SET_NULL, blank=True, null=True)
-    carga_horaria = models.PositiveIntegerField()
+    cargaHoraria = models.PositiveIntegerField()
     inativo = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-        if not self.id and self.categoria:
-            self.id = f"{self.categoria.sigla}{self.pk or ''}"
+        if not self.id and self.categoria and self.codigo:
+            self.id = f"{self.categoria.sigla}{self.codigo}"
         super().save(*args, **kwargs)
 
     def __str__(self):
