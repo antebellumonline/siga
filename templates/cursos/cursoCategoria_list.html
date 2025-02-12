@@ -46,7 +46,7 @@
     <thead>
         <tr>
             <th>
-                <a href="?order_by=id&descending={% if request.GET.order_by == 'sigla' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
+                <a href="?order_by=sigla&descending={% if request.GET.order_by == 'sigla' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
                     Sigla {% if request.GET.order_by == 'sigla' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
@@ -62,7 +62,7 @@
         {% for cursoCategoria in page_obj %}
         <tr>
             <td>{{ cursoCategoria.sigla }}</td>
-            <td><a href="{% url 'cursoCategoria_detail' cursoCategoria.pk %}">{{ cursoCategoria.nome }}</a></td>
+            <td><a href="{% url 'cursoCategoria_detail' cursoCategoria.sigla %}">{{ cursoCategoria.nome }}</a></td>
             <td>{{ cursoCategoria.inativo|yesno:"Sim,Não" }}</td>
         </tr>
         {% empty %}

@@ -95,24 +95,24 @@ def cursocategoria_list(request):
         'query_params': request.GET,
         })
 
-def cursocategoria_detail(request, pk):
+def cursocategoria_detail(request, sigla):
     """
     View para Visualizar os detalhes de uma Categoria de Cursos   
     """
     # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
-    cursocategoria = get_object_or_404(CursoCategoria, pk=pk)
+    cursocategoria = get_object_or_404(CursoCategoria, sigla=sigla)
 
     # Renderização do template
     return render(request, 'cursos/cursoCategoria_detail.html', {
         'cursocategoria': cursocategoria
     })
 
-def cursocategoria_edit(request, pk):
+def cursocategoria_edit(request, sigla):
     """
     View para Editar uma Categoria de Cursos
     """
     # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
-    cursocategoria = get_object_or_404(CursoCategoria, pk=pk)
+    cursocategoria = get_object_or_404(CursoCategoria, sigla=sigla)
 
     # Verifica se a requisição é do tipo POST (submissão de formulário)
     if request.method == "POST":
@@ -130,11 +130,11 @@ def cursocategoria_edit(request, pk):
         'form': form
     })
 
-def cursocategoria_delete(request, pk):
+def cursocategoria_delete(request, sigla):
     """
     View para Excluir uma Categoria de Cursos
     """
-    cursocategoria = get_object_or_404(CursoCategoria, pk=pk)
+    cursocategoria = get_object_or_404(CursoCategoria, sigla=sigla)
     if request.method == "POST":
         cursocategoria.delete()
         return redirect('cursoCategoria_list')

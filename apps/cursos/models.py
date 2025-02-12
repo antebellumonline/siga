@@ -15,7 +15,7 @@ class CursoCategoria(models.Model):
 
     id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=255)
-    sigla = models.CharField(max_length=3)
+    sigla = models.CharField(max_length=3, unique=True)
     inativo = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
