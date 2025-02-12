@@ -8,10 +8,12 @@ os dados relacionados aos alunos no banco de dados.
 """
 
 from django.db import models
-from apps.certificacoes.models import Certificador
+from apps.certificacoes.models import Certificacao
 
 class CursoCategoria(models.Model):
-    """Modelo que representa uma Categoria de Curso."""
+    """
+    Modelo que representa uma Categoria de Curso.
+    """
 
     id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=255)
@@ -34,12 +36,13 @@ class CursoCategoria(models.Model):
         db_table = 'tb_curso-categoria'
 
 class Curso(models.Model):
-    """Modelo que representa um Curso."""
+    """
+    Modelo que representa um Curso.
+    """
 
     id = models.CharField(max_length=6, primary_key=True)
     codigo = models.CharField(max_length=3, unique=True, default='000')
     nome = models.CharField(max_length=255)
-    certificador = models.ForeignKey(Certificador, on_delete=models.SET_NULL, blank=True, null=True)
     categoria = models.ForeignKey(CursoCategoria, on_delete=models.SET_NULL, blank=True, null=True)
     cargaHoraria = models.PositiveIntegerField()
     inativo = models.BooleanField(default=False)
@@ -55,6 +58,22 @@ class Curso(models.Model):
     class Meta:
         """Meta-informações para o modelo Curso."""
         db_table = 'tb_curso'
+
+class CursoCertificacao(models.Model):
+    """
+    Modelo que representa a relação entre Curso e Certificação.
+    """
+    id = models.AutoField(primary_key=True)
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    certificacao = models.ForeignKey(Certificacao, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.curso} - {self.certificacao}"
+
+    class Meta:
+        """Meta-informações para o modelo CursoCertificacao."""
+        db_table = 'tb_curso-certificacao'
+        unique_together = ('curso', 'certificacao')
 
 class TrainingBlocksTopico(models.Model):
     """Modelo que representa um Tópico de Bloco de Treinamento."""
