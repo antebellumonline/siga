@@ -1,0 +1,18 @@
+<!-- templates/cursos/curso_confirmDelete.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}SIGA - Confirmar exclusão do Curso{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Excluir Curso</h2>
+
+<p>Tem certeza que deseja excluir o Curso {{ curso.nome }}?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar</button>
+    <a href="{% url 'curso_list' %}">Cancelar</a>
+</form>
+
+{% endblock %}
