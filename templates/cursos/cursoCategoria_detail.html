@@ -1,0 +1,41 @@
+<!-- templates/cursos/cursoCategoria_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}SIGA - Detalhes da Categoria dos Cursos{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Detalhes da Categoria dos Cursos</h2>
+
+<div class="group-detail">
+    <div class="group-detail-sub">
+        <table class="tb-detail">
+            <thead>
+                <tr>
+                    <th>Sigla</th>
+                    <th>Nome</th>
+                    <th>Inativo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ cursocategoria.sigla }}</td>
+                    <td>{{ cursocategoria.nome }}</td>
+                    <td>{{ cursocategoria.inativo|yesno:"Sim,Não" }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Grupo de botões (Editar, Excluir e Retornar) -->
+<div class="btn-group">
+    <a class="btn-edit" href="{% url 'cursoCategoria_edit' cursocategoria.pk %}">Editar</a>
+    <a class="btn-delete" id="btn-delete" data-model="cursocategoria" data-pk="{{ cursocategoria.pk }}" href="#">Excluir</a>
+    <a class="btn-return" href="{% url 'cursoCategoria_list' %}">Retornar</a>
+</div>
+
+<!-- Modal Pop-up -->
+{% include 'includes/modals.html' %}
+
+{% endblock %}
