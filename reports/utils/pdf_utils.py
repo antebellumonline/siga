@@ -1,5 +1,3 @@
-# reports/utils/pdf_utils.py
-
 """
 Módulo para gerar relatórios em PDF para os apps do projeto.
 """
@@ -103,9 +101,15 @@ def on_page(c, doc, title, pagesize):
     draw_header(c, doc, title, pagesize)
     draw_footer(c, doc.page, pagesize)
 
-def report_create_pdf(response, title, data, orientation='landscape'):
+def report_create_pdf(response, title, data, orientation='landscape', group_by=None):
     """
     Gera o relatório em PDF com cabeçalho padronizado e tabela formatada.
+    
+    :param response: objeto HttpResponse para o PDF
+    :param title: título do relatório
+    :param data: dados do relatório
+    :param orientation: orientação da página ('landscape' ou 'portrait')
+    :param group_by: campo pelo qual os dados devem ser agrupados (opcional)
     """
     if orientation == 'landscape':
         pagesize = landscape(A4)
@@ -121,14 +125,13 @@ def report_create_pdf(response, title, data, orientation='landscape'):
                             )
     elements = []
 
-    # Estilos do relatório
     styles = getSampleStyleSheet()
     bold_style = ParagraphStyle(
         'Bold',
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
         fontSize=10,
-        textColor=colors.white
+        textColor=colors.black  # Cor preta para o título do grupo
     )
     cell_style = ParagraphStyle(
         name='Normal',
@@ -140,36 +143,73 @@ def report_create_pdf(response, title, data, orientation='landscape'):
         fontSize=8,
         alignment=1
     )
-    data = [
-        [Paragraph(str(cell), header_style if i == 0 else cell_style) for cell in row]
-        for i, row in enumerate(data)
-    ]
 
-    # Criar tabela
-    col_widths = [pagesize[0] / len(data[0])] * len(data[0])
-    table = Table(data, colWidths=col_widths, repeatRows=1)
+    if group_by:
+        grouped_data = {}
+        for row in data[1:]:
+            group_value = row[group_by]
+            if group_value not in grouped_data:
+                grouped_data[group_value] = []
+            grouped_data[group_value].append(row)
 
-    table_style = TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#E6B510')),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
-        ('FONTSIZE', (0, 0), (-1, -1), 8),
-        ('TOPPADDING', (0, 0), (-1, 0), 4),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 4),
-        ('VALIGN', (0, 0), (-1, -1), 'TOP')
-    ])
+        for group, rows in grouped_data.items():
+            group_header = Paragraph(group, bold_style)  # Apenas o nome do grupo
+            elements.append(group_header)
+            elements.append(Spacer(1, 12))
 
-    for i in range(1, len(data)):
-        bg_color = colors.HexColor('#e3e3e1') if i % 2 == 0 else colors.white
-        table_style.add('BACKGROUND', (0, i), (-1, i), bg_color)
+            group_data = [data[0][:group_by] + data[0][group_by+1:]] + [
+                row[:group_by] + row[group_by+1:] for row in rows
+            ]
+            group_data = [
+                [Paragraph(str(cell), header_style if i == 0 else cell_style) for cell in row]
+                for i, row in enumerate(group_data)
+            ]
+            col_widths = [pagesize[0] / len(group_data[0])] * len(group_data[0])
+            table = Table(group_data, colWidths=col_widths, repeatRows=1)
+            table_style = TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#E6B510')),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
+                ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+                ('FONTSIZE', (0, 0), (-1, -1), 8),
+                ('TOPPADDING', (0, 0), (-1, 0), 4),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 4),
+                ('VALIGN', (0, 0), (-1, -1), 'TOP')
+            ])
+            for i in range(1, len(group_data)):
+                bg_color = colors.HexColor('#e3e3e1') if i % 2 == 0 else colors.white
+                table_style.add('BACKGROUND', (0, i), (-1, i), bg_color)
+            table.setStyle(table_style)
+            elements.append(table)
+            elements.append(Spacer(1, 12))
 
-    table.setStyle(table_style)
-    elements.append(table)
+    else:
+        data = [
+            [Paragraph(str(cell), header_style if i == 0 else cell_style) for cell in row]
+            for i, row in enumerate(data)
+        ]
+        col_widths = [pagesize[0] / len(data[0])] * len(data[0])
+        table = Table(data, colWidths=col_widths, repeatRows=1)
+        table_style = TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#E6B510')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+            ('FONTSIZE', (0, 0), (-1, -1), 8),
+            ('TOPPADDING', (0, 0), (-1, 0), 4),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 4),
+            ('VALIGN', (0, 0), (-1, -1), 'TOP')
+        ])
+        for i in range(1, len(data)):
+            bg_color = colors.HexColor('#e3e3e1') if i % 2 == 0 else colors.white
+            table_style.add('BACKGROUND', (0, i), (-1, i), bg_color)
+        table.setStyle(table_style)
+        elements.append(table)
 
-    # Adicionando contador de registros ao final da tabela
-    total_records = len(data) - 1  # Subtrai 1 para não contar o cabeçalho
+    total_records = sum(
+        len(rows) for rows in grouped_data.values()) if group_by else (len(data) - 1)
     record_counter_text = f"Total de registros neste relatório: {total_records}"
     record_counter = Paragraph(
         record_counter_text,
@@ -179,10 +219,8 @@ def report_create_pdf(response, title, data, orientation='landscape'):
             alignment=2
         )
     )
-
     elements.append(Spacer(1, 6))
 
-    # Tabela do contador de registros
     record_counter_table = Table([[record_counter]], colWidths=[pagesize[0]])
     record_counter_table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor('#3FB081')),
@@ -193,10 +231,8 @@ def report_create_pdf(response, title, data, orientation='landscape'):
         ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
         ('TOPPADDING', (0, 0), (-1, -1), 4),
     ]))
-
     elements.append(record_counter_table)
 
-    # Adicionando cabeçalho e rodapé em cada página
     doc.build(elements, onFirstPage=lambda c, d: on_page(c, d, title, pagesize),
                      onLaterPages=lambda c, d: on_page(c, d, title, pagesize))
 

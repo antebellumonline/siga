@@ -382,7 +382,7 @@ def exame_report_pdf(request):
         'Presença',
         'Cancelado',
         'Observação'
-        ]]
+    ]]
 
     for exame in exames:
         certificacao_text = (
@@ -407,7 +407,8 @@ def exame_report_pdf(request):
         response,
         "Exames Realizados no Centro de Provas",
         data,
-        orientation='portrait'
+        orientation='portrait',
+        group_by=1  # Índice da coluna "Centro de Provas"
     )
 
 def exame_report_xlsx(request):
