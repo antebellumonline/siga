@@ -41,7 +41,7 @@ class Curso(models.Model):
     """
 
     id = models.CharField(max_length=6, primary_key=True)
-    codigo = models.CharField(max_length=3, unique=True, default='000')
+    codigo = models.CharField(max_length=3)
     nome = models.CharField(max_length=255)
     categoria = models.ForeignKey(CursoCategoria, on_delete=models.SET_NULL, blank=True, null=True)
     cargaHoraria = models.PositiveIntegerField()

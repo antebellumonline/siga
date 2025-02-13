@@ -20,7 +20,7 @@ class CursoForm(forms.ModelForm):
         Configurações meta do formulário.
         """
         model = Curso
-        fields = ['nome', 'categoria', 'cargaHoraria', 'inativo']
+        fields = ['nome', 'categoria', 'codigo', 'cargaHoraria', 'inativo']
 
 class CursoCategoriaForm(forms.ModelForm):
     """
