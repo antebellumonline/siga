@@ -1,3 +1,5 @@
+# reports/utils/pdf_utils.py
+
 """
 Módulo para gerar relatórios em PDF para os apps do projeto.
 """
@@ -16,43 +18,34 @@ def draw_header(canvas, doc, title, pagesize):
     """
     Desenha o cabeçalho do relatório com fundo colorido, espaço para logo e título ajustável.
     """
-    # O argumento 'doc' é necessário para compatibilidade com outras partes do código
     _ = doc
 
     canvas.saveState()
 
     page_width, page_height = pagesize
     header_height = 0.9 * inch
-    logo_width = page_width * 0.25  # 25% da largura
-    text_width = page_width * 0.75  # 75% da largura
-    padding = 0.2 * inch  # Espaçamento interno
+    logo_width = page_width * 0.25
+    text_width = page_width * 0.75
+    padding = 0.2 * inch
 
-    # Fundo do cabeçalho
     canvas.setFillColor(colors.HexColor("#1a4f45"))
     canvas.rect(0, page_height - header_height, page_width, header_height, fill=True, stroke=False)
 
-    # Caminho para a imagem
     logo_path = "static/images/logo-antebellum-horizontal-2linhas-negativo-verdeEscuro.png"
-
-    # Carregar a imagem usando ImageReader
     logo_image = ImageReader(logo_path)
     original_width, original_height = logo_image.getSize()
 
-    # Calcular a nova largura e altura mantendo a proporção
     aspect_ratio = original_width / original_height
     new_width = logo_width - padding
     new_height = new_width / aspect_ratio
 
-    # Verificar se a nova altura excede o limite permitido
     if new_height > (header_height - padding):
         new_height = header_height - padding
         new_width = new_height * aspect_ratio
 
-    # Inserir a imagem no canvas
     logo = Image(logo_path, width=new_width, height=new_height)
     logo.drawOn(canvas, padding, page_height - header_height + padding)
 
-    # Ajuste automático do tamanho do título
     max_font_size = 18
     min_font_size = 12
     font_name = "Helvetica-Bold"
@@ -75,21 +68,21 @@ def draw_footer(c, page_number, pagesize):
     """Desenha o rodapé em todas as páginas."""
     now = datetime.now()
     generated_text = (
-        f"Gerado em {format_datetime(now, 'd \'de\' MMMM \'de\' y \'às\' HH:mm:ss',
-        locale='pt_BR')}"
+        f"Gerado em {format_datetime(
+            now,
+            'd \'de\' MMMM \'de\' y \'às\' HH:mm:ss',
+            locale='pt_BR'
+        )}"
     )
     page_text = f"{page_number}"
 
-    # Cor de fundo do rodapé
     c.setFillColor(colors.HexColor("#1a4f45"))
     c.rect(0, 0, pagesize[0], 0.5 * inch, fill=True, stroke=False)
 
-    # Cor do texto do rodapé
     c.setFillColor(colors.white)
     c.setFont("Helvetica-Bold", 10)
     c.drawString(inch, 0.25 * inch, generated_text)
 
-    # Desenhar círculo com número da página
     c.setFillColor(colors.HexColor("#E6B510"))
     c.circle(pagesize[0] - inch, 0.25 * inch, 0.2 * inch, fill=True, stroke=False)
     c.setFillColor(colors.black)
@@ -131,7 +124,8 @@ def report_create_pdf(response, title, data, orientation='landscape', group_by=N
         parent=styles['Normal'],
         fontName='Helvetica-Bold',
         fontSize=10,
-        textColor=colors.black  # Cor preta para o título do grupo
+        textColor=colors.black,
+        alignment=1  # Centralizar o texto
     )
     cell_style = ParagraphStyle(
         name='Normal',
@@ -154,7 +148,19 @@ def report_create_pdf(response, title, data, orientation='landscape', group_by=N
 
         for group, rows in grouped_data.items():
             group_header = Paragraph(group, bold_style)  # Apenas o nome do grupo
-            elements.append(group_header)
+
+            group_header_table = Table([[group_header]], colWidths=[pagesize[0] * 0.8])
+            group_header_table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor('#3FB081')),
+                ('TEXTCOLOR', (0, 0), (-1, -1), colors.white),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, -1), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, -1), 10),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+                ('TOPPADDING', (0, 0), (-1, -1), 4),
+            ]))
+
+            elements.append(group_header_table)
             elements.append(Spacer(1, 12))
 
             group_data = [data[0][:group_by] + data[0][group_by+1:]] + [
@@ -184,6 +190,31 @@ def report_create_pdf(response, title, data, orientation='landscape', group_by=N
             elements.append(table)
             elements.append(Spacer(1, 12))
 
+            group_record_counter_text = f"Total de registros nesse grupo: {len(rows)}"
+            group_record_counter = Paragraph(
+                group_record_counter_text,
+                ParagraphStyle(
+                    'LeftAligned',
+                    parent=bold_style,
+                    alignment=0  # Alinhado à esquerda
+                )
+            )
+            group_record_counter_table = Table(
+                [[group_record_counter]],
+                colWidths=[pagesize[0] * 0.4]
+            )
+            group_record_counter_table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor('#3FB081')),
+                ('TEXTCOLOR', (0, 0), (-1, -1), colors.white),
+                ('ALIGN', (-1, -1), (-1, -1), 'RIGHT'),  # Célula alinhada à direita
+                ('FONTNAME', (0, 0), (-1, -1), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, -1), 10),
+                ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+                ('TOPPADDING', (0, 0), (-1, -1), 4),
+            ]))
+            elements.append(group_record_counter_table)
+            elements.append(Spacer(1, 12))
+
     else:
         data = [
             [Paragraph(str(cell), header_style if i == 0 else cell_style) for cell in row]
@@ -208,24 +239,25 @@ def report_create_pdf(response, title, data, orientation='landscape', group_by=N
         table.setStyle(table_style)
         elements.append(table)
 
-    total_records = sum(
-        len(rows) for rows in grouped_data.values()) if group_by else (len(data) - 1)
+    total_records = (
+        sum(len(rows) for rows in grouped_data.values())
+        if group_by
+        else (len(data) - 1)
+    )
     record_counter_text = f"Total de registros neste relatório: {total_records}"
     record_counter = Paragraph(
         record_counter_text,
         ParagraphStyle(
-            'RightAligned',
+            'LeftAligned',
             parent=bold_style,
-            alignment=2
+            alignment=0
         )
     )
-    elements.append(Spacer(1, 6))
-
-    record_counter_table = Table([[record_counter]], colWidths=[pagesize[0]])
+    record_counter_table = Table([[record_counter]], colWidths=[pagesize[0] * 0.4])
     record_counter_table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor('#3FB081')),
         ('TEXTCOLOR', (0, 0), (-1, -1), colors.white),
-        ('ALIGN', (0, 0), (-1, -1), 'RIGHT'),
+        ('ALIGN', (-1, -1), (-1, -1), 'RIGHT'),
         ('FONTNAME', (0, 0), (-1, -1), 'Helvetica-Bold'),
         ('FONTSIZE', (0, 0), (-1, -1), 10),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
