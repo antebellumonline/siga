@@ -167,7 +167,7 @@ def curso_list(request):
     """
     # Obtém os filtros
     query = request.GET.get('q')
-    categoria = request.GET.get('categoria')
+    categoria = request.GET.get('cursoCategoria')
     inativo = request.GET.get('inativo')
 
     # Ordenação
@@ -176,14 +176,14 @@ def curso_list(request):
 
     # Otimização de Consulta
     curso = Curso.objects.select_related(
-        'categoria'
+        'cursoCategoria'
     )
 
-    # Filtra por Aluno
+    # Filtra por Categoria
     if categoria:
-        curso = curso.filter(aluno__uid=aluno)
+        curso = curso.filter(cursoCategoria__id=categoria)
 
-    # Inicializa a variável certificador
+    # Inicializa a variável curso
     curso = Curso.objects.all()
 
     # Aplicar os filtros e pesquisa
@@ -195,7 +195,7 @@ def curso_list(request):
 
     # Filtra por Status
     if inativo in ['True', 'False']:
-        curso = curso.filter(inativo=(inativo == 'True'))
+        curso = curso.filter(inativo=inativo == 'True')
 
     # Aplicar ordenação
     if descending:
@@ -220,14 +220,12 @@ def curso_list(request):
     except (ValueError, TypeError):
         page_obj = paginator.get_page(1)
 
-    # Renderização do template com o objeto de paginação e os parâmetros de consulta
-    context = {
-        'page_obj': page_obj,
-        'query_params': request.GET.urlencode()
-    }
-
+    # Buscar e ordenar opções de seleção
+    categoria = CursoCategoria.objects.order_by('nome')
+    
     return render(request, 'cursos/curso_list.html', {
         'curso': curso,
+        'categoria': categoria,
         'page_obj': page_obj,
         'query_params': request.GET.urlencode(),
         })
