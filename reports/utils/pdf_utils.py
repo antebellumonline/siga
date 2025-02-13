@@ -194,23 +194,23 @@ def report_create_pdf(response, title, data, orientation='landscape', group_by=N
             group_record_counter = Paragraph(
                 group_record_counter_text,
                 ParagraphStyle(
-                    'LeftAligned',
+                    'RightAligned',
                     parent=bold_style,
-                    alignment=0  # Alinhado à esquerda
+                    alignment=2  # Alinhado à direita
                 )
             )
             group_record_counter_table = Table(
-                [[group_record_counter]],
-                colWidths=[pagesize[0] * 0.4]
+                [[Spacer(1, 0), group_record_counter]],
+                colWidths=[pagesize[0] * 0.6, pagesize[0] * 0.4]
             )
             group_record_counter_table.setStyle(TableStyle([
-                ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor('#3FB081')),
-                ('TEXTCOLOR', (0, 0), (-1, -1), colors.white),
-                ('ALIGN', (-1, -1), (-1, -1), 'RIGHT'),  # Célula alinhada à direita
-                ('FONTNAME', (0, 0), (-1, -1), 'Helvetica-Bold'),
-                ('FONTSIZE', (0, 0), (-1, -1), 10),
-                ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
-                ('TOPPADDING', (0, 0), (-1, -1), 4),
+                ('BACKGROUND', (1, 0), (1, 0), colors.HexColor('#3FB081')),
+                ('TEXTCOLOR', (1, 0), (1, 0), colors.white),
+                ('ALIGN', (1, 0), (1, 0), 'RIGHT'),  # Célula alinhada à direita
+                ('FONTNAME', (1, 0), (1, 0), 'Helvetica-Bold'),
+                ('FONTSIZE', (1, 0), (1, 0), 10),
+                ('BOTTOMPADDING', (1, 0), (1, 0), 4),
+                ('TOPPADDING', (1, 0), (1, 0), 4),
             ]))
             elements.append(group_record_counter_table)
             elements.append(Spacer(1, 12))
@@ -248,20 +248,23 @@ def report_create_pdf(response, title, data, orientation='landscape', group_by=N
     record_counter = Paragraph(
         record_counter_text,
         ParagraphStyle(
-            'LeftAligned',
+            'RightAligned',
             parent=bold_style,
-            alignment=0
+            alignment=2  # Alinhado à direita
         )
     )
-    record_counter_table = Table([[record_counter]], colWidths=[pagesize[0] * 0.4])
+    record_counter_table = Table(
+        [[Spacer(1, 0), record_counter]],  # Adiciona um espaçador à esquerda
+        colWidths=[pagesize[0] * 0.6, pagesize[0] * 0.4]  # Largura ajustada para alinhar à direita
+    )
     record_counter_table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor('#3FB081')),
-        ('TEXTCOLOR', (0, 0), (-1, -1), colors.white),
-        ('ALIGN', (-1, -1), (-1, -1), 'RIGHT'),
-        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica-Bold'),
-        ('FONTSIZE', (0, 0), (-1, -1), 10),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
-        ('TOPPADDING', (0, 0), (-1, -1), 4),
+        ('BACKGROUND', (1, 0), (1, 0), colors.HexColor('#3FB081')),
+        ('TEXTCOLOR', (1, 0), (1, 0), colors.white),
+        ('ALIGN', (1, 0), (1, 0), 'RIGHT'),  # Alinhar à direita
+        ('FONTNAME', (1, 0), (1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (1, 0), (1, 0), 10),
+        ('BOTTOMPADDING', (1, 0), (1, 0), 4),
+        ('TOPPADDING', (1, 0), (1, 0), 4),
     ]))
     elements.append(record_counter_table)
 
