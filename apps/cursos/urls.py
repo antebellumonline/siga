@@ -17,9 +17,9 @@ urlpatterns = [
     # URLs Cursos
     path('curso/new/', views.curso_new, name='curso_new'),
     path('curso/list/', views.curso_list, name='curso_list'),
-    path('curso/<int:pk>/', views.curso_detail, name='curso_detail'),
-    path('curso/<int:pk>/edit/', views.curso_edit, name='curso_edit'),
-    path('curso/<int:pk>/delete/', views.curso_delete, name='curso_delete'),
+    path('curso/<str:pk>/', views.curso_detail, name='curso_detail'),
+    path('curso/<str:pk>/edit/', views.curso_edit, name='curso_edit'),
+    path('curso/<str:pk>/delete/', views.curso_delete, name='curso_delete'),
 
     # URLs Categoria de Cursos
     path('curso/categoria/new/', views.cursocategoria_new, name='cursoCategoria_new'),

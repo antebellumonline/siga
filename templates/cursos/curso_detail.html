@@ -1,0 +1,40 @@
+<!-- templates/cursos/curso_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}SIGA - Detalhes do Curso{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Detalhes do Curso</h2>
+
+<div class="group-detail">
+    <p class="p-detail">
+        <span class="label-detail">ID: </span>
+        <span class="value-detail">{{ curso.id }}</span>
+    </p>
+    <p class="p-detail">
+        <span class="label-detail">Categoria: </span>
+        <span class="value-detail">{{ curso.cursoCategoria.nome }}</span>
+    </p>
+    <p class="p-detail">
+        <span class="label-detail">Nome: </span>
+        <span class="value-detail">{{ curso.nome }}</span>
+    </p>
+    <p class="p-detail">
+        <span class="label-detail">Inativo? </span>
+        <span class="value-detail">{{ curso.inativo|yesno:"Sim,Não" }}</span>
+    </p>
+</div>
+
+<!-- Grupo de botões (Editar, Excluir e Retornar) -->
+<div class="btn-group">
+    <a class="btn-edit" href="{% url 'exame_edit' centroprova_exame.pk %}">Editar</a>
+    <a class="btn-delete" id="btn-delete" data-model="centroprova_exame" data-pk="{{ centroprova_exame.pk }}" href="#">Excluir</a>
+    <a class="btn-return" href="{% url 'exame_list' %}">Retornar</a>
+</div>
+
+<!-- Modal Pop-up -->
+{% include 'includes/modals.html' %}
+
+{% endblock %}
