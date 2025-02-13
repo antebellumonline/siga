@@ -84,6 +84,7 @@ INSTALLED_APPS = [
     'apps.certificacoes',
     'apps.centroProva',
     'apps.cursos',
+    'apps.empresas',
     'apis',
     'reports',
 ]
