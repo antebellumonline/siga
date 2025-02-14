@@ -11,8 +11,8 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from django.db.models import Q
 
-from .models import Curso, CursoCategoria
-from .forms import CursoForm, CursoCategoriaForm
+from .models import Curso, CursoCategoria, CursoCertificacao
+from .forms import CursoForm, CursoCategoriaForm, CursoCertificacaoForm
 
 def curso_home(request):
     """
@@ -151,13 +151,18 @@ def curso_new(request):
     categorias = CursoCategoria.objects.filter(inativo=False).order_by('nome')
     if request.method == "POST":
         form = CursoForm(request.POST)
-        if form.is_valid():
-            form.save()
+        formset = CursoCertificacaoForm(request.POST)
+        if form.is_valid() and formset.is_valid():
+            curso = form.save()
+            formset.instance = curso
+            formset.save()
             return redirect('curso_list')
     else:
         form = CursoForm()
+        formset = CursoCertificacaoForm()
     return render(request, 'cursos/curso_form.html',{
         'form': form,
+        'formset': formset,
         'categorias': categorias
     })
 
@@ -234,12 +239,14 @@ def curso_detail(request, pk):
     """
     View para Visualizar os Detalhes de um Curso
     """
-    # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
+    # Obtém os filtros
     curso = get_object_or_404(Curso, pk=pk)
+    certificacoes = CursoCertificacao.objects.filter(curso=curso).order_by('certificacao__descricao')
 
     # Renderização do template
     return render(request, 'cursos/curso_detail.html', {
-        'curso': curso
+        'curso': curso,
+        'certificacoes': certificacoes
     })
 
 def curso_edit(request, pk):
@@ -248,23 +255,30 @@ def curso_edit(request, pk):
     """
     # Obtém os filtros
     curso = get_object_or_404(Curso, pk=pk)
-    print(curso.nome)
     categorias = CursoCategoria.objects.filter(inativo=False).order_by('nome')
 
     # Verifica se a requisição é do tipo POST (submissão de formulário)
     if request.method == "POST":
         form = CursoForm(request.POST, instance=curso)
+        formset = CursoCertificacaoForm(request.POST, instance=curso)
 
         # Se o formulário for válido, salva as alterações no objeto
-        if form.is_valid():
+        if form.is_valid() and formset.is_valid():
             form.save()
+            formset.save()
             return redirect('curso_list')
+        else:
+            print(form.errors)
+            for certificacao_form in formset:
+                print(certificacao_form.errors)
     else:
         form = CursoForm(instance=curso)
+        formset = CursoCertificacaoForm(instance=curso)
 
     # Renderização do template
     return render(request, 'cursos/curso_form.html', {
-        'form': form, 
+        'form': form,
+        'formset': formset,
         'categorias': categorias
     })
 

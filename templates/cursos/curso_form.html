@@ -45,6 +45,37 @@
                 </select>
             </div>
         </div>
+        <!-- Contatos -->
+        <div class="form-group-edit-sub">
+            <h4 class="sub-section-title">Certificações que podem ser conquistadas com este Curso</h4>
+            {{ formset.management_form }}
+            <table class="tb-list">
+                <thead>
+                    <tr>
+                        <th>Certificação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for certificacao_form in formset %}
+                    {{ certificacao_form.id }}
+                    <tr>
+                        <td>{{ certificacao_form.certificacao }}</td>
+                        <td>
+                            {% if formset.can_delete %}
+                                {{ certificacao_form.DELETE }} Excluir
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">Nenhum contato adicionado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
     </div>
     <!-- Grupo de botões (Salvar e Retornar) -->
     <div class="btn-group">

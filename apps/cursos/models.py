@@ -66,7 +66,7 @@ class CursoCertificacao(models.Model):
     Modelo que representa a relação entre Curso e Certificação.
     """
     id = models.AutoField(primary_key=True)
-    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE, related_name='certificacoes')
     certificacao = models.ForeignKey(Certificacao, on_delete=models.CASCADE)
 
     def __str__(self):
