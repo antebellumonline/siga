@@ -21,6 +21,13 @@ class CursoForm(forms.ModelForm):
         """
         model = Curso
         fields = ['nome', 'categoria', 'codigo', 'cargaHoraria', 'inativo']
+        widgets = {
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
+            'codigo': forms.TextInput(attrs={'class': 'form-control'}),
+            'nome': forms.TextInput(attrs={'class': 'form-control'}),
+            'cargaHoraria': forms.NumberInput(attrs={'class': 'form-control'}),
+            'inativo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
 
 class CursoCategoriaForm(forms.ModelForm):
     """

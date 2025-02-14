@@ -81,10 +81,10 @@
     <tbody>
         {% for curso in page_obj %}
         <tr>
-            <td>{{ curso.codigo }}</td>
+            <td>{{ curso.id }}</td>
             <td><a href="{% url 'curso_detail' curso.pk %}">{{ curso.nome }}</a></td>
             <td>{{ curso.categoria.nome }}</td>
-            <td>{{ curso.carga_horaria }}</td>
+            <td>{{ curso.cargaHoraria  }}</td>
             <td>{{ curso.inativo|yesno:"Sim,Não" }}</td>
         </tr>
         {% empty %}
