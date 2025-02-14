@@ -25,6 +25,12 @@ def home(request):
     """
     return render(request, 'home.html')
 
+def clientes(request):
+    """
+    View para a Página Inicial de Clientes
+    """
+    return render(request, 'clientes/clientes.html')
+
 @csrf_exempt  # Use com cautela
 def delete_item(request, model_name, pk):
     """

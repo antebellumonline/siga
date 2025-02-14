@@ -13,7 +13,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
-from .views import delete_item, home
+from .views import delete_item, home, clientes
 
 urlpatterns = [
     # URL para a interface Administrativa Django
@@ -26,6 +26,9 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
+    # URL para a página de clientes
+    path('clientes/', clientes, name='clientes'),
+    
     #URL para a documentação do projeto
     path('docs/', RedirectView.as_view(url='/docs/build/html/index.html')),
 

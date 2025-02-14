@@ -28,14 +28,14 @@
                         </li>
                     {% endif %}
                     {% if request.user.is_authenticated %}
-                        <li class="{% if request.path == '/alunos/' %}active{% endif %}">
-                            <a href="/alunos" aria-label="Alunos"><i class="fa fa-user-graduate"></i>Alunos</a>
+                        <li class="{% if request.path == '/clientes/' %}active{% endif %}">
+                            <a href="/clientes" aria-label="Clientes"><i class="fa fa-star"></i>Clientes</a>
                         </li>
                         <li class="{% if request.path == '/certificacao/' %}active{% endif %}">
                             <a href="/certificacao" aria-label="Certificações"><i class="fa fa-trophy"></i>Certificações</a>
                         </li>
                         <li class="{% if request.path == '/curso/' %}active{% endif %}">
-                            <a href="/curso" aria-label="Cursos"><i class="fa fa-graduation-cap"></i>Cursos (em desenvolvimento)</a>
+                            <a href="/curso" aria-label="Cursos"><i class="fa fa-graduation-cap"></i>Cursos</a>
                         </li>
                         <li class="{% if request.path == '/centroProva/' %}active{% endif %}">
                             <a href="/centroProva" aria-label="Centro de Provas"><i class="fa fa-clipboard-check"></i>Centro de Provas</a>
