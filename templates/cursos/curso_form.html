@@ -27,7 +27,7 @@
             <h4 class="sub-section-title">Detalhes do Curso</h4>
             <div class="form-input">
                 <label for="id_codigo">Código (Ex.: AAA000): </label>
-                {{ form.codigo }}
+                <input type="text" name="codigo" id="id_codigo" value="{% if form.instance.pk %}{{ form.codigo.value }}{% else %}{% endif %}" autofocus>
             </div>
             <div class="form-input">
                 <label for="id_nome">Nome: </label>
@@ -39,7 +39,7 @@
                     <option value="">Selecionar Categoria</option>
                     {% for categoria in categorias %}
                     <option value="{{ categoria.id }}" {% if form.categoria.value == categoria.id %}selected{% endif %}>
-                        {{ categoria.nome }}
+                        {{ categoria.nome }} ({{ categoria.sigla }})
                     </option>
                     {% endfor %}
                 </select>
