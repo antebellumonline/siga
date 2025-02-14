@@ -58,7 +58,8 @@
 .btn-close,
 .btn-clear,
 .btn-access,
-.btn-exit {
+.btn-exit,
+.btn-reset {
     text-decoration: none;
     display: inline-block;
     background-color: #1A4F45;
@@ -111,7 +112,8 @@
 .btn-close:hover,
 .btn-clear:hover,
 .btn-access:hover,
-.btn-exit:hover {
+.btn-exit:hover,
+.btn-reset:hover {
     background-color: #3FB081;
 }
 
@@ -138,7 +140,8 @@
 .btn-access::before,
 .btn-exit::before,
 .btn-pdf::before,
-.btn-excel::before {
+.btn-excel::before,
+.btn-reset::before {
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     margin-right: 8px;
@@ -164,6 +167,7 @@
 .btn-exit::before { content: "\f2f5"; }
 .btn-pdf::before { content: "\f1c1"; }
 .btn-excel::before { content: "\f1c3"; }
+.btn-reset::before { content: "\f2f9"; }
 
 /* Estilo para botões circulares */
 .btn-circle {
