@@ -4,10 +4,21 @@
 Middleware para garantir que o usuário esteja autenticado antes de acessar certas URLs.
 """
 
-from django.shortcuts import redirect
-from django.urls import reverse, NoReverseMatch
+"""
+Middleware para garantir que o usuário esteja autenticado antes de acessar certas URLs.
+"""
 
-EXEMPT_URLS = []
+from django.conf import settings
+from django.shortcuts import redirect
+from django.urls import resolve, reverse, NoReverseMatch
+
+EXEMPT_URLS = [
+    settings.LOGIN_URL.lstrip('/'),
+    'recuperar-senha/',
+    'recuperar-senha/sucesso/',
+    'reset/',
+    'reset/sucesso/'
+]
 
 try:
     EXEMPT_URLS.append(reverse('login'))
@@ -27,7 +38,8 @@ class LoginRequiredMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        if not request.user.is_authenticated and request.path not in EXEMPT_URLS:
-            return redirect('login')
+        path = request.path_info.lstrip('/')
+        if not request.user.is_authenticated and not any(path.startswith(url) for url in EXEMPT_URLS):
+            return redirect(settings.LOGIN_URL)
         response = self.get_response(request)
         return response

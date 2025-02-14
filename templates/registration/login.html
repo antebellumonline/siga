@@ -34,13 +34,16 @@
                 </div>
                 <button type="submit" class="btn-access">Acessar</button>
             </form>
-            <!-- <hr>
-            <div class="social-login">
+            <hr>
+            <!-- <div class="social-login">
                 <a href="{% provider_login_url 'microsoft' %}" class="btn-microsoft-login">
                     <img src="{% static 'images/microsoft-logo.png' %}" alt="Microsoft Logo">
                     Logar com a conta corporativa Microsoft
                 </a>
             </div> -->
+            <div class="password-reset-link">
+                <a href="{% url 'password_reset' %}">Esqueceu sua senha?</a>
+            </div>
         </div>
     </div>
     <!-- Rodapé Comum -->
