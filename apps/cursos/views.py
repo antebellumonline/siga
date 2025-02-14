@@ -222,7 +222,7 @@ def curso_list(request):
 
     # Buscar e ordenar opções de seleção
     categoria = CursoCategoria.objects.order_by('nome')
-    
+
     return render(request, 'cursos/curso_list.html', {
         'curso': curso,
         'categoria': categoria,

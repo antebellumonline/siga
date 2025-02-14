@@ -26,7 +26,7 @@
         <div class="form-group-edit-sub">
             <h4 class="sub-section-title">Detalhes do Curso</h4>
             <div class="form-input">
-                <label for="id_codigo">Código Numérico: </label>
+                <label for="id_codigo">Código (Ex.: AAA000): </label>
                 {{ form.codigo }}
             </div>
             <div class="form-input">
@@ -34,12 +34,8 @@
                 {{ form.nome }}
             </div>
             <div class="form-input">
-                <label for="id_cargaHoraria">Carga-horária: </label>
-                {{ form.cargaHoraria }}
-            </div>
-            <div class="form-input">
-                <label for="id_curso-categoria">Categoria: </label>
-                <select name="curso-categoria" id="edit-select-curso-categoria" class="select-edit select2">
+                <label for="id_categoria">Categoria: </label>
+                <select name="categoria" id="edit-select-categoria" class="select-edit select2">
                     <option value="">Selecionar Categoria</option>
                     {% for categoria in categorias %}
                     <option value="{{ categoria.id }}" {% if form.categoria.value == categoria.id %}selected{% endif %}>
@@ -52,8 +48,8 @@
     </div>
     <!-- Grupo de botões (Salvar e Retornar) -->
     <div class="btn-group">
-        <button class="btn-save" type="submit">Salvar Curso</button>
-        <a class="btn-return" href="{% url 'curso_list' %}">Retornar</a>
+        <button class="btn-save" type="submit" accesskey="s">Salvar Curso</button>
+        <a class="btn-return" href="{% url 'curso_list' %}" accesskey="r">Retornar</a>
     </div>
 </form>
 

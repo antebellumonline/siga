@@ -20,12 +20,11 @@ class CursoForm(forms.ModelForm):
         Configurações meta do formulário.
         """
         model = Curso
-        fields = ['nome', 'categoria', 'codigo', 'cargaHoraria', 'inativo']
+        fields = ['nome', 'categoria', 'codigo', 'inativo']
         widgets = {
             'categoria': forms.Select(attrs={'class': 'form-control'}),
             'codigo': forms.TextInput(attrs={'class': 'form-control'}),
             'nome': forms.TextInput(attrs={'class': 'form-control'}),
-            'cargaHoraria': forms.NumberInput(attrs={'class': 'form-control'}),
             'inativo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 

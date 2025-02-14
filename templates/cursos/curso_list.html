@@ -44,8 +44,8 @@
 </form>
 <!-- Grupo de botões (Novo e Retornar) -->
 <div class="btn-group">
-    <a class="btn-return" href="{% url 'curso_home' %}">Retornar</a>
-    <a class="btn-new" href="{% url 'curso_new' %}">Novo</a>
+    <a class="btn-return" href="{% url 'curso_home' %}" accesskey="r">Retornar</a>
+    <a class="btn-new" href="{% url 'curso_new' %}" accesskey="n">Novo</a>
     <!-- <a class="btn-pdf" href="{% url 'exame_report_pdf' %}?{{ query_params }}">Exportar para PDF</a>
     <a class="btn-excel" href="{% url 'exame_report_xlsx' %}?{{ query_params }}">Exportar para Excel</a> -->
 </div>
@@ -60,31 +60,29 @@
     <thead>
         <tr>
             <th>
-                <a href="?order_by=data&descending={% if request.GET.order_by == 'data' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&curso={{ request.GET.curso }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                    Código {% if request.GET.order_by == 'data' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                <a href="?order_by=codigo&descending={% if request.GET.order_by == 'codigo' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&categoria={{ request.GET.categoria }}&inativo={{ request.GET.inativo }}">
+                    Código {% if request.GET.order_by == 'codigo' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
             <th>
-                <a href="?order_by=aluno__nome&descending={% if request.GET.order_by == 'aluno__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                    Nome do Curso {% if request.GET.order_by == 'aluno__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                <a href="?order_by=nome&descending={% if request.GET.order_by == 'nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&categoria={{ request.GET.categoria }}&inativo={{ request.GET.inativo }}">
+                    Nome do Curso {% if request.GET.order_by == 'nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
             <th>
-                <a href="?order_by=centroProva__nome&descending={% if request.GET.order_by == 'centroProva__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                    Categoria {% if request.GET.order_by == 'centroProva__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                <a href="?order_by=categoria__nome&descending={% if request.GET.order_by == 'categoria__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&categoria={{ request.GET.categoria }}&inativo={{ request.GET.inativo }}">
+                    Categoria {% if request.GET.order_by == 'categoria__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                 </a>
             </th>
-            <th>Carga-Horária</th>
             <th>Inativo</th>
         </tr>
     </thead>
     <tbody>
         {% for curso in page_obj %}
         <tr>
-            <td>{{ curso.id }}</td>
+            <td>{{ curso.codigo }}</td>
             <td><a href="{% url 'curso_detail' curso.pk %}">{{ curso.nome }}</a></td>
             <td>{{ curso.categoria.nome }}</td>
-            <td>{{ curso.cargaHoraria  }}</td>
             <td>{{ curso.inativo|yesno:"Sim,Não" }}</td>
         </tr>
         {% empty %}

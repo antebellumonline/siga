@@ -40,16 +40,18 @@ class Curso(models.Model):
     Modelo que representa um Curso.
     """
 
-    id = models.CharField(max_length=6, primary_key=True)
-    codigo = models.CharField(max_length=3)
+    id = models.AutoField(primary_key=True)
+    codigo = models.CharField(max_length=6)
     nome = models.CharField(max_length=255)
-    categoria = models.ForeignKey(CursoCategoria, on_delete=models.SET_NULL, blank=True, null=True)
-    cargaHoraria = models.PositiveIntegerField()
+    categoria = models.ForeignKey(CursoCategoria, on_delete=models.PROTECT)
     inativo = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-        if not self.id and self.categoria and self.codigo:
-            self.id = f"{self.categoria.sigla}{self.codigo}"
+        """
+        Sobrescreve o método save para garantir que o Código seja salvo em caixa alta.
+        """
+        if self.codigo:
+            self.codigo = self.codigo.upper()
         super().save(*args, **kwargs)
 
     def __str__(self):
