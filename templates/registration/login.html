@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIGA - Login</title>
     {% load static %}
+    {% load socialaccount %}
     <!-- Fontes e estilos CSS -->
     {% include 'css_includes.html' %}
     <!-- Meta tags de segurança -->
@@ -33,6 +34,13 @@
                 </div>
                 <button type="submit" class="btn-access">Acessar</button>
             </form>
+            <hr>
+            <div class="social-login">
+                <a href="{% provider_login_url 'microsoft' %}" class="btn-microsoft-login">
+                    <img src="{% static 'images/microsoft-logo.png' %}" alt="Microsoft Logo">
+                    Logar com a conta corporativa Microsoft
+                </a>
+            </div>
         </div>
     </div>
     <!-- Rodapé Comum -->

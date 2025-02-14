@@ -87,6 +87,11 @@ INSTALLED_APPS = [
     'apps.empresas',
     'apis',
     'reports',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.microsoft',
 ]
 
 # Configuração dos middlewares (MIDDLEWARE)
@@ -98,6 +103,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'siga.middleware.LoginRequiredMiddleware',
 ]
 
@@ -154,10 +160,37 @@ MICROSOFT = {
     'logout_uri': os.getenv('MICROSOFT_LOGOUT_URI')
 }
 
+# Configurações do django-allauth
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # Autenticação padrão
+    'allauth.account.auth_backends.AuthenticationBackend',  # Autenticação do django-allauth
+)
+
 # Configuração de login/logout
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
+
+# Configurações da conta
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_REQUIRED = True
+
+# Configurações do Microsoft Azure AD
+SOCIALACCOUNT_PROVIDERS = {
+    'microsoft': {
+        'APP': {
+            'client_id': MICROSOFT['app_id'],
+            'secret': MICROSOFT['app_secret'],
+            'key': ''
+        },
+        'AUTH_PARAMS': {
+            'scope': 'email',
+        },
+        'OAUTH_PKCE_ENABLED': True,  # Habilitar PKCE
+    }
+}
 
 # Configurações de logging
 LOGGING = {
