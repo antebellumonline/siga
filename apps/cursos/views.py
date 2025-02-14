@@ -238,7 +238,7 @@ def curso_detail(request, pk):
     curso = get_object_or_404(Curso, pk=pk)
 
     # Renderização do template
-    return render(request, 'cursos/curso.html', {
+    return render(request, 'cursos/curso_detail.html', {
         'curso': curso
     })
 
