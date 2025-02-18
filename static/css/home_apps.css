@@ -1,5 +1,7 @@
 /* PÁGINA INICIAL DOS APPS */
-.column-container {
+.responsive-container {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -9,20 +11,50 @@
 
 .column {
     display: flex;
-    flex: 1 1 calc(33.33% - 20px);
+    flex: 1 1 calc(25% - 20px);
     flex-direction: column;
     justify-content: space-between;
     padding: 10px;    
     min-height: 100px;
     box-sizing: border-box;
-    border: 2px solid #1A4F45;
-    background-color: #e3e3e1;
-    border-radius: 4px;
+    background: linear-gradient(to right, #e3e3e1, transparent);
+}
+
+.btn-group-home-apps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px;
+}
+
+.btn-group-home-apps a {
+    flex: 1 1 calc(50% - 10px);
+    text-align: left;
+}
+
+.home-apps-subtitle {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.2em;
+    color: black;
+    background-color: #E6B510;
+    padding: 10px;
+}
+
+@media (max-width: 1024px) {
+    .column {
+        flex: 1 1 calc(50% - 20px);
+    }
 }
 
 @media (max-width: 768px) {
     .column {
         flex: 1 1 100%;
         max-width: 100%;
+    }
+    .btn-group a {
+        flex: 1 1 100%;
+        text-align: left;
     }
 }

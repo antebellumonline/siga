@@ -194,3 +194,14 @@
 .btn-dark:hover {
     background-color: #E6B510;
 }
+
+/* Estilo para botões com fundos transparentes */
+.btn-transparent {
+    background-color: transparent;
+    color: #1A4F45;
+}
+
+.btn-transparent:hover {
+    background-color: transparent;
+    color: #3FB081;
+}
