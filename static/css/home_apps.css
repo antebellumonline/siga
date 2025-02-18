@@ -1,0 +1,28 @@
+/* PÁGINA INICIAL DOS APPS */
+.column-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding: 10px;
+}
+
+.column {
+    display: flex;
+    flex: 1 1 calc(33.33% - 20px);
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;    
+    min-height: 100px;
+    box-sizing: border-box;
+    border: 2px solid #1A4F45;
+    background-color: #e3e3e1;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .column {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
