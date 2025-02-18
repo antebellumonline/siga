@@ -10,14 +10,3 @@ html, body {
     display: flex;
     flex-direction: column;
 }
-
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 10px auto;
-    border-radius: 4px;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(26, 79, 69, 0.3);
-    padding-top: 14px;
-    padding-bottom: 14px;
-}
