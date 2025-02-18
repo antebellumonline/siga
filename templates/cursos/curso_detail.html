@@ -9,29 +9,65 @@
 <h2 class="page-title">Detalhes do Curso</h2>
 
 <div class="group-detail">
-    <p class="p-detail">
-        <span class="label-detail">ID: </span>
-        <span class="value-detail">{{ curso.id }}</span>
-    </p>
-    <p class="p-detail">
-        <span class="label-detail">Categoria: </span>
-        <span class="value-detail">{{ curso.categoria.nome }} ({{ curso.categoria.sigla }})</span>
-    </p>
-    <p class="p-detail">
-        <span class="label-detail">Nome: </span>
-        <span class="value-detail">{{ curso.nome }}</span>
-    </p>
-    <p class="p-detail">
-        <span class="label-detail">Inativo? </span>
-        <span class="value-detail">{{ curso.inativo|yesno:"Sim,Não" }}</span>
-    </p>
+    <div class="group-detail-status">
+        <h6 class="status-section-title">Status do Curso</h6>
+        <div class="group-detail-status-sub">
+            <p class="p-detail">
+                <span class="value-detail">{{ curso.inativo|yesno:"Inativo,Ativo" }}</span>
+            </p>
+        </div>
+    </div>
+    <div class="group-detail-sub">
+        <h6 class="sub-section-title">Informações Principais</h6>
+        <table class="tb-detail">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ curso.codigo }}</td>
+                    <td>{{ curso.nome }}</td>
+                    <td>{{ curso.categoria.nome }} ({{ curso.categoria.sigla }})</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="group-detail-sub">
+        <h6 class="sub-section-title">Certificações que podem ser conquistadas com este curso</h6>
+        {% if certificacoes %}
+            <table class="tb-detail">
+                <thead>
+                    <tr>
+                        <th>Sigla</th>
+                        <th>Nome da Certificação</th>
+                        <th>Certificador</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for certificacao in certificacoes %}
+                        <tr>
+                            <td>{{ certificacao.certificacao.siglaExame }}</td>
+                            <td>{{ certificacao.certificacao.descricao }}</td>
+                            <td>{{ certificacao.certificacao.idCertificador.descricao }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Este curso não possui certificações cadastradas.</p>
+        {% endif %}
+    </div>
 </div>
 
 <!-- Grupo de botões (Editar, Excluir e Retornar) -->
 <div class="btn-group">
     <a class="btn-edit" href="{% url 'curso_edit' curso.pk %}">Editar</a>
     <a class="btn-delete" id="btn-delete" data-model="curso" data-pk="{{ curso.pk }}" href="#">Excluir</a>
-    <a class="btn-return" href="{% url 'exame_list' %}">Retornar</a>
+    <a class="btn-return" href="{% url 'curso_list' %}">Retornar</a>
 </div>
 
 <!-- Modal Pop-up -->
