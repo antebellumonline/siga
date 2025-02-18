@@ -4,22 +4,13 @@
 Este módulo contém os formulários utilizados para o App Cursos.
 Ele define os formulários para cadastro, edição e outras operações relacionadas aos Cursos.
 """
-
 from django import forms
 from django.forms import inlineformset_factory
 from .models import Curso, CursoCategoria, CursoCertificacao
+from apps.certificacoes.models import Certificacao
 
 class CursoForm(forms.ModelForm):
-    """
-    Formulário para cadastro e edição de Cursos.
-
-    Este formulário é baseado no modelo Curso e define os campos que serão exibidos no formulário, 
-    além de customizar a aparência dos campos utilizando widgets.
-    """
     class Meta:
-        """
-        Configurações meta do formulário.
-        """
         model = Curso
         fields = ['nome', 'categoria', 'codigo', 'inativo']
         widgets = {
@@ -30,49 +21,26 @@ class CursoForm(forms.ModelForm):
         }
 
 class CursoCategoriaForm(forms.ModelForm):
-    """
-    Formulário para cadastro e edição de Categorias de Cursos.
-
-    Este formulário é baseado no modelo CursoCategoria e define os campos que serão exibidos no formulário, 
-    além de customizar a aparência dos campos utilizando widgets.
-    """
     class Meta:
-        """
-        Configurações meta do formulário.
-        """
         model = CursoCategoria
-        fields = [
-            'nome',
-            'sigla', 'inativo'
-        ]
+        fields = ['nome', 'sigla', 'inativo']
 
 class CursoCertificacaoForm(forms.ModelForm):
-    """
-    Formulário para cadastro e edição de Certificações dos Cursos.
-
-    Este formulário é baseado no modelo Cursos e define os campos que serão exibidos no formulário, 
-    além de customizar a aparência dos campos utilizando widgets.
-    """
     class Meta:
-        """
-        Configurações meta do formulário.
-        """
         model = CursoCertificacao
-        fields = [
-            'curso',
-            'certificacao'
-        ]
-
+        fields = ['certificacao']
         widgets = {
-            'curso': forms.HiddenInput(),
-            'certificacao': forms.Select(attrs={'class': 'form-control'})
+            'certificacao': forms.Select(attrs={'class': 'form-control select2'})
         }
 
-# FormSet para Certificações dos Cursos
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['certificacao'].queryset = Certificacao.objects.filter(inativo=False).order_by('descricao')
+
 CursoCertificacaoFormSet = inlineformset_factory(
     Curso,
     CursoCertificacao,
     form=CursoCertificacaoForm,
-    extra=0,
+    extra=4,
     can_delete=True
 )

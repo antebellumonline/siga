@@ -5,7 +5,6 @@
 {% block title %}{{ form.instance.pk|yesno:"Editar Curso,Adicionar Curso" }}{% endblock %}
 
 {% block content %}
-
 <h2 class="page-title">{{ form.instance.pk|yesno:"Editar Curso,Adicionar Curso" }}</h2>
 
 <form method="post" class="edit-form">
@@ -27,7 +26,7 @@
             <h4 class="sub-section-title">Detalhes do Curso</h4>
             <div class="form-input">
                 <label for="id_codigo">Código (Ex.: AAA000): </label>
-                <input type="text" name="codigo" id="id_codigo" value="{% if form.instance.pk %}{{ form.codigo.value }}{% else %}{% endif %}" autofocus>
+                <input type="text" name="codigo" id="id_codigo" value="{{ form.codigo.value }}" autofocus>
             </div>
             <div class="form-input">
                 <label for="id_nome">Nome: </label>
@@ -45,7 +44,7 @@
                 </select>
             </div>
         </div>
-        <!-- Contatos -->
+        <!-- Certificações -->
         <div class="form-group-edit-sub">
             <h4 class="sub-section-title">Certificações que podem ser conquistadas com este Curso</h4>
             {{ formset.management_form }}
@@ -58,9 +57,18 @@
                 </thead>
                 <tbody>
                     {% for certificacao_form in formset %}
-                    {{ certificacao_form.id }}
                     <tr>
-                        <td>{{ certificacao_form.certificacao }}</td>
+                        <td>
+                            {{ certificacao_form.id }}
+                            <select name="{{ certificacao_form.certificacao.name }}" class="select-edit select2">
+                                <option value="">Selecionar Certificação</option>
+                                {% for certificacao in certificacao_form.certificacao.field.queryset %}
+                                <option value="{{ certificacao.id }}" {% if certificacao_form.certificacao.value == certificacao.id %}selected{% endif %}>
+                                    {{ certificacao.descricao }} ({{ certificacao.siglaExame }})
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </td>
                         <td>
                             {% if formset.can_delete %}
                                 {{ certificacao_form.DELETE }} Excluir
@@ -69,18 +77,17 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="4">Nenhum contato adicionado.</td>
+                        <td colspan="2">Nenhuma certificação adicionada.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-    </div>
     <!-- Grupo de botões (Salvar e Retornar) -->
     <div class="btn-group">
-        <button class="btn-save" type="submit" accesskey="s">Salvar Curso</button>
-        <a class="btn-return" href="{% url 'curso_list' %}" accesskey="r">Retornar</a>
+        <button class="btn-save" type="submit">Salvar Curso</button>
+        <a class="btn-return" href="{% url 'curso_list' %}">Retornar</a>
     </div>
 </form>
 

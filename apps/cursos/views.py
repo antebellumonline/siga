@@ -12,7 +12,7 @@ from django.urls import reverse
 from django.db.models import Q
 
 from .models import Curso, CursoCategoria, CursoCertificacao
-from .forms import CursoForm, CursoCategoriaForm, CursoCertificacaoForm
+from .forms import CursoForm, CursoCategoriaForm, CursoCertificacaoFormSet
 
 def curso_home(request):
     """
@@ -151,7 +151,7 @@ def curso_new(request):
     categorias = CursoCategoria.objects.filter(inativo=False).order_by('nome')
     if request.method == "POST":
         form = CursoForm(request.POST)
-        formset = CursoCertificacaoForm(request.POST)
+        formset = CursoCertificacaoFormSet(request.POST)
         if form.is_valid() and formset.is_valid():
             curso = form.save()
             formset.instance = curso
@@ -159,8 +159,9 @@ def curso_new(request):
             return redirect('curso_list')
     else:
         form = CursoForm()
-        formset = CursoCertificacaoForm()
-    return render(request, 'cursos/curso_form.html',{
+        formset = CursoCertificacaoFormSet()
+
+    return render(request, 'cursos/curso_form.html', {
         'form': form,
         'formset': formset,
         'categorias': categorias
@@ -253,16 +254,13 @@ def curso_edit(request, pk):
     """
     View para Editar um Curso
     """
-    # Obtém os filtros
     curso = get_object_or_404(Curso, pk=pk)
     categorias = CursoCategoria.objects.filter(inativo=False).order_by('nome')
 
-    # Verifica se a requisição é do tipo POST (submissão de formulário)
     if request.method == "POST":
         form = CursoForm(request.POST, instance=curso)
-        formset = CursoCertificacaoForm(request.POST, instance=curso)
+        formset = CursoCertificacaoFormSet(request.POST, instance=curso)
 
-        # Se o formulário for válido, salva as alterações no objeto
         if form.is_valid() and formset.is_valid():
             form.save()
             formset.save()
@@ -273,9 +271,8 @@ def curso_edit(request, pk):
                 print(certificacao_form.errors)
     else:
         form = CursoForm(instance=curso)
-        formset = CursoCertificacaoForm(instance=curso)
+        formset = CursoCertificacaoFormSet(instance=curso)
 
-    # Renderização do template
     return render(request, 'cursos/curso_form.html', {
         'form': form,
         'formset': formset,
@@ -287,11 +284,7 @@ def curso_delete(request, pk):
     View para Excluir um Curso
     """
     curso = get_object_or_404(Curso, pk=pk)
-
     if request.method == "POST":
         curso.delete()
         return redirect('curso_list')
-
-    return render(request, 'cursos/curso_confirm_delete.html', {
-        'curso': curso
-    })
+    return render(request, 'cursos/curso_confirm_delete.html', {'curso': curso})
