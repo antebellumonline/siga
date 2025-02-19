@@ -1,26 +1,14 @@
 <!-- templates/home.html -->
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGA - Sistema Integrado de Gestão Administrativa</title>
-    {% load static %}
-    <!-- Fontes e estilos CSS -->
-    {% include 'css_includes.html' %}
-    <!-- Meta tags de segurança -->
-    {% include 'csp_policy.html' %}
-</head>
-<body class="body-home">
-    <!-- Área exclusiva para conteúdo específico de cada página -->
-    <h2 class="page-title">SIGA - Sistema Integrado de Gestão Administrativa</h2>
+{% extends "base.html" %}
 
-    <!-- Imagem centralizada -->
-    <div class="logo-container-home">
-        <img src="{% static 'images/logo-siga-horizontal-negativo-preto.png' %}" alt="Logo SIGA" class="logo">
-    </div>
+{% block title %}SIGA - Sistema Integrado de Gestão Administrativa{% endblock %}
 
+{% block body_class %}body-home{% endblock %}
+
+{% block header_title %}SIGA - Sistema Integrado de Gestão Administrativa{% endblock %}
+
+{% block content %}
     <div class="container-home">
         {% if request.user.is_authenticated %}
             <p>Seja bem-vindo (a) ao SIGA.</p>
@@ -56,13 +44,4 @@
             <p>Você não está autenticado. <a href="{% url 'login' %}">Login</a></p>
         {% endif %}
     </div>
-
-    <!-- Rodapé Comum -->
-    <footer>
-        <p>&copy; 2025 SIGA - Sistema Integrado de Gestão Administrativa</p>
-    </footer>
-    <!-- Scripts -->
-    {% include 'js_includes.html' %}
-</body>
-{% csrf_token %}
-</html>
+{% endblock %}

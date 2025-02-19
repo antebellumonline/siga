@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}SIGA{% endblock %} - Sistema Integrado de Gestão Administrativa</title>
+    <title>{% block title %}SIGA - Sistema Integrado de Gestão Administrativa{% endblock %}</title>
     {% load static %}
     <!-- Fontes e estilos CSS -->
     {% include 'css_includes.html' %}
@@ -15,38 +15,11 @@
 <body class="{% block body_class %}{% endblock %}">
     <!-- Cabeçalho Comum -->
     <header>
-        <div class="menu-container">
+        <!-- Imagem centralizada -->
+        <div class="logo-container-home">
             <img src="{% static 'images/logo-siga-horizontal-negativo-preto.png' %}" alt="Logo SIGA" class="logo">
-            <nav class="menu">
-                <ul>
-                    <li class="{% if request.path == '/' %}active{% endif %}">
-                        <a href="/" aria-label="Home"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
-                    </li>
-                    {% if request.user.is_staff %}
-                        <li class="{% if request.path == '/admin' %}active{% endif %}">
-                            <a href="/admin" aria-label="Painel Administrativo"><i class="fa fa-gear"></i>Administração</a>
-                        </li>
-                    {% endif %}
-                    {% if request.user.is_authenticated %}
-                        <li class="{% if request.path == '/clientes/' %}active{% endif %}">
-                            <a href="/clientes" aria-label="Clientes"><i class="fa fa-star"></i>Clientes</a>
-                        </li>
-                        <li class="{% if request.path == '/certificacao/' %}active{% endif %}">
-                            <a href="/certificacao" aria-label="Certificações"><i class="fa fa-trophy"></i>Certificações</a>
-                        </li>
-                        <li class="{% if request.path == '/curso/' %}active{% endif %}">
-                            <a href="/curso" aria-label="Cursos"><i class="fa fa-graduation-cap"></i>Cursos</a>
-                        </li>
-                        <li class="{% if request.path == '/centroProva/' %}active{% endif %}">
-                            <a href="/centroProva" aria-label="Centro de Provas"><i class="fa fa-clipboard-check"></i>Centro de Provas</a>
-                        </li>
-                    {% endif %}
-                </ul>
-                <div class="hamburger-menu">
-                    <i class="fa fa-bars" aria-hidden="true"></i>
-                </div>
-            </nav>
         </div>
+        <h2 class="page-title">{% block header_title %}SIGA - Sistema Integrado de Gestão Administrativa{% endblock %}</h2>
     </header>
     
     <!-- Área exclusiva para conteúdo específico de cada página -->
