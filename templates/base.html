@@ -12,7 +12,7 @@
     <!-- Meta tags de segurança -->
     {% include 'csp_policy.html' %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
     <!-- Cabeçalho Comum -->
     <header>
         <div class="menu-container">
