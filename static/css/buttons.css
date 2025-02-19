@@ -42,6 +42,7 @@
     margin-top: 10px; /* Margem para separar dos campos de pesquisa */
 }
 
+.btn-home,
 .btn-first,
 .btn-last,
 .btn-previous,
@@ -79,6 +80,7 @@
     z-index: 1;
 }
 
+.btn-home:hover,
 .btn-first:hover,
 .btn-last:hover,
 .btn-previous:hover,
@@ -102,6 +104,7 @@
     background-color: #3FB081;
 }
 
+.btn-home::before,
 .btn-first::before,
 .btn-last::before,
 .btn-previous::before,
@@ -128,6 +131,7 @@
 }
 
 /* Códigos dos ícones para cada botão */
+.btn-home::before {content: "\f015";}
 .btn-first::before {content: "\f049";}
 .btn-last::before {content: "\f050";}
 .btn-previous::before {content: "\f048";}
@@ -164,6 +168,23 @@
 }
 
 .btn-circle::before {
+    margin-right: 0;
+}
+
+/* Estilo para botões quadrados */
+.btn-square {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.btn-square::before {
     margin-right: 0;
 }
 
