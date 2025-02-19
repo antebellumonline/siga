@@ -11,9 +11,9 @@
     padding: 10px;
 }
 
-/* Centralização da imagem do logo */
 .logo-container-home {
-    text-align: center;
+    display: flex;
+    justify-content: center;
     margin-bottom: 20px;
 }
 
@@ -24,16 +24,15 @@
 
 /* Grid de aplicativos */
 .app-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
     justify-content: center;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .app-item {
-    flex: 1 1 calc(20% - 20px);
-    max-width: calc(20% - 20px);
     text-align: center;
     background: #3FB081;
     border-radius: 4px;
@@ -66,26 +65,4 @@
     transform: translateY(-5px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     background-color: #e6b510;
-}
-
-/* Responsividade */
-@media (max-width: 992px) {
-    .app-item {
-        flex: 1 1 calc(25% - 20px);
-        max-width: calc(25% - 20px);
-    }
-}
-
-@media (max-width: 768px) {
-    .app-item {
-        flex: 1 1 calc(25% - 20px);
-        max-width: calc(25% - 20px);
-    }
-}
-
-@media (max-width: 576px) {
-    .app-item {
-        flex: 1 1 calc(50% - 20px);
-        max-width: calc(50% - 20px);
-    }
 }
