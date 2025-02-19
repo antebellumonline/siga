@@ -21,13 +21,6 @@
         </div>
         <h2 class="page-title">{% block header_title %}SIGA - Sistema Integrado de Gestão Administrativa{% endblock %}</h2>
     </header>
-    
-    <!-- Breadcrumbs -->
-    {% if not request.resolver_match.url_name == 'home' %}
-        {% load breadcrumbs %}
-        {% generate_breadcrumbs %}
-    {% endif %}
-
 
     <!-- Área exclusiva para conteúdo específico de cada página -->
     {% block content %}
