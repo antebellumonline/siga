@@ -1,3 +1,5 @@
+# templatetags/custom_filters.py
+
 from urllib.parse import urlencode, parse_qs
 from django import template
 

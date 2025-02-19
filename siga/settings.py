@@ -122,6 +122,7 @@ TEMPLATES = [
             ],
         'libraries': {
                 'custom_filters': 'templatetags.custom_filters',
+                'breadcrumbs': 'templatetags.breadcrumbs',
             },
         },
     },

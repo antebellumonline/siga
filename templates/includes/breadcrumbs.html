@@ -1,0 +1,9 @@
+<!-- templates/includes/breadcrumbs.html -->
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a></li>
+        <!-- O restante dos breadcrumbs deve ser definido na página específica -->
+        {% block breadcrumbs %}{% endblock %}
+    </ol>
+</nav>
