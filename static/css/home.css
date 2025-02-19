@@ -14,20 +14,22 @@
 .logo-container-home {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    padding: 10px;
 }
 
 .logo {
-    max-width: 20%;
+    width: 100%;
+    max-width: 300px;
+    min-width: 120px;
     height: auto;
 }
 
 /* Grid de aplicativos */
 .app-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 20px;
     margin-bottom: 20px;
     width: 100%;
 }
@@ -46,6 +48,8 @@
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
+    width: 200px;
+    height: auto;
 }
 
 .app-item i {
