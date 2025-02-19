@@ -1,5 +1,5 @@
 /* PÁGINA INICIAL */
-.home-page {
+.body-home {
     background-color: #000;
     color: #fff;
     min-height: 100vh;
@@ -9,6 +9,17 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 10px;
+}
+
+/* Centralização da imagem do logo */
+.logo-container-home {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 300px;
+    height: auto;
 }
 
 /* Grid de aplicativos */

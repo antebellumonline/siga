@@ -1,55 +1,76 @@
 <!-- templates/home.html -->
 
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGA - Sistema Integrado de Gestão Administrativa</title>
+    {% load static %}
+    <!-- Fontes e estilos CSS -->
+    {% include 'css_includes.html' %}
+    <!-- Meta tags de segurança -->
+    {% include 'csp_policy.html' %}
+</head>
+<body class="body-home">
+    <!-- Área exclusiva para conteúdo específico de cada página -->
+    <h2 class="page-title">SIGA - Sistema Integrado de Gestão Administrativa</h2>
 
-{% block title %}SIGA - Sistema Integrado de Gestão Administrativa{% endblock %}
+    <!-- Imagem centralizada -->
+    <div class="logo-container-home">
+        <img src="{% static 'images/logo-siga-horizontal-negativo-preto.png' %}" alt="Logo SIGA" class="logo">
+    </div>
 
-{% block body_class %}home-page{% endblock %}
+    <div class="container-home">
+        {% if request.user.is_authenticated %}
+            <p>Seja bem-vindo (a) ao SIGA.</p>
 
-{% block content %}
-<h2 class="page-title">SIGA - Sistema Integrado de Gestão Administrativa</h2>
-
-<div class="container-home">
-    {% if request.user.is_authenticated %}
-        <p>Você está logado como <strong>{{ request.user.username }}</strong>.</p>
-
-        <!-- Lista de aplicativos -->
-        <div class="app-grid">
-            <div class="app-item">
-                <a href="/clientes">
-                    <i class="fa fa-star"></i>
-                    <p>Clientes</p>
-                </a>
+            <!-- Lista de aplicativos -->
+            <div class="app-grid">
+                <div class="app-item">
+                    <a href="/clientes">
+                        <i class="fa fa-star"></i>
+                        <p>Clientes</p>
+                    </a>
+                </div>
+                <div class="app-item">
+                    <a href="/certificacao">
+                        <i class="fa fa-trophy"></i>
+                        <p>Certificações</p>
+                    </a>
+                </div>
+                <div class="app-item">
+                    <a href="/curso">
+                        <i class="fa fa-graduation-cap"></i>
+                        <p>Cursos</p>
+                    </a>
+                </div>
+                <div class="app-item">
+                    <a href="/centroProva">
+                        <i class="fa fa-clipboard-check"></i>
+                        <p>Centro de Provas</p>
+                    </a>
+                </div>
+                <!-- Adicione mais aplicativos conforme necessário -->
             </div>
-            <div class="app-item">
-                <a href="/certificacao">
-                    <i class="fa fa-trophy"></i>
-                    <p>Certificações</p>
-                </a>
-            </div>
-            <div class="app-item">
-                <a href="/curso">
-                    <i class="fa fa-graduation-cap"></i>
-                    <p>Cursos</p>
-                </a>
-            </div>
-            <div class="app-item">
-                <a href="/centroProva">
-                    <i class="fa fa-clipboard-check"></i>
-                    <p>Centro de Provas</p>
-                </a>
-            </div>
-            <!-- Adicione mais aplicativos conforme necessário -->
-        </div>
 
-        <!-- Formulário de logout -->
-        <form action="{% url 'logout' %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" class="btn-exit">Logout</button>
-        </form>
-    {% else %}
-        <p>Você não está autenticado. <a href="{% url 'login' %}">Login</a></p>
-    {% endif %}
-</div>
+            <p>Você está logado como <strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong>.</p>
+            <!-- Formulário de logout -->
+            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn-exit">Logout</button>
+            </form>
+        {% else %}
+            <p>Você não está autenticado. <a href="{% url 'login' %}">Login</a></p>
+        {% endif %}
+    </div>
 
-{% endblock %}
+    <!-- Rodapé Comum -->
+    <footer>
+        <p>&copy; 2025 SIGA - Sistema Integrado de Gestão Administrativa</p>
+    </footer>
+    <!-- Scripts -->
+    {% include 'js_includes.html' %}
+</body>
+{% csrf_token %}
+</html>
