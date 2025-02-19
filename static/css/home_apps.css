@@ -17,7 +17,7 @@
     padding: 10px;    
     min-height: 100px;
     box-sizing: border-box;
-    background: linear-gradient(to right, #e3e3e1, transparent);
+    background: #E3E3E1;
 }
 
 .btn-group-home-apps {
@@ -36,7 +36,7 @@
     text-align: center;
     text-transform: uppercase;
     font-weight: 600;
-    font-size: 1.2em;
+    font-size: 1.0em;
     color: black;
     background-color: #E6B510;
     padding: 10px;

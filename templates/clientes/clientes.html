@@ -7,17 +7,17 @@
 {% block content %}
 
 <h2 class="page-title">Gestão de Clientes</h2>
-<div class="column-container">
-    <div class="column">
-        <h3 class="page-subtitle">Alunos (Pessoa Física)</h3>
-        <div class="btn-group-center">
-            <a href="{% url 'aluno_new' %}" class="btn-new" aria-label="Criar Novo Aluno">Novo</a>
-            <a href="{% url 'aluno_list' %}" class="btn-list" aria-label="Localizar Aluno">Localizar</a>
+<div class="container-home-apps">
+    <div class="column-home-apps">
+        <h3 class="home-apps-subtitle">Alunos (Pessoa Física)</h3>
+        <div class="btn-group-home-apps">
+            <a href="{% url 'aluno_new' %}" class="btn-new btn-transparent" aria-label="Criar Novo Aluno">Novo</a>
+            <a href="{% url 'aluno_list' %}" class="btn-list btn-transparent" aria-label="Localizar Aluno">Localizar</a>
         </div>
     </div>
-    <div class="column">
-        <h3 class="page-subtitle">Empresas (Pessoa Jurídica)</h3>
-        <div class="btn-group-center">
+    <div class="column-home-apps">
+        <h3 class="home-apps-subtitle">Empresas (Pessoa Jurídica)</h3>
+        <div class="btn-group-home-apps">
         </div>
     </div>
 </div>

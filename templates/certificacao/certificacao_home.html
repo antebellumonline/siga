@@ -2,24 +2,24 @@
 
 {% extends 'base.html' %}
 
-{% block title %}SIGA - Gestão de Certificações e Certificadores{% endblock %}
+{% block title %}SIGA - Gestão de Certificações{% endblock %}
 
 {% block content %}
 
-<h2 class="page-title">Gestão de Certificações e Certificadores</h2>
-<div class="column-container">
-    <div class="column">
-        <h3 class="page-subtitle">Certificadores</h3>
-        <div class="btn-group-center">
-            <a href="{% url 'certificador_new' %}" class="btn-new" aria-label="Criar Novo Certificador">Novo</a>
-            <a href="{% url 'certificador_list' %}" class="btn-list" aria-label="Localizar Certificador">Localizar</a>
+<h2 class="page-title">Gestão de Certificações</h2>
+<div class="container-home-apps">
+    <div class="column-home-apps">
+        <h3 class="home-apps-subtitle">Certificadores</h3>
+        <div class="btn-group-home-apps">
+            <a href="{% url 'certificador_new' %}" class="btn-new btn-transparent" aria-label="Criar Novo Certificador">Novo</a>
+            <a href="{% url 'certificador_list' %}" class="btn-list btn-transparent" aria-label="Localizar Certificador">Localizar</a>
         </div>
     </div>
-    <div class="column">
-        <h3 class="page-subtitle">Certificações</h3>
-        <div class="btn-group-center">
-            <a href="{% url 'certificacao_new' %}" class="btn-new" aria-label="Criar nova Certificação">Novo</a>
-            <a href="{% url 'certificacao_list' %}" class="btn-list" aria-label="Localizar Certificação">Localizar</a>
+    <div class="column-home-apps">
+        <h3 class="home-apps-subtitle">Certificações</h3>
+        <div class="btn-group-home-apps">
+            <a href="{% url 'certificacao_new' %}" class="btn-new btn-transparent" aria-label="Criar nova Certificação">Novo</a>
+            <a href="{% url 'certificacao_list' %}" class="btn-list btn-transparent" aria-label="Localizar Certificação">Localizar</a>
         </div>
     </div>
 </div>
