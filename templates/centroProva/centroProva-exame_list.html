@@ -76,8 +76,8 @@
 <div class="btn-group">
     <a class="btn-return" href="{% url 'centroprova_home' %}">Retornar</a>
     <a class="btn-new" href="{% url 'exame_new' %}">Novo</a>
-    <a class="btn-pdf" href="{% url 'exame_report_pdf' %}?{{ query_params }}">Exportar para PDF</a>
-    <a class="btn-excel" href="{% url 'exame_report_xlsx' %}?{{ query_params }}">Exportar para Excel</a>
+    <a class="btn-pdf btn-dark" href="{% url 'exame_report_pdf' %}?{{ query_params }}">Exportar para PDF</a>
+    <a class="btn-excel btn-dark" href="{% url 'exame_report_xlsx' %}?{{ query_params }}">Exportar para Excel</a>
 </div>
 <!-- Seletor para escolher quantos registros exibir -->
 {% include "includes/records_per_page_selector.html" with action_url=request.path %}

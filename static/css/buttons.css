@@ -59,30 +59,13 @@
 .btn-clear,
 .btn-access,
 .btn-exit,
-.btn-reset {
+.btn-reset,
+.btn-excel,
+.btn-pdf {
     text-decoration: none;
     display: inline-block;
     background-color: #1A4F45;
     color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: 'Fredoka', sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    text-transform: uppercase;
-    transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease;
-    position: relative;
-    z-index: 1;
-}
-
-.btn-pdf,
-.btn-excel {
-    text-decoration: none;
-    display: inline-block;
-    background-color: #E6B510;
-    color: black;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
@@ -113,12 +96,9 @@
 .btn-clear:hover,
 .btn-access:hover,
 .btn-exit:hover,
-.btn-reset:hover {
-    background-color: #3FB081;
-}
-
-.btn-pdf:hover,
-.btn-excel:hover {
+.btn-reset:hover,
+.btn-excel:hover,
+.btn-pdf:hover {
     background-color: #3FB081;
 }
 
@@ -187,6 +167,7 @@
     margin-right: 0;
 }
 
+/* Estilo para botões para fundos pretos */
 .btn-dark {
     background-color: #3FB081;
 }
@@ -195,7 +176,18 @@
     background-color: #E6B510;
 }
 
-/* Estilo para botões com fundos transparentes */
+/* Estilo para botões amarelos (#E6B510) */
+.btn-yellow {
+    background-color: #E6B510;
+    color: black;
+}
+
+.btn-yellow:hover {
+    background-color: #3FB081;
+    color: black;
+}
+
+/* Estilo para botões transparentes */
 .btn-transparent {
     background-color: transparent;
     color: #1A4F45;
