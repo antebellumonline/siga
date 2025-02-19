@@ -26,10 +26,10 @@
 
 /* Grid de aplicativos */
 .app-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
+    justify-content: center;
     margin-bottom: 20px;
     width: 100%;
 }
@@ -48,7 +48,7 @@
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
-    width: 200px;
+    width: 100%;
     height: auto;
 }
 
