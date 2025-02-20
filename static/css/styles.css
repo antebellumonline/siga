@@ -19,18 +19,6 @@
 /* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
 
 /* TÍTULOS E SUBTÍTULOS DAS PÁGINAS */
-.page-title {
-    text-align: center;
-    color: white;
-    padding: 6px;
-    margin: 0;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 600;
-}
-
 .page-subtitle {
     text-align: center;
     text-transform: uppercase;

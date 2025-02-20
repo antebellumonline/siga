@@ -16,14 +16,13 @@
     <!-- Cabeçalho Comum -->
     <header>
         <div class="header-content">
-            <!-- Imagem e Título -->
-            <div class="logo-title-container">
-                <div class="logo-container-home">
-                    <img src="{% static 'images/logo-siga-horizontal-negativo-preto.png' %}" alt="Logo SIGA" class="logo">
-                </div>
-                <h2 class="page-title">{% block header_title %}SIGA - Sistema Integrado de Gestão Administrativa{% endblock %}</h2>
+            <div class="logo-container-header">
+                <img src="{% static 'images/logo-siga-horizontal-negativo-preto.png' %}" alt="Logo SIGA" class="logo">
             </div>
-            <a class="btn-home btn-square btn-dark" href="{% url 'home' %}" accesskey="h"></a>
+            <h2 class="page-title">{% block header_title %}SIGA - Sistema Integrado de Gestão Administrativa{% endblock %}</h2>
+            <div class="btn-container-header">
+                <a class="btn-home btn-square btn-dark" href="{% url 'home' %}" accesskey="h"></a>
+            </div>
         </div>
     </header>
 

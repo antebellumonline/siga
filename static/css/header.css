@@ -13,23 +13,38 @@ header {
     max-width: 1200px;
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 0 10px;
 }
 
 /* Container do logo e título */
-.logo-title-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
+.logo-container-header {
+    width: 30%;
+}
+
+.btn-container-header {
+    width: 10%;
 }
 
 /* Logo */
 .logo {
-    max-width: 280px;
+    max-width: 300px;
+    min-width: 200px;
     width: 100%;
     height: auto;
+}
+
+.page-title {
+    text-align: center;
+    color: white;
+    padding: 6px;
+    margin: 0;
+    width: 60%;
+    box-sizing: border-box;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
 }
