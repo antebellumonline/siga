@@ -1,45 +1,49 @@
 <!-- templates/cursos/cursoCategoria_form.html -->
 
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}{{ form.instance.pk|yesno:"Editar Caetegoria de Cursos,Adicionar Categoria de Cursos" }}{% endblock %}
 
+{% block body_class %}body-apps-form{% endblock %}
+
+{% block header_title %}{{ form.instance.pk|yesno:"Editar Caetegoria de Cursos,Adicionar Categoria de Cursos" }}{% endblock %}
+
 {% block content %}
 
-<h2 class="page-title">{{ form.instance.pk|yesno:"Editar Caetegoria de Cursos,Adicionar Categoria de Cursos" }}</h2>
-
-<form method="post" class="edit-form">
-    {% csrf_token %}
-    <div class="form-group-edit">
-        {% if form.instance.pk %}
-        <div class="form-group-edit-status">
-            <h4 class="status-section-title">Status da Categoria</h4>
-            <div class="form-input">
-                <label for="id_inativo">Inativo: </label>
-                <select id="id_inativo" name="inativo">
-                    <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
-                    <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
-                </select>
+<div class="container-apps-form">
+    <form method="post" class="apps-form-edit">
+        {% csrf_token %}
+        <div class="apps-form-group-edit">
+            {% if form.instance.pk %}
+            <div class="apps-form-group-edit-status">
+                <h4 class="apps-form-status-section-title">Status da Categoria</h4>
+                <div class="apps-form-input">
+                    <label for="id_inativo">Inativo: </label>
+                    <select id="id_inativo" name="inativo">
+                        <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
+                        <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
+                    </select>
+                </div>
+            </div>
+            {% endif %}
+            <div class="apps-form-group-edit-sub">
+                <h4 class="apps-form-sub-section-title">Detalhes da Categoria</h4>
+                <div class="apps-form-input">
+                    <label for="id_nome">Nome: </label>
+                    {{ form.nome }}
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_sigla">Sigla: </label>
+                    {{ form.sigla }}
+                </div>
             </div>
         </div>
-        {% endif %}
-        <div class="form-group-edit-sub">
-            <h4 class="sub-section-title">Detalhes da Categoria</h4>
-            <div class="form-input">
-                <label for="id_nome">Nome: </label>
-                {{ form.nome }}
-            </div>
-            <div class="form-input">
-                <label for="id_sigla">Sigla: </label>
-                {{ form.sigla }}
-            </div>
+        <!-- Grupo de botões (Salvar e Retornar) -->
+        <div class="apps-form-btn-group">
+            <button class="btn-save btn-dark" type="submit">Salvar Categoria de Cursos</button>
+            <a class="btn-return btn-yellow" href="{% url 'cursoCategoria_list' %}">Retornar</a>
         </div>
-    </div>
-    <!-- Grupo de botões (Salvar e Retornar) -->
-    <div class="btn-group">
-        <button class="btn-save" type="submit">Salvar Categoria de Cursos</button>
-        <a class="btn-return" href="{% url 'cursoCategoria_list' %}">Retornar</a>
-    </div>
-</form>
+    </form>
+</div>
 
 {% endblock %}

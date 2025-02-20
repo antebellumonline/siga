@@ -30,7 +30,7 @@
 </div>
 <!-- Grupo de botões (Editar, Excluir e Retornar) -->
 <div class="btn-group">
-    <a class="btn-edit" href="{% url 'cursoCategoria_edit' cursocategoria.pk %}">Editar</a>
+    <a class="btn-edit" href="{% url 'cursoCategoria_edit' cursocategoria.sigla %}">Editar</a>
     <a class="btn-delete" id="btn-delete" data-model="cursocategoria" data-pk="{{ cursocategoria.pk }}" href="#">Excluir</a>
     <a class="btn-return" href="{% url 'cursoCategoria_list' %}">Retornar</a>
 </div>
