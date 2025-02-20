@@ -2,16 +2,17 @@
 .body-apps-list {
     background-color: black;
     color: #fff;
+    font-size: 1rem; /* Use rem para tamanhos de fonte */
 }
 
 .container-apps-list {
-    max-width: 1200px;
+    max-width: 1200px; /* Use 100% para permitir que o contêiner se ajuste ao tamanho da tela */
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 1rem; /* Use rem para espaçamento */
     justify-content: center;
-    padding: 10px;
+    padding: 1rem; /* Use rem para padding */
 }
 
 /* FORMULÁRIOS DE BUSCA */
@@ -21,9 +22,9 @@
     gap: 0.5rem;
     width: 100%;
     font-family: 'Montserrat', sans-serif;
-    border: 4px solid #3FB081;
-    border-radius: 4px;
-    padding: 20px;
+    border: 0.25rem solid #3FB081; /* Use rem para bordas */
+    border-radius: 0.25rem; /* Use rem para bordas arredondadas */
+    padding: 1.25rem; /* Use rem para padding */
 }
 
 .apps-list-form-group-search {
@@ -44,7 +45,7 @@
 
 .apps-list-form-group-search-sub label {
     flex-shrink: 0;
-    min-width: 150px;
+    min-width: 10rem;
     text-align: left;
     font-weight: 500;
 }
@@ -59,15 +60,16 @@
 .apps-list-select-group-search label {
     text-align: left;
     font-weight: 500;
-    margin-right: 5px;
+    margin-right: 0.25rem;
 }
 
 .apps-list-btn-group {
-    margin: 10px;
+    margin: 0.5rem;
     text-align: right;
     display: flex;
     width: 100%;
-    gap: 10px;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .apps-list-btn-group-search {
@@ -75,7 +77,8 @@
     width: 100%;
     justify-content: flex-end;
     margin-top: 1rem;
-    gap: 10px;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 /* TABELAS */
@@ -84,18 +87,19 @@
     border-collapse: collapse;
     background-color: white;
     border: 1px solid #ddd;
-    border-top: 0px;
-    border-left: 0px;
-    border-right: 0px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
     margin-top: 0;
     font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
 }
 
 .tb-list th, 
 .tb-list td {
     text-align: left;
-    padding: 8px;
+    padding: 0.5rem;
 }
 
 .tb-list thead {
@@ -127,6 +131,7 @@
 .tb-list td {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
+    overflow-wrap: break-word;
 }
 
 .tb-list td a {
