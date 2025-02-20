@@ -1,101 +1,107 @@
 <!-- templates/alunos/aluno_list.html -->
 
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}SIGA - Lista de Alunos{% endblock %}
 
+{% block body_class %}body-apps-list{% endblock %}
+
+{% block header_title %}Lista de Alunos{% endblock %}
+
 {% block content %}
 
-<h2 class="page-title">Lista de Alunos</h2>
 <!-- Formulário de busca e filtro -->
-<form method="GET" action="{% url 'aluno_list' %}" class="search-form">
-    <div class="form-group-search">
-        <div class="form-group-search-sub">
-            <input type="checkbox" id="check-list-aluno-nome-contatos" data-target="list-aluno-nome-contatos">
-            <label for="search-list-aluno-nome-contatos">Buscar por UID, Nome, Telefone ou E-mail:</label>
-            <input type="text" id="list-aluno-nome-contatos" name="q" placeholder="Buscar por UID, Nome, Telefone ou E-mail" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por UID, Nome, Telefone ou E-mail">
+<div class="container-apps-list">
+    <form method="GET" action="{% url 'aluno_list' %}" class="apps-list-search-form">
+        <div class="apps-list-form-group-search">
+            <div class="apps-list-form-group-search-sub">
+                <input type="checkbox" id="check-list-aluno-nome-contatos" data-target="list-aluno-nome-contatos">
+                <label for="search-list-aluno-nome-contatos">Buscar por UID, Nome, Telefone ou E-mail:</label>
+                <input type="text" id="list-aluno-nome-contatos" name="q" placeholder="Buscar por UID, Nome, Telefone ou E-mail" value="{{ request.GET.q }}" class="form-control" aria-label="Buscar por UID, Nome, Telefone ou E-mail">
+            </div>
+            <div class="apps-list-form-group-search-sub">
+                <input type="checkbox" id="check-list-aluno-cidade" data-target="list-aluno-cidade">
+                <label for="list-aluno-cidade">Selecione a Cidade:</label>
+                <select name="cidade" id="list-aluno-cidade" class="select-search select2">
+                    <option value="">Selecionar cidade</option>
+                    {% for cidade in cidades %}
+                    <option value="{{ cidade.nome }}" {% if request.GET.cidade == cidade.nome %}selected{% endif %}>
+                        {{ cidade.nome }} - {{ cidade.estado.uf }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="apps-list-select-group-search">
+                <input type="checkbox" id="check-list-aluno-inativo" data-target="list-aluno-inativo">
+                <label for="list-aluno-inativo">Aluno Inativo?</label>
+                <select name="inativo" id="list-aluno-inativo" class="select-search select2">
+                    <option value="True" {% if request.GET.inativo == 'True' %}selected{% endif %}>Sim</option>
+                    <option value="False" {% if request.GET.inativo == 'False' %}selected{% endif %}>Não</option>
+                </select>
+            </div>
         </div>
-        <div class="form-group-search-sub">
-            <input type="checkbox" id="check-list-aluno-cidade" data-target="list-aluno-cidade">
-            <label for="list-aluno-cidade">Selecione a Cidade:</label>
-            <select name="cidade" id="list-aluno-cidade" class="select-search select2">
-                <option value="">Selecionar cidade</option>
-                {% for cidade in cidades %}
-                <option value="{{ cidade.nome }}" {% if request.GET.cidade == cidade.nome %}selected{% endif %}>
-                    {{ cidade.nome }} - {{ cidade.estado.uf }}
-                </option>
-                {% endfor %}
-            </select>
+        <!-- Botões de Ação -->
+        <div class="apps-list-btn-group-search">
+            <button type="submit" class="btn-list btn-circle btn-dark"></button>
+            <a class="btn-clear btn-circle btn-yellow" href="{% url 'aluno_list' %}"></a>
         </div>
-        <div class="select-group-search">
-            <input type="checkbox" id="check-list-aluno-inativo" data-target="list-aluno-inativo">
-            <label for="list-aluno-inativo">Aluno Inativo?</label>
-            <select name="inativo" id="list-aluno-inativo" class="select-search select2">
-                <option value="True" {% if request.GET.inativo == 'True' %}selected{% endif %}>Sim</option>
-                <option value="False" {% if request.GET.inativo == 'False' %}selected{% endif %}>Não</option>
-            </select>
-        </div>
+    </form>
+    <!-- Grupo de botões -->
+    <div class="apps-list-btn-group">
+        <a class="btn-return btn-dark" href="{% url 'aluno_home' %}">Retornar</a>
+        <a class="btn-new btn-dark" href="{% url 'aluno_new' %}">Novo</a>
     </div>
-    <!-- Botões de Ação -->
-    <div class="btn-group-search">
-        <button type="submit" class="btn-list btn-circle"></button>
-        <a class="btn-clear btn-circle" href="{% url 'aluno_list' %}"></a>
+    <!-- Seletor para escolher quantos registros exibir -->
+    {% include "includes/records_per_page_selector.html" with action_url=request.path %}
+    <!-- Contador de registros -->
+    {% include 'includes/record_counter.html' with page_obj=page_obj %}
+    <!-- Paginação da Tabela -->
+    {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
+    <!-- Tabela de busca -->
+    <table class="tb-list" id="tb-list-alunos">
+        <thead>
+            <tr>
+                <th>
+                    <a href="?order_by=uid&descending={% if request.GET.order_by == 'uid' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&records_per_page={{ request.GET.records_per_page }}">
+                        UID {% if request.GET.order_by == 'uid' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                    </a>                
+                </th>
+                <th>
+                    <a href="?order_by=nome&descending={% if request.GET.order_by == 'nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&records_per_page={{ request.GET.records_per_page }}">
+                        Nome {% if request.GET.order_by == 'nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                    </a>                
+                </th>
+                <th>CPF</th>
+                <th>Cidade</th>
+                <th>Inativo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for aluno in page_obj %}
+            <tr>
+                <td>{{ aluno.uid }}</td>
+                <td><a href="{% url 'aluno_detail' aluno.pk %}">{{ aluno.nome }}</a></td>
+                <td>{{ aluno.cpf }}</td>
+                <td>{{ aluno.cidade.nome }} / {{aluno.cidade.estado.uf}}</td>
+                <td>{{ aluno.inativo|yesno:"Sim,Não" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Nenhum aluno encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Paginação da Tabela -->
+    {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
+    <!-- Contador de registros -->
+    {% include 'includes/record_counter.html' with page_obj=page_obj %}
+    <!-- Grupo de botões (Novo e Retornar) -->
+    <!-- Grupo de botões -->
+    <div class="apps-list-btn-group">
+        <a class="btn-return btn-dark" href="{% url 'aluno_home' %}">Retornar</a>
+        <a class="btn-new btn-dark" href="{% url 'aluno_new' %}">Novo</a>
     </div>
-</form>
-<!-- Grupo de botões (Novo e Retornar) -->
-<div class="btn-group">
-    <a class="btn-return" href="{% url 'aluno_home' %}">Retornar</a>
-    <a class="btn-new" href="{% url 'aluno_new' %}">Novo</a>
-</div>
-<!-- Seletor para escolher quantos registros exibir -->
-{% include "includes/records_per_page_selector.html" with action_url=request.path %}
-<!-- Contador de registros -->
-{% include 'includes/record_counter.html' with page_obj=page_obj %}
-<!-- Paginação da Tabela -->
-{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
-<!-- Tabela de busca -->
-<table class="tb-list" id="tb-list-alunos">
-    <thead>
-        <tr>
-            <th>
-                <a href="?order_by=uid&descending={% if request.GET.order_by == 'uid' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&records_per_page={{ request.GET.records_per_page }}">
-                    UID {% if request.GET.order_by == 'uid' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                </a>                
-            </th>
-            <th>
-                <a href="?order_by=nome&descending={% if request.GET.order_by == 'nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&cidade={{ request.GET.cidade }}&inativo={{ request.GET.inativo }}&records_per_page={{ request.GET.records_per_page }}">
-                    Nome {% if request.GET.order_by == 'nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                </a>                
-            </th>
-            <th>CPF</th>
-            <th>Cidade</th>
-            <th>Inativo</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for aluno in page_obj %}
-        <tr>
-            <td>{{ aluno.uid }}</td>
-            <td><a href="{% url 'aluno_detail' aluno.pk %}">{{ aluno.nome }}</a></td>
-            <td>{{ aluno.cpf }}</td>
-            <td>{{ aluno.cidade.nome }} / {{aluno.cidade.estado.uf}}</td>
-            <td>{{ aluno.inativo|yesno:"Sim,Não" }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="5">Nenhum aluno encontrado.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<!-- Paginação da Tabela -->
-{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
-<!-- Contador de registros -->
-{% include 'includes/record_counter.html' with page_obj=page_obj %}
-<!-- Grupo de botões (Novo e Retornar) -->
-<div class="btn-group">
-    <a class="btn-return" href="{% url 'aluno_home' %}">Retornar</a>
-    <a class="btn-new" href="{% url 'aluno_new' %}">Novo</a>
 </div>
 
 {% endblock %}
