@@ -4,17 +4,32 @@ header {
     color: white;
     padding: 10px 0;
     text-align: center;
-}
-
-.logo-container-home {
     display: flex;
     justify-content: center;
-    padding: 10px;
 }
 
-.logo {
+/* Conteúdo do cabeçalho */
+.header-content {
+    max-width: 1200px;
     width: 100%;
-    max-width: 300px;
-    min-width: 120px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+/* Container do logo e título */
+.logo-title-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Logo */
+.logo {
+    max-width: 280px;
+    width: 100%;
     height: auto;
 }
