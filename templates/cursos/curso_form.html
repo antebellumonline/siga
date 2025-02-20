@@ -1,85 +1,90 @@
 <!-- templates/cursos/curso_form.html -->
 
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}{{ form.instance.pk|yesno:"Editar Curso,Adicionar Curso" }}{% endblock %}
 
+{% block body_class %}body-apps-form{% endblock %}
+
+{% block header_title %}{{ form.instance.pk|yesno:"Editar Curso,Adicionar Curso" }}{% endblock %}
+
 {% block content %}
-<h2 class="page-title">{{ form.instance.pk|yesno:"Editar Curso,Adicionar Curso" }}</h2>
 
-<form method="post" class="edit-form">
-    {% csrf_token %}
-    <div class="form-group-edit">
-        {% if form.instance.pk %}
-        <div class="form-group-edit-status">
-            <h4 class="status-section-title">Status do Curso</h4>
-            <div class="form-input">
-                <label for="id_inativo">Inativo: </label>
-                <select id="id_inativo" name="inativo">
-                    <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
-                    <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
-                </select>
+<div class="container-apps-form">
+    <form method="post" class="apps-form-edit">
+        {% csrf_token %}
+        <div class="apps-form-group-edit">
+            {% if form.instance.pk %}
+            <div class="apps-form-group-edit-status">
+                <h4 class="apps-form-status-section-title">Status do Curso</h4>
+                <div class="apps-form-input">
+                    <label for="id_inativo">Inativo: </label>
+                    <select id="id_inativo" name="inativo">
+                        <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
+                        <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
+                    </select>
+                </div>
             </div>
-        </div>
-        {% endif %}
-        <div class="form-group-edit-sub">
-            <h4 class="sub-section-title">Detalhes do Curso</h4>
-            <div class="form-input">
-                <label for="id_codigo">Código (Ex.: AAA000): </label>
-                <input type="text" name="codigo" id="id_codigo" value="{{ form.codigo.value }}" autofocus>
+            {% endif %}
+            <div class="apps-form-group-edit-sub">
+                <h4 class="apps-form-sub-section-title">Detalhes do Curso</h4>
+                <div class="apps-form-input">
+                    <label for="id_codigo">Código (Ex.: AAA000): </label>
+                    <input type="text" name="codigo" id="id_codigo" value="{{ form.codigo.value }}" autofocus>
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_nome">Nome: </label>
+                    {{ form.nome }}
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_categoria">Categoria: </label>
+                    <select name="categoria" id="edit-select-categoria" class="select-edit select2">
+                        <option value="">Selecionar Categoria</option>
+                        {% for categoria in categorias %}
+                        <option value="{{ categoria.id }}" {% if form.categoria.value == categoria.id %}selected{% endif %}>
+                            {{ categoria.nome }} ({{ categoria.sigla }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
-            <div class="form-input">
-                <label for="id_nome">Nome: </label>
-                {{ form.nome }}
-            </div>
-            <div class="form-input">
-                <label for="id_categoria">Categoria: </label>
-                <select name="categoria" id="edit-select-categoria" class="select-edit select2">
-                    <option value="">Selecionar Categoria</option>
-                    {% for categoria in categorias %}
-                    <option value="{{ categoria.id }}" {% if form.categoria.value == categoria.id %}selected{% endif %}>
-                        {{ categoria.nome }} ({{ categoria.sigla }})
-                    </option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-        <!-- Certificações -->
-        <div class="form-group-edit-sub">
-            <h4 class="sub-section-title">Certificações que podem ser conquistadas com este Curso</h4>
-            {{ formset.management_form }}
-            <table class="tb-list">
-                <thead>
-                    <tr>
-                        <th>Certificação</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for certificacao_form in formset %}
-                    <tr>
+            <!-- Certificações -->
+            <div class="apps-form-group-edit-sub">
+                <h4 class="apps-form-sub-section-title">Certificações que podem ser conquistadas com este Curso</h4>
+                {{ formset.management_form }}
+                <table class="tb-form">
+                    <thead>
+                        <tr>
+                            <th>Certificação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for certificacao_form in formset %}
+                        <tr>
 
-                        <td>{{ certificacao_form.id }}{{ certificacao_form.certificacao }}</td>
-                        <td>
-                            {% if formset.can_delete %}
-                                {{ certificacao_form.DELETE }} Excluir
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="2">Nenhuma certificação adicionada.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                            <td>{{ certificacao_form.id }}{{ certificacao_form.certificacao }}</td>
+                            <td>
+                                {% if formset.can_delete %}
+                                    {{ certificacao_form.DELETE }} Excluir
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2">Nenhuma certificação adicionada.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <!-- Grupo de botões (Salvar e Retornar) -->
-    <div class="btn-group">
-        <button class="btn-save" type="submit">Salvar Curso</button>
-        <a class="btn-return" href="{% url 'curso_list' %}">Retornar</a>
-    </div>
-</form>
+        <!-- Grupo de botões -->
+        <div class="apps-form-btn-group">
+            <button class="btn-save btn-dark" type="submit">Salvar Curso</button>
+            <a class="btn-return btn-yellow" href="{% url 'curso_list' %}">Retornar</a>
+        </div>
+    </form>
+</div>
 
 {% endblock %}

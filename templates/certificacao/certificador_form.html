@@ -1,44 +1,49 @@
 <!-- templates/certificacao/certificador_form.html -->
 
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}{{ form.instance.pk|yesno:"Editar Certificador,Adicionar Certificador" }}{% endblock %}
 
-{% block content %}
-<h2 class="page-title">{{ form.instance.pk|yesno:"Editar Certificador,Adicionar Certificador" }}</h2>
+{% block body_class %}body-apps-form{% endblock %}
 
-<form method="post" class="edit-form">
-    {% csrf_token %}
-    <div class="form-group-edit">
-        {% if form.instance.pk %}
-        <div class="form-group-edit-status">
-            <h4 class="status-section-title">Status do Certificador</h4>
-            <div class="form-input">
-                <label for="id_inativo"><strong>Inativo: </strong></label>
-                <select id="id_inativo" name="inativo">
-                    <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
-                    <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
-                </select>
+{% block header_title %}{{ form.instance.pk|yesno:"Editar Certificador,Adicionar Certificador" }}{% endblock %}
+
+{% block content %}
+
+<div class="container-apps-form">
+    <form method="post" class="apps-form-edit">
+        {% csrf_token %}
+        <div class="apps-form-group-edit">
+            {% if form.instance.pk %}
+            <div class="apps-form-group-edit-status">
+                <h4 class="apps-form-status-section-title">Status do Certificador</h4>
+                <div class="apps-form-input">
+                    <label for="id_inativo"><strong>Inativo: </strong></label>
+                    <select id="id_inativo" name="inativo">
+                        <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
+                        <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
+                    </select>
+                </div>
+            </div>
+            {% endif %}
+            <div class="apps-form-group-edit-sub">
+                <h4 class="apps-form-sub-section-title">Detalhes do Certificador</h4>
+                <div class="apps-form-input">
+                    <label for="id_nome"><strong>Nome: </strong></label>
+                    {{ form.descricao }}
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_siglaCertificador"><strong>Sigla do Certificador: </strong></label>
+                    {{ form.siglaCertificador }}
+                </div>
             </div>
         </div>
-        {% endif %}
-        <div class="form-group-edit-sub">
-            <h4 class="sub-section-title">Detalhes do Certificador</h4>
-            <div class="form-input">
-                <label for="id_nome"><strong>Nome: </strong></label>
-                {{ form.descricao }}
-            </div>
-            <div class="form-input">
-                <label for="id_siglaCertificador"><strong>Sigla do Certificador: </strong></label>
-                {{ form.siglaCertificador }}
-            </div>
+        <!-- Grupo de botões -->
+        <div class="apps-form-btn-group">
+            <button class="btn-save btn-dark" type="submit">Salvar Certificador</button>
+            <a class="btn-return btn-yellow" href="{% url 'certificacao_home' %}">Retornar</a>
         </div>
-    </div>
-    <!-- Grupo de botões (Salvar e Retornar) -->
-    <div class="btn-group">
-        <button class="btn-save" type="submit">Salvar Certificador</button>
-        <a class="btn-return" href="{% url 'certificacao_home' %}">Retornar</a>
-    </div>
-</form>
+    </form>
+</div>
 
 {% endblock %}
