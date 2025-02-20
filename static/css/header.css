@@ -16,17 +16,28 @@ header {
     flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 0 10px;
 }
 
 /* Container do logo e título */
 .logo-container-header {
-    width: 30%;
+    flex: 0 0 30%;
+}
+
+.page-title {
+    text-align: center;
+    color: white;
+    padding: 6px;
+    margin: 0;
+    flex: 0 0 60%;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 .btn-container-header {
-    width: 10%;
+    flex: 0 0 10%;
 }
 
 /* Logo */
@@ -37,14 +48,8 @@ header {
     height: auto;
 }
 
-.page-title {
-    text-align: center;
-    color: white;
-    padding: 6px;
-    margin: 0;
-    width: 60%;
-    box-sizing: border-box;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 600;
+/* Garantir que, se a largura for maior que 100%, os itens quebram automaticamente */
+.header-content > div {
+    flex: 0 0 auto;
+    width: auto;
 }
