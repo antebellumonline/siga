@@ -1,143 +1,148 @@
 <!-- templates/centroProva/centroProva-exame_list.html -->
 
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}SIGA - Exames Realizados no Centro de Provas{% endblock %}
 
+{% block body_class %}body-list{% endblock %}
+
+{% block header_title %}Exames Realizados no Centro de Provas{% endblock %}
+
 {% block content %}
 
-<h2 class="page-title">Exames Realizados no Centro de Provas</h2>
 <!-- Formulário de busca e filtro -->
-<form method="GET" action="{% url 'exame_list' %}" class="search-form">
-    <div class="form-group-search">
-        <div class="form-group-search-sub">
-            <input type="checkbox" id="check-list-exame-daterange" data-target="list-exame-daterange">
-            <label for="search-list-exame-daterange">Período de realização:</label>
-            <input type="text" id="list-exame-daterange" name="daterange" class="form-control daterange" placeholder="Selecione o período" value="">
+ <div class="container-apps-list">
+    <form method="GET" action="{% url 'exame_list' %}" class="search-form">
+        <div class="form-group-search">
+            <div class="form-group-search-sub">
+                <input type="checkbox" id="check-list-exame-daterange" data-target="list-exame-daterange">
+                <label for="search-list-exame-daterange">Período de realização:</label>
+                <input type="text" id="list-exame-daterange" name="daterange" class="form-control daterange" placeholder="Selecione o período" value="">
+            </div>
+            <div class="form-group-search-sub">
+                <input type="checkbox" id="check-list-exame-aluno" data-target="list-exame-aluno">
+                <label for="search-list-exame-aluno">Aluno:</label>
+                <select name="aluno" id="list-exame-aluno" class="select-search select2">
+                    <option value="">Selecionar Aluno</option>
+                    {% for aluno in aluno %}
+                    <option value="{{ aluno.uid }}" {% if request.GET.aluno == aluno.uid %}selected{% endif %}>
+                        {{ aluno.uid }} - {{ aluno.nome }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group-search-sub">
+                <input type="checkbox" id="check-list-exame-centroProva" data-target="list-exame-centroProva">
+                <label for="search-list-exame-centroProva">Centro de Provas:</label>
+                <select name="centroProva" id="list-exame-centroProva" class="select-search select2">
+                    <option value="">Selecione o Centro de Provas</option>
+                    {% for centroprova in centrosprova %}
+                    <option value="{{ centroprova.id }}" {% if request.GET.centroprova == centroprova.id %}selected{% endif %}>
+                        {{ centroprova.nome }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group-search-sub">
+                <input type="checkbox" id="check-list-exame-certificacao" data-target="list-exame-certificacao">
+                <label for="search-list-exame-certificacao">Certificação:</label>
+                <select name="certificacao" id="list-exame-certificacao" class="select-search select2">
+                    <option value="">Selecionar Certificação</option>
+                    {% for certificacao in certificacoes %}
+                    <option value="{{ certificacao.id }}" {% if request.GET.certificacao == certificacao.id %}selected{% endif %}>
+                        {{ certificacao.descricao }} ({{ certificacao.siglaExame }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="select-group-search">
+                <input type="checkbox" id="check-list-exame-presenca" data-target="list-exame-presenca">
+                <label for="search-list-exame-presenca">Presença:</label>
+                <select name="presenca" id="list-exame-presenca" class="select-search select2">
+                    <option value="True" {% if request.GET.presenca == 'True' %}selected{% endif %}>Sim</option>
+                    <option value="False" {% if request.GET.presenca == 'False' %}selected{% endif %}>Não</option>
+                </select>
+                <input type="checkbox" id="check-list-exame-cancelado" data-target="list-exame-cancelado">
+                <label for="search-list-exame-cancelado">Cancelado:</label>
+                <select name="cancelado" id="list-exame-cancelado" class="select-search select2">
+                    <option value="True" {% if request.GET.cancelado == 'True' %}selected{% endif %}>Sim</option>
+                    <option value="False" {% if request.GET.cancelado == 'False' %}selected{% endif %}>Não</option>
+                </select>
+            </div> 
         </div>
-        <div class="form-group-search-sub">
-            <input type="checkbox" id="check-list-exame-aluno" data-target="list-exame-aluno">
-            <label for="search-list-exame-aluno">Aluno:</label>
-            <select name="aluno" id="list-exame-aluno" class="select-search select2">
-                <option value="">Selecionar Aluno</option>
-                {% for aluno in aluno %}
-                <option value="{{ aluno.uid }}" {% if request.GET.aluno == aluno.uid %}selected{% endif %}>
-                    {{ aluno.uid }} - {{ aluno.nome }}
-                </option>
-                {% endfor %}
-            </select>
+        <!-- Botões de Ação -->
+        <div class="btn-group-search">
+            <button type="submit" class="btn-list btn-circle"></button>
+            <a class="btn-clear btn-circle" href="{% url 'exame_list' %}"></a>
         </div>
-        <div class="form-group-search-sub">
-            <input type="checkbox" id="check-list-exame-centroProva" data-target="list-exame-centroProva">
-            <label for="search-list-exame-centroProva">Centro de Provas:</label>
-            <select name="centroProva" id="list-exame-centroProva" class="select-search select2">
-                <option value="">Selecione o Centro de Provas</option>
-                {% for centroprova in centrosprova %}
-                <option value="{{ centroprova.id }}" {% if request.GET.centroprova == centroprova.id %}selected{% endif %}>
-                    {{ centroprova.nome }}
-                </option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group-search-sub">
-            <input type="checkbox" id="check-list-exame-certificacao" data-target="list-exame-certificacao">
-            <label for="search-list-exame-certificacao">Certificação:</label>
-            <select name="certificacao" id="list-exame-certificacao" class="select-search select2">
-                <option value="">Selecionar Certificação</option>
-                {% for certificacao in certificacoes %}
-                <option value="{{ certificacao.id }}" {% if request.GET.certificacao == certificacao.id %}selected{% endif %}>
-                    {{ certificacao.descricao }} ({{ certificacao.siglaExame }})
-                </option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="select-group-search">
-            <input type="checkbox" id="check-list-exame-presenca" data-target="list-exame-presenca">
-            <label for="search-list-exame-presenca">Presença:</label>
-            <select name="presenca" id="list-exame-presenca" class="select-search select2">
-                <option value="True" {% if request.GET.presenca == 'True' %}selected{% endif %}>Sim</option>
-                <option value="False" {% if request.GET.presenca == 'False' %}selected{% endif %}>Não</option>
-            </select>
-            <input type="checkbox" id="check-list-exame-cancelado" data-target="list-exame-cancelado">
-            <label for="search-list-exame-cancelado">Cancelado:</label>
-            <select name="cancelado" id="list-exame-cancelado" class="select-search select2">
-                <option value="True" {% if request.GET.cancelado == 'True' %}selected{% endif %}>Sim</option>
-                <option value="False" {% if request.GET.cancelado == 'False' %}selected{% endif %}>Não</option>
-            </select>
-        </div> 
+    </form>
+    <!-- Grupo de botões (Novo e Retornar) -->
+    <div class="btn-group">
+        <a class="btn-return" href="{% url 'centroprova_home' %}">Retornar</a>
+        <a class="btn-new" href="{% url 'exame_new' %}">Novo</a>
+        <a class="btn-pdf btn-dark" href="{% url 'exame_report_pdf' %}?{{ query_params }}">Exportar para PDF</a>
+        <a class="btn-excel btn-dark" href="{% url 'exame_report_xlsx' %}?{{ query_params }}">Exportar para Excel</a>
     </div>
-    <!-- Botões de Ação -->
-    <div class="btn-group-search">
-        <button type="submit" class="btn-list btn-circle"></button>
-        <a class="btn-clear btn-circle" href="{% url 'exame_list' %}"></a>
+    <!-- Seletor para escolher quantos registros exibir -->
+    {% include "includes/records_per_page_selector.html" with action_url=request.path %}
+    <!-- Contador de registros -->
+    {% include 'includes/record_counter.html' with page_obj=page_obj %}
+    <!-- Paginação da Tabela -->
+    {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
+    <!-- Tabela de busca -->
+    <table class="tb-list" id="tb-list-centroProva-exames">
+        <thead>
+            <tr>
+                <th>
+                    <a href="?order_by=data&descending={% if request.GET.order_by == 'data' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                        Data e Hora {% if request.GET.order_by == 'data' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="?order_by=aluno__nome&descending={% if request.GET.order_by == 'aluno__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                        Aluno {% if request.GET.order_by == 'aluno__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="?order_by=centroProva__nome&descending={% if request.GET.order_by == 'centroProva__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                        Centro de Provas {% if request.GET.order_by == 'centroProva__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="?order_by=certificacao__descricao&descending={% if request.GET.order_by == 'certificacao__descricao' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                        Certificação {% if request.GET.order_by == 'certificacao__descricao' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                    </a>
+                </th>
+                <th>Presença</th>
+                <th>Cancelado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exame in page_obj %}
+            <tr>
+                <td>{{ exame.data|date:"d/m/Y H:i" }}</td>
+                <td><a href="{% url 'exame_detail' exame.pk %}">{{ exame.aluno.nome }}</a></td>
+                <td>{{ exame.centroProva.nome }}</td>
+                <td>{{ exame.certificacao.descricao }} ({{ exame.certificacao.siglaExame }})</td>
+                <td>{{ exame.presenca|yesno:"Sim,Não" }}</td>
+                <td>{{ exame.cancelado|yesno:"Sim,Não" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">Nenhum exame encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Paginação da Tabela -->
+    {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
+    <!-- Contador de registros -->
+    {% include 'includes/record_counter.html' with page_obj=page_obj %}
+    <!-- Grupo de botões (Novo e Retornar) -->
+    <div class="btn-group">
+        <a class="btn-return" href="{% url 'centroprova_home' %}">Retornar</a>
+        <a class="btn-new" href="{% url 'exame_new' %}">Novo</a>
     </div>
-</form>
-<!-- Grupo de botões (Novo e Retornar) -->
-<div class="btn-group">
-    <a class="btn-return" href="{% url 'centroprova_home' %}">Retornar</a>
-    <a class="btn-new" href="{% url 'exame_new' %}">Novo</a>
-    <a class="btn-pdf btn-dark" href="{% url 'exame_report_pdf' %}?{{ query_params }}">Exportar para PDF</a>
-    <a class="btn-excel btn-dark" href="{% url 'exame_report_xlsx' %}?{{ query_params }}">Exportar para Excel</a>
-</div>
-<!-- Seletor para escolher quantos registros exibir -->
-{% include "includes/records_per_page_selector.html" with action_url=request.path %}
-<!-- Contador de registros -->
-{% include 'includes/record_counter.html' with page_obj=page_obj %}
-<!-- Paginação da Tabela -->
-{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
-<!-- Tabela de busca -->
-<table class="tb-list" id="tb-list-centroProva-exames">
-    <thead>
-        <tr>
-            <th>
-                <a href="?order_by=data&descending={% if request.GET.order_by == 'data' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                    Data e Hora {% if request.GET.order_by == 'data' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                </a>
-            </th>
-            <th>
-                <a href="?order_by=aluno__nome&descending={% if request.GET.order_by == 'aluno__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                    Aluno {% if request.GET.order_by == 'aluno__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                </a>
-            </th>
-            <th>
-                <a href="?order_by=centroProva__nome&descending={% if request.GET.order_by == 'centroProva__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                    Centro de Provas {% if request.GET.order_by == 'centroProva__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                </a>
-            </th>
-            <th>
-                <a href="?order_by=certificacao__descricao&descending={% if request.GET.order_by == 'certificacao__descricao' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                    Certificação {% if request.GET.order_by == 'certificacao__descricao' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                </a>
-            </th>
-            <th>Presença</th>
-            <th>Cancelado</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for exame in page_obj %}
-        <tr>
-            <td>{{ exame.data|date:"d/m/Y H:i" }}</td>
-            <td><a href="{% url 'exame_detail' exame.pk %}">{{ exame.aluno.nome }}</a></td>
-            <td>{{ exame.centroProva.nome }}</td>
-            <td>{{ exame.certificacao.descricao }} ({{ exame.certificacao.siglaExame }})</td>
-            <td>{{ exame.presenca|yesno:"Sim,Não" }}</td>
-            <td>{{ exame.cancelado|yesno:"Sim,Não" }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="6">Nenhum exame encontrado.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<!-- Paginação da Tabela -->
-{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
-<!-- Contador de registros -->
-{% include 'includes/record_counter.html' with page_obj=page_obj %}
-<!-- Grupo de botões (Novo e Retornar) -->
-<div class="btn-group">
-    <a class="btn-return" href="{% url 'centroprova_home' %}">Retornar</a>
-    <a class="btn-new" href="{% url 'exame_new' %}">Novo</a>
 </div>
 
 {% endblock %}

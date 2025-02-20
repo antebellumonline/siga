@@ -11,19 +11,6 @@
     padding: 10px;
 }
 
-.logo-container-home {
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-}
-
-.logo {
-    width: 100%;
-    max-width: 300px;
-    min-width: 120px;
-    height: auto;
-}
-
 /* Grid de aplicativos */
 .app-grid {
     display: grid;

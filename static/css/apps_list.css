@@ -1,5 +1,5 @@
-/* PÁGINA INICIAL DOS APPS */
-.container-home-apps {
+/* PÁGINA DE LISTAGEM DOS APPS */
+.container-apps-list {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -9,30 +9,30 @@
     padding: 10px;
 }
 
-.column-home-apps {
+.column-apps-list {
     display: flex;
     flex: 1 1 calc(25% - 20px);
     flex-direction: column;
     justify-content: space-between;
-    padding: 10px;    
+    padding: 10px;
     min-height: 100px;
     box-sizing: border-box;
     background: #E3E3E1;
 }
 
-.btn-group-home-apps {
+.btn-group-apps-list {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     margin: 10px;
 }
 
-.btn-group-home-apps a {
+.btn-group-apps-list a {
     flex: 1 1 calc(50% - 10px);
     text-align: left;
 }
 
-.home-apps-subtitle {
+.apps-list-subtitle {
     text-align: center;
     text-transform: uppercase;
     font-weight: 600;
@@ -40,21 +40,4 @@
     color: black;
     background-color: #E6B510;
     padding: 10px;
-}
-
-@media (max-width: 1024px) {
-    .column {
-        flex: 1 1 calc(50% - 20px);
-    }
-}
-
-@media (max-width: 768px) {
-    .column {
-        flex: 1 1 100%;
-        max-width: 100%;
-    }
-    .btn-group a {
-        flex: 1 1 100%;
-        text-align: left;
-    }
 }

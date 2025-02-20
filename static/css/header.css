@@ -6,109 +6,15 @@ header {
     text-align: center;
 }
 
-.menu-container {
-    max-width: 1200px;
-    margin: 0 auto;
+.logo-container-home {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    padding: 10px;
 }
 
 .logo {
-    max-width: 200px;
+    width: 100%;
+    max-width: 300px;
+    min-width: 120px;
     height: auto;
-}
-
-.menu ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    align-items: center;
-}
-
-.menu > ul > li {
-    position: relative;
-    margin-right: 10px;
-    transition: color 0.5s ease;
-}
-
-.menu > ul > li:hover {
-    color: #E6B510;
-}
-
-.menu > ul > li:hover::before,
-.menu > ul > li:hover::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: #3FB081;
-}
-
-.menu > ul > li:hover::before {
-    top: 0;
-}
-
-.menu > ul > li:hover::after {
-    bottom: 0;
-}
-
-.menu > ul > li > a {
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: #ffffff;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    flex-direction: column;
-}
-
-.menu > ul > li > a i {
-    margin-bottom: 8px;
-    font-size: 24px;
-    display: block;
-    margin-bottom: 5px;
-    color: #3FB081;
-    transition: color 0.5s ease;
-}
-
-.menu > ul > li:hover > a,
-.menu > ul > li:hover > a i {
-    color: #E6B510;
-}
-
-.menu > ul > li.active {
-    color: #E6B510;
-}
-
-.hamburger-menu {
-    display: none;
-    cursor: pointer;
-}
-
-.hamburger-menu i {
-    font-size: 24px;
-    color: white;
-}
-
-/* Estilos para dispositivos móveis */
-@media (max-width: 768px) {
-    .menu ul {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .menu ul.active {
-        display: flex;
-    }
-
-    .hamburger-menu {
-        display: block;
-    }
 }
