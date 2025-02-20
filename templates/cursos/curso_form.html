@@ -58,17 +58,8 @@
                 <tbody>
                     {% for certificacao_form in formset %}
                     <tr>
-                        <td>
-                            {{ certificacao_form.id }}
-                            <select name="{{ certificacao_form.certificacao.name }}" class="select-edit select2">
-                                <option value="">Selecionar Certificação</option>
-                                {% for certificacao in certificacao_form.certificacao.field.queryset %}
-                                <option value="{{ certificacao.id }}" {% if certificacao_form.certificacao.value == certificacao.id %}selected{% endif %}>
-                                    {{ certificacao.descricao }} ({{ certificacao.siglaExame }})
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </td>
+
+                        <td>{{ certificacao_form.id }}{{ certificacao_form.certificacao }}</td>
                         <td>
                             {% if formset.can_delete %}
                                 {{ certificacao_form.DELETE }} Excluir

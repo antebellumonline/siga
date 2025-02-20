@@ -28,14 +28,22 @@ class CursoCategoriaForm(forms.ModelForm):
 class CursoCertificacaoForm(forms.ModelForm):
     class Meta:
         model = CursoCertificacao
-        fields = ['certificacao']
+        fields = [
+            'id',
+            'certificacao',
+        ]
         widgets = {
+            'curso': forms.Select(attrs={'class': 'form-control'}),
             'certificacao': forms.Select(attrs={'class': 'form-control select2'})
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['certificacao'].queryset = Certificacao.objects.filter(inativo=False).order_by('descricao')
+        self.fields['certificacao'].label_from_instance = self.certificacao_label_from_instance
+
+    def certificacao_label_from_instance(self, obj):
+        return f"{obj.descricao} ({obj.siglaExame})"
 
 CursoCertificacaoFormSet = inlineformset_factory(
     Curso,

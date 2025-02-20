@@ -260,6 +260,8 @@ def curso_edit(request, pk):
     if request.method == "POST":
         form = CursoForm(request.POST, instance=curso)
         formset = CursoCertificacaoFormSet(request.POST, instance=curso)
+        
+        print(request.POST)
 
         if form.is_valid() and formset.is_valid():
             form.save()
