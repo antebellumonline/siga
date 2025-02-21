@@ -1,11 +1,3 @@
-# Ignorar arquivos de JavaScript e CSS na detecção de linguagem
-*.js linguist-vendored
-*.css linguist-vendored
-
-# Ignorar todos os arquivos CSS na pasta static
-static/*.css linguist-vendored
-static/*.js linguist-vendored
-
 # Considerar esses arquivos CSS
 static/css/styles.css linguist-language=CSS
 static/css/header.css linguist-language=CSS
@@ -34,3 +26,11 @@ static/js/checkbox-toggle.js linguist-language=JavaScript
 static/js/pagination.js linguist-language=JavaScript
 static/js/modal.js linguist-language=JavaScript
 static/js/hamburger-menu.js linguist-language=JavaScript
+
+# Ignorar arquivos CSS e JavaScript na detecção de linguagem
+*.js linguist-vendored
+*.css linguist-vendored
+
+# Ignorar todos os arquivos CSS e JavaScript na pasta static
+static/*.css linguist-vendored
+static/*.js linguist-vendored
