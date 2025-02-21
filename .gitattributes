@@ -1,31 +1,31 @@
 # Considerar esses arquivos CSS
-static/css/styles.css linguist-language=CSS
-static/css/header.css linguist-language=CSS
-static/css/body.css linguist-language=CSS
-static/css/apps_detail.css linguist-language=CSS
-static/css/apps_form.css linguist-language=CSS
-static/css/apps_home.css linguist-language=CSS
-static/css/apps_list.css linguist-language=CSS
-static/css/footer.css linguist-language=CSS
-static/css/login.css linguist-language=CSS
-static/css/password_reset.css linguist-language=CSS
-static/css/buttons.css linguist-language=CSS
-static/css/home.css linguist-language=CSS
-static/css/layout.css linguist-language=CSS
-static/css/modals.css linguist-language=CSS
-static/css/pagination.css linguist-language=CSS
-static/css/daterangepicker_custom.css linguist-language=CSS
-static/css/select2_custom.css linguist-language=CSS
-static/css/record-counter.css linguist-language=CSS
+static/css/styles.css linguist-vendored=false
+static/css/header.css linguist-vendored=false
+static/css/body.css linguist-vendored=false
+static/css/apps_detail.css linguist-vendored=false
+static/css/apps_form.css linguist-vendored=false
+static/css/apps_home.css linguist-vendored=false
+static/css/apps_list.css linguist-vendored=false
+static/css/footer.css linguist-vendored=false
+static/css/login.css linguist-vendored=false
+static/css/password_reset.css linguist-vendored=false
+static/css/buttons.css linguist-vendored=false
+static/css/home.css linguist-vendored=false
+static/css/layout.css linguist-vendored=false
+static/css/modals.css linguist-vendored=false
+static/css/pagination.css linguist-vendored=false
+static/css/daterangepicker_custom.css linguist-vendored=false
+static/css/select2_custom.css linguist-vendored=false
+static/css/record-counter.css linguist-vendored=false
 
 # Considerar esses arquivos JavaScript
-static/js/daterangepicker.js linguist-language=JavaScript
-static/js/select2.js linguist-language=JavaScript
-static/js/cep.js linguist-language=JavaScript
-static/js/checkbox-toggle.js linguist-language=JavaScript
-static/js/pagination.js linguist-language=JavaScript
-static/js/modal.js linguist-language=JavaScript
-static/js/hamburger-menu.js linguist-language=JavaScript
+static/js/daterangepicker.js linguist-vendored=false
+static/js/select2.js linguist-vendored=false
+static/js/cep.js linguist-vendored=false
+static/js/checkbox-toggle.js linguist-vendored=false
+static/js/pagination.js linguist-vendored=false
+static/js/modal.js linguist-vendored=false
+static/js/hamburger-menu.js linguist-vendored=false
 
 # Ignorar arquivos CSS e JavaScript na detecção de linguagem
 *.js linguist-vendored
