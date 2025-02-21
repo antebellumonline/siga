@@ -1,36 +1,36 @@
 # Considerar esses arquivos CSS
-static/css/styles.css linguist-vendored=false linguist-language=CSS
-static/css/header.css linguist-vendored=false linguist-language=CSS
-static/css/body.css linguist-vendored=false linguist-language=CSS
-static/css/apps_detail.css linguist-vendored=false linguist-language=CSS
-static/css/apps_form.css linguist-vendored=false linguist-language=CSS
-static/css/apps_home.css linguist-vendored=false linguist-language=CSS
-static/css/apps_list.css linguist-vendored=false linguist-language=CSS
-static/css/footer.css linguist-vendored=false linguist-language=CSS
-static/css/login.css linguist-vendored=false linguist-language=CSS
-static/css/password_reset.css linguist-vendored=false linguist-language=CSS
-static/css/buttons.css linguist-vendored=false linguist-language=CSS
-static/css/home.css linguist-vendored=false linguist-language=CSS
-static/css/layout.css linguist-vendored=false linguist-language=CSS
-static/css/modals.css linguist-vendored=false linguist-language=CSS
-static/css/pagination.css linguist-vendored=false linguist-language=CSS
-static/css/daterangepicker_custom.css linguist-vendored=false linguist-language=CSS
-static/css/select2_custom.css linguist-vendored=false linguist-language=CSS
-static/css/record-counter.css linguist-vendored=false linguist-language=CSS
+!static/css/styles.css linguist-vendored=false linguist-language=CSS
+!static/css/header.css linguist-vendored=false linguist-language=CSS
+!static/css/body.css linguist-vendored=false linguist-language=CSS
+!static/css/apps_detail.css linguist-vendored=false linguist-language=CSS
+!static/css/apps_form.css linguist-vendored=false linguist-language=CSS
+!static/css/apps_home.css linguist-vendored=false linguist-language=CSS
+!static/css/apps_list.css linguist-vendored=false linguist-language=CSS
+!static/css/footer.css linguist-vendored=false linguist-language=CSS
+!static/css/login.css linguist-vendored=false linguist-language=CSS
+!static/css/password_reset.css linguist-vendored=false linguist-language=CSS
+!static/css/buttons.css linguist-vendored=false linguist-language=CSS
+!static/css/home.css linguist-vendored=false linguist-language=CSS
+!static/css/layout.css linguist-vendored=false linguist-language=CSS
+!static/css/modals.css linguist-vendored=false linguist-language=CSS
+!static/css/pagination.css linguist-vendored=false linguist-language=CSS
+!static/css/daterangepicker_custom.css linguist-vendored=false linguist-language=CSS
+!static/css/select2_custom.css linguist-vendored=false linguist-language=CSS
+!static/css/record-counter.css linguist-vendored=false linguist-language=CSS
 
 # Considerar esses arquivos JavaScript
-static/js/daterangepicker.js linguist-vendored=false linguist-language=JavaScript
-static/js/select2.js linguist-vendored=false linguist-language=JavaScript
-static/js/cep.js linguist-vendored=false linguist-language=JavaScript
-static/js/checkbox-toggle.js linguist-vendored=false linguist-language=JavaScript
-static/js/pagination.js linguist-vendored=false linguist-language=JavaScript
-static/js/modal.js linguist-vendored=false linguist-language=JavaScript
-static/js/hamburger-menu.js linguist-vendored=false linguist-language=JavaScript
+!static/js/daterangepicker.js linguist-vendored=false linguist-language=JavaScript
+!static/js/select2.js linguist-vendored=false linguist-language=JavaScript
+!static/js/cep.js linguist-vendored=false linguist-language=JavaScript
+!static/js/checkbox-toggle.js linguist-vendored=false linguist-language=JavaScript
+!static/js/pagination.js linguist-vendored=false linguist-language=JavaScript
+!static/js/modal.js linguist-vendored=false linguist-language=JavaScript
+!static/js/hamburger-menu.js linguist-vendored=false linguist-language=JavaScript
 
 # Ignorar arquivos CSS e JavaScript na detecção de linguagem
 *.js linguist-vendored
 *.css linguist-vendored
 
-# Ignorar todos os arquivos CSS e JavaScript na pasta static
+# Ignorar todos os arquivos CSS e JavaScript na pasta !static
 static/*.css linguist-vendored
 static/*.js linguist-vendored
