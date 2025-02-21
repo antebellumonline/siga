@@ -1,53 +1,60 @@
 <!-- templates/centroProva/centroProva-exame_detail.html -->
 
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}SIGA - Detalhes do Exame Realizado no Centro de Provas{% endblock %}
 
+{% block body_class %}body-apps-detail{% endblock %}
+
+{% block header_title %}Detalhes do Exame Realizado no Centro de Provas{% endblock %}
+
 {% block content %}
 
-<h2 class="page-title">Detalhes do Exame Realizado no Centro de Provas</h2>
+<div class="container-apps-detail">
+    <div class="apps-detail-group">
+        <div class="apps-detail-group-sub">
+            <h6 class="apps-detail-sub-section-title">Detalhes do Exame Realizado no Centro de Provas</h6>
+            <p class="p-detail">
+                <span class="apps-detail-label">ID: </span>
+                <span class="apps-detail-value">{{ centroprova_exame.id }}</span>
+            </p>
+            <p class="p-detail">
+                <span class="apps-detail-label">Data: </span>
+                <span class="apps-detail-value">{{ centroprova_exame.data|date:"d/m/Y H:i" }}</span>
+            </p>
+            <p class="p-detail">
+                <span class="apps-detail-label">Centro de Provas: </span>
+                <span class="apps-detail-value">{{ centroprova_exame.centroProva.nome }}</span>
+            </p>
+            <p class="p-detail">
+                <span class="apps-detail-label">Certificação: </span>
+                <span class="apps-detail-value">{{ centroprova_exame.certificacao.descricao }} 
+                    {% if centroprova_exame.certificacao.siglaExame %}
+                        ({{ centroprova_exame.certificacao.siglaExame }})
+                    {% endif %}
+                </span>
+            </p>
+            <p class="p-detail">
+                <span class="apps-detail-label">Aluno: </span>
+                <span class="apps-detail-value">{{ centroprova_exame.aluno.uid }} - {{ centroprova_exame.aluno.nome }}</span>
+            </p>
+            <p class="p-detail">
+                <span class="apps-detail-label">O aluno estava presente? </span>
+                <span class="apps-detail-value">{{ centroprova_exame.presenca|yesno:"Sim,Não" }}</span>
+            </p>
+            <p class="p-detail">
+                <span class="apps-detail-label">O Exame foi cancelado? </span>
+                <span class="apps-detail-value">{{ centroprova_exame.cancelado|yesno:"Sim,Não" }}</span>
+            </p>
+        </div>
+    </div>
 
-<div class="group-detail">
-    <p class="p-detail">
-        <span class="label-detail">ID: </span>
-        <span class="value-detail">{{ centroprova_exame.id }}</span>
-    </p>
-    <p class="p-detail">
-        <span class="label-detail">Data: </span>
-        <span class="value-detail">{{ centroprova_exame.data|date:"d/m/Y H:i" }}</span>
-    </p>
-    <p class="p-detail">
-        <span class="label-detail">Centro de Provas: </span>
-        <span class="value-detail">{{ centroprova_exame.centroProva.nome }}</span>
-    </p>
-    <p class="p-detail">
-        <span class="label-detail">Certificação: </span>
-        <span class="value-detail">{{ centroprova_exame.certificacao.descricao }} 
-            {% if centroprova_exame.certificacao.siglaExame %}
-                ({{ centroprova_exame.certificacao.siglaExame }})
-            {% endif %}
-        </span>
-    </p>
-    <p class="p-detail">
-        <span class="label-detail">Aluno: </span>
-        <span class="value-detail">{{ centroprova_exame.aluno.uid }} - {{ centroprova_exame.aluno.nome }}</span>
-    </p>
-    <p class="p-detail">
-        <span class="label-detail">O aluno estava presente? </span>
-        <span class="value-detail">{{ centroprova_exame.presenca|yesno:"Sim,Não" }}</span>
-    </p>
-    <p class="p-detail">
-        <span class="label-detail">O Exame foi cancelado? </span>
-        <span class="value-detail">{{ centroprova_exame.cancelado|yesno:"Sim,Não" }}</span>
-    </p>
-</div>
-
-<!-- Grupo de botões (Editar, Excluir e Retornar) -->
-<div class="btn-group">
-    <a class="btn-edit" href="{% url 'exame_edit' centroprova_exame.pk %}">Editar</a>
-    <a class="btn-delete" id="btn-delete" data-model="centroprova_exame" data-pk="{{ centroprova_exame.pk }}" href="#">Excluir</a>
-    <a class="btn-return" href="{% url 'exame_list' %}">Retornar</a>
+    <!-- Grupo de botões (Editar, Excluir e Retornar) -->
+    <div class="apps-detail-btn-group">
+        <a class="btn-edit btn-dark" href="{% url 'exame_edit' centroprova_exame.pk %}">Editar</a>
+        <a class="btn-delete btn-yellow" id="btn-delete" data-model="centroprova_exame" data-pk="{{ centroprova_exame.pk }}" href="#">Excluir</a>
+        <a class="btn-return btn-dark" href="{% url 'exame_list' %}">Retornar</a>
+    </div>
 </div>
 
 <!-- Modal Pop-up -->
