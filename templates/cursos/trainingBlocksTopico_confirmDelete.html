@@ -1,0 +1,18 @@
+<!-- templates/cursos/trainingBlocksTopico_confirmDelete.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}SIGA - Confirmar exclusão do Tópico da Training Blocks{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Excluir Tópico da Training Blocks</h2>
+
+<p>Tem certeza que deseja excluir o Tópico da Training Blocks {{ trainingblockstopico.nome }}?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar</button>
+    <a href="{% url 'trainingBlocksTopico_list' %}">Cancelar</a>
+</form>
+
+{% endblock %}

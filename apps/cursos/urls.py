@@ -72,6 +72,33 @@ urlpatterns = [
         name='cursoCategoria_delete'
     ),
 
+    # URLs Tópicos Training Blocks
+    path(
+        'curso/trainingBlocksTopico/new/',
+        views.trainingblockstopico_new,
+        name='trainingblockstopico_new'
+    ),
+    path(
+        'curso/trainingBlocksTopico/list/',
+        views.trainingblockstopico_list,
+        name='trainingblockstopico_list'
+    ),
+    path(
+        'curso/trainingBlocksTopico/<int:pk>/',
+        views.trainingblockstopico_detail,
+        name='trainingblockstopico_detail'
+    ),
+    path(
+        'curso/trainingBlocksTopico/<int:pk>/edit/',
+        views.trainingblockstopico_edit,
+        name='trainingblockstopico_edit'
+    ),
+    path(
+        'curso/trainingBlocksTopico/<int:pk>/delete/',
+        views.trainingblockstopico_delete,
+        name='trainingBlockstopico_delete'
+    ),
+
     # URLs Training Blocks
     # path('curso/trainingBlocks/new/', views.trainingBlocks_new, name='trainingBlocks_new'),
     # path('curso/trainingBlocks/list/', views.trainingBlocks_list, name='trainingBlocks_list'),

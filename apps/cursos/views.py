@@ -11,8 +11,8 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from django.db.models import Q
 
-from .models import Curso, CursoCategoria, CursoCertificacao
-from .forms import CursoForm, CursoCategoriaForm, CursoCertificacaoFormSet
+from .models import Curso, CursoCategoria, CursoCertificacao, TrainingBlocksTopico
+from .forms import CursoForm, CursoCategoriaForm, CursoCertificacaoFormSet, TrainingBlocksTopicoForm
 
 def curso_home(request):
     """
@@ -290,3 +290,128 @@ def curso_delete(request, pk):
         curso.delete()
         return redirect('curso_list')
     return render(request, 'cursos/curso_confirm_delete.html', {'curso': curso})
+
+# ----- XXXXX ----- XXXXX -----
+
+def trainingblockstopico_new(request):
+    """
+    View para Adicionar um Tópico da Training Blocks
+    """
+    if request.method == 'POST':
+        form = TrainingBlocksTopicoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('trainingblockstopico_list'))
+    else:
+        form = TrainingBlocksTopicoForm()
+    return render(request, 'cursos/trainingBlocksTopico_form.html', {
+        'form': form
+    })
+
+def trainingblockstopico_list(request):
+    """
+    View para Listar os Tópicos da Training Blocks    
+    """
+    # Obtém os filtros
+    query = request.GET.get('q')
+    inativo = request.GET.get('inativo')
+
+    # Ordenação
+    order_by = request.GET.get('order_by', 'nome')
+    descending = request.GET.get('descending', 'False') == 'True'
+
+    # Inicializa a variável trainingblockstopico
+    trainingblockstopico = TrainingBlocksTopico.objects.all()
+
+    # Aplicar os filtros e pesquisa
+    if query:
+        trainingblockstopico = trainingblockstopico.filter(
+            Q(id__icontains=query) |
+            Q(nome__icontains=query)
+        )
+
+    # Filtra por Status
+    if inativo is not None and inativo != "":
+        if inativo == 'True':
+            trainingblockstopico = trainingblockstopico.filter(inativo=True)
+        elif inativo == 'False':
+            trainingblockstopico = trainingblockstopico.filter(inativo=False)
+
+    # Aplicar ordenação
+    if descending:
+        order_by = f'-{order_by}'
+    trainingblockstopico = trainingblockstopico.order_by(order_by)
+
+    # Quantidade de registros por página (com valor padrão de 20)
+    records_per_page = request.GET.get('records_per_page', 20)
+    try:
+        records_per_page = int(records_per_page)
+    except (ValueError, TypeError):
+        records_per_page = 10
+
+    # Criação do paginator com o queryset e o número de registros por página
+    paginator = Paginator(trainingblockstopico, records_per_page)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Tratamento de erros para garantir que o objeto de página seja válido
+    try:
+        page_obj = paginator.get_page(page_number)
+    except (ValueError, TypeError):
+        page_obj = paginator.get_page(1)
+
+    # Renderização do template
+    return render(request, 'cursos/trainingBlocksTopico_list.html', {
+        'trainingblockstopico': trainingblockstopico,
+        'page_obj': page_obj,
+        'query_params': request.GET,
+        })
+
+def trainingblockstopico_detail(request, pk):
+    """
+    View para Visualizar os detalhes de um Tópico da Training Blocks  
+    """
+    # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
+    trainingblockstopico = get_object_or_404(TrainingBlocksTopico, pk=pk)
+
+    # Renderização do template
+    return render(request, 'cursos/trainingBlocksTopico_detail.html', {
+        'trainingblockstopico': trainingblockstopico
+    })
+
+def trainingblockstopico_edit(request, pk):
+    """
+    View para Editar um Tópico da Training Blocks
+    """
+    # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
+    trainingblockstopico = get_object_or_404(TrainingBlocksTopico, pk=pk)
+
+    # Verifica se a requisição é do tipo POST (submissão de formulário)
+    if request.method == "POST":
+        form = TrainingBlocksTopicoForm(request.POST, instance=trainingblockstopico)
+
+        # Se o formulário for válido, salva as alterações no objeto
+        if form.is_valid():
+            form.save()
+            return redirect('trainingblockstopico_list')
+    else:
+        form = TrainingBlocksTopicoForm(instance=trainingblockstopico)
+
+    # Renderização do template
+    return render(request, 'cursos/trainingBlocksTopico_form.html', {
+        'form': form
+    })
+
+def trainingblockstopico_delete(request, pk):
+    """
+    View para Excluir um Tópico da Training Blocks
+    """
+    trainingblockstopico = get_object_or_404(TrainingBlocksTopico, pk=pk)
+    if request.method == "POST":
+        trainingblockstopico.delete()
+        return redirect('trainingblockstopico_list')
+    return render(request, 'cursos/trainingBlocksTopico_confirmDelete.html', {
+        'trainingblockstopico': trainingblockstopico
+    })
+
+# ----- XXXXX ----- XXXXX -----

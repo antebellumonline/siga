@@ -6,7 +6,7 @@ Ele define os formulários para cadastro, edição e outras operações relacion
 """
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Curso, CursoCategoria, CursoCertificacao
+from .models import Curso, CursoCategoria, CursoCertificacao, TrainingBlocksTopico
 from apps.certificacoes.models import Certificacao
 
 class CursoForm(forms.ModelForm):
@@ -52,3 +52,8 @@ CursoCertificacaoFormSet = inlineformset_factory(
     extra=4,
     can_delete=True
 )
+
+class TrainingBlocksTopicoForm(forms.ModelForm):
+    class Meta:
+        model = TrainingBlocksTopico
+        fields = ['nome', 'inativo']
