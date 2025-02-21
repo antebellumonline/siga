@@ -81,6 +81,10 @@
     flex-wrap: wrap;
 }
 
+.apps-list-form-group-search-sub input[type="text"] {
+    border-radius: 0%;
+}
+
 /* TABELAS */
 .tb-list {
     width: 100%;
