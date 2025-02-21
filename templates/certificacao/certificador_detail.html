@@ -1,43 +1,51 @@
 <!-- templates/certificacao/certificacao_detail.html -->
 
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}SIGA - Detalhes do Certificador{% endblock %}
 
+{% block body_class %}body-apps-detail{% endblock %}
+
+{% block header_title %}
+    Detalhes do Certificador<br>
+    <span class="apps-detail-subtitle">{{ certificador.descricao }}</span>
+{% endblock %}
+
 {% block content %}
 
-<h2 class="page-title">Detalhes do Certificador</h2>
-
-<div class="group-detail">
-    <div class="group-detail-status">
-        <h6 class="status-section-title">Status do Certificador</h6>
-        <div class="group-detail-status-sub">
+<div class="container-apps-detail">
+    <div class="apps-detail-group">
+        <div class="apps-detail-group-status">
+            <h6 class="apps-detail-status-section-title">Status do Certificador</h6>
+            <div class="apps-detail-group-status-sub">
+                <p class="p-detail">
+                    <span class="apps-detail-value">{{ certificador.inativo|yesno:"Inativo,Ativo" }}</span>
+                </p>
+            </div>
+        </div>
+        <div class="apps-detail-group-sub">
+            <h6 class="apps-detail-sub-section-title">Dados do Certificador</h6>
             <p class="p-detail">
-                <span class="value-detail">{{ certificador.inativo|yesno:"Inativo,Ativo" }}</span>
+                <span class="apps-detail-label">ID: </span>
+                <span class="apps-detail-value">{{ certificador.id }}</span>
+            </p>
+            <p class="p-detail">
+                <span class="apps-detail-label">Sigla: </span>
+                <span class="apps-detail-value">{{ certificador.siglaCertificador }}</span>
+            </p>
+            <p class="p-detail">
+                <span class="apps-detail-label">Nome: </span>
+                <span class="apps-detail-value">{{ certificador.descricao }}</span>
             </p>
         </div>
     </div>
-    <div class="group-detail-sub">
-        <p class="p-detail">
-            <span class="label-detail">ID: </span>
-            <span class="value-detail">{{ certificador.id }}</span>
-        </p>
-        <p class="p-detail">
-            <span class="label-detail">Sigla: </span>
-            <span class="value-detail">{{ certificador.siglaCertificador }}</span>
-        </p>
-        <p class="p-detail">
-            <span class="label-detail">Nome: </span>
-            <span class="value-detail">{{ certificador.descricao }}</span>
-        </p>
-    </div>
-</div>
 
-<!-- Grupo de botões (Editar, Excluir e Retornar) -->
-<div class="btn-group">
-    <a class="btn-edit" href="{% url 'certificador_edit' certificador.pk %}">Editar</a>
-    <a class="btn-delete" data-pk="{{ certificador.pk }}" data-model="Certificador" href="#">Excluir</a>
-    <a class="btn-return" href="{% url 'certificador_list' %}">Retornar</a>
+    <!-- Grupo de botões -->
+    <div class="apps-detail-btn-group">
+        <a class="btn-edit btn-dark" href="{% url 'certificador_edit' certificador.pk %}">Editar</a>
+        <a class="btn-delete btn-yellow" data-pk="{{ certificador.pk }}" data-model="Certificador" href="#">Excluir</a>
+        <a class="btn-return btn-dark" href="{% url 'certificador_list' %}">Retornar</a>
+    </div>
 </div>
 
 <!-- Modal Pop-up -->

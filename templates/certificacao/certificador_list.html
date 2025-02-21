@@ -1,87 +1,92 @@
 <!-- templates/certificacao/certificador_list.html -->
 
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block title %}SIGA - Lista de Certificadores{% endblock %}
 
+{% block body_class %}body-apps-list{% endblock %}
+
+{% block header_title %}Lista de Certificadores{% endblock %}
+
 {% block content %}
 
-<h2 class="page-title">Lista de Certificadores</h2>
 <!-- Formulário de busca e filtro -->
-<form method="GET" action="{% url 'certificador_list' %}" class="search-form">
-    <div class="form-group-search">
-        <div class="form-group-search-sub">
-            <input type="checkbox" id="check-list-certificador-descricao" data-target="list-certificador-descricao">
-            <label for="search-list-certificador-descricao">ID, Sigla ou Nome:</label>
-            <input type="text" id="list-certificador-descricao" name="q" placeholder="Busque por ID, Sigla ou Nome do Certificador" value="{{ request.GET.q }}" class="form-control" aria-label="Busque por ID, Sigla ou Nome do Certificador">
+<div class="container-apps-list">
+    <form method="GET" action="{% url 'certificador_list' %}" class="apps-list-search-form">
+        <div class="apps-list-form-group-search">
+            <div class="apps-list-form-group-search-sub">
+                <input type="checkbox" id="check-list-certificador-descricao" data-target="list-certificador-descricao">
+                <label for="search-list-certificador-descricao">ID, Sigla ou Nome:</label>
+                <input type="text" id="list-certificador-descricao" name="q" placeholder="Busque por ID, Sigla ou Nome do Certificador" value="{{ request.GET.q }}" class="form-control" aria-label="Busque por ID, Sigla ou Nome do Certificador">
+            </div>
+            <div class="apps-list-select-group-search">
+                <input type="checkbox" id="check-list-certificador-inativo" data-target="list-certificador-inativo">
+                <label for="search-list-certificador-inativo">Inativo:</label>
+                <select name="inativo" id="list-certificador-inativo" class="select-search select2">
+                    <option value="True" {% if request.GET.inativo == 'True' %}selected{% endif %}>Sim</option>
+                    <option value="False" {% if request.GET.inativo == 'False' %}selected{% endif %}>Não</option>
+                </select>
+            </div>
         </div>
-        <div class="select-group-search">
-            <input type="checkbox" id="check-list-certificador-inativo" data-target="list-certificador-inativo">
-            <label for="search-list-certificador-inativo">Inativo:</label>
-            <select name="inativo" id="list-certificador-inativo" class="select-search select2">
-                <option value="True" {% if request.GET.inativo == 'True' %}selected{% endif %}>Sim</option>
-                <option value="False" {% if request.GET.inativo == 'False' %}selected{% endif %}>Não</option>
-            </select>
+        <!-- Botões de Ação -->
+        <div class="apps-list-btn-group-search">
+            <button type="submit" class="btn-list btn-circle btn-dark"></button>
+            <a class="btn-clear btn-circle btn-yellow" href="{% url 'certificador_list' %}"></a>
         </div>
+    </form>
+    <!-- Grupo de botões -->
+    <div class="apps-list-btn-group">
+        <a class="btn-return btn-dark" href="{% url 'certificacao_home' %}">Retornar</a>
+        <a class="btn-new btn-dark" href="{% url 'certificador_new' %}">Novo</a>
     </div>
-    <!-- Botões de Ação -->
-    <div class="btn-group-search">
-        <button type="submit" class="btn-list btn-circle"></button>
-        <a class="btn-clear btn-circle" href="{% url 'certificador_list' %}"></a>
+    <!-- Seletor para escolher quantos registros exibir -->
+    {% include "includes/records_per_page_selector.html" with action_url=request.path %}
+    <!-- Contador de registros -->
+    {% include 'includes/record_counter.html' with page_obj=page_obj %}
+    <!-- Paginação da Tabela -->
+    {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
+    <!-- Tabela de busca -->
+    <table class="tb-list" id="tb-list-certificador">
+        <thead>
+            <tr>
+                <th>
+                    <a href="?order_by=id&descending={% if request.GET.order_by == 'id' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
+                        ID {% if request.GET.order_by == 'id' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="?order_by=descricao&descending={% if request.GET.order_by == 'descricao' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
+                        Nome {% if request.GET.order_by == 'descricao' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                    </a>
+                </th>
+                <th>
+                    <a href="?order_by=siglaCertificador&descending={% if request.GET.order_by == 'siglaCertificador' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
+                        Sigla {% if request.GET.order_by == 'siglaCertificador' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                    </a>
+                </th>
+                <th>Inativo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for certificador in page_obj %}
+            <tr>
+                <td>{{ certificador.id }}</td>
+                <td><a href="{% url 'certificador_detail' certificador.pk %}">{{ certificador.descricao }}</a></td>
+                <td>{{ certificador.siglaCertificador }}</td>
+                <td>{{ certificador.inativo|yesno:"Sim,Não" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Paginação da Tabela -->
+    {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
+    <!-- Contador de registros -->
+    {% include 'includes/record_counter.html' with page_obj=page_obj %}
+    <!-- Grupo de botões -->
+    <div class="apps-list-btn-group">
+        <a class="btn-return btn-dark" href="{% url 'certificacao_home' %}">Retornar</a>
+        <a class="btn-new btn-dark" href="{% url 'certificador_new' %}">Novo</a>
     </div>
-</form>
-<!-- Grupo de botões (Novo e Retornar) -->
-<div class="btn-group">
-    <a class="btn-return" href="{% url 'certificacao_home' %}">Retornar</a>
-    <a class="btn-new" href="{% url 'certificador_new' %}">Novo</a>
-</div>
-<!-- Seletor para escolher quantos registros exibir -->
-{% include "includes/records_per_page_selector.html" with action_url=request.path %}
-<!-- Contador de registros -->
-{% include 'includes/record_counter.html' with page_obj=page_obj %}
-<!-- Paginação da Tabela -->
-{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
-<!-- Tabela de busca -->
-<table class="tb-list" id="tb-list-certificador">
-    <thead>
-        <tr>
-            <th>
-                <a href="?order_by=id&descending={% if request.GET.order_by == 'id' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
-                    ID {% if request.GET.order_by == 'id' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                </a>
-            </th>
-            <th>
-                <a href="?order_by=descricao&descending={% if request.GET.order_by == 'descricao' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
-                    Nome {% if request.GET.order_by == 'descricao' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                </a>
-            </th>
-            <th>
-                <a href="?order_by=siglaCertificador&descending={% if request.GET.order_by == 'siglaCertificador' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
-                    Sigla {% if request.GET.order_by == 'siglaCertificador' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                </a>
-            </th>
-            <th>Inativo</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for certificador in page_obj %}
-        <tr>
-            <td>{{ certificador.id }}</td>
-            <td><a href="{% url 'certificador_detail' certificador.pk %}">{{ certificador.descricao }}</a></td>
-            <td>{{ certificador.siglaCertificador }}</td>
-            <td>{{ certificador.inativo|yesno:"Sim,Não" }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<!-- Paginação da Tabela -->
-{% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
-<!-- Contador de registros -->
-{% include 'includes/record_counter.html' with page_obj=page_obj %}
-<!-- Grupo de botões (Novo e Retornar) -->
-<div class="btn-group">
-    <a class="btn-return" href="{% url 'certificacao_home' %}">Retornar</a>
-    <a class="btn-new" href="{% url 'certificador_new' %}">Novo</a>
 </div>
 
 {% endblock %}
