@@ -8,6 +8,7 @@ os dados relacionados aos alunos no banco de dados.
 """
 
 from django.db import models
+from django.core.validators import RegexValidator
 from apps.certificacoes.models import Certificacao
 
 class CursoCategoria(models.Model):
@@ -60,6 +61,31 @@ class Curso(models.Model):
     class Meta:
         """Meta-informações para o modelo Curso."""
         db_table = 'tb_curso'
+
+class CursoVersao(models.Model):
+    """
+    Modelo que representa as Versões de um Curso.
+    """
+
+    id = models.AutoField(primary_key=True)
+    curso = models.ForeignKey(Curso, on_delete=models.PROTECT)
+    versao = models.CharField(
+        max_length=6,
+        validators=[RegexValidator(
+            regex=r'^\d+\.\d+$',
+            message='A versão deve ser um número no formato X.Y, por exemplo: 2.1, 30.5, 30.57, etc.'
+        )]
+    )
+    codigo = models.CharField(max_length=255)
+    cargaHoraria = models.DurationField(default='00:00:00')
+    nome = models.CharField(max_length=255)
+
+    def __str__(self):
+        return str(self.versao)
+
+    class Meta:
+        """Meta-informações para o modelo Curso."""
+        db_table = 'tb_curso-versao'
 
 class CursoCertificacao(models.Model):
     """
