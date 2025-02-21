@@ -1,0 +1,36 @@
+# Ignorar arquivos de JavaScript e CSS na detecção de linguagem
+*.js linguist-vendored
+*.css linguist-vendored
+
+# Ignorar todos os arquivos CSS na pasta static
+static/*.css linguist-vendored
+static/*.js linguist-vendored
+
+# Considerar esses arquivos CSS
+static/css/styles.css linguist-language=CSS
+static/css/header.css linguist-language=CSS
+static/css/body.css linguist-language=CSS
+static/css/apps_detail.css linguist-language=CSS
+static/css/apps_form.css linguist-language=CSS
+static/css/apps_home.css linguist-language=CSS
+static/css/apps_list.css linguist-language=CSS
+static/css/footer.css linguist-language=CSS
+static/css/login.css linguist-language=CSS
+static/css/password_reset.css linguist-language=CSS
+static/css/buttons.css linguist-language=CSS
+static/css/home.css linguist-language=CSS
+static/css/layout.css linguist-language=CSS
+static/css/modals.css linguist-language=CSS
+static/css/pagination.css linguist-language=CSS
+static/css/daterangepicker_custom.css linguist-language=CSS
+static/css/select2_custom.css linguist-language=CSS
+static/css/record-counter.css linguist-language=CSS
+
+# Considerar esses arquivos JavaScript
+static/js/daterangepicker.js linguist-language=JavaScript
+static/js/select2.js linguist-language=JavaScript
+static/js/cep.js linguist-language=JavaScript
+static/js/checkbox-toggle.js linguist-language=JavaScript
+static/js/pagination.js linguist-language=JavaScript
+static/js/modal.js linguist-language=JavaScript
+static/js/hamburger-menu.js linguist-language=JavaScript
