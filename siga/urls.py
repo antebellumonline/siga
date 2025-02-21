@@ -61,7 +61,7 @@ urlpatterns = [
     path('clientes/', clientes, name='clientes'),
 
     # URL para a documentação do projeto
-    path('docs/', RedirectView.as_view(url='/docs/build/html/index.html')),
+    path('docs/', RedirectView.as_view(url='/static/index.html')),
 
     # URLs dos apps
     path('apis/', include('apis.urls')),
