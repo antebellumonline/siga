@@ -60,7 +60,7 @@ urlpatterns = [
     # URL para a página de clientes
     path('clientes/', clientes, name='clientes'),
 
-    #URL para a documentação do projeto
+    # URL para a documentação do projeto
     path('docs/', RedirectView.as_view(url='/docs/build/html/index.html')),
 
     # URLs dos apps
@@ -70,7 +70,7 @@ urlpatterns = [
     path('', include('apps.centroProva.urls')),
     path('', include('apps.cursos.urls')),
 
-    # Path para eclusão de registros
+    # Path para exclusão de registros
     path('delete/<str:model_name>/<int:pk>/', delete_item, name='delete_item'),
 
 ]
