@@ -25,8 +25,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelectorAll(`#${tableId} .records-per-page-selector`).forEach(selector => {
             selector.addEventListener('change', function() {
-                const url = this.value;
-                updateTable(url, tableId);
+                const form = this.closest('form');
+                const url = new URL(form.action);
+                const params = new URLSearchParams(new FormData(form));
+                url.search = params.toString();
+                updateTable(url.toString(), tableId);
             });
         });
     }

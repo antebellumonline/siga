@@ -90,50 +90,9 @@
     <!-- Paginação da Tabela -->
     {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
     <!-- Tabela de busca -->
-    <table class="tb-list" id="tb-list-centroProva-exames">
-        <thead>
-            <tr>
-                <th>
-                    <a href="?order_by=data&descending={% if request.GET.order_by == 'data' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                        Data e Hora {% if request.GET.order_by == 'data' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=aluno__nome&descending={% if request.GET.order_by == 'aluno__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                        Aluno {% if request.GET.order_by == 'aluno__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=centroProva__nome&descending={% if request.GET.order_by == 'centroProva__nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                        Centro de Provas {% if request.GET.order_by == 'centroProva__nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=certificacao__descricao&descending={% if request.GET.order_by == 'certificacao__descricao' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
-                        Certificação {% if request.GET.order_by == 'certificacao__descricao' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                    </a>
-                </th>
-                <th>Presença</th>
-                <th>Cancelado</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for exame in page_obj %}
-            <tr>
-                <td>{{ exame.data|date:"d/m/Y H:i" }}</td>
-                <td><a href="{% url 'exame_detail' exame.pk %}">{{ exame.aluno.nome }}</a></td>
-                <td>{{ exame.centroProva.nome }}</td>
-                <td>{{ exame.certificacao.descricao }} ({{ exame.certificacao.siglaExame }})</td>
-                <td>{{ exame.presenca|yesno:"Sim,Não" }}</td>
-                <td>{{ exame.cancelado|yesno:"Sim,Não" }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="6">Nenhum exame encontrado.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="ajax-table" id="ajax-table">
+        {% include 'includes/table.html' %}
+    </div>
     <!-- Paginação da Tabela -->
     {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
     <!-- Contador de registros -->

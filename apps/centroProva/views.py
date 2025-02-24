@@ -206,14 +206,12 @@ def exame_list(request):
     if data_range:
         try:
             data_inicio, data_fim = data_range.split(' - ')
-            # Converte o formato de DD/MM/YYYY para YYYY-MM-DD
             data_inicio = datetime.strptime(data_inicio.strip(), '%d/%m/%Y').date()
             data_fim = datetime.strptime(data_fim.strip(), '%d/%m/%Y').date()
-            # Adiciona um dia ao data_fim para incluir o último dia completo
             data_fim += timedelta(days=1)
             centroprova_exame = centroprova_exame.filter(data__range=[data_inicio, data_fim])
         except (ValueError, TypeError):
-            pass  # Ignorar filtro em caso de erro
+            pass
 
     # Filtra por Presença
     if presenca in ['True', 'False']:
@@ -259,14 +257,38 @@ def exame_list(request):
     centrosprova = CentroProva.objects.order_by('nome')
     certificacoes = Certificacao.objects.order_by('descricao')
 
-    return render(request, 'centroProva/centroProva-exame_list.html', {
+    context = {
         'centroprova_exame': centroprova_exame,
         'page_obj': page_obj,
         'aluno': alunos,
         'centrosprova': centrosprova,
         'certificacoes': certificacoes,
         'query_params': request.GET.urlencode(),
-    })
+        'headers': [
+            {'field': 'data', 'label': 'Data e Hora'},
+            {'field': 'aluno__nome', 'label': 'Aluno'},
+            {'field': 'centroProva__nome', 'label': 'Centro de Provas'},
+            {'field': 'certificacao__descricao', 'label': 'Certificação'},
+            {'field': 'presenca', 'label': 'Presença'},
+            {'field': 'cancelado', 'label': 'Cancelado'},
+        ],
+        'rows': [
+            [
+                exame.data.strftime("%d/%m/%Y %H:%M"),
+                exame.aluno.nome,
+                exame.centroProva.nome,
+                f"{exame.certificacao.descricao} ({exame.certificacao.siglaExame})",
+                "Sim" if exame.presenca else "Não",
+                "Sim" if exame.cancelado else "Não",
+            ]
+            for exame in page_obj
+        ]
+    }
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, 'includes/table.html', context)
+    else:
+        return render(request, 'centroProva/centroProva-exame_list.html', context)
 
 def exame_detail(request, pk):
     """
