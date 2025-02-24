@@ -56,4 +56,4 @@ CursoCertificacaoFormSet = inlineformset_factory(
 class TrainingBlocksTopicoForm(forms.ModelForm):
     class Meta:
         model = TrainingBlocksTopico
-        fields = ['nome', 'inativo']
+        fields = ['nome', 'codigo', 'inativo']

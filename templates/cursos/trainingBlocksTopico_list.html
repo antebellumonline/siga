@@ -52,8 +52,8 @@
         <thead>
             <tr>
                 <th>
-                    <a href="?order_by=id&descending={% if request.GET.order_by == 'id' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
-                        ID {% if request.GET.order_by == 'id' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                    <a href="?order_by=codigo&descending={% if request.GET.order_by == 'codigo' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
+                        Código {% if request.GET.order_by == 'codigo' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                     </a>
                 </th>
                 <th>
@@ -67,7 +67,7 @@
         <tbody>
             {% for trainingblockstopico in page_obj %}
             <tr>
-                <td>{{ trainingblockstopico.id }}</td>
+                <td>{{ trainingblockstopico.codigo }}</td>
                 <td><a href="{% url 'trainingblockstopico_detail' trainingblockstopico.pk %}">{{ trainingblockstopico.nome }}</a></td>
                 <td>{{ trainingblockstopico.inativo|yesno:"Sim,Não" }}</td>
             </tr>
