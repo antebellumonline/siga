@@ -107,6 +107,7 @@ class TrainingBlocksTopico(models.Model):
     """Modelo que representa um Tópico de Bloco de Treinamento."""
 
     id = models.AutoField(primary_key=True)
+    codigo = models.CharField(max_length=10)
     nome = models.CharField(max_length=255)
     inativo = models.BooleanField(default=False)
 
@@ -121,6 +122,7 @@ class TrainingBlocks(models.Model):
     """Modelo que representa um Bloco de Treinamento."""
 
     id = models.CharField(max_length=10, primary_key=True)
+    codigo = models.CharField(max_length=10)
     duracao = models.DurationField(default='00:00:00')
     descricao = models.CharField(max_length=255)
     topico = models.ForeignKey(
