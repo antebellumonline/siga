@@ -1,0 +1,30 @@
+<!-- templates/includes/table.html -->
+
+<div id="{{ table_id }}">
+    <table class="tb-list">
+        <thead>
+            <tr>
+                {% for header in headers %}
+                <th>
+                    <a class="sort-link" href="?order_by={{ header.field }}&descending={% if request.GET.order_by == header.field and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                        {{ header.label }} {% if request.GET.order_by == header.field %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
+                    </a>
+                </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                {% for cell in row %}
+                <td>{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="{{ headers|length }}">Nenhum registro encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
