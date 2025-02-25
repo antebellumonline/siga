@@ -96,12 +96,20 @@ urlpatterns = [
     path(
         'curso/trainingBlocksTopico/<int:pk>/delete/',
         views.trainingblockstopico_delete,
-        name='trainingBlockstopico_delete'
+        name='trainingblockstopico_delete'
     ),
 
     # URLs Training Blocks
-    # path('curso/trainingBlocks/new/', views.trainingBlocks_new, name='trainingBlocks_new'),
-    # path('curso/trainingBlocks/list/', views.trainingBlocks_list, name='trainingBlocks_list'),
+    path(
+        'curso/trainingBlocks/new/',
+        views.trainingblocks_new,
+        name='trainingblocks_new'
+    ),
+    path(
+        'curso/trainingBlocks/list/',
+        views.trainingblocks_list,
+        name='trainingblocks_list'
+    ),
     # path('curso/trainingBlocks/<int:pk>/', views.trainingBlocks_detail, name='trainingBlocks_detail'),
     # path('curso/trainingBlocks/<int:pk>/edit/', views.trainingBlocks_edit, name='trainingBlocks_edit'),
     # path('curso/trainingBlocks/<int:pk>/delete/', views.trainingBlocks_delete, name='trainingBlocks_delete'),

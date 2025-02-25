@@ -11,8 +11,14 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from django.db.models import Q
 
-from .models import Curso, CursoCategoria, CursoCertificacao, TrainingBlocksTopico
-from .forms import CursoForm, CursoCategoriaForm, CursoCertificacaoFormSet, TrainingBlocksTopicoForm
+from django.utils.safestring import mark_safe
+
+from .models import (Curso, CursoCategoria, CursoCertificacao,
+                     TrainingBlocksTopico, TrainingBlocks, CursoTrainingBlocks
+)
+from .forms import (CursoForm, CursoCategoriaForm, CursoCertificacaoFormSet, TrainingBlocksTopicoForm,
+                    TrainingBlocksForm, CursoTrainingBlocksForm, CursoTrainingBlocksFormSet
+)
 
 def curso_home(request):
     """
@@ -242,7 +248,9 @@ def curso_detail(request, pk):
     """
     # Obtém os filtros
     curso = get_object_or_404(Curso, pk=pk)
-    certificacoes = CursoCertificacao.objects.filter(curso=curso).order_by('certificacao__descricao')
+    certificacoes = (
+        CursoCertificacao.objects.filter(curso=curso).order_by('certificacao__descricao')
+    )
 
     # Renderização do template
     return render(request, 'cursos/curso_detail.html', {
@@ -415,3 +423,122 @@ def trainingblockstopico_delete(request, pk):
     })
 
 # ----- XXXXX ----- XXXXX -----
+
+def trainingblocks_new(request):
+    """
+    View para Adicionar uma Training Blocks
+    """
+    topicos = TrainingBlocksTopico.objects.filter(inativo=False).order_by('nome')
+    if request.method == "POST":
+        form = TrainingBlocksForm(request.POST)
+        formset = CursoCertificacaoFormSet(request.POST)
+        if form.is_valid() and formset.is_valid():
+            trainingBlocks = form.save()
+            formset.instance = trainingBlocks
+            formset.save()
+            return redirect('trainingblocks_list')
+    else:
+        form = TrainingBlocksForm()
+        formset = CursoTrainingBlocksFormSet()
+
+    return render(request, 'cursos/trainingBlocks_form.html', {
+        'form': form,
+        'formset': formset,
+        'topicos': topicos
+    })
+
+def trainingblocks_list(request):
+    """
+    View para Listar as Training Blocks
+    """
+    # Obtém os filtros
+    query = request.GET.get('q')
+    topico = request.GET.get('topico')
+    inativo = request.GET.get('inativo')
+
+    # Ordenação
+    order_by = request.GET.get('order_by', 'descricao')
+    descending = request.GET.get('descending', 'True') == 'True'
+
+    # Inicializa a variável trainingblocks
+    trainingblocks = TrainingBlocks.objects.all()
+
+    # Otimização de Consulta
+    trainingblocks = TrainingBlocks.objects.select_related(
+        'topico',
+    )
+
+    # Aplicar os filtros e pesquisa
+    if query:
+        trainingblocks = trainingblocks.filter(
+            Q(descricao__icontains=query)
+        )
+
+    # Filtra por Tópico
+    if topico:
+        trainingblocks = trainingblocks.filter(topico__id=topico)
+
+    # Filtra por Status
+    if inativo is not None and inativo != "":
+        if inativo == 'True':
+            trainingblocks = trainingblocks.filter(inativo=True)
+        elif inativo == 'False':
+            trainingblocks = trainingblocks.filter(inativo=False)
+
+    # Aplicar ordenação
+    if descending:
+        order_by = f'-{order_by}'
+    trainingblocks = trainingblocks.order_by(order_by)
+
+    # Quantidade de registros por página (com valor padrão de 20)
+    records_per_page = request.GET.get('records_per_page', 20)
+    try:
+        records_per_page = int(records_per_page)
+    except (ValueError, TypeError):
+        records_per_page = 20
+
+    # Criação do paginator com o queryset e o número de registros por página
+    paginator = Paginator(trainingblocks, records_per_page)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Tratamento de erros para garantir que o objeto de página seja válido
+    try:
+        page_obj = paginator.get_page(page_number)
+    except (ValueError, TypeError):
+        page_obj = paginator.get_page(1)
+
+    # Buscar e ordenar opções de seleção
+    topicos = TrainingBlocksTopico.objects.order_by('nome')
+
+    context = {
+        'trainingblocks': trainingblocks,
+        'page_obj': page_obj,
+        'topicos': topicos,
+        'query_params': request.GET.urlencode(),
+        'headers': [
+            {'field': 'codigo', 'label': 'Código'},
+            {'field': 'duracao', 'label': 'Duração'},
+            {'field': 'descricao', 'label': 'Descrição'},
+            {'field': 'topico__nome', 'label': 'Tópico'},
+            {'field': 'observacao', 'label': 'Observação'},
+            {'field': 'inativo', 'label': 'Inativo'},
+        ],
+        'rows': [
+            [
+                trainingblocks.codigo,
+                trainingblocks.duracao,
+                mark_safe(f'<a href="{reverse("trainingblocks_detail", args=[trainingblocks.id])}">{trainingblocks.descricao}</a>'),
+                trainingblocks.topico.nome,
+                trainingblocks.observacao,
+                "Sim" if trainingblocks.inativo else "Não",
+            ]
+            for trainingblocks in page_obj
+        ]
+    }
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, 'includes/table.html', context)
+    else:
+        return render(request, 'cursos/trainingBlocks_list.html', context)
+

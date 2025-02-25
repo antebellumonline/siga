@@ -1,0 +1,77 @@
+<!-- templates/cursos/trainingBlocks_list.html -->
+
+{% extends "base.html" %}
+
+{% block title %}SIGA - Lista de Training Blocks{% endblock %}
+
+{% block body_class %}body-apps-list{% endblock %}
+
+{% block header_title %}Lista de Training Blocks{% endblock %}
+
+{% block content %}
+
+<!-- Formulário de busca e filtro -->
+ <div class="container-apps-list">
+    <form method="GET" action="{% url 'trainingblocks_list' %}" class="apps-list-search-form">
+        <div class="apps-list-form-group-search">
+            <div class="apps-list-form-group-search-sub">
+                <input type="checkbox" id="check-list-trainingBlocks-descricao" data-target="list-trainingBlocks-descricao">
+                <label for="search-list-trainingBlocks-descricao">Nome:</label>
+                <input type="text" id="list-trainingBlocks-descricao" name="q" placeholder="Busque pela descrição da Training Blocks" value="{{ request.GET.q }}" class="form-control" aria-label="Busque pela descrição da Training Blocks">
+            </div>
+            <div class="apps-list-form-group-search-sub">
+                <input type="checkbox" id="check-list-trainingBlocks-topico" data-target="list-trainingBlocks-topico">
+                <label for="search-list-trainingBlocks-topico">Tópico:</label>
+                <select name="aluno" id="list-trainingBlocks-topico" class="select-search select2">
+                    <option value="">Selecionar Tópico</option>
+                    {% for topico in topico %}
+                    <option value="{{ topico.id }}" {% if request.GET.topico == topico.id %}selected{% endif %}>
+                        {{ topico.descricao }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="apps-list-form-group-search-sub">
+                <input type="checkbox" id="check-list-trainingBlocks-inativo" data-target="list-trainingBlocks-inativo">
+                <label for="search-list-trainingBlocks-inativo">Inativo:</label>
+                <select name="inativo" id="list-trainingBlocks-inativo" class="select-search select2">
+                    <option value="True" {% if request.GET.inativo == 'True' %}selected{% endif %}>Sim</option>
+                    <option value="False" {% if request.GET.inativo == 'False' %}selected{% endif %}>Não</option>
+                </select>
+            </div> 
+        </div>
+        <!-- Botões de Ação -->
+        <div class="apps-list-btn-group-search">
+            <button type="submit" class="btn-list btn-circle btn-dark"></button>
+            <a class="btn-clear btn-circle btn-yellow" href="{% url 'trainingblocks_list' %}"></a>
+        </div>
+    </form>
+    <!-- Grupo de botões -->
+    <div class="apps-list-btn-group">
+        <a class="btn-return btn-dark" href="{% url 'curso_home' %}">Retornar</a>
+        <a class="btn-new btn-dark" href="{% url 'trainingblocks_new' %}">Novo</a>
+        <!-- <a class="btn-pdf btn-yellow" href="{% url 'exame_report_pdf' %}?{{ query_params }}">Exportar para PDF</a>
+        <a class="btn-excel btn-yellow" href="{% url 'exame_report_xlsx' %}?{{ query_params }}">Exportar para Excel</a> -->
+    </div>
+    <!-- Seletor para escolher quantos registros exibir -->
+    {% include "includes/records_per_page_selector.html" with action_url=request.path %}
+    <!-- Contador de registros -->
+    {% include 'includes/record_counter.html' with page_obj=page_obj %}
+    <!-- Paginação da Tabela -->
+    {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
+    <!-- Tabela de busca -->
+    <div class="ajax-table" id="ajax-table">
+        {% include 'includes/table.html' %}
+    </div>
+    <!-- Paginação da Tabela -->
+    {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
+    <!-- Contador de registros -->
+    {% include 'includes/record_counter.html' with page_obj=page_obj %}
+    <!-- Grupo de botões -->
+    <div class="apps-list-btn-group">
+        <a class="btn-return btn-dark" href="{% url 'curso_home' %}">Retornar</a>
+        <a class="btn-new btn-dark" href="{% url 'trainingblocks_new' %}">Novo</a>
+    </div>
+</div>
+
+{% endblock %}
