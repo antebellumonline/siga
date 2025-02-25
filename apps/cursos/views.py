@@ -429,9 +429,10 @@ def trainingblocks_new(request):
     View para Adicionar uma Training Blocks
     """
     topicos = TrainingBlocksTopico.objects.filter(inativo=False).order_by('nome')
+    
     if request.method == "POST":
         form = TrainingBlocksForm(request.POST)
-        formset = CursoCertificacaoFormSet(request.POST)
+        formset = CursoTrainingBlocksFormSet(request.POST)
         if form.is_valid() and formset.is_valid():
             trainingBlocks = form.save()
             formset.instance = trainingBlocks
@@ -542,3 +543,18 @@ def trainingblocks_list(request):
     else:
         return render(request, 'cursos/trainingBlocks_list.html', context)
 
+def trainingblocks_detail(request, pk):
+    """
+    View para Visualizar os Detalhes de uma Training Blocks
+    """
+    # Obtém os filtros
+    trainingblocks = get_object_or_404(TrainingBlocks, pk=pk)
+    cursos = (
+        CursoTrainingBlocks.objects.filter(trainingblocks=trainingblocks).order_by('curso__nome')
+    )
+
+    # Renderização do template
+    return render(request, 'cursos/trainingBlocks_detail.html', {
+        'trainingblocks': trainingblocks,
+        'cursos': cursos
+    })

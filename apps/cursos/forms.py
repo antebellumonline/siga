@@ -145,10 +145,19 @@ class CursoTrainingBlocksForm (forms.ModelForm):
             'curso': forms.Select(attrs={'class': 'form-control select2'}),
             'trainingBlocks': forms.Select(attrs={'class': 'form-control select2'}),
             'topico': forms.Select(attrs={'class': 'form-control select2'}),
+            'ordem': forms.TextInput(attrs={'class': 'form-control'}),
+            'observacao': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
         }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['curso'].queryset = Curso.objects.all().order_by('codigo')
+        self.fields['curso'].label_from_instance = self.curso_label_from_instance
+
+    def curso_label_from_instance(self, obj):
+        return f"{obj.codigo}: {obj.nome}"
 
 CursoTrainingBlocksFormSet = inlineformset_factory(
-    Curso,
+    TrainingBlocks,
     CursoTrainingBlocks,
     form=CursoTrainingBlocksForm,
     extra=4,

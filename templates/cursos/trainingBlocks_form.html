@@ -1,0 +1,106 @@
+<!-- templates/cursos/curso_form.html -->
+
+{% extends "base.html" %}
+
+{% block title %}{{ form.instance.pk|yesno:"Editar Training Blocks,Adicionar Training Blocks" }}{% endblock %}
+
+{% block body_class %}body-apps-form{% endblock %}
+
+{% block header_title %}{{ form.instance.pk|yesno:"Editar Training Blocks,Adicionar Training Blocks" }}{% endblock %}
+
+{% block content %}
+
+<div class="container-apps-form">
+    <form method="post" class="apps-form-edit">
+        {% csrf_token %}
+        <div class="apps-form-group-edit">
+            {% if form.instance.pk %}
+            <div class="apps-form-group-edit-status">
+                <h4 class="apps-form-status-section-title">Status da Training Blocks</h4>
+                <div class="apps-form-input">
+                    <label for="id_inativo">Inativo: </label>
+                    <select id="id_inativo" name="inativo">
+                        <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
+                        <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
+                    </select>
+                </div>
+            </div>
+            {% endif %}
+            <div class="apps-form-group-edit-sub">
+                <h4 class="apps-form-sub-section-title">Detalhes da Training Blocks</h4>
+                <div class="apps-form-input">
+                    <label for="id_codigo">Código (Ex.: 0.00): </label>
+                    <input type="text" name="codigo" id="id_codigo" 
+                        value="{{ form.codigo.value|default_if_none:'' }}" autofocus>
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_duracao">Duração: </label>
+                    <input type="text" name="duracao" id="edit-select-trainingBlocks-duracao" 
+                        value="{{ form.duracao.value|date:'H:i:s' }}" data-mask="time">
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_topico">Tópico: </label>
+                    <select name="topico" id="edit-select-topico" class="select-edit select2">
+                        <option value="">Selecionar Tópico</option>
+                        {% for topico in topicos %}
+                        <option value="{{ topico.id }}" {% if form.topico.value == topico.id %}selected{% endif %}>
+                            {{ topico.nome }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_descricao">Descrição: </label>
+                    {{ form.descricao }}
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_observacao">Observação: </label>
+                    {{ form.observacao }}
+                </div>
+            </div>
+            <!-- Cursos -->
+            <div class="apps-form-group-edit-sub">
+                <h4 class="apps-form-sub-section-title">Cursos vinculados a esta Training Blocks</h4>
+                {{ formset.management_form }}
+                <table class="tb-form">
+                    <thead>
+                        <tr>
+                            <th>Curso</th>
+                            <th>Tópico</th>
+                            <th>Ordem (Ex.: 0.00)</th>
+                            <th>Observação</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for curso_form in formset %}
+                        <tr>
+
+                            <td>{{ curso_form.id }}{{ curso_form.curso }}</td>
+                            <td>{{ curso_form.topico }}</td>
+                            <td>{{ curso_form.ordem }}</td>
+                            <td>{{ curso_form.observacao }}</td>
+                            <td>
+                                {% if formset.can_delete %}
+                                    {{ curso_form.DELETE }} Excluir
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2">Nenhum Curso adicionado.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Grupo de botões -->
+        <div class="apps-form-btn-group">
+            <button class="btn-save btn-dark" type="submit">Salvar Curso</button>
+            <a class="btn-return btn-yellow" href="{% url 'curso_list' %}">Retornar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

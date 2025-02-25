@@ -121,7 +121,7 @@ class TrainingBlocksTopico(models.Model):
 class TrainingBlocks(models.Model):
     """Modelo que representa um Bloco de Treinamento."""
 
-    id = models.CharField(max_length=10, primary_key=True)
+    id = models.AutoField(primary_key=True)
     codigo = models.CharField(max_length=10)
     duracao = models.DurationField(default='00:00:00')
     descricao = models.CharField(max_length=255)
@@ -133,13 +133,6 @@ class TrainingBlocks(models.Model):
         )
     observacao = models.TextField(blank=True, null=True)
     inativo = models.BooleanField(default=False)
-
-    def save(self, *args, **kwargs):
-        if not self.id and self.topico:
-            # Gerar o ID no formato correto
-            ultimo_id = TrainingBlocks.objects.filter(topico=self.topico).count() + 1
-            self.id = f"{self.topico.id}.{ultimo_id:02d}"
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.descricao)

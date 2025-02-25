@@ -110,7 +110,11 @@ urlpatterns = [
         views.trainingblocks_list,
         name='trainingblocks_list'
     ),
-    # path('curso/trainingBlocks/<int:pk>/', views.trainingBlocks_detail, name='trainingBlocks_detail'),
+    path(
+        'curso/trainingBlocks/<str:pk>/',
+        views.trainingblocks_detail,
+        name='trainingblocks_detail'
+    ),
     # path('curso/trainingBlocks/<int:pk>/edit/', views.trainingBlocks_edit, name='trainingBlocks_edit'),
     # path('curso/trainingBlocks/<int:pk>/delete/', views.trainingBlocks_delete, name='trainingBlocks_delete'),
 ]
