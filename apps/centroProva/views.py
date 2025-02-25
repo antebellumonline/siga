@@ -15,6 +15,7 @@ from django.urls import reverse
 from django.db.models import Q
 
 from django.http import HttpResponse
+from django.utils.safestring import mark_safe
 from reports.utils.pdf_utils import report_create_pdf
 from reports.utils.excel_utils import report_create_xlsx
 
@@ -275,7 +276,7 @@ def exame_list(request):
         'rows': [
             [
                 exame.data.strftime("%d/%m/%Y %H:%M"),
-                exame.aluno.nome,
+                mark_safe(f'<a href="{reverse("exame_detail", args=[exame.id])}">{exame.aluno.nome}</a>'),
                 exame.centroProva.nome,
                 f"{exame.certificacao.descricao} ({exame.certificacao.siglaExame})",
                 "Sim" if exame.presenca else "Não",
