@@ -131,7 +131,7 @@ class TrainingBlocks(models.Model):
         blank=True,
         null=True
         )
-    obsevacao = models.TextField(blank=True, null=True)
+    observacao = models.TextField(blank=True, null=True)
     inativo = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
@@ -149,7 +149,7 @@ class TrainingBlocks(models.Model):
         db_table = 'tb_trainingBlocks'
 
 class CursoTrainingBlocks(models.Model):
-    """Modelo que representa a relação entre Curso e Bloco de Treinamento."""
+    """Modelo que representa a relação entre Curso e Training Blocks."""
 
     id = models.AutoField(primary_key=True)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)

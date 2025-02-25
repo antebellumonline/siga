@@ -6,11 +6,25 @@ Ele define os formulários para cadastro, edição e outras operações relacion
 """
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Curso, CursoCategoria, CursoCertificacao, TrainingBlocksTopico
+
 from apps.certificacoes.models import Certificacao
+from .models import (
+    Curso,
+    CursoCategoria,
+    CursoCertificacao,
+    TrainingBlocksTopico,
+    TrainingBlocks,
+    CursoTrainingBlocks
+)
 
 class CursoForm(forms.ModelForm):
+    """
+    Formulário para cadastro e edição de Cursos.
+    """
     class Meta:
+        """
+        Configurações meta do formulário.
+        """
         model = Curso
         fields = ['nome', 'categoria', 'codigo', 'inativo']
         widgets = {
@@ -21,12 +35,29 @@ class CursoForm(forms.ModelForm):
         }
 
 class CursoCategoriaForm(forms.ModelForm):
+    """
+    Formulário para cadastro e edição de Categorias de Cursos.
+    """
     class Meta:
+        """
+        Configurações meta do formulário.
+        """
         model = CursoCategoria
-        fields = ['nome', 'sigla', 'inativo']
+        fields = [
+            'nome',
+            'sigla',
+            'inativo'
+        ]
 
 class CursoCertificacaoForm(forms.ModelForm):
+    """
+    Formulário para cadastro e edição de Relacionamento
+    entre Cursos e Certificações.
+    """
     class Meta:
+        """
+        Configurações meta do formulário.
+        """
         model = CursoCertificacao
         fields = [
             'id',
@@ -54,6 +85,72 @@ CursoCertificacaoFormSet = inlineformset_factory(
 )
 
 class TrainingBlocksTopicoForm(forms.ModelForm):
+    """
+    Formulário para cadastro e edição de Tópicos da Training Blocks.
+    """
     class Meta:
+        """
+        Configurações meta do formulário.
+        """
         model = TrainingBlocksTopico
-        fields = ['nome', 'codigo', 'inativo']
+        fields = [
+            'nome',
+            'codigo',
+            'inativo'
+        ]
+
+class TrainingBlocksForm(forms.ModelForm):
+    """
+    Formulário para cadastro e edição de Training Blocks.
+    """
+    class Meta:
+        """
+        Configurações meta do formulário.
+        """
+        model = TrainingBlocks
+        fields = ['codigo',
+                  'topico',
+                  'duracao',
+                  'descricao',
+                  'observacao',
+                  'inativo'
+            ]
+        widgets = {
+            'topico': forms.Select(attrs={'class': 'form-control'}),
+            'duracao': forms.DateInput(attrs={'class': 'form-control'}),
+            'descricao': forms.TextInput(attrs={'class': 'form-control'}),
+            'observacao': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
+            'inativo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+class CursoTrainingBlocksForm (forms.ModelForm):
+    """
+    Formulário para cadastro e edição de Relacionamento
+    entre Cursos e Training Blocks.
+    """
+    class Meta:
+        """
+        Configurações meta do formulário.
+        """
+        model = CursoTrainingBlocks
+        fields = [
+            'curso',
+            'trainingBlocks',
+            'topico',
+            'ordem',
+            'observacao',
+            'inativo'
+        ]
+        widgets = {
+            'curso': forms.Select(attrs={'class': 'form-control select2'}),
+            'trainingBlocks': forms.Select(attrs={'class': 'form-control select2'}),
+            'topico': forms.Select(attrs={'class': 'form-control select2'}),
+        }
+
+CursoTrainingBlocksFormSet = inlineformset_factory(
+    Curso,
+    CursoTrainingBlocks,
+    form=CursoTrainingBlocksForm,
+    extra=4,
+    can_delete=True
+)
