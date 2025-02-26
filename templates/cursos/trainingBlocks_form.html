@@ -62,6 +62,7 @@
             <div class="apps-form-group-edit-sub">
                 <h4 class="apps-form-sub-section-title">Cursos vinculados a esta Training Blocks</h4>
                 {{ formset.management_form }}
+                {{ formset.non_form_errors }}
                 <table class="tb-form">
                     <thead>
                         <tr>
@@ -97,8 +98,8 @@
         </div>
         <!-- Grupo de botões -->
         <div class="apps-form-btn-group">
-            <button class="btn-save btn-dark" type="submit">Salvar Curso</button>
-            <a class="btn-return btn-yellow" href="{% url 'curso_list' %}">Retornar</a>
+            <button class="btn-save btn-dark" type="submit">Salvar</button>
+            <a class="btn-return btn-yellow" href="{% url 'trainingblocks_list' %}">Retornar</a>
         </div>
     </form>
 </div>

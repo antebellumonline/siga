@@ -150,9 +150,21 @@ class CursoTrainingBlocks(models.Model):
     """Modelo que representa a relação entre Curso e Training Blocks."""
 
     id = models.AutoField(primary_key=True)
-    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
-    trainingBlocks = models.ForeignKey(TrainingBlocks, on_delete=models.CASCADE)
-    topico = models.ForeignKey(TrainingBlocksTopico, on_delete=models.CASCADE)
+    curso = models.ForeignKey(
+        Curso,
+        on_delete=models.CASCADE,
+        related_name='cursos'
+    )
+    trainingBlocks = models.ForeignKey(
+        TrainingBlocks,
+        on_delete=models.CASCADE,
+        related_name='trainingblocks'
+    )
+    topico = models.ForeignKey(
+        TrainingBlocksTopico,
+        on_delete=models.CASCADE,
+        related_name='topico'
+    )
     ordem = models.PositiveIntegerField()
     observacao = models.TextField(blank=True, null=True)
     inativo = models.BooleanField(default=False)

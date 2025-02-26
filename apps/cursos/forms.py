@@ -117,7 +117,7 @@ class TrainingBlocksForm(forms.ModelForm):
             ]
         widgets = {
             'topico': forms.Select(attrs={'class': 'form-control'}),
-            'duracao': forms.DateInput(attrs={'class': 'form-control'}),
+            'duracao': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
             'descricao': forms.TextInput(attrs={'class': 'form-control'}),
             'observacao': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
             'inativo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
@@ -134,6 +134,7 @@ class CursoTrainingBlocksForm (forms.ModelForm):
         """
         model = CursoTrainingBlocks
         fields = [
+            'id',
             'curso',
             'trainingBlocks',
             'topico',
@@ -146,7 +147,7 @@ class CursoTrainingBlocksForm (forms.ModelForm):
             'trainingBlocks': forms.Select(attrs={'class': 'form-control select2'}),
             'topico': forms.Select(attrs={'class': 'form-control select2'}),
             'ordem': forms.TextInput(attrs={'class': 'form-control'}),
-            'observacao': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
+            'observacao': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
         }
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

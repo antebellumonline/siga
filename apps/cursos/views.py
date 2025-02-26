@@ -429,7 +429,7 @@ def trainingblocks_new(request):
     View para Adicionar uma Training Blocks
     """
     topicos = TrainingBlocksTopico.objects.filter(inativo=False).order_by('nome')
-    
+
     if request.method == "POST":
         form = TrainingBlocksForm(request.POST)
         formset = CursoTrainingBlocksFormSet(request.POST)
@@ -549,12 +549,53 @@ def trainingblocks_detail(request, pk):
     """
     # Obtém os filtros
     trainingblocks = get_object_or_404(TrainingBlocks, pk=pk)
-    cursos = (
-        CursoTrainingBlocks.objects.filter(trainingblocks=trainingblocks).order_by('curso__nome')
-    )
+    cursos = CursoTrainingBlocks.objects.filter(trainingBlocks=trainingblocks).order_by('curso__codigo')
 
     # Renderização do template
     return render(request, 'cursos/trainingBlocks_detail.html', {
         'trainingblocks': trainingblocks,
-        'cursos': cursos
+        'cursos': cursos,
+    })
+
+def trainingblocks_edit(request, pk):
+    """
+    View para Editar uma Training Blocks
+    """
+    trainingblocks = get_object_or_404(TrainingBlocks, pk=pk)
+    topicos = TrainingBlocksTopico.objects.filter(inativo=False).order_by('nome')
+
+    if request.method == "POST":
+        form = TrainingBlocksForm(request.POST, instance=trainingblocks)
+        formset = CursoTrainingBlocksFormSet(request.POST, instance=trainingblocks)
+
+        print(request.POST)
+
+        if form.is_valid() and formset.is_valid():
+            form.save()
+            formset.save()
+            return redirect('trainingblocks_list')
+        else:
+            print(form.errors)
+            for curso_form in formset:
+                print(curso_form.errors)
+    else:
+        form = TrainingBlocksForm(instance=trainingblocks)
+        formset = CursoTrainingBlocksFormSet(instance=trainingblocks)
+
+    return render(request, 'cursos/trainingBlocks_form.html', {
+        'form': form,
+        'formset': formset,
+        'topicos': topicos
+    })
+
+def trainingblocks_delete(request, pk):
+    """
+    View para Excluir uma Training Blocks
+    """
+    trainingblocks = get_object_or_404(TrainingBlocks, pk=pk)
+    if request.method == "POST":
+        trainingblocks.delete()
+        return redirect('trainingblocks_list')
+    return render(request, 'cursos/trainingBlocks_confirm_delete.html', {
+        'trainingblocks': trainingblocks
     })
