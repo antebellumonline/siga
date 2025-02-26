@@ -33,8 +33,9 @@
                     {{ form.nome }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_nome">Código: </label>
-                    {{ form.codigo }}
+                    <label for="id_codigo">Código: </label>
+                    <input type="text" name="codigo" id="id_codigo" class="rtl-number-input"
+                        value="{{ form.codigo.value|default_if_none:'' }}">
                 </div>
             </div>
         </div>

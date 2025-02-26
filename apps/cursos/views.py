@@ -9,15 +9,16 @@ e interagir com os modelos de dados.
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.urls import reverse
-from django.db.models import Q
+from django.db.models.functions import Cast
+from django.db.models import Q, FloatField
 
 from django.utils.safestring import mark_safe
 
 from .models import (Curso, CursoCategoria, CursoCertificacao,
                      TrainingBlocksTopico, TrainingBlocks, CursoTrainingBlocks
 )
-from .forms import (CursoForm, CursoCategoriaForm, CursoCertificacaoFormSet, TrainingBlocksTopicoForm,
-                    TrainingBlocksForm, CursoTrainingBlocksForm, CursoTrainingBlocksFormSet
+from .forms import (CursoForm, CursoCategoriaForm, CursoCertificacaoFormSet,
+                    TrainingBlocksTopicoForm, TrainingBlocksForm, CursoTrainingBlocksFormSet
 )
 
 def curso_home(request):
@@ -348,7 +349,12 @@ def trainingblockstopico_list(request):
     # Aplicar ordenação
     if descending:
         order_by = f'-{order_by}'
-    trainingblockstopico = trainingblockstopico.order_by(order_by)
+    if order_by == "codigo":
+        trainingblockstopico = trainingblockstopico.order_by(Cast("codigo", FloatField()))
+    elif order_by == "-codigo":
+        trainingblockstopico = trainingblockstopico.order_by(Cast("codigo", FloatField()).desc())
+    else:
+        trainingblockstopico = trainingblockstopico.order_by(order_by)
 
     # Quantidade de registros por página (com valor padrão de 20)
     records_per_page = request.GET.get('records_per_page', 20)
@@ -489,7 +495,12 @@ def trainingblocks_list(request):
     # Aplicar ordenação
     if descending:
         order_by = f'-{order_by}'
-    trainingblocks = trainingblocks.order_by(order_by)
+    if order_by == "codigo":
+        trainingblocks = trainingblocks.order_by(Cast("codigo", FloatField()))
+    elif order_by == "-codigo":
+        trainingblocks = trainingblocks.order_by(Cast("codigo", FloatField()).desc())
+    else:
+        trainingblocks = trainingblocks.order_by(order_by)
 
     # Quantidade de registros por página (com valor padrão de 20)
     records_per_page = request.GET.get('records_per_page', 20)

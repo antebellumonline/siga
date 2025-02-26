@@ -17,6 +17,15 @@ from .models import (
     CursoTrainingBlocks
 )
 
+class RightToLeftNumberInput(forms.TextInput):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.attrs.update({
+            'class': 'rtl-number-input',
+            'placeholder': '0.00',
+            'style': 'direction: rtl; text-align: left;'
+        })
+
 class CursoForm(forms.ModelForm):
     """
     Formulário para cadastro e edição de Cursos.
@@ -98,6 +107,9 @@ class TrainingBlocksTopicoForm(forms.ModelForm):
             'codigo',
             'inativo'
         ]
+    widgets = {
+        'codigo': RightToLeftNumberInput(),
+    }
 
 class TrainingBlocksForm(forms.ModelForm):
     """
@@ -116,6 +128,7 @@ class TrainingBlocksForm(forms.ModelForm):
                   'inativo'
             ]
         widgets = {
+            'codigo': RightToLeftNumberInput(),
             'topico': forms.Select(attrs={'class': 'form-control'}),
             'duracao': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
             'descricao': forms.TextInput(attrs={'class': 'form-control'}),
@@ -146,7 +159,7 @@ class CursoTrainingBlocksForm (forms.ModelForm):
             'curso': forms.Select(attrs={'class': 'form-control select2'}),
             'trainingBlocks': forms.Select(attrs={'class': 'form-control select2'}),
             'topico': forms.Select(attrs={'class': 'form-control select2'}),
-            'ordem': forms.TextInput(attrs={'class': 'form-control'}),
+            'ordem': RightToLeftNumberInput(),
             'observacao': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
         }
     def __init__(self, *args, **kwargs):

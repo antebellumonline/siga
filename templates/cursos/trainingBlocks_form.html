@@ -1,4 +1,4 @@
-<!-- templates/cursos/curso_form.html -->
+<!-- templates/cursos/trainingBlocks_form.html -->
 
 {% extends "base.html" %}
 
@@ -30,7 +30,7 @@
                 <h4 class="apps-form-sub-section-title">Detalhes da Training Blocks</h4>
                 <div class="apps-form-input">
                     <label for="id_codigo">Código (Ex.: 0.00): </label>
-                    <input type="text" name="codigo" id="id_codigo" 
+                    <input type="text" name="codigo" id="id_codigo" class="rtl-number-input"
                         value="{{ form.codigo.value|default_if_none:'' }}" autofocus>
                 </div>
                 <div class="apps-form-input">

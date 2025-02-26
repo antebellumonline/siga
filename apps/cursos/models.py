@@ -7,9 +7,21 @@ Este arquivo contém as classes de modelos usadas para representar e manipular
 os dados relacionados aos alunos no banco de dados.
 """
 
+import re
+
 from django.db import models
 from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
 from apps.certificacoes.models import Certificacao
+
+def validate_codigo(value):
+    """
+    Valida se o código da categoria do curso está no formato correto.
+    """
+    if not re.match(r'^\d{1,3}\.\d{2}$', value):
+        raise ValidationError(
+            'Código deve estar no formato #.#0, com até três dígitos antes e dois depois do ponto.'
+        )
 
 class CursoCategoria(models.Model):
     """
@@ -112,7 +124,7 @@ class TrainingBlocksTopico(models.Model):
     """Modelo que representa um Tópico de Bloco de Treinamento."""
 
     id = models.AutoField(primary_key=True)
-    codigo = models.CharField(max_length=10)
+    codigo = models.CharField(max_length=7, validators=[validate_codigo])
     nome = models.CharField(max_length=255)
     inativo = models.BooleanField(default=False)
 
@@ -122,12 +134,13 @@ class TrainingBlocksTopico(models.Model):
     class Meta:
         """Meta-informações para o modelo trainingBlocksTopico."""
         db_table = 'tb_trainingBlocks-topico'
+        ordering = [models.functions.Cast('codigo', output_field=models.FloatField())]
 
 class TrainingBlocks(models.Model):
     """Modelo que representa um Bloco de Treinamento."""
 
     id = models.AutoField(primary_key=True)
-    codigo = models.CharField(max_length=10)
+    codigo = models.CharField(max_length=7, validators=[validate_codigo])
     duracao = models.DurationField(default='00:00:00')
     descricao = models.CharField(max_length=255)
     topico = models.ForeignKey(
@@ -145,6 +158,7 @@ class TrainingBlocks(models.Model):
     class Meta:
         """Meta-informações para o modelo TrainingBlocks."""
         db_table = 'tb_trainingBlocks'
+        ordering = [models.functions.Cast('codigo', output_field=models.FloatField())]
 
 class CursoTrainingBlocks(models.Model):
     """Modelo que representa a relação entre Curso e Training Blocks."""
@@ -165,7 +179,7 @@ class CursoTrainingBlocks(models.Model):
         on_delete=models.CASCADE,
         related_name='topico'
     )
-    ordem = models.PositiveIntegerField()
+    ordem = models.CharField(max_length=7, validators=[validate_codigo])
     observacao = models.TextField(blank=True, null=True)
     inativo = models.BooleanField(default=False)
 
@@ -176,3 +190,4 @@ class CursoTrainingBlocks(models.Model):
         """Meta-informações para o modelo CursoTrainingBlocks."""
         db_table = 'tb_curso-trainingBlocks'
         unique_together = ('curso', 'trainingBlocks', 'ordem')
+        ordering = [models.functions.Cast('ordem', output_field=models.FloatField())]
