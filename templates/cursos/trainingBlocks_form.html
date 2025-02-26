@@ -36,16 +36,16 @@
                 <div class="apps-form-input">
                     <label for="id_duracao">Duração: </label>
                     <input type="text" name="duracao" id="edit-select-trainingBlocks-duracao" 
-                        value="{{ form.duracao.value|date:'H:i:s' }}" data-mask="time">
+                        value="{{ form.duracao.value|default_if_none:'' }}" data-mask="time">
                 </div>
                 <div class="apps-form-input">
                     <label for="id_topico">Tópico: </label>
                     <select name="topico" id="edit-select-topico" class="select-edit select2">
                         <option value="">Selecionar Tópico</option>
                         {% for topico in topicos %}
-                        <option value="{{ topico.id }}" {% if form.topico.value == topico.id %}selected{% endif %}>
+                        <option value="{{ topico.id }}" {% if form.topico.value|stringformat:"s" == topico.id|stringformat:"s" %}selected{% endif %}>
                             {{ topico.nome }}
-                        </option>
+                        </option>                        
                         {% endfor %}
                     </select>
                 </div>
