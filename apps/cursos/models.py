@@ -71,10 +71,15 @@ class CursoVersao(models.Model):
     curso = models.ForeignKey(Curso, on_delete=models.PROTECT)
     versao = models.CharField(
         max_length=6,
-        validators=[RegexValidator(
-            regex=r'^\d+\.\d+$',
-            message='A versão deve ser um número no formato X.Y, por exemplo: 2.1, 30.5, 30.57, etc.'
-        )]
+        validators = [
+            RegexValidator(
+                regex=r'^\d+\.\d+$',
+                message=(
+                    'A versão deve ser um número no formato X.Y, '
+                    'por exemplo: 2.1, 30.5, 30.57, etc.'
+                )
+            )
+        ]
     )
     codigo = models.CharField(max_length=255)
     cargaHoraria = models.DurationField(default='00:00:00')
