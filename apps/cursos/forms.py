@@ -124,6 +124,7 @@ class TrainingBlocksForm(forms.ModelForm):
                   'topico',
                   'duracao',
                   'descricao',
+                  'gravado',
                   'observacao',
                   'inativo'
             ]
@@ -132,6 +133,10 @@ class TrainingBlocksForm(forms.ModelForm):
             'topico': forms.Select(attrs={'class': 'form-control'}),
             'duracao': forms.TimeInput(attrs={'class': 'form-control', 'type': 'time'}),
             'descricao': forms.TextInput(attrs={'class': 'form-control'}),
+            'gravado': forms.Select(choices=[
+                (True, 'Sim'),
+                (False, 'Não')
+            ], attrs={'class': 'form-select'}),
             'observacao': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
             'inativo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }

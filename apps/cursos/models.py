@@ -149,6 +149,7 @@ class TrainingBlocks(models.Model):
         blank=True,
         null=True
         )
+    gravado = models.BooleanField(default=False)
     observacao = models.TextField(blank=True, null=True)
     inativo = models.BooleanField(default=False)
 
