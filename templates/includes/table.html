@@ -6,7 +6,7 @@
             <tr>
                 {% for header in headers %}
                 <th>
-                    <a class="sort-link" href="?order_by={{ header.field }}&descending={% if request.GET.order_by == header.field and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&aluno={{ request.GET.aluno }}&daterange={{ request.GET.daterange }}&centroProva={{ request.GET.centroProva }}&certificacao={{ request.GET.certificacao }}&presenca={{ request.GET.presenca }}&cancelado={{ request.GET.cancelado }}">
+                    <a class="sort-link" href="?order_by={{ header.field }}&descending={% if request.GET.order_by == header.field and not request.GET.descending == 'True' %}True{% else %}False{% endif %}{% for key, value in request.GET.items %}{% if key != 'order_by' and key != 'descending' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
                         {{ header.label }} {% if request.GET.order_by == header.field %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
                     </a>
                 </th>
