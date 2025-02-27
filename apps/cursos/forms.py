@@ -136,7 +136,7 @@ class TrainingBlocksForm(forms.ModelForm):
             'gravado': forms.Select(choices=[
                 (True, 'Sim'),
                 (False, 'Não')
-            ], attrs={'class': 'form-select'}),
+            ], attrs={'class': 'form-control select2'}),
             'observacao': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
             'inativo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
