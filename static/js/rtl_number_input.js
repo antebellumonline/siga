@@ -1,11 +1,13 @@
 /* static/js/rtl_number_input.js */
 
 document.addEventListener('DOMContentLoaded', function() {
-    function formatNumberInput(input) {
+    function formatNumberInput(input, onBlur = false) {
         let value = input.value.replace(/\D/g, ''); // Remove tudo que não for número
 
         if (value.length === 0) {
-            input.value = '0.00';
+            if (onBlur) {
+                input.value = '';
+            }
             return;
         }
 
@@ -23,12 +25,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         input.addEventListener('blur', function() {
-            if (!this.value.includes('.')) {
-                this.value = '0.00';
+            if (this.value === '') {
+                return;
             }
+            formatNumberInput(this, true);
         });
 
-        // Formata o valor inicial ao carregar a página
-        formatNumberInput(input);
+        // Não formata o valor inicial ao carregar a página
     });
 });
