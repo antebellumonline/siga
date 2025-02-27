@@ -22,11 +22,11 @@
             <div class="apps-list-form-group-search-sub">
                 <input type="checkbox" id="check-list-trainingBlocks-topico" data-target="list-trainingBlocks-topico">
                 <label for="search-list-trainingBlocks-topico">Tópico:</label>
-                <select name="aluno" id="list-trainingBlocks-topico" class="select-search select2">
+                <select name="topico" id="list-trainingBlocks-topico" class="select-search select2">
                     <option value="">Selecionar Tópico</option>
                     {% for topico in topico %}
                     <option value="{{ topico.id }}" {% if request.GET.topico == topico.id %}selected{% endif %}>
-                        {{ topico.descricao }}
+                        {{ topico.codigo }}: {{ topico.nome }}
                     </option>
                     {% endfor %}
                 </select>
@@ -48,8 +48,8 @@
     </form>
     <!-- Grupo de botões -->
     <div class="apps-list-btn-group">
-        <a class="btn-return btn-dark" href="{% url 'curso_home' %}">Retornar</a>
-        <a class="btn-new btn-dark" href="{% url 'trainingblocks_new' %}">Novo</a>
+        <a class="btn-return btn-dark" href="{% url 'curso_home' %}" accesskey="r">Retornar</a>
+        <a class="btn-new btn-dark" href="{% url 'trainingblocks_new' %}" accesskey="n">Novo</a>
         <!-- <a class="btn-pdf btn-yellow" href="{% url 'exame_report_pdf' %}?{{ query_params }}">Exportar para PDF</a>
         <a class="btn-excel btn-yellow" href="{% url 'exame_report_xlsx' %}?{{ query_params }}">Exportar para Excel</a> -->
     </div>

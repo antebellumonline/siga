@@ -532,7 +532,7 @@ def trainingblocks_list(request):
     context = {
         'trainingblocks': trainingblocks,
         'page_obj': page_obj,
-        'topicos': topicos,
+        'topico': topicos,
         'query_params': request.GET.urlencode(),
         'headers': [
             {'field': 'codigo', 'label': 'Código'},
