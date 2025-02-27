@@ -1,7 +1,22 @@
 import os
 import sys
+import django
 import subprocess
+
+from django.conf import settings
 from datetime import datetime
+
+# Define o DJANGO_SETTINGS_MODULE antes de chamar django.setup()
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "siga.settings")
+django.setup()
+
+def get_project_apps():
+    return [
+        app.split('.')[-1]
+        for app in settings.INSTALLED_APPS
+        if not app.startswith("django.") and not app.startswith("allauth")
+    ]
+apps = get_project_apps()
 
 def generate_diagram():
     # Define o diretório e o nome do arquivo
@@ -21,9 +36,8 @@ def generate_diagram():
     os.chdir(r'C:\Users\AndreVentura\ANTEBELLUM LLC\SIGA - Documentos\siga-app')
 
     # Gera o diagrama em formato PDF
-    result = subprocess.run([sys.executable, "manage.py", "graph_models", "-a", "--group-models", "-o", file_path],
+    result = subprocess.run([sys.executable, "manage.py", "graph_models", *apps, "--group-models", "-o", file_path],
                         capture_output=True, text=True)
-
 
     # Verifica se houve algum erro durante a execução do comando
     if result.returncode != 0:
