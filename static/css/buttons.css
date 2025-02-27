@@ -212,3 +212,9 @@
     background-color: transparent;
     color: #3FB081;
 }
+
+/* Estilo para botões inativos */
+.btn-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}

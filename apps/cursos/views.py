@@ -430,6 +430,12 @@ def trainingblockstopico_delete(request, pk):
 
 # ----- XXXXX ----- XXXXX -----
 
+def trainingblocks_home(request):
+    """
+    View para a Página Inicial do App Training Blocks
+    """
+    return render(request, 'cursos/trainingBlocks_home.html')
+
 def trainingblocks_new(request):
     """
     View para Adicionar uma Training Blocks

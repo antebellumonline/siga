@@ -11,6 +11,9 @@ from .forms import CertificacaoForm, CertificadorForm
 def certificacao_home(request):
     return render(request, 'certificacao/certificacao_home.html')
 
+def certificador_home(request):
+    return render(request, 'certificacao/certificador_home.html')
+
 # ----- View para Adicionar um Certificador -----
 def certificador_new(request):
     if request.method == "POST":

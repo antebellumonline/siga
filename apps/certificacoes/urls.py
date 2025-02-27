@@ -4,8 +4,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # URL da Página Inicial das Certificações
+    # URL das Páginas Iniciais
     path('certificacao/', views.certificacao_home, name='certificacao_home'),
+    path('certificador/', views.certificador_home, name='certificador_home'),
 
     # URLs Certificadores
     path('certificador/new/', views.certificador_new, name='certificador_new'),

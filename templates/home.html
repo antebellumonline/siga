@@ -15,23 +15,46 @@
 
             <!-- Lista de aplicativos -->
             <div class="app-grid">
-                <a href="/clientes" class="app-item">
-                    <i class="fa fa-star"></i>
-                    <p>Clientes</p>
-                </a>
-                <a href="/certificacao" class="app-item">
-                    <i class="fa fa-trophy"></i>
-                    <p>Certificações</p>
-                </a>
-                <a href="/curso" class="app-item">
-                    <i class="fa fa-graduation-cap"></i>
-                    <p>Cursos</p>
-                </a>
                 <a href="/centroProva" class="app-item">
-                    <i class="fa fa-clipboard-check"></i>
+                    <i class="fa fa-school"></i>
                     <p>Centro de Provas</p>
                 </a>
-                <!-- Adicione mais aplicativos a partir desta linha -->
+                <a href="/certificacao" class="app-item">
+                    <i class="fa fa-certificate"></i>
+                    <p>Certificações</p>
+                </a>
+                <a href="/certificador" class="app-item">
+                    <i class="fa fa-user-check"></i>
+                    <p>Certificadores</p>
+                </a>
+                <a href="/alunos" class="app-item">
+                    <i class="fa fa-user-graduate"></i>
+                    <p>Clientes PF<br>(Alunos)</p>
+                </a>
+                <a href="/empresas" class="app-item btn-disabled">
+                    <i class="fa fa-building"></i>
+                    <p>Clientes PJ<br>(Empresas)</p>
+                </a>
+                <a href="/cursos" class="app-item">
+                    <i class="fa fa-book"></i>
+                    <p>Cursos</p>
+                </a>
+                <a href="/instrutores" class="app-item btn-disabled">
+                    <i class="fa fa-chalkboard-teacher"></i>
+                    <p>Instrutores</p>
+                </a>
+                <a href="/" class="app-item btn-disabled">
+                    <i class="fa fa-file-invoice"></i>
+                    <p>Notas Fiscais</p>
+                </a>
+                <a href="/turmas" class="app-item btn-disabled">
+                    <i class="fa fa-users"></i>
+                    <p>Turmas</p>
+                </a>
+                <a href="/trainingBlocks" class="app-item">
+                    <i class="fa fa-cubes"></i>
+                    <p>Training Blocks</p>
+                </a>
             </div>
 
             <p>Você está logado como <strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong>.</p>

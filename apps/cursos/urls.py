@@ -11,12 +11,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    #URL página Principal do App Cursos
-    path(
-        'curso/',
-         views.curso_home,
-         name='curso_home'
-    ),
+    #URL páginas Iniciais
+    path('curso/', views.curso_home, name='curso_home'),
+    path('trainingBlocks/', views.trainingblocks_home, name='trainingblocks_home'),
 
     # URLs Cursos
     path(
@@ -74,53 +71,54 @@ urlpatterns = [
 
     # URLs Tópicos Training Blocks
     path(
-        'curso/trainingBlocksTopico/new/',
+        'trainingBlocks/topico/new/',
         views.trainingblockstopico_new,
         name='trainingblockstopico_new'
     ),
     path(
-        'curso/trainingBlocksTopico/list/',
+        'trainingBlocks/topico/list/',
         views.trainingblockstopico_list,
         name='trainingblockstopico_list'
     ),
     path(
-        'curso/trainingBlocksTopico/<int:pk>/',
+        'trainingBlocks/topico/<int:pk>/',
         views.trainingblockstopico_detail,
         name='trainingblockstopico_detail'
     ),
     path(
-        'curso/trainingBlocksTopico/<int:pk>/edit/',
+        'trainingBlocks/topico/<int:pk>/edit/',
         views.trainingblockstopico_edit,
         name='trainingblockstopico_edit'
     ),
     path(
-        'curso/trainingBlocksTopico/<int:pk>/delete/',
+        'trainingBlocks/topico/<int:pk>/delete/',
         views.trainingblockstopico_delete,
         name='trainingblockstopico_delete'
     ),
 
     # URLs Training Blocks
     path(
-        'curso/trainingBlocks/new/',
+        'trainingBlocks/new/',
         views.trainingblocks_new,
         name='trainingblocks_new'
     ),
     path(
-        'curso/trainingBlocks/list/',
+        'trainingBlocks/list/',
         views.trainingblocks_list,
         name='trainingblocks_list'
     ),
     path(
-        'curso/trainingBlocks/<int:pk>/',
+        'trainingBlocks/<int:pk>/',
         views.trainingblocks_detail,
         name='trainingblocks_detail'
     ),
-    path('curso/trainingBlocks/<int:pk>/edit/',
+    path(
+        'trainingBlocks/<int:pk>/edit/',
          views.trainingblocks_edit,
          name='trainingblocks_edit'
     ),
     path(
-        'curso/trainingBlocks/<int:pk>/delete/',
+        'trainingBlocks/<int:pk>/delete/',
         views.trainingblocks_delete,
         name='trainingblocks_delete'
     ),

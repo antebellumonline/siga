@@ -1,0 +1,30 @@
+<!-- templates/curso/trainingBlocks_home.html -->
+
+{% extends "base.html" %}
+
+{% block title %}SIGA - Gestão Training Blocks{% endblock %}
+
+{% block body_class %}body-apps-home{% endblock %}
+
+{% block header_title %}Gestão Training Blocks{% endblock %}
+
+{% block content %}
+
+<div class="container-home-apps">
+    <div class="column-home-apps">
+        <h3 class="home-apps-subtitle">Training Blocks</h3>
+        <div class="btn-group-home-apps">
+            <a href="{% url 'trainingblocks_new' %}" class="btn-new btn-transparent" aria-label="Criar nova Training Blocks">Novo</a>
+            <a href="{% url 'trainingblocks_list' %}" class="btn-list btn-transparent" aria-label="Localizar Training Blocks">Localizar</a>
+        </div>
+    </div>
+    <div class="column-home-apps">
+        <h3 class="home-apps-subtitle">Tópicos da Training Blocks</h3>
+        <div class="btn-group-home-apps">
+            <a href="{% url 'trainingblockstopico_new' %}" class="btn-new btn-transparent" aria-label="Criar Novo Tópico da Training Blocks">Novo</a>
+            <a href="{% url 'trainingblockstopico_list' %}" class="btn-list btn-transparent" aria-label="Localizar Tópico da Training Blocks">Localizar</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
