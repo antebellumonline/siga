@@ -8,6 +8,7 @@ os dados relacionados aos Instrutores no banco de dados.
 """
 
 from django.db import models
+from apps.auxiliares.fields import InativoField
 
 class Instrutor(models.Model):
     """
@@ -16,7 +17,7 @@ class Instrutor(models.Model):
     id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=255)
     observacao = models.TextField(blank=True, null=True)
-    inativo = models.BooleanField(default=False)
+    inativo = InativoField(default=False)
 
     def __str__(self):
         return str(self.nome)
