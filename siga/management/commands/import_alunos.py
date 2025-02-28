@@ -1,7 +1,7 @@
 import pandas as pd
 from django.core.management.base import BaseCommand
 from apps.alunos.models import Aluno
-from apps.cidades.models import Cidade
+from apps.local.models import Cidade
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 import logging

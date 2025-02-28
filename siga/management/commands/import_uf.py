@@ -1,6 +1,6 @@
 import pandas as pd
 from django.core.management.base import BaseCommand
-from apps.cidades.models import Estado
+from apps.local.models import Estado
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 import logging

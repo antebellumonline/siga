@@ -9,7 +9,7 @@ os dados relacionados aos alunos no banco de dados.
 
 from django.db import models
 from django.db.models import Manager
-from apps.cidades.models import Cidade
+from apps.local.models import Cidade
 from apps.auxiliares.models import ConfigTpContato
 
 class Aluno(models.Model):
