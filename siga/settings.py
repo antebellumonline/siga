@@ -88,6 +88,7 @@ INSTALLED_APPS = [
     'apis',
     'reports',
     'apps.alunos',
+    'apps.auxiliares',
     'apps.cidades',
     'apps.certificacoes',
     'apps.centroProva',
