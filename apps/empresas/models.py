@@ -9,7 +9,7 @@ os dados relacionados aos alunos no banco de dados.
 
 from django.db import models
 from apps.cidades.models import Cidade
-from apps.alunos.models import ConfigTpContato
+from apps.auxiliares.models import ConfigTpContato
 
 class Empresa(models.Model):
     """
