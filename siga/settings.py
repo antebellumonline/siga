@@ -95,6 +95,7 @@ INSTALLED_APPS = [
     'apps.cursos',
     'apps.empresas',
     'apps.instrutores',
+    'apps.turmas',
 ]
 
 # Configuração dos middlewares (MIDDLEWARE)
