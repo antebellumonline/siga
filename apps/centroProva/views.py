@@ -277,7 +277,8 @@ def exame_list(request):
         'rows': [
             [
                 timezone.localtime(exame.data).strftime("%d/%m/%Y %H:%M"),
-                mark_safe(f'<a href="{reverse("exame_detail", args=[exame.id])}">{exame.aluno.nome}</a>'),
+                mark_safe(f'<a href="{reverse(
+                    "exame_detail", args=[exame.id])}">{exame.aluno.nome}</a>'),
                 exame.centroProva.nome,
                 f"{exame.certificacao.descricao} ({exame.certificacao.siglaExame})",
                 "Sim" if exame.presenca else "Não",

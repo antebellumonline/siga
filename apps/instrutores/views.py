@@ -8,6 +8,8 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from django.db.models import Q
 
+from django.utils.safestring import mark_safe
+
 from .models import Instrutor
 from .forms import InstrutorForm
 
@@ -93,7 +95,8 @@ def instrutor_list(request):
         'rows': [
             [
                 instrutor.id,
-                instrutor.nome,
+                mark_safe(f'<a href="{reverse(
+                    "instrutor_detail", args=[instrutor.id])}">{instrutor.nome}</a>'),
                 "Sim" if instrutor.inativo else "Não",
             ]
             for instrutor in page_obj

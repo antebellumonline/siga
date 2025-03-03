@@ -1,0 +1,23 @@
+<!-- templates/instrutores/instrutor_home.html -->
+
+{% extends "base.html" %}
+
+{% block title %}SIGA - Gestão de Instrutores{% endblock %}
+
+{% block body_class %}body-apps-home{% endblock %}
+
+{% block header_title %}Gestão de Instrutores{% endblock %}
+
+{% block content %}
+
+<div class="container-home-apps">
+    <div class="column-home-apps">
+        <h3 class="home-apps-subtitle">Instrutores</h3>
+        <div class="btn-group-home-apps">
+            <a href="{% url 'instrutor_new' %}" class="btn-new btn-transparent" aria-label="Criar novo Instrutor">Novo</a>
+            <a href="{% url 'instrutor_list' %}" class="btn-list btn-transparent" aria-label="Localizar Instrutores">Localizar</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
