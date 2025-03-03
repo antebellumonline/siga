@@ -1,10 +1,7 @@
-# apps/cidades/models.py
+# apps/local/models.py
 
 """
-Definições dos modelos do aplicativo 'alunos'.
-
-Este arquivo contém as classes de modelos usadas para representar e manipular
-os dados relacionados aos alunos no banco de dados.
+Definições dos modelos do aplicativo 'local'.
 """
 
 from django.db import models
@@ -38,3 +35,24 @@ class Cidade(models.Model):
     class Meta:
         """Meta-informações para o modelo Cidade."""
         db_table = 'tb_uf-cidade'
+
+class Local (models.Model):
+    """
+    Modelo que representa um local.
+    """
+    id = models.AutoField(primary_key=True)
+    nome = models.CharField(max_length=255)
+    endereco = models.CharField(max_length=255, blank=True, null=True)
+    numero = models.CharField(max_length=10, blank=True, null=True)
+    complemento = models.CharField(max_length=255, blank=True, null=True)
+    bairro = models.CharField(max_length=255, blank=True, null=True)
+    cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, blank=True, null=True)
+    observacao = models.TextField(blank=True, null=True)
+    inativo = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.nome)
+
+    class Meta:
+        """Meta-informações para o modelo Local"""
+        db_table = 'tb_local'
