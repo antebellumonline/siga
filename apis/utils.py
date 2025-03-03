@@ -4,7 +4,12 @@
 Este módulo contém funções utilitárias para a implementação de APIs.
 """
 
+import logging
 import requests
+
+# Configuração do logger
+logging.basicConfig(level=logging.ERROR)
+logger = logging.getLogger(__name__)
 
 def busca_cep(cep):
     """
