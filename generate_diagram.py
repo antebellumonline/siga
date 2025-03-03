@@ -1,16 +1,24 @@
 import os
 import sys
-import django
 import subprocess
+import tkinter as tk
 
-from django.conf import settings
+from tkinter import filedialog
 from datetime import datetime
 
+import django
+
+from django.conf import settings
+
+"""
+...
+"""
 # Define o DJANGO_SETTINGS_MODULE antes de chamar django.setup()
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "siga.settings")
 django.setup()
 
 def get_project_apps():
+    """..."""
     return [
         app.split('.')[-1]
         for app in settings.INSTALLED_APPS
@@ -19,32 +27,46 @@ def get_project_apps():
 apps = get_project_apps()
 
 def generate_diagram():
-    # Define o diretório e o nome do arquivo
-    directory = r"C:\Users\AndreVentura\ANTEBELLUM LLC\SIGA - Documentos\Diagramas"
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+    """..."""
+    # Cria uma instância da janela Tkinter
+    root = tk.Tk()
+    root.withdraw()  # Oculta a janela principal
 
-    # Obtém a data e hora atual
-    now = datetime.now()
-    date_time = now.strftime("%Y%m%d%H%M")
+    # Abre o pop-up de seleção de pasta para salvar o diagrama
+    save_directory = filedialog.askdirectory(title="Selecione a pasta para salvar o diagrama")
 
-    # Define o nome do arquivo com a data e hora atual
-    file_name = f"siga-app_diagrama_{date_time}.pdf"
-    file_path = os.path.join(directory, file_name)
+    # Verifica se o usuário selecionou uma pasta
+    if save_directory:
+        if not os.path.exists(save_directory):
+            os.makedirs(save_directory)
 
-    # Muda para o diretório do projeto
-    os.chdir(r'C:\Users\AndreVentura\ANTEBELLUM LLC\SIGA - Documentos\siga-app')
+        # Obtém a data e hora atual
+        now = datetime.now()
+        date_time = now.strftime("%Y%m%d%H%M")
 
-    # Gera o diagrama em formato PDF
-    result = subprocess.run([sys.executable, "manage.py", "graph_models", *apps, "--group-models", "-o", file_path],
-                        capture_output=True, text=True)
+        # Define o nome do arquivo com a data e hora atual
+        file_name = f"siga-app_diagrama_{date_time}.pdf"
+        file_path = os.path.join(save_directory, file_name)
 
-    # Verifica se houve algum erro durante a execução do comando
-    if result.returncode != 0:
-        print("Erro ao gerar o diagrama:")
-        print(result.stderr)
+        # Define o caminho para o manage.py
+        manage_py_path = os.path.join(os.getcwd(), 'manage.py')
+
+        # Verifica se o arquivo manage.py existe
+        if os.path.exists(manage_py_path):
+            # Gera o diagrama em formato PDF
+            result = subprocess.run([sys.executable, manage_py_path, "graph_models", *apps, "--group-models", "-o", file_path],
+                                capture_output=True, text=True)
+
+            # Verifica se houve algum erro durante a execução do comando
+            if result.returncode != 0:
+                print("Erro ao gerar o diagrama:")
+                print(result.stderr)
+            else:
+                print(f"Diagrama gerado com sucesso: {file_path}")
+        else:
+            print(f"O arquivo manage.py não foi encontrado no diretório atual: {os.getcwd()}")
     else:
-        print(f"Diagrama gerado com sucesso: {file_path}")
+        print("Nenhuma pasta selecionada para salvar o diagrama.")
 
 if __name__ == "__main__":
     generate_diagram()
