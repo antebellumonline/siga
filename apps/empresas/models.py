@@ -16,7 +16,7 @@ class Empresa(models.Model):
     Modelo que representa um Curso.
     """
     id = models.AutoField(primary_key=True)
-    taxID = models.CharField(max_length=255, unique=True)
+    taxId = models.CharField(max_length=255, unique=True)
     razaoSocial = models.CharField(max_length=255)
     fantasia = models.CharField(max_length=255)
     cep = models.CharField(max_length=8, blank=True, null=True)
@@ -50,7 +50,7 @@ class EmpresaContato(models.Model):
         Retorna uma string com o tipo de contato e o contato.
         """
         # pylint: disable=no-member
-        return f'Contato de {self.empresa.razaoSocial}: {self.tipoContato.descricao} - {self.contato}'
+        return f'Contato de {self.empresa.razaoSocial}: {self.tipoContato.descricao}'
 
     class Meta:
         """Meta-informações para o modelo EmpresaContato."""
