@@ -173,6 +173,9 @@ class CursoTrainingBlocksForm (forms.ModelForm):
         self.fields['curso'].label_from_instance = self.curso_label_from_instance
 
     def curso_label_from_instance(self, obj):
+        """
+    Retorna uma string formatada com o Código e Nome do Curso.
+    """
         return f"{obj.codigo}: {obj.nome}"
 
 CursoTrainingBlocksFormSet = inlineformset_factory(
