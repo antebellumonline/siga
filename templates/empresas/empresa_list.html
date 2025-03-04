@@ -1,0 +1,77 @@
+<!-- templates/empresas/empresa_list.html -->
+
+{% extends "base.html" %}
+
+{% block title %}SIGA - Lista de Empresas{% endblock %}
+
+{% block body_class %}body-apps-list{% endblock %}
+
+{% block header_title %}Lista de Empresas{% endblock %}
+
+{% block content %}
+
+<!-- Formulário de busca e filtro -->
+ <div class="container-apps-list">
+    <form method="GET" action="{% url 'empresa_list' %}" class="apps-list-search-form">
+        <div class="apps-list-form-group-search">
+            <div class="apps-list-form-group-search-sub">
+                <input type="checkbox" id="check-list-empresa-razaoSocial" data-target="list-empresa-razaoSocial">
+                <label for="search-list-empresa-razaoSocial">CNPJ, Razão Social, Fantasia ou Contatos:</label>
+                <input type="text" id="list-empresa-razaoSocial" name="q" placeholder="Busque por CNPJ, Razão Social, Fantasia ou Contatos da Empresa" value="{{ request.GET.q }}" class="form-control" aria-label="Busque por CNPJ, Razão Social, Fantasia ou Contatos da Empresa">
+            </div>
+            <div class="apps-list-form-group-search-sub">
+                <input type="checkbox" id="check-list-empresa-cidade" data-target="list-empresa-cidade">
+                <label for="search-list-exame-aluno">Cidade:</label>
+                <select name="cidade" id="list-empresa-cidade" class="select-search select2">
+                    <option value="">Selecionar Cidade</option>
+                    {% for cidade in cidades %}
+                    <option value="{{ cidade.id }}" {% if request.GET.cidade == cidade.id %}selected{% endif %}>
+                        {{ cidade.nome }} ({{ cidade.estado.uf }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="apps-list-select-group-search">
+                <input type="checkbox" id="check-list-empresa-inativo" data-target="list-empresa-inativo">
+                <label for="search-list-empresa-inativo">Inativo:</label>
+                <select name="inativo" id="list-empresa-inativo" class="select-search select2">
+                    <option value="True" {% if request.GET.inativo == 'True' %}selected{% endif %}>Sim</option>
+                    <option value="False" {% if request.GET.inativo == 'False' %}selected{% endif %}>Não</option>
+                </select>
+            </div> 
+        </div>
+        <!-- Botões de Ação -->
+        <div class="apps-list-btn-group-search">
+            <button type="submit" class="btn-list btn-circle btn-dark"></button>
+            <a class="btn-clear btn-circle btn-yellow" href="{% url 'empresa_list' %}"></a>
+        </div>
+    </form>
+    <!-- Grupo de botões -->
+    <div class="apps-list-btn-group">
+        <a class="btn-return btn-dark" href="{% url 'empresa_home' %}" accesskey="r">Retornar</a>
+        <a class="btn-new btn-dark" href="{% url 'empresa_new' %}" accesskey="n">Novo</a>
+        <!-- <a class="btn-pdf btn-yellow" href="{% url 'exame_report_pdf' %}?{{ query_params }}">Exportar para PDF</a>
+        <a class="btn-excel btn-yellow" href="{% url 'exame_report_xlsx' %}?{{ query_params }}">Exportar para Excel</a> -->
+    </div>
+    <!-- Seletor para escolher quantos registros exibir -->
+    {% include "includes/records_per_page_selector.html" with action_url=request.path %}
+    <!-- Contador de registros -->
+    {% include 'includes/record_counter.html' with page_obj=page_obj %}
+    <!-- Paginação da Tabela -->
+    {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
+    <!-- Tabela de busca -->
+    <div class="ajax-table table-list" id="ajax-table">
+        {% include 'includes/table.html' %}
+    </div>
+    <!-- Paginação da Tabela -->
+    {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
+    <!-- Contador de registros -->
+    {% include 'includes/record_counter.html' with page_obj=page_obj %}
+    <!-- Grupo de botões -->
+    <div class="apps-list-btn-group">
+        <a class="btn-return btn-dark" href="{% url 'empresa_home' %}">Retornar</a>
+        <a class="btn-new btn-dark" href="{% url 'empresa_new' %}">Novo</a>
+    </div>
+</div>
+
+{% endblock %}

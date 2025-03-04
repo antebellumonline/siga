@@ -546,7 +546,10 @@ def trainingblocks_list(request):
             [
                 trainingblocks.codigo,
                 trainingblocks.duracao,
-                mark_safe(f'<a href="{reverse("trainingblocks_detail", args=[trainingblocks.id])}">{trainingblocks.descricao}</a>'),
+                mark_safe(f'<a href="{reverse(
+                    "trainingblocks_detail",
+                    args=[trainingblocks.id])}">{trainingblocks.descricao}</a>'
+                ),
                 trainingblocks.topico.nome,
                 trainingblocks.observacao,
                 "Sim" if trainingblocks.inativo else "Não",
@@ -566,7 +569,9 @@ def trainingblocks_detail(request, pk):
     """
     # Obtém os filtros
     trainingblocks = get_object_or_404(TrainingBlocks, pk=pk)
-    cursos = CursoTrainingBlocks.objects.filter(trainingBlocks=trainingblocks).order_by('curso__codigo')
+    cursos = CursoTrainingBlocks.objects.filter(
+        trainingBlocks=trainingblocks
+    ).order_by('curso__codigo')
 
     # Renderização do template
     return render(request, 'cursos/trainingBlocks_detail.html', {

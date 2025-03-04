@@ -50,15 +50,20 @@ def empresa_list(request):
     """
     # Obtém os filtros
     query = request.GET.get('q')
-    inativo = request.GET.get('inativo')
     cidade = request.GET.get('cidade')
+    inativo = request.GET.get('inativo')
 
     # Ordenação
-    order_by = request.GET.get('order_by', 'nome')
+    order_by = request.GET.get('order_by', 'razaoSocial')
     descending = request.GET.get('descending', 'False') == 'True'
 
-    # Otimiza a consulta usando select_related para carregar cidade junto com aluno
-    empresas = Empresa.objects.prefetch_related('contatos', 'cidade', 'cidade__estado').all()
+    # Otimiza a consulta usando select_related para carregar cidade junto com empresa
+    empresas = Empresa.objects.all()
+
+    # Otimização de Consulta
+    empresas = Empresa.objects.select_related(
+        'cidade',
+    )
 
     # Aplicar os filtros e pesquisa
     if query:
@@ -70,16 +75,16 @@ def empresa_list(request):
             Q(contatos__detalhe__icontains=query)
         ).distinct()
 
+    # Filtra por Cidade
+    if cidade:
+        empresas = empresas.filter(cidade__id=cidade)
+
     # Filtra por Status
-    if inativo is not None and inativo != "":  # Verifica se o filtro foi aplicado
+    if inativo is not None and inativo != "":
         if inativo == 'True':
             empresas = empresas.filter(inativo=True)
         elif inativo == 'False':
             empresas = empresas.filter(inativo=False)
-
-    # Filtra por Cidade
-    if cidade:
-        empresas = empresas.filter(cidade__nome=cidade)  # Filtra por Cidade
 
     # Aplicar ordenação
     if descending:
@@ -114,17 +119,19 @@ def empresa_list(request):
         'cidades': cidades,
         'query_params': request.GET.urlencode(),
         'headers': [
-            {'text': 'Tax ID', 'sortable': True, 'sort_field': 'taxId'},
-            {'text': 'Razão Social', 'sortable': True, 'sort_field': 'razaoSocial'},
-            {'text': 'Cidade', 'sortable': True, 'sort_field': 'cidade'},
-            {'text': 'Inativo', 'sortable': True, 'sort_field': 'inativo'},
+            {'field': 'taxId', 'label': 'Tax ID (CNPJ)'},
+            {'field': 'razaoSocial', 'label': 'Razão Social'},
+            {'field': 'fantasia', 'label': 'Nome Fantasia'},
+            {'field': 'cidade_nome', 'label': 'Cidade/UF'},
+            {'field': 'inativo', 'label': 'Inativo'},
         ],
         'rows': [
             [
                 empresa.taxId,
                 mark_safe(f'<a href="{reverse(
                     "empresa_detail", args=[empresa.pk])}">{empresa.razaoSocial}</a>'),
-                f"{empresa.cidade.nome} / {empresa.cidade.estado.sigla}",
+                empresa.fantasia,
+                empresa.cidade,
                 "Sim" if empresa.inativo else "Não",
             ] for empresa in page_obj
         ],

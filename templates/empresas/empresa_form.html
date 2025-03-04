@@ -1,0 +1,121 @@
+<!-- templates/empresas/empresa_form.html -->
+
+{% extends "base.html" %}
+
+{% block title %}{{ form.instance.pk|yesno:"Editar Empresa,Adicionar Empresa" }}{% endblock %}
+
+{% block body_class %}body-apps-form{% endblock %}
+
+{% block header_title %}{{ form.instance.pk|yesno:"Editar Empresa,Adicionar Empresa" }}{% endblock %}
+
+{% block content %}
+
+<div class="container-apps-form">
+    <form method="post" class="apps-form-edit">
+        {% csrf_token %}
+        <div class="apps-form-group-edit">
+            {% if form.instance.pk %}
+            <div class="apps-form-group-edit-status">
+                <h4 class="apps-form-status-section-title">Status da Empresa</h4>
+                <div class="apps-form-input">
+                    <label for="id_inativo">Inativo: </label>
+                    <select id="id_inativo" name="inativo">
+                        <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
+                        <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
+                    </select>
+                </div>
+            </div>
+            {% endif %}
+            <div class="apps-form-group-edit-sub">
+                <h4 class="apps-form-sub-section-title">Detalhes da Empresa</h4>
+                <div class="apps-form-input">
+                    <label for="id_taxId">Tax ID (CNPJ): </label>
+                    {{ form.taxId }}
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_razaoSocial">Razão Social: </label>
+                    {{ form.razaoSocial }}
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_fantasia">Fantasia: </label>
+                    {{ form.fantasia }}
+                </div>
+            </div>
+            <div class="apps-form-group-edit-sub">
+                <h4 class="apps-form-sub-section-title">Endereço da Empresa</h4>
+                <div class="apps-form-input">
+                    <label for="id_cep">CEP: </label>
+                    {{ form.cep }}
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_logradouro">Logradouro: </label>
+                    {{ form.endereco }}
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_numero">Nº: </label>
+                    {{ form.numero }}
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_complemento">Complemento: </label>
+                    {{ form.complemento }}
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_bairro">Bairro: </label>
+                    {{ form.bairro }}
+                </div>
+                <div class="apps-form-input">
+                    <label for="id_cidade">Cidade / UF: </label>
+                    <select name="cidade" id="select-cidade" class="select-edit select2">
+                        <option value="">Selecionar cidade</option>
+                        {% for cidade in cidades %}
+                        <option value="{{ cidade.id }}" {% if form.cidade.value == cidade.id %}selected{% endif %}>
+                            {{ cidade.nome }} - {{ cidade.estado.uf }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <!-- Contatos -->
+            <div class="apps-form-group-edit-sub">
+                <h4 class="apps-form-sub-section-title">Contatos da Empresa</h4>
+                {{ formset.management_form }}
+                {{ formset.non_form_errors }}
+                <table class="tb-form">
+                    <thead>
+                        <tr>
+                            <th>Tipo de Contato</th>
+                            <th>Contato</th>
+                            <th>Detalhe</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contato_form in formset %}
+                        <tr>
+                            <td>{{ contato_form.id }}{{ contato_form.tipoContato }}</td>
+                            <td>{{ contato_form.contato }}</td>
+                            <td>{{ contato_form.detalhe }}</td>
+                            <td>
+                                {% if formset.can_delete %}
+                                    {{ contato_form.DELETE }} Excluir
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4">Nenhum Contato adicionado.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Grupo de botões -->
+        <div class="apps-form-btn-group">
+            <button class="btn-save btn-dark" type="submit" accesskey="s">Salvar</button>
+            <a class="btn-return btn-yellow" href="{% url 'empresa_list' %}" accesskey="r">Retornar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
