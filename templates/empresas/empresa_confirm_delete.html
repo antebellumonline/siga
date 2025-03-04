@@ -1,0 +1,18 @@
+<!-- templates/empresas/empresa_confirm_delete.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}SIGA - Confirmar exclusão da Empresa{% endblock %}
+
+{% block content %}
+
+<h2 class="page-title">Excluir Empresa</h2>
+
+<p>Tem certeza que deseja excluir a Empresa {{ empresa.taxId }} - {{ empresa.razaoSocial }}?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar</button>
+    <a href="{% url 'empresa_list' %}">Cancelar</a>
+</form>
+
+{% endblock %}
