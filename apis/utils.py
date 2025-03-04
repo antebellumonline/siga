@@ -59,7 +59,7 @@ def busca_cep(cep):
 
 def busca_cnpj(cnpj):
     """
-    Busca informações de um CNPJ usando a API CNPJá.
+    Busca informações de um CNPJ usando a API BrasilAPI.
 
     Args:
         cnpj (str): O CNPJ a ser buscado.
@@ -67,13 +67,28 @@ def busca_cnpj(cnpj):
     Returns:
         dict: Um dicionário contendo informações do CNPJ, ou None se não encontrado.
     """
-    url_cnpja = f"https://api.cnpja.com.br/companies/{cnpj}"
+    url_brasil_api = f"https://brasilapi.com.br/api/cnpj/v1/{cnpj}"
+
     try:
-        response_cnpja = requests.get(url_cnpja, timeout=10)
-        if response_cnpja.status_code == 200:
-            data = response_cnpja.json()
-            cidade = data.get("city")
-            uf = data.get("state")
+        response = requests.get(url_brasil_api, timeout=10)
+        logger.info("Status da resposta da API BrasilAPI: %s", response.status_code)
+
+        if response.status_code == 200:
+            data = response.json()
+            logger.info("Dados recebidos da API BrasilAPI: %s", data)
+
+            if 'erro' in data:
+                logger.error("Erro na resposta da API BrasilAPI: %s", data['erro'])
+                return None
+
+            cidade = data.get("municipio")
+            uf = data.get("uf")
+            descricao_tipo_de_logradouro = data.get("descricao_tipo_de_logradouro", "")
+            logradouro = data.get("logradouro", "")
+
+            # Concatenando logradouro com descricao_tipo_de_logradouro
+            endereco_completo = f"{descricao_tipo_de_logradouro} {logradouro}".strip()
+
             if cidade and uf:
                 url_ibge = (
                     f"https://servicodados.ibge.gov.br/api/v1/localidades/municipios"
@@ -89,19 +104,24 @@ def busca_cnpj(cnpj):
                         ):
                             data["ibge"] = municipio["id"]
                             break
+
+            if cidade and uf:
                 return {
                     "taxID": data.get("cnpj"),
                     "razaoSocial": data.get("razao_social"),
                     "fantasia": data.get("nome_fantasia"),
                     "cep": data.get("cep"),
-                    "endereco": data.get("logradouro"),
+                    "endereco": endereco_completo,
                     "numero": data.get("numero"),
                     "complemento": data.get("complemento"),
                     "bairro": data.get("bairro"),
-                    "cidade": data.get("city"),
-                    "uf": data.get("state"),
+                    "cidade": data.get("municipio"),
+                    "uf": data.get("uf"),
                     "ibge": data.get("ibge")
                 }
+        else:
+            logger.error("Erro na resposta da API BrasilAPI. Status code: %s", response.status_code)
+            return None
     except requests.exceptions.RequestException as e:
         logger.error("Erro ao buscar CNPJ: %s", e)
         return {"erro": "Erro ao buscar informações do CNPJ"}

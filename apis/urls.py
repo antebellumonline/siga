@@ -12,5 +12,5 @@ from .import views
 
 urlpatterns = [
     path('buscacep/<str:cep>/', views.busca_cep_view, name='busca_cep'),
-    path('buscacnpj/<str:taxID>/', views.busca_cnpj_view, name='busca_cnpj'),
+    path('buscacnpj/<str:taxId>/', views.busca_cnpj_view, name='busca_cnpj'),
 ]
