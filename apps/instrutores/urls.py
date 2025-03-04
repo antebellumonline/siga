@@ -14,5 +14,5 @@ urlpatterns = [
     path('instrutor/list/', views.instrutor_list, name='instrutor_list'),
     path('instrutor/<str:pk>/', views.instrutor_detail, name='instrutor_detail'),
     path('instrutor/<str:pk>/edit/', views.instrutor_edit, name='instrutor_edit'),
-        path('instrutor/<str:pk>/delete/', views.instrutor_delete, name='instrutor_delete'),
+    path('instrutor/<str:pk>/delete/', views.instrutor_delete, name='instrutor_delete'),
 ]
