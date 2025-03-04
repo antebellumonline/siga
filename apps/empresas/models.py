@@ -27,7 +27,7 @@ class Empresa(models.Model):
     bairro = models.CharField(max_length=255, blank=True, null=True)
     cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, blank=True, null=True)
     observacao = models.TextField(null=True, blank=True)
-    inativo = InativoField()
+    inativo = InativoField(default=False)
 
     def __str__(self):
         return self.razaoSocial

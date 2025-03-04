@@ -158,6 +158,6 @@ EmpresaContatoFormSet = inlineformset_factory(
     Empresa,
     EmpresaContato,
     form=EmpresaContatoForm,
-    extra=4,
+    extra=1,
     can_delete=True,
 )

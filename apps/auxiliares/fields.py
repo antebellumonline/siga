@@ -17,4 +17,7 @@ class InativoField(models.BooleanField):
             (True, 'Sim'),
         ]
         kwargs['choices'] = inativo_choices
+        kwargs['default'] = False
+        kwargs['null'] = False
+        kwargs['blank'] = False
         super().__init__(*args, **kwargs)

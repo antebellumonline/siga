@@ -29,11 +29,22 @@ def empresa_new(request):
     if request.method == "POST":
         form = EmpresaForm(request.POST)
         formset = EmpresaContatoFormSet(request.POST)
-        if form.is_valid() and formset.is_valid():
-            empresa = form.save()
-            formset.instance = empresa
-            formset.save()
-            return redirect('empresa_list')
+
+        if form.is_valid():
+            empresa = form.save()  # Salva a empresa primeiro
+            formset.instance = empresa  # Associa a empresa ao formset
+
+            if formset.is_valid():
+                formset.save()  # Salva os contatos
+                return redirect('empresa_list')
+            else:
+                print("Erros no Formset:")
+                for contato_form in formset:
+                    print(contato_form.errors)  # Verifica erros no formset
+        else:
+            print("Erros no Formulário de Empresa:")
+            print(form.errors)  # Verifica erros no formulário de empresa
+
     else:
         form = EmpresaForm()
         formset = EmpresaContatoFormSet()
@@ -131,7 +142,7 @@ def empresa_list(request):
                 mark_safe(f'<a href="{reverse(
                     "empresa_detail", args=[empresa.pk])}">{empresa.razaoSocial}</a>'),
                 empresa.fantasia,
-                empresa.cidade,
+                f"{empresa.cidade.nome if empresa.cidade else '-'} / {empresa.cidade.estado.uf if empresa.cidade else '-'}",
                 "Sim" if empresa.inativo else "Não",
             ] for empresa in page_obj
         ],
