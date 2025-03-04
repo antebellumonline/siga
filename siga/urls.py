@@ -69,6 +69,7 @@ urlpatterns = [
     path('', include('apps.certificacoes.urls')),
     path('', include('apps.centroProva.urls')),
     path('', include('apps.cursos.urls')),
+    path('', include('apps.empresas.urls')),
     path('', include('apps.instrutores.urls')),
     # path('', include('apps.turmas.urls')),
 

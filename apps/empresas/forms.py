@@ -104,36 +104,40 @@ class EmpresaContatoForm(forms.ModelForm):
     """
     Formulário para cadastro e edição de contatos das Empresas.
     """
-    model = EmpresaContato
-    fields = [
-        'empresa',
-        'tipoContato',
-        'contato',
-        'detalhe'
-    ]
-    widgets = {
-        'empresa': forms.Select(attrs={
-            'class': 'apps-form-input',
-            'id': 'empresaContato-empresa',
-            'placeholder': 'Selecione a Empresa',
-        }),
-        'tipoContato': forms.Select(attrs={
-            'class': 'apps-form-input select2',
-            'id': 'empresaContato-tipoContato',
-            'placeholder': 'Selecione o Tipo de Contato',
-        }),
-        'contato': forms.TextInput(attrs={
-            'class': 'apps-form-input',
-            'id': 'empresaContato-contato',
-            'placeholder': 'Digite o Contato',
-        }),
-        'detalhe': forms.Textarea(attrs={
-            'class': 'apps-form-input',
-            'id': 'empresaContato-detalhe',
-            'placeholder': 'Digite algum detalhe sobre o Contato',
-            'rows': 2,
-        }),
-    }
+    class Meta:
+        """
+        Configurações meta do formulário.
+        """
+        model = EmpresaContato
+        fields = [
+            'empresa',
+            'tipoContato',
+            'contato',
+            'detalhe'
+        ]
+        widgets = {
+            'empresa': forms.Select(attrs={
+                'class': 'apps-form-input',
+                'id': 'empresaContato-empresa',
+                'placeholder': 'Selecione a Empresa',
+            }),
+            'tipoContato': forms.Select(attrs={
+                'class': 'apps-form-input select2',
+                'id': 'empresaContato-tipoContato',
+                'placeholder': 'Selecione o Tipo de Contato',
+            }),
+            'contato': forms.TextInput(attrs={
+                'class': 'apps-form-input',
+                'id': 'empresaContato-contato',
+                'placeholder': 'Digite o Contato',
+            }),
+            'detalhe': forms.Textarea(attrs={
+                'class': 'apps-form-input',
+                'id': 'empresaContato-detalhe',
+                'placeholder': 'Digite algum detalhe sobre o Contato',
+                'rows': 2,
+            }),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
