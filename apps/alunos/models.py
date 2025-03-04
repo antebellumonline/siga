@@ -11,6 +11,7 @@ from django.db import models
 from django.db.models import Manager
 from apps.local.models import Cidade
 from apps.auxiliares.models import ConfigTpContato
+from apps.auxiliares.fields import InativoField
 
 class Aluno(models.Model):
     """
@@ -31,7 +32,7 @@ class Aluno(models.Model):
     bairro = models.CharField(max_length=255, blank=True, null=True)
     cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, blank=True, null=True)
     observacao = models.TextField(blank=True, null=True)
-    inativo = models.BooleanField(default=False)
+    inativo = InativoField()
 
     objects: Manager['Aluno'] = Manager()
 

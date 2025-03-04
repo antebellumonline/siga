@@ -10,6 +10,7 @@ os dados relacionados aos alunos no banco de dados.
 from django.db import models
 from apps.local.models import Cidade
 from apps.auxiliares.models import ConfigTpContato
+from apps.auxiliares.fields import InativoField
 
 class Empresa(models.Model):
     """
@@ -26,7 +27,7 @@ class Empresa(models.Model):
     bairro = models.CharField(max_length=255, blank=True, null=True)
     cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, blank=True, null=True)
     observacao = models.TextField(null=True, blank=True)
-    inativo = models.BooleanField(default=False)
+    inativo = InativoField()
 
     def __str__(self):
         return self.razaoSocial

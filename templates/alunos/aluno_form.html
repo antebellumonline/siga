@@ -18,57 +18,47 @@
             <div class="apps-form-group-edit-status">
                 <h4 class="apps-form-status-section-title">Status do Aluno</h4>
                 <div class="apps-form-input">
-                    <label for="id_inativo">Inativo: </label>
-                    <select id="id_inativo" name="inativo">
-                        <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
-                        <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
-                    </select>
+                    <label for="aluno-inativo">Inativo: </label>
+                        {{ form.inativo }}
                 </div>
             </div>
             {% endif %}
             <div class="apps-form-group-edit-sub">
                 <h4 class="apps-form-sub-section-title">Dados Cadastrais</h4>
                 <div class="apps-form-input">
-                    <label for="id_nome">Nome: </label>
+                    <label for="aluno-nome">Nome: </label>
                     {{ form.nome }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_cpf">CPF: </label>
+                    <label for="aluno-cpf">CPF: </label>
                     {{ form.cpf }}
                 </div>
             </div>
             <div class="apps-form-group-edit-sub">
                 <h4 class="apps-form-sub-section-title">Endereço</h4>
                 <div class="apps-form-input">
-                    <label for="id_cep">CEP: </label>
+                    <label for="aluno-cep">CEP: </label>
                     {{ form.cep }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_logradouro">Logradouro: </label>
+                    <label for="aluno-logradouro">Logradouro: </label>
                     {{ form.endereco }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_numero">Nº: </label>
+                    <label for="aluno-numero">Nº: </label>
                     {{ form.numero }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_complemento">Complemento: </label>
+                    <label for="aluno-complemento">Complemento: </label>
                     {{ form.complemento }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_bairro">Bairro: </label>
+                    <label for="aluno-bairro">Bairro: </label>
                     {{ form.bairro }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_cidade">Cidade / UF: </label>
-                    <select name="cidade" id="select-cidade" class="select-edit select2">
-                        <option value="">Selecionar cidade</option>
-                        {% for cidade in cidades %}
-                        <option value="{{ cidade.id }}" {% if form.cidade.value == cidade.id %}selected{% endif %}>
-                            {{ cidade.nome }} - {{ cidade.estado.uf }}
-                        </option>
-                        {% endfor %}
-                    </select>
+                    <label for="aluno-cidade">Cidade / UF: </label>
+                    {{ form.cidade }}
                 </div>
             </div>
             <!-- Contatos -->

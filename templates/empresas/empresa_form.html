@@ -18,61 +18,51 @@
             <div class="apps-form-group-edit-status">
                 <h4 class="apps-form-status-section-title">Status da Empresa</h4>
                 <div class="apps-form-input">
-                    <label for="id_inativo">Inativo: </label>
-                    <select id="id_inativo" name="inativo">
-                        <option value="False" {% if not form.instance.inativo %}selected{% endif %}>Não</option>
-                        <option value="True" {% if form.instance.inativo %}selected{% endif %}>Sim</option>
-                    </select>
+                    <label for="empresa-inativo">Inativo: </label>
+                        {{ form.inativo }}
                 </div>
             </div>
             {% endif %}
             <div class="apps-form-group-edit-sub">
                 <h4 class="apps-form-sub-section-title">Detalhes da Empresa</h4>
                 <div class="apps-form-input">
-                    <label for="id_taxId">Tax ID (CNPJ): </label>
+                    <label for="empresa-taxId">Tax ID (CNPJ): </label>
                     {{ form.taxId }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_razaoSocial">Razão Social: </label>
+                    <label for="empresa-razaoSocial">Razão Social: </label>
                     {{ form.razaoSocial }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_fantasia">Fantasia: </label>
+                    <label for="empresa-fantasia">Fantasia: </label>
                     {{ form.fantasia }}
                 </div>
             </div>
             <div class="apps-form-group-edit-sub">
                 <h4 class="apps-form-sub-section-title">Endereço da Empresa</h4>
                 <div class="apps-form-input">
-                    <label for="id_cep">CEP: </label>
+                    <label for="empresa-cep">CEP: </label>
                     {{ form.cep }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_logradouro">Logradouro: </label>
+                    <label for="empresa-logradouro">Logradouro: </label>
                     {{ form.endereco }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_numero">Nº: </label>
+                    <label for="empresa-numero">Nº: </label>
                     {{ form.numero }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_complemento">Complemento: </label>
+                    <label for="empresa-complemento">Complemento: </label>
                     {{ form.complemento }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_bairro">Bairro: </label>
+                    <label for="empresa-bairro">Bairro: </label>
                     {{ form.bairro }}
                 </div>
                 <div class="apps-form-input">
-                    <label for="id_cidade">Cidade / UF: </label>
-                    <select name="cidade" id="select-cidade" class="select-edit select2">
-                        <option value="">Selecionar cidade</option>
-                        {% for cidade in cidades %}
-                        <option value="{{ cidade.id }}" {% if form.cidade.value == cidade.id %}selected{% endif %}>
-                            {{ cidade.nome }} - {{ cidade.estado.uf }}
-                        </option>
-                        {% endfor %}
-                    </select>
+                    <label for="empresa-cidade">Cidade / UF: </label>
+                    {{ form.cidade }}
                 </div>
             </div>
             <!-- Contatos -->
