@@ -32,8 +32,8 @@ class Turma (models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     local = models.ForeignKey(Local, on_delete=models.CASCADE)
     codigo = models.CharField(max_length=3, unique=True)
-    inicioCurso = models.DateTimeField()
-    terminoCurso = models.DateTimeField()
+    inicioCurso = models.DateTimeField(blank=True, null=True)
+    terminoCurso = models.DateTimeField(blank=True, null=True)
     datasCurso = models.CharField(max_length=255, blank=True, null=True)
     enturmacao = models.BooleanField(default=False)
     plataforma = models.BooleanField(default=False)
@@ -41,6 +41,14 @@ class Turma (models.Model):
     certificado = models.BooleanField(default=False)
     observacao = models.TextField(blank=True, null=True)
     inativo = InativoField(default=False)
+
+    def save(self, *args, **kwargs):
+        """
+        Sobrescreve o método save para garantir que o Código seja salvo em caixa alta.
+        """
+        if self.codigo:
+            self.codigo = self.codigo.upper()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.codigo)
