@@ -184,3 +184,51 @@ def turma_list(request):
             'turmas/turma_list.html',
             context
         )
+
+def turma_detail(request, pk):
+    """
+    View para Visualizar os detalhes de uma Turma
+    """
+    # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
+    turma = get_object_or_404(Turma, pk=pk)
+
+    # Renderização do template
+    return render(request, 'turmas/turma_detail.html', {
+        'turma': turma
+    })
+
+def turma_edit(request, pk):
+    """
+    View para Editar uma Turma
+    """
+
+    # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
+    turma = get_object_or_404(Turma, pk=pk)
+
+    # Verifica se a requisição é do tipo POST (submissão de formulário)
+    if request.method == "POST":
+        form = TurmaForm(request.POST, instance=turma)
+
+        # Se o formulário for válido, salva as alterações no objeto
+        if form.is_valid():
+            form.save()
+            return redirect('turma_list')
+    else:
+        form = TurmaForm(instance=turma)
+
+    # Renderização do template
+    return render(request, 'turmas/turma_form.html', {
+        'form': form
+    })
+
+def turma_delete(request, pk):
+    """
+    View para Excluir uma Turma
+    """
+    turma = get_object_or_404(Turma, pk=pk)
+    if request.method == "POST":
+        turma.delete()
+        return redirect('turma_list')
+    return render(request, 'turmas/turma_confirm_delete.html', {
+        'turma': turma
+    })
