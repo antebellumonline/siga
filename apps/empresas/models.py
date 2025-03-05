@@ -10,7 +10,6 @@ os dados relacionados aos alunos no banco de dados.
 from django.db import models
 from apps.local.models import Cidade
 from apps.auxiliares.models import ConfigTpContato
-from apps.auxiliares.fields import InativoField
 
 class Empresa(models.Model):
     """
@@ -19,7 +18,7 @@ class Empresa(models.Model):
     id = models.AutoField(primary_key=True)
     taxId = models.CharField(max_length=255, unique=True)
     razaoSocial = models.CharField(max_length=255)
-    fantasia = models.CharField(max_length=255)
+    fantasia = models.CharField(max_length=255, blank=True, null=True)
     cep = models.CharField(max_length=8, blank=True, null=True)
     endereco = models.CharField(max_length=255, blank=True, null=True)
     numero = models.CharField(max_length=10, blank=True, null=True)
@@ -27,10 +26,10 @@ class Empresa(models.Model):
     bairro = models.CharField(max_length=255, blank=True, null=True)
     cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, blank=True, null=True)
     observacao = models.TextField(null=True, blank=True)
-    inativo = InativoField(default=False)
+    inativo = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.razaoSocial
+        return f'Empresa: {self.razaoSocial} - {self.taxId}'
 
     class Meta:
         """Meta-informações para o modelo Empresa."""
@@ -50,7 +49,6 @@ class EmpresaContato(models.Model):
         """
         Retorna uma string com o tipo de contato e o contato.
         """
-        # pylint: disable=no-member
         return f'Contato de {self.empresa.razaoSocial}: {self.tipoContato.descricao}'
 
     class Meta:

@@ -37,6 +37,7 @@ class EmpresaForm(forms.ModelForm):
                 'id': 'empresa-taxId',
                 'name': 'empresa-taxId',
                 'placeholder': 'Digite o CNPJ ou Tax ID da Empresa',
+                'autofocus': True,
             }),
             'razaoSocial': forms.TextInput(attrs={
                 'class': 'apps-form-input razaoSocial-input',
