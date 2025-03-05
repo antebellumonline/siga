@@ -1,0 +1,23 @@
+<!-- templates/turmas/turma_home.html -->
+
+{% extends "base.html" %}
+
+{% block title %}SIGA - Gestão de Turmas{% endblock %}
+
+{% block body_class %}body-apps-home{% endblock %}
+
+{% block header_title %}Gestão de Turmas{% endblock %}
+
+{% block content %}
+
+<div class="container-home-apps">
+    <div class="column-home-apps">
+        <h3 class="home-apps-subtitle">Turmas</h3>
+        <div class="btn-group-home-apps">
+            <a href="{% url 'turma_new' %}" class="btn-new btn-transparent" aria-label="Criar Nova Turma">Novo</a>
+            <a href="{% url 'turma_list' %}" class="btn-list btn-transparent" aria-label="Localizar Turma">Localizar</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
