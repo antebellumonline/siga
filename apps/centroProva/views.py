@@ -182,12 +182,12 @@ def exame_list(request):
     View para Listar os Exames Realizados no Centro de Provas
     """
     # Obtém os filtros
-    aluno = request.GET.get('aluno')
-    data_range = request.GET.get('daterange')
-    presenca = request.GET.get('presenca')
-    cancelado = request.GET.get('cancelado')
-    centroprova = request.GET.get('centroProva')
-    certificacao = request.GET.get('certificacao')
+    aluno = request.GET.get('exame-list-aluno')
+    data_range = request.GET.get('exame-list-daterange')
+    presenca = request.GET.get('exame-list-presenca')
+    cancelado = request.GET.get('exame-list-cancelado')
+    centroprova = request.GET.get('exame-list-centroProva')
+    certificacao = request.GET.get('exame-list-certificacao')
 
     # Ordenação
     order_by = request.GET.get('order_by', 'data')
@@ -259,12 +259,69 @@ def exame_list(request):
     centrosprova = CentroProva.objects.order_by('nome')
     certificacoes = Certificacao.objects.order_by('descricao')
 
+    # Definindo os campos de pesquisa
+    search_fields = [
+        {
+            'type': 'daterange',
+            'id': 'exame-list-daterange',
+            'name': 'exame-list-daterange',
+            'class': 'apps-list-search-form daterange',
+            'label': 'Período de realização',
+            'value': request.GET.get('daterange', ''),
+        },
+        {
+            'id': 'exame-list-aluno',
+            'name': 'exame-list-aluno',
+            'label': 'Aluno',
+            'type': 'select',
+            'options': [(aluno.uid, f"{aluno.uid} - {aluno.nome}") for aluno in alunos],
+            'selected': request.GET.get('aluno', ''),
+        },
+        {
+            'id': 'exame-list-centroProva',
+            'name': 'exame-list-centroProva',
+            'label': 'Centro de Provas',
+            'type': 'select',
+            'options': [
+                (centroprova.id, centroprova.nome) for centroprova in centrosprova
+            ],
+            'selected': request.GET.get('centroProva', ''),
+        },
+        {
+            'id': 'exame-list-certificacao',
+            'name': 'exame-list-certificacao',
+            'label': 'Certificação',
+            'type': 'select',
+            'options': [
+                (
+                    certificacao.id,
+                    f"{certificacao.descricao} ({certificacao.siglaExame})"
+                ) for certificacao in certificacoes
+            ],
+            'selected': request.GET.get('certificacao', ''),
+        },
+        {
+            'id': 'exame-list-presenca',
+            'name': 'exame-list-presenca',
+            'label': 'Aluno Presente?',
+            'type': 'select',
+            'options': [('True', 'Sim'), ('False', 'Não')],
+            'selected': request.GET.get('presenca', ''),
+        },
+        {
+            'id': 'exame-list-cancelado',
+            'name': 'exame-list-cancelado',
+            'label': 'Exame Cancelado?',
+            'type': 'select',
+            'options': [('True', 'Sim'), ('False', 'Não')],
+            'selected': request.GET.get('cancelado', ''),
+        },
+    ]
+
     context = {
         'centroprova_exame': centroprova_exame,
         'page_obj': page_obj,
-        'aluno': alunos,
-        'centrosprova': centrosprova,
-        'certificacoes': certificacoes,
+        'search_fields': search_fields,
         'query_params': request.GET.urlencode(),
         'headers': [
             {'field': 'data', 'label': 'Data e Hora'},
@@ -273,16 +330,22 @@ def exame_list(request):
             {'field': 'certificacao__descricao', 'label': 'Certificação'},
             {'field': 'presenca', 'label': 'Presença'},
             {'field': 'cancelado', 'label': 'Cancelado'},
+            {'field': 'observacao', 'label': 'Observações'},
         ],
         'rows': [
             [
                 timezone.localtime(exame.data).strftime("%d/%m/%Y %H:%M"),
-                mark_safe(f'<a href="{reverse(
-                    "exame_detail", args=[exame.id])}">{exame.aluno.nome}</a>'),
+                mark_safe(
+                    f'<a href="{reverse(
+                        "exame_detail",
+                        args=[exame.id]
+                    )}">{exame.aluno.nome}</a>'
+                ),
                 exame.centroProva.nome,
                 f"{exame.certificacao.descricao} ({exame.certificacao.siglaExame})",
                 "Sim" if exame.presenca else "Não",
                 "Sim" if exame.cancelado else "Não",
+                exame.observacao,
             ]
             for exame in page_obj
         ]
