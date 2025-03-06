@@ -1,0 +1,37 @@
+<!-- templates/includes/search_filters.html -->
+
+<form method="GET" action="{{ action_url }}" class="apps-list-search-form">
+    <div class="apps-list-form-group-search">
+        {% for field in filters %}
+            <div class="apps-list-form-group-search-sub">
+                <input type="checkbox" id="check-{{ field.name }}" data-target="{{ field.attrs.id|default:field.name }}">
+                <label for="{{ field.attrs.id }}">{{ field.label }}</label>
+
+                {% if field.type == "text" %}
+                    <input 
+                        type="text" 
+                        id="{{ field.attrs.id|default:field.name }}" 
+                        name="{{ field.attrs.name|default:field.name }}" 
+                        placeholder="{{ field.placeholder|default:'' }}" 
+                        value="{{ request.GET|get_item:'some_key' }}"
+                        class="{{ field.attrs.class|default:'form-control' }}">
+                
+                {% elif field.type == "select" %}
+                    <select name="{{ field.attrs.name }}" id="{{ field.attrs.id }}" class="{{ field.attrs.class }}">
+                        {% for option in field.options %}
+                            <option value="{{ option.value }}" {% if request.GET|get_item:field.name == option.value %}selected{% endif %}>
+                                {{ option.label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Botões de Ação -->
+    <div class="apps-list-btn-group-search">
+        <button type="submit" class="btn-list btn-circle btn-dark"></button>
+        <a class="btn-clear btn-circle btn-yellow" href="{{ action_url }}"></a>
+    </div>
+</form>
