@@ -23,7 +23,7 @@ class TurmaForm(forms.ModelForm):
             'tipo',
             'empresa',
             'local',
-            'codigo',
+            'nome',
             'inicioCurso',
             'terminoCurso',
             'datasCurso',
@@ -66,11 +66,11 @@ class TurmaForm(forms.ModelForm):
                 'name': 'turma-local',
                 'placeholder': 'Selecione o Local',
             }),
-            'codigo': forms.TextInput(attrs={
+            'nome': forms.TextInput(attrs={
                 'class': 'apps-form-input',
-                'id': 'turma-codigo',
-                'name': 'turma-codigo',
-                'placeholder': 'Digite o Código da Turma',
+                'id': 'turma-nome',
+                'name': 'turma-nome',
+                'placeholder': 'Digite o Nome da Turma',
             }),
             'inicioCurso': forms.DateTimeInput(attrs={
                 'class': 'apps-form-input',

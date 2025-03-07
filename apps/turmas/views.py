@@ -53,7 +53,7 @@ def turma_list(request):
     inativo = request.GET.get('inativo')
 
     # Ordenação
-    order_by = request.GET.get('order_by', 'codigo')
+    order_by = request.GET.get('order_by', 'nome')
     descending = request.GET.get('descending', 'True') == 'True'
 
     # Otimização da Consulta
@@ -67,7 +67,7 @@ def turma_list(request):
     # Filtragem
     if query:
         turma = turma.filter(
-            Q(codigo__icontains=query)
+            Q(nome__icontains=query)
         )
 
     if curso:
@@ -188,7 +188,7 @@ def turma_list(request):
         'search_fields': search_fields,
         'query_params': request.GET.urlencode(),
         'headers': [
-            {'field': 'codigo', 'label': 'Código'},
+            {'field': 'nome', 'label': 'Nome'},
             {'field': 'curso', 'label': 'Curso'},
             {'field': 'tipo', 'label': 'Tipo'},
             {'field': 'empresa', 'label': 'Empresa'},
@@ -207,7 +207,7 @@ def turma_list(request):
             [
                 mark_safe(f'<a href="{reverse(
                     "turma_detail",
-                    args=[turma.id])}">{turma.codigo}</a>'
+                    args=[turma.id])}">{turma.nome}</a>'
                 ),
                 turma.curso.nome,
                 turma.tipo.nome,
