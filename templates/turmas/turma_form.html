@@ -1,0 +1,66 @@
+<!-- templates/turmas/turma_form.html -->
+
+{% extends "base.html" %}
+
+{% block title %}{{ form.instance.pk|yesno:"Editar Turma,Adicionar Turma" }}{% endblock %}
+
+{% block body_class %}body-apps-form{% endblock %}
+
+{% block header_title %}{{ form.instance.pk|yesno:"Editar Turma,Adicionar Turma" }}{% endblock %}
+
+{% block content %}
+
+<div class="container-apps-form">
+    <form method="post" class="apps-form-edit">
+        {% csrf_token %}
+        <div class="apps-form-group-edit">
+            {% if form.instance.pk %}
+            <div class="apps-form-group-edit-status">
+                <h4 class="apps-form-status-section-title">Status da Turma</h4>
+                <div class="apps-form-input">
+                    {{ form.inativo.label_tag }}
+                    {{ form.inativo }}
+                </div>
+            </div>
+            {% endif %}
+            <div class="apps-form-group-edit-sub">
+                <h4 class="apps-form-sub-section-title">Detalhes do Exame</h4>
+                <div class="apps-form-input">
+                    {{ form.data.label_tag }}
+                    {{ form.data }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.centroProva.label_tag }}
+                    {{ form.centroProva }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.certificacao.label_tag }}
+                    {{ form.certificacao }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.aluno.label_tag }}
+                    {{ form.aluno }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.presenca.label_tag }}
+                    {{ form.presenca }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.cancelado.label_tag }}
+                    {{ form.cancelado }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.observacao.label_tag }}
+                    {{ form.observacao }}
+                </div>
+            </div>
+        </div>
+        <!-- Grupo de botões (Salvar e Retornar) -->
+        <div class="apps-form-btn-group">
+            <button class="btn-save btn-dark" type="submit" accesskey="s">Salvar</button>
+            <a class="btn-return btn-yellow" href="{% url 'exame_list' %}" accesskey="r">Retornar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
