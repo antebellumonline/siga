@@ -24,41 +24,68 @@
             </div>
             {% endif %}
             <div class="apps-form-group-edit-sub">
-                <h4 class="apps-form-sub-section-title">Detalhes do Exame</h4>
+                <h4 class="apps-form-sub-section-title">Detalhes da Turma</h4>
                 <div class="apps-form-input">
-                    {{ form.data.label_tag }}
-                    {{ form.data }}
+                    {{ form.tipo.label_tag }}
+                    {{ form.tipo }}
                 </div>
                 <div class="apps-form-input">
-                    {{ form.centroProva.label_tag }}
-                    {{ form.centroProva }}
+                    {{ form.empresa.label_tag }}
+                    {{ form.empresa }}
                 </div>
                 <div class="apps-form-input">
-                    {{ form.certificacao.label_tag }}
-                    {{ form.certificacao }}
+                    {{ form.local.label_tag }}
+                    {{ form.local }}
                 </div>
                 <div class="apps-form-input">
-                    {{ form.aluno.label_tag }}
-                    {{ form.aluno }}
+                    {{ form.inicioCurso.label_tag }}
+                    {{ form.inicioCurso }}
                 </div>
                 <div class="apps-form-input">
-                    {{ form.presenca.label_tag }}
-                    {{ form.presenca }}
+                    {{ form.terminoCurso.label_tag }}
+                    {{ form.terminoCurso }}
                 </div>
                 <div class="apps-form-input">
-                    {{ form.cancelado.label_tag }}
-                    {{ form.cancelado }}
+                    {{ form.datasCurso.label_tag }}
+                    {{ form.datasCurso }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.enturmacao.label_tag }}
+                    {{ form.enturmacao }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.plataforma.label_tag }}
+                    {{ form.plataforma }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.material.label_tag }}
+                    {{ form.material }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.certificado.label_tag }}
+                    {{ form.certificado }}
                 </div>
                 <div class="apps-form-input">
                     {{ form.observacao.label_tag }}
                     {{ form.observacao }}
                 </div>
             </div>
+            <div class="apps-form-group-edit-sub">
+                <h4 class="apps-form-sub-section-title">Detalhes do Curso</h4>
+                <div class="apps-form-input">
+                    {{ form.curso.label_tag }}
+                    {{ form.curso }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.versaoCurso.label_tag }}
+                    {{ form.versaoCurso }}
+                </div>
+            </div>
         </div>
         <!-- Grupo de botões (Salvar e Retornar) -->
         <div class="apps-form-btn-group">
             <button class="btn-save btn-dark" type="submit" accesskey="s">Salvar</button>
-            <a class="btn-return btn-yellow" href="{% url 'exame_list' %}" accesskey="r">Retornar</a>
+            <a class="btn-return btn-yellow" href="{% url 'turma_list' %}" accesskey="r">Retornar</a>
         </div>
     </form>
 </div>

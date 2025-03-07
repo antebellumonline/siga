@@ -26,9 +26,9 @@ class Turma (models.Model):
     """Modelo que representa uma Turma."""
     id = models.AutoField(primary_key=True)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
-    versaoCurso = models.ForeignKey(CursoVersao, on_delete=models.CASCADE)
+    versaoCurso = models.ForeignKey(CursoVersao, on_delete=models.CASCADE, blank=True, null=True)
     tipo = models.ForeignKey(TipoTurma, on_delete=models.CASCADE)
-    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, blank=True, null=True)
     local = models.ForeignKey(Local, on_delete=models.CASCADE)
     nome = models.CharField(max_length=3, unique=True)
     inicioCurso = models.DateTimeField(blank=True, null=True)
