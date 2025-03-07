@@ -5,7 +5,6 @@ Definições dos modelos do aplicativo 'local'.
 """
 
 from django.db import models
-from apps.auxiliares.fields import InativoField
 
 class Estado(models.Model) :
     """
@@ -49,7 +48,7 @@ class Local (models.Model):
     bairro = models.CharField(max_length=255, blank=True, null=True)
     cidade = models.ForeignKey(Cidade, on_delete=models.SET_NULL, blank=True, null=True)
     observacao = models.TextField(blank=True, null=True)
-    inativo = InativoField(default=False)
+    inativo = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.nome)

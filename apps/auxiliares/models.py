@@ -5,8 +5,6 @@ Definições dos modelos do aplicativo 'auxiliares'.
 """
 
 from django.db import models
-from apps.auxiliares.fields import InativoField
-
 
 class ConfigTpContato(models.Model):
     """
@@ -14,7 +12,7 @@ class ConfigTpContato(models.Model):
     """
     id = models.AutoField(primary_key=True)
     descricao = models.CharField(max_length=255, unique=True)
-    inativo = InativoField(default=False)
+    inativo = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.descricao)
@@ -29,7 +27,7 @@ class ConfigStatus(models.Model):
     """
     id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=255)
-    inativo = InativoField(default=False)
+    inativo = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.nome)

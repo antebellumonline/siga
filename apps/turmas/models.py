@@ -5,7 +5,6 @@ Definições dos modelos do aplicativo 'centroProva'.
 """
 
 from django.db import models
-from apps.auxiliares.fields import InativoField
 from apps.cursos.models import Curso, CursoVersao
 from apps.empresas.models import Empresa
 from apps.local.models import Local
@@ -14,7 +13,7 @@ class TipoTurma (models.Model):
     """Modelo que representa um Tipo de Turma."""
     id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=255)
-    inativo = InativoField(default=False)
+    inativo = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.nome)
@@ -40,7 +39,7 @@ class Turma (models.Model):
     material = models.BooleanField(default=False)
     certificado = models.BooleanField(default=False)
     observacao = models.TextField(blank=True, null=True)
-    inativo = InativoField(default=False)
+    inativo = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         """
