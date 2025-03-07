@@ -18,6 +18,22 @@ from .models import (
 )
 
 class RightToLeftNumberInput(forms.TextInput):
+    """
+    Um widget de entrada de texto personalizado para números, com suporte para
+    exibição da direita para a esquerda.
+
+    Este widget é uma subclasse de `forms.TextInput` que adiciona atributos
+    personalizados para exibir números da direita para a esquerda (RTL).
+
+    Atributos HTML adicionados:
+        - class: 'rtl-number-input'
+        - placeholder: '0.00'
+        - style: 'direction: rtl; text-align: left;'
+
+    Args:
+        *args: Argumentos posicionais passados para a classe base.
+        **kwargs: Argumentos nomeados passados para a classe base.
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.attrs.update({
@@ -79,10 +95,17 @@ class CursoCertificacaoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['certificacao'].queryset = Certificacao.objects.filter(inativo=False).order_by('descricao')
+        self.fields['certificacao'].queryset = (
+            Certificacao.objects
+            .filter(inativo=False)
+            .order_by('descricao')
+        )
         self.fields['certificacao'].label_from_instance = self.certificacao_label_from_instance
 
     def certificacao_label_from_instance(self, obj):
+        """
+        Gera uma string de rótulo para uma instância de certificação.
+        """
         return f"{obj.descricao} ({obj.siglaExame})"
 
 CursoCertificacaoFormSet = inlineformset_factory(

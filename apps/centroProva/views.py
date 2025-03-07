@@ -156,9 +156,6 @@ def exame_new(request):
     """
     View para Adicionar um Exame Realizado no Centro de Provas
     """
-    alunos = Aluno.objects.filter(inativo=False).order_by('nome')
-    centrosprovas = CentroProva.objects.order_by('nome')
-    certificacoes = Certificacao.objects.filter(inativo=False).order_by('descricao')
 
     if request.method == 'POST':
         form = CentroProvaExameForm(request.POST)
@@ -172,9 +169,6 @@ def exame_new(request):
 
     return render(request, 'centroProva/centroProva-exame_form.html', {
         'form': form, 
-        'alunos': alunos,
-        'centrosprovas': centrosprovas,
-        'certificacoes': certificacoes
     })
 
 def exame_list(request):
@@ -374,10 +368,6 @@ def exame_edit(request, pk):
     """
     # Obtém os filtros
     exame = get_object_or_404(CentroProvaExame, pk=pk)
-    print(exame.data)
-    alunos = Aluno.objects.filter(inativo=False).order_by('nome')
-    centrosprovas = CentroProva.objects.order_by('nome')
-    certificacoes = Certificacao.objects.filter(inativo=False).order_by('descricao')
 
     # Verifica se a requisição é do tipo POST (submissão de formulário)
     if request.method == "POST":
@@ -393,9 +383,6 @@ def exame_edit(request, pk):
     # Renderização do template
     return render(request, 'centroProva/centroProva-exame_form.html', {
         'form': form, 
-        'alunos': alunos,
-        'centrosprovas': centrosprovas,
-        'certificacoes': certificacoes
     })
 
 def exame_delete(request, pk):
