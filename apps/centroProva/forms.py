@@ -119,6 +119,9 @@ class CentroProvaExameForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            self.fields['data'].initial = self.instance.data.strftime('%Y-%m-%dT%H:%M')
+
         self.fields['certificacao'].queryset = (
             Certificacao.objects
             .filter(inativo=False)
