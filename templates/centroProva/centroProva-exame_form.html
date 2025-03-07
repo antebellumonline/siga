@@ -18,7 +18,7 @@
                 <h4 class="apps-form-sub-section-title">Detalhes do Exame</h4>
                 <div class="apps-form-input">
                     {{ form.data.label_tag }}
-                    <input type="datetime-local" value="{{ form.instance.data|date:'Y-m-d H:i' }}" />
+                    {{ form.data }}
                 </div>
                 <div class="apps-form-input">
                     {{ form.centroProva.label_tag }}
