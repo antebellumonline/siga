@@ -1,7 +1,7 @@
 # apps/turmas/views.py
 
 """
-Definição das views para o aplicativo 'instrutores'.
+Definição das views para o aplicativo 'turmas'.
 """
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -40,7 +40,7 @@ def turma_list(request):
     View para Listar as Turmas
     """
     # Obtém os filtros
-    query = request.GET.get('q')
+    query = request.GET.get('turma-list-query')
     curso = request.GET.get('curso')
     tipo = request.GET.get('tipo')
     empresa = request.GET.get('empresa')
@@ -124,17 +124,68 @@ def turma_list(request):
         page_obj = paginator.get_page(1)
 
     # Busca e Ordenação das opções de Seleção
-    cursos = Curso.objects.filter(inativo=False).order_by('nome')
-    tipos = TipoTurma.objects.filter(inativo=False).order_by('nome')
-    empresas = Empresa.objects.filter(inativo=False).order_by('razaoSocial')
-    locais = Local.objects.filter(inativo=False).order_by('nome')
+    cursos = Curso.objects.order_by('nome')
+    tipos = TipoTurma.objects.order_by('nome')
+    empresas = Empresa.objects.order_by('razaoSocial')
+    locais = Local.objects.order_by('nome')
 
+    # Definição dos Campos de Pesquisa
+    search_fields = [
+        {
+            'id': 'turma-list-query',
+            'name': 'turma-list-query',
+            'label': 'Busque pelo Nome da Turma: ',
+            'placeholder': 'Busque pelo Nome da Turma',
+            'type': 'text',
+            'value': request.GET.get('q', '')
+        },
+        {
+            'id': 'turma-list-curso',
+            'name': 'turma-list-curso',
+            'label': 'Curso :',
+            'type': 'select',
+            'options': [(
+                curso.id,
+                f"{curso.codigo}: {curso.nome}"
+            ) for curso in cursos],
+            'selected': request.GET.get('curso', ''),
+        },
+        {
+            'id': 'turma-list-tipo',
+            'name': 'turma-list-tipo',
+            'label': 'Tipo de Turma :',
+            'type': 'select',
+            'options': [(
+                tipo.id, tipo.nome
+            ) for tipo in tipos],
+            'selected': request.GET.get('tipo', ''),
+        },
+        {
+            'id': 'turma-list-empresa',
+            'name': 'turma-list-empresa',
+            'label': 'Empresa contratante da Turma :',
+            'type': 'select',
+            'options': [(
+                empresa.taxId,
+                f"{empresa.razaoSocial} - {empresa.taxId}"
+            ) for empresa in empresas],
+            'selected': request.GET.get('empresa', ''),
+        },
+        {
+            'id': 'turma-list-local',
+            'name': 'turma-list-local',
+            'label': 'Local :',
+            'type': 'select',
+            'options': [(
+                local.id, local.nome
+            ) for local in locais],
+            'selected': request.GET.get('local', ''),
+        },
+    ]
     context = {
-        'cursos': cursos,
-        'tipos': tipos,
-        'empresas': empresas,
-        'locais': locais,
+        'turma': turma,
         'page_obj': page_obj,
+        'search_fields': search_fields,
         'query_params': request.GET.urlencode(),
         'headers': [
             {'field': 'codigo', 'label': 'Código'},

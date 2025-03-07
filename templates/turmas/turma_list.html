@@ -13,21 +13,7 @@
 <!-- Formulário de busca e filtro -->
  <div class="container-apps-list">
     <form method="GET" action="{% url 'turma_list' %}" class="apps-list-search-form">
-        <div class="apps-list-form-group-search">
-            <div class="apps-list-form-group-search-sub">
-                <input type="checkbox" id="check-list-turma-nome" data-target="list-turma-nome">
-                <label for="search-list-turma-nome">Nome / Código:</label>
-                <input type="text" id="list-turma-nome" name="q" placeholder="Busque pelo Nome / Código da Turma" value="{{ request.GET.q }}" class="form-control" aria-label="Busque pelo Nome / Código da Turma">
-            </div>
-            <div class="apps-list-form-group-search-sub">
-                <input type="checkbox" id="check-list-instrutor-inativo" data-target="list-instrutor-inativo">
-                <label for="search-list-instrutor-inativo">Inativo:</label>
-                <select name="inativo" id="list-instrutor-inativo" class="select-search select2">
-                    <option value="True" {% if request.GET.inativo == 'True' %}selected{% endif %}>Sim</option>
-                    <option value="False" {% if request.GET.inativo == 'False' %}selected{% endif %}>Não</option>
-                </select>
-            </div> 
-        </div>
+        {% include 'includes/search_fields.html' %}
         <!-- Botões de Ação -->
         <div class="apps-list-btn-group-search">
             <button type="submit" class="btn-list btn-circle btn-dark"></button>

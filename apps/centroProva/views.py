@@ -2,9 +2,6 @@
 
 """
 Definição das views para o aplicativo 'centroProva'.
-
-As views utilizam Django para gerenciar as requisições HTTP 
-e interagir com os modelos de dados.
 """
 
 from datetime import datetime, timedelta
@@ -348,7 +345,11 @@ def exame_list(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return render(request, 'includes/table.html', context)
     else:
-        return render(request, 'centroProva/centroProva-exame_list.html', context)
+        return render(
+            request,
+            'centroProva/centroProva-exame_list.html',
+            context
+        )
 
 def exame_detail(request, pk):
     """
