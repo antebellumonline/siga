@@ -29,7 +29,7 @@ class Turma (models.Model):
     curso = models.ForeignKey(Curso, on_delete=models.PROTECT)
     versaoCurso = models.ForeignKey(CursoVersao, on_delete=models.PROTECT, blank=True, null=True)
     tipo = models.ForeignKey(TipoTurma, on_delete=models.PROTECT)
-    empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT, blank=True, null=True)
+    empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT)
     local = models.ForeignKey(Local, on_delete=models.PROTECT)
     nome = models.CharField(max_length=18, unique=True)
     inicioCurso = models.DateTimeField(blank=True, null=True)

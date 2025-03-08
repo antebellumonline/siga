@@ -24,18 +24,21 @@
             </div>
             {% endif %}
             <div class="apps-form-group-edit-sub">
+                <h4 class="apps-form-sub-section-title">Detalhes do Curso desta Turma</h4>
+                <div class="apps-form-input">
+                    {{ form.curso.label_tag }}
+                    {{ form.curso }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.versaoCurso.label_tag }}
+                    {{ form.versaoCurso }}
+                </div>
+            </div>
+            <div class="apps-form-group-edit-sub">
                 <h4 class="apps-form-sub-section-title">Detalhes da Turma</h4>
                 <div class="apps-form-input">
-                    {{ form.tipo.label_tag }}
-                    {{ form.tipo }}
-                </div>
-                <div class="apps-form-input">
-                    {{ form.empresa.label_tag }}
-                    {{ form.empresa }}
-                </div>
-                <div class="apps-form-input">
-                    {{ form.local.label_tag }}
-                    {{ form.local }}
+                    {{ form.nome.label_tag }}
+                    {{ form.nome }}
                 </div>
                 <div class="apps-form-input">
                     {{ form.inicioCurso.label_tag }}
@@ -48,6 +51,18 @@
                 <div class="apps-form-input">
                     {{ form.datasCurso.label_tag }}
                     {{ form.datasCurso }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.tipo.label_tag }}
+                    {{ form.tipo }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.empresa.label_tag }}
+                    {{ form.empresa }}
+                </div>
+                <div class="apps-form-input">
+                    {{ form.local.label_tag }}
+                    {{ form.local }}
                 </div>
                 <div class="apps-form-input">
                     {{ form.enturmacao.label_tag }}
@@ -68,17 +83,6 @@
                 <div class="apps-form-input">
                     {{ form.observacao.label_tag }}
                     {{ form.observacao }}
-                </div>
-            </div>
-            <div class="apps-form-group-edit-sub">
-                <h4 class="apps-form-sub-section-title">Detalhes do Curso</h4>
-                <div class="apps-form-input">
-                    {{ form.curso.label_tag }}
-                    {{ form.curso }}
-                </div>
-                <div class="apps-form-input">
-                    {{ form.versaoCurso.label_tag }}
-                    {{ form.versaoCurso }}
                 </div>
             </div>
         </div>
