@@ -81,28 +81,22 @@ class TurmaForm(forms.ModelForm):
                 'label': 'Nome da Turma: ',
                 'placeholder': 'Digite o Nome da Turma',
             }),
-            'inicioCurso': forms.DateTimeInput(
-                attrs={
-                    'class': 'apps-form-input',
-                    'id': 'turma-inicioCurso',
-                    'name': 'turma-inicioCurso',
-                    'type': 'datetime-local',
-                    'label': 'Data e Hora de Início do Curso: ',
-                    'placeholder': 'Digite a Data de Início do Curso',
-                },
-                format='%d/%m/%Y %H:%M',
-            ),
-            'terminoCurso': forms.DateTimeInput(
-                attrs={
-                    'class': 'apps-form-input',
-                    'id': 'turma-terminoCurso',
-                    'name': 'turma-terminoCurso',
-                    'type': 'datetime-local',
-                    'label': 'Data e Hora de Término do Curso: ',
-                    'placeholder': 'Digite a Data de Término do Curso',
-                },
-                format='%d/%m/%Y %H:%M',
-            ),
+            'inicioCurso': forms.DateTimeInput(attrs={
+                'class': 'apps-form-input',
+                'id': 'turma-inicioCurso',
+                'name': 'turma-inicioCurso',
+                'type': 'datetime-local',
+                'label': 'Data e Hora de Início do Curso: ',
+                'placeholder': 'Digite a Data de Início do Curso',
+            }),
+            'terminoCurso': forms.DateTimeInput(attrs={
+                'class': 'apps-form-input',
+                'id': 'turma-terminoCurso',
+                'name': 'turma-terminoCurso',
+                'type': 'datetime-local',
+                'label': 'Data e Hora de Término do Curso: ',
+                'placeholder': 'Digite a Data de Término do Curso',
+            }),
             'datasCurso': forms.TextInput(attrs={
                 'class': 'apps-form-input',
                 'id': 'turma-datasCurso',
@@ -152,6 +146,11 @@ class TurmaForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if self.instance and self.instance.pk:
             if self.instance.inicioCurso:
-                self.fields['inicioCurso'].initial = self.instance.inicioCurso.strftime('%Y-%m-%dT%H:%M')
+                self.fields['inicioCurso'].initial = self.instance.inicioCurso.strftime(
+                    '%Y-%m-%dT%H:%M'
+                )
+
             if self.instance.terminoCurso:
-                self.fields['terminoCurso'].initial = self.instance.terminoCurso.strftime('%Y-%m-%dT%H:%M')
+                self.fields['terminoCurso'].initial = self.instance.terminoCurso.strftime(
+                    '%Y-%m-%dT%H:%M'
+                )

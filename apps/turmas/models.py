@@ -48,20 +48,20 @@ class Turma (models.Model):
         """
         if self.nome:
             self.nome = self.nome.upper()
-        if self.inicioCurso:
-            self.inicioCurso = datetime.strptime(
-                self.inicioCurso.strftime('%d/%m/%Y %H:%M'),
-                '%d/%m/%Y %H:%M'
-            )
-        if self.terminoCurso:
-            self.terminoCurso = datetime.strptime(
-                self.terminoCurso.strftime('%d/%m/%Y %H:%M'),
-                '%d/%m/%Y %H:%M'
-            )
+
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return str(self.nome)
+        if isinstance(self.inicioCurso, datetime):
+            formatted_iniciocurso = self.inicioCurso.strftime('%d/%m/%Y %H:%M')
+        else:
+            formatted_iniciocurso = 'Data de Início não definida'
+        if isinstance(self.terminoCurso, datetime):
+            formatted_terminocurso = self.terminoCurso.strftime('%d/%m/%Y %H:%M')
+        else:
+            formatted_terminocurso = 'Data de Término não definida'
+
+        return f"{self.nome} - {formatted_iniciocurso} - {formatted_terminocurso}"
 
     class Meta:
         """Meta-informações para o modelo Turma"""
