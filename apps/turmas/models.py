@@ -4,6 +4,7 @@
 Definições dos modelos do aplicativo 'centroProva'.
 """
 
+from datetime import datetime
 from django.db import models
 from apps.cursos.models import Curso, CursoVersao
 from apps.empresas.models import Empresa
@@ -47,6 +48,16 @@ class Turma (models.Model):
         """
         if self.nome:
             self.nome = self.nome.upper()
+        if self.inicioCurso:
+            self.inicioCurso = datetime.strptime(
+                self.inicioCurso.strftime('%d/%m/%Y %H:%M'),
+                '%d/%m/%Y %H:%M'
+            )
+        if self.terminoCurso:
+            self.terminoCurso = datetime.strptime(
+                self.terminoCurso.strftime('%d/%m/%Y %H:%M'),
+                '%d/%m/%Y %H:%M'
+            )
         super().save(*args, **kwargs)
 
     def __str__(self):
