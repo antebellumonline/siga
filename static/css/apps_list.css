@@ -98,6 +98,7 @@
     margin-top: 0;
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
+    overflow-x: auto;
 }
 
 .tb-list th, 
@@ -113,6 +114,7 @@
 
 .tb-list thead th {
     border-bottom: none;
+    white-space: nowrap;
 }
 
 .tb-list th a {
