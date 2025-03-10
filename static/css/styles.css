@@ -26,10 +26,3 @@
     color: black;
     background-color: #E6B510;
 }
-
-/* -----XXX-----XXX-----XXX-----XXX-----XXX----- */
-
-/* MÁSCARA DOS CAMPOS */
-.cep-mask::placeholder {
-    content: "XX.XXX-XXX";
-}
