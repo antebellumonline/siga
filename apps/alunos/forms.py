@@ -41,7 +41,7 @@ class AlunoForm(forms.ModelForm):
                 'placeholder': 'Digite o Nome do Aluno',
             }),
             'cpf': forms.TextInput(attrs={
-                'class': 'apps-form-input',
+                'class': 'apps-form-input cpf-mask',
                 'id': 'aluno-cpf',
                 'name': 'aluno-cpf',
                 'placeholder': 'Digite o CPF do Aluno',
@@ -127,13 +127,13 @@ class AlunoContatoForm(forms.ModelForm):
                 'placeholder': 'Selecione o Aluno',
             }),
             'tipoContato': forms.Select(attrs={
-                'class': 'apps-form-input select2',
+                'class': 'apps-form-input select2 tipo-contato',
                 'id': 'alunoContato-tipoContato',
                 'name': 'alunoContato-tipoContato',
                 'placeholder': 'Selecione o Tipo de Contato',
             }),
             'contato': forms.TextInput(attrs={
-                'class': 'apps-form-input',
+                'class': 'apps-form-input contato-mask',
                 'id': 'alunoContato-contato',
                 'name': 'alunoContato-contato',
                 'placeholder': 'Digite o Contato',

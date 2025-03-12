@@ -1,64 +1,72 @@
 /* static/js/masks.js */
 
-// Função para aplicar máscara de CPF
-function maskCPF(cpf) {
-    return cpf.replace(/(\d{3})(\d)/, '$1.$2')
-              .replace(/(\d{3})(\d)/, '$1.$2')
-              .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-}
+document.addEventListener("DOMContentLoaded", function() {
+    function formatCPF(value) {
+        return value
+            .replace(/\D/g, "") // Remove tudo que não for número
+            .replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+            .slice(0, 14); // Garante que não passe do limite
+    }
 
-// Função para aplicar máscara de CNPJ
-function maskCNPJ(cnpj) {
-    return cnpj.replace(/(\d{2})(\d)/, '$1.$2')
-               .replace(/(\d{3})(\d)/, '$1.$2')
-               .replace(/(\d{3})(\d{1,2})$/, '$1/$2')
-               .replace(/(\d{4})(\d{1,2})$/, '$1-$2');
-}
+    function formatCNPJ(value) {
+        return value
+            .replace(/\D/g, "") // Remove tudo que não for número
+            .replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")
+            .slice(0, 18);
+    }
 
-// Função para aplicar máscara de Telefone
-function maskTelefone(telefone) {
-    return telefone.replace(/(\d{2})(\d)/, '($1) $2')
-                   .replace(/(\d{4})(\d)/, '$1-$2');
-}
+    function formatCEP(value) {
+        return value
+            .replace(/\D/g, "")
+            .replace(/(\d{5})(\d{3})/, "$1-$2")
+            .slice(0, 9);
+    }
 
-// Função para aplicar máscara de Celular
-function maskCelular(celular) {
-    return celular.replace(/(\d{2})(\d)/, '($1) $2')
-                  .replace(/(\d{5})(\d)/, '$1-$2');
-}
+    function formatTelefone(value) {
+        value = value.replace(/\D/g, ""); // Remove tudo que não for número
+        if (value.length <= 10) {
+            return value.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
+        } else {
+            return value.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+        }
+    }
 
-// Função para aplicar máscara de CEP
-function maskCEP(cep) {
-    return cep.replace(/(\d{5})(\d)/, '$1-$2');
-}
+    function applyMask(input, formatter) {
+        // Formata ao digitar
+        input.addEventListener("input", function() {
+            let cursorPosition = input.selectionStart;
+            let oldValueLength = input.value.length;
 
-// Função genérica para aplicar a máscara
-function applyMask(input, maskFunction) {
-    input.addEventListener('input', function() {
-        console.log("Input value before mask:", this.value); // Debugging
-        this.value = maskFunction(this.value.replace(/\D/g, ''));
-        console.log("Input value after mask:", this.value); // Debugging
-    });
-}
+            input.value = formatter(input.value);
 
-// Inicializa as máscaras
-function initMasks() {
-    const cpfInputs = document.querySelectorAll('.mask-cpf');
-    console.log("CPF Inputs found:", cpfInputs.length); // Debugging
-    cpfInputs.forEach(input => applyMask(input, maskCPF));
+            let newValueLength = input.value.length;
+            cursorPosition += (newValueLength - oldValueLength);
+            input.setSelectionRange(cursorPosition, cursorPosition);
+        });
 
-    const cnpjInputs = document.querySelectorAll('.mask-cnpj');
-    cnpjInputs.forEach(input => applyMask(input, maskCNPJ));
+        // Formata ao colar
+        input.addEventListener("paste", function(event) {
+            event.preventDefault();
+            let pastedText = (event.clipboardData || window.clipboardData).getData("text");
+            input.value = formatter(pastedText);
+        });
 
-    const telefoneInputs = document.querySelectorAll('.mask-telefone');
-    telefoneInputs.forEach(input => applyMask(input, maskTelefone));
+        // Aplica a máscara nos valores já preenchidos ao carregar a página
+        input.value = formatter(input.value);
+    }
 
-    const celularInputs = document.querySelectorAll('.mask-celular');
-    celularInputs.forEach(input => applyMask(input, maskCelular));
+    function removeMaskBeforeSubmit() {
+        document.querySelectorAll(".cpf-mask, .cnpj-mask, .cep-mask, .telefone-mask").forEach(input => {
+            input.value = input.value.replace(/\D/g, ""); // Remove qualquer formatação antes de enviar
+        });
+    }
 
-    const cepInputs = document.querySelectorAll('.mask-cep');
-    cepInputs.forEach(input => applyMask(input, maskCEP));
-}
+    // Aplica máscara para todos os campos com as classes especificadas
+    document.querySelectorAll(".cpf-mask").forEach(input => applyMask(input, formatCPF));
+    document.querySelectorAll(".cnpj-mask").forEach(input => applyMask(input, formatCNPJ));
+    document.querySelectorAll(".cep-mask").forEach(input => applyMask(input, formatCEP));
+    document.querySelectorAll(".telefone-mask").forEach(input => applyMask(input, formatTelefone));
 
-// Chama a função de inicialização quando o DOM estiver carregado
-document.addEventListener('DOMContentLoaded', initMasks);
+    // Remove a máscara antes de enviar o formulário
+    document.querySelector("form").addEventListener("submit", removeMaskBeforeSubmit);
+});
