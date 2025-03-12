@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}SIGA - Sistema Integrado de Gestão Administrativa{% endblock %}</title>
     {% load static %}
+    {% load django_bootstrap5 %}
     <!-- Fontes e estilos CSS -->
     {% include 'css_includes.html' %}
     <!-- Meta tags de segurança -->
@@ -37,6 +38,7 @@
     
     <!-- Scripts -->
     {% include 'js_includes.html' %}
+    {% bootstrap_javascript %}
 </body>
 {% csrf_token %}
 </html>

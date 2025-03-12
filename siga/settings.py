@@ -86,6 +86,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.microsoft',
     'siga',
     'apis',
+    'django_bootstrap5',
     'reports',
     'apps.alunos',
     'apps.auxiliares',
