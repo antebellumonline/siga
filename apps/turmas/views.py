@@ -7,9 +7,9 @@ Definição das views para o aplicativo 'turmas'.
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.urls import reverse
-from django.db.models import Q
+from django.utils.html import format_html
 
-from django.utils.safestring import mark_safe
+from django.db.models import Q
 
 from .models import Turma, TipoTurma, Curso, Empresa, Local
 from .forms import TurmaForm
@@ -205,9 +205,10 @@ def turma_list(request):
         ],
         'rows': [
             [
-                mark_safe(f'<a href="{reverse(
-                    "turma_detail",
-                    args=[turma.id])}">{turma.nome}</a>'
+                format_html(
+                    '<a href="{}" class="turma-mask">{}</a>',
+                    reverse("turma_detail", args=[turma.id]),
+                    turma.nome
                 ),
                 turma.curso.nome,
                 turma.tipo.nome,
@@ -216,12 +217,12 @@ def turma_list(request):
                 turma.inicioCurso,
                 turma.terminoCurso,
                 turma.datasCurso,
-                turma.enturmacao,
-                turma.plataforma,
-                turma.material,
-                turma.certificado,
+                "Sim" if turma.enturmacao else "Não",
+                "Sim" if turma.plataforma else "Não",
+                "Sim" if turma.material else "Não",
+                "Sim" if turma.certificado else "Não",
                 turma.observacao,
-                turma.inativo
+                "Sim" if turma.inativo else "Não",
             ]
             for turma in page_obj
         ]

@@ -155,3 +155,8 @@
 .tb-list tbody tr:nth-child(even) {
     background-color: white;
 }
+
+/* EXCLUSIVO PARA O APP TURMAS */
+.turma-mask {
+    white-space: nowrap;
+}

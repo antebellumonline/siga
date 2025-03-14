@@ -31,6 +31,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    function formatTurmaNome(value) {
+        return value.replace(/^([A-Z]{3})(\d{3})(\d{4})(\d{2})(\d{1})$/, "$1$2.$3-$4.$5");
+    }
+
     function applyMask(input, formatter) {
         // Formata ao digitar
         input.addEventListener("input", function() {
@@ -56,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function removeMaskBeforeSubmit() {
-        document.querySelectorAll(".cpf-mask, .cnpj-mask, .cep-mask, .telefone-mask").forEach(input => {
+        document.querySelectorAll(".cpf-mask, .cnpj-mask, .cep-mask, .telefone-mask, .turma-mask").forEach(input => {
             input.value = input.value.replace(/\D/g, ""); // Remove qualquer formatação antes de enviar
         });
     }
@@ -67,6 +71,11 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll(".cep-mask").forEach(input => applyMask(input, formatCEP));
     document.querySelectorAll(".telefone-mask").forEach(input => applyMask(input, formatTelefone));
 
+    // Aplica a máscara na listagem das turmas
+    document.querySelectorAll(".turma-mask").forEach(input => {
+        input.innerText = formatTurmaNome(input.innerText);
+    });
+    
     // Remove a máscara antes de enviar o formulário
     document.querySelector("form").addEventListener("submit", removeMaskBeforeSubmit);
 });
