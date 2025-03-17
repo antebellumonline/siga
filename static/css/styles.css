@@ -26,3 +26,8 @@
     color: black;
     background-color: #E6B510;
 }
+
+/* ATALHOS DO ACCESSKEY */
+.accesskey {
+    text-decoration: underline;
+}
