@@ -18,7 +18,7 @@
             <div class="apps-form-group-edit-status">
                 <h4 class="apps-form-status-section-title">Status da Centro de Provas</h4>
                 <div class="apps-form-input">
-                    {{ form.inativo.label_tag }}
+                    <label for="{{ form.inativo.id_for_label }}">{{ form.inativo.field.widget.attrs.label }}</label>
                     {{ form.inativo }}
                 </div>
             </div>
@@ -26,7 +26,7 @@
             <div class="apps-form-group-edit-sub">
                 <h4 class="apps-form-sub-section-title">Detalhes do Centro de Provas</h4>
                 <div class="apps-form-input">
-                    {{ form.nome.label_tag }}
+                    <label for="{{ form.nome.id_for_label }}">{{ form.nome.field.widget.attrs.label }}</label>
                     {{ form.nome }}
                 </div>
             </div>
@@ -34,7 +34,7 @@
         <!-- Grupo de botões -->
         <div class="apps-form-btn-group">
             <button class="btn-save btn-dark" type="submit" accesskey="s">Salvar</button>
-            <a class="btn-return btn-yellow" href="{% url 'centroprova_home' %}" accesskey="r">Retornar</a>
+            <a class="btn-return btn-yellow" href="{% url 'centroprova_home' %}">Retornar</a>
         </div>
     </form>
 </div>
