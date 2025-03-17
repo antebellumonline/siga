@@ -90,12 +90,13 @@ INSTALLED_APPS = [
     'reports',
     'apps.alunos',
     'apps.auxiliares',
-    'apps.local',
-    'apps.certificacoes',
     'apps.centroProva',
+    'apps.certificacoes',
     'apps.cursos',
+    'apps.dfs',
     'apps.empresas',
     'apps.instrutores',
+    'apps.local',
     'apps.turmas',
 ]
 
