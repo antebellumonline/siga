@@ -34,4 +34,4 @@ class ConfigStatus(models.Model):
 
     class Meta:
         """Meta-informações para o modelo Instrutor"""
-        db_table = 'tb_ConfigStatus'
+        db_table = 'tb_configStatus'

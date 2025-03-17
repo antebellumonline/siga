@@ -1,7 +1,7 @@
 # apps/turmas/models.py
 
 """
-Definições dos modelos do aplicativo 'centroProva'.
+Definições dos modelos do aplicativo 'turmas'.
 """
 
 from datetime import datetime
