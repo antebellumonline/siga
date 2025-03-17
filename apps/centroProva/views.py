@@ -46,43 +46,39 @@ def centroprova_list(request):
     View para Listar os Centros de Provas    
     """
     # Obtém os filtros
-    query = request.GET.get('q')
-    inativo = request.GET.get('inativo')
+    query = request.GET.get('centroProva-list-query')
+    inativo = request.GET.get('centroProva-list-inativo')
 
     # Ordenação
     order_by = request.GET.get('order_by', 'nome')
     descending = request.GET.get('descending', 'False') == 'True'
 
-    # Inicializa a variável centroProva
+    # Otimização da Consulta
     centroprova = CentroProva.objects.all()
 
-    # Aplicar os filtros e pesquisa
+    # Filtragem
     if query:
         centroprova = centroprova.filter(
             Q(id__icontains=query) |
             Q(nome__icontains=query)
         )
 
-    # Filtra por Status
-    if inativo is not None and inativo != "":
-        if inativo == 'True':
-            centroprova = centroprova.filter(inativo=True)
-        elif inativo == 'False':
-            centroprova = centroprova.filter(inativo=False)
+    if inativo in ['True', 'False']:
+        centroprova = centroprova.filter(inativo=inativo == 'True')
 
-    # Aplicar ordenação
+    # Aplicação da Ordenação
     if descending:
         order_by = f'-{order_by}'
     centroprova = centroprova.order_by(order_by)
 
-    # Quantidade de registros por página (com valor padrão de 20)
+    # Registros por Página
     records_per_page = request.GET.get('records_per_page', 20)
     try:
         records_per_page = int(records_per_page)
     except (ValueError, TypeError):
         records_per_page = 10
 
-    # Criação do paginator com o queryset e o número de registros por página
+    # Paginação
     paginator = Paginator(centroprova, records_per_page)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -93,12 +89,59 @@ def centroprova_list(request):
     except (ValueError, TypeError):
         page_obj = paginator.get_page(1)
 
-    # Renderização do template
-    return render(request, 'centroProva/centroProva_list.html', {
+    # Definição dos Campos de Pesquisa
+    search_fields = [
+        {
+            'id': 'centroProva-list-query',
+            'name': 'centroProva-list-query',
+            'label': 'Busque pelo Nome ou ID do Centro de Provas:',
+            'placeholder': 'Busque pelo Nome ou ID do Centro de Provas',
+            'type': 'text',
+            'value': request.GET.get('q', ''),
+        },
+        {
+            'id': 'centroProva-list-inativo',
+            'name': 'centroProva-list-inativo',
+            'label': 'Centro de Provas Inativo?',
+            'type': 'select',
+            'options': [('True', 'Sim'), ('False', 'Não')],
+            'selected': request.GET.get('inativo', ''),
+        },
+    ]
+
+    context = {
         'centroprova': centroprova,
         'page_obj': page_obj,
-        'query_params': request.GET,
-        })
+        'search_fields': search_fields,
+        'query_params': request.GET.urlencode(),
+        'headers': [
+            {'field': 'id', 'label': 'ID'},
+            {'field': 'nome', 'label': 'Nome'},
+            {'field': 'inativo', 'label': 'Inativo'}
+        ],
+        'rows': [
+            [
+                centroprova.id,
+                mark_safe(
+                    f'<a href="{reverse(
+                        "centroprova_detail",
+                        args=[centroprova.id]
+                    )}">{centroprova.nome}</a>'
+                ),
+                "Sim" if centroprova.inativo else "Não",
+            ]
+            for centroprova in page_obj
+        ]
+    }
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, 'includes/table.html', context)
+    else:
+        return render(
+            request,
+            'centroProva/centroProva_list.html',
+            context
+        )
 
 def centroprova_detail(request, pk):
     """

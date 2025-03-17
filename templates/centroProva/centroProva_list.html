@@ -13,21 +13,7 @@
 <!-- Formulário de busca e filtro -->
 <div class="container-apps-list">
     <form method="GET" action="{% url 'centroprova_list' %}" class="apps-list-search-form">
-        <div class="apps-list-form-group-search">
-            <div class="apps-list-form-group-search-sub">
-                <input type="checkbox" id="check-list-centroProva-nome" data-target="list-centroProva-nome">
-                <label for="search-list-centroProva-nome">ID ou Nome:</label>
-                <input type="text" id="list-centroProva-nome" name="q" placeholder="Busque por ID ou Nome do Centro de Provas" value="{{ request.GET.q }}" class="form-control" aria-label="Busque por ID ou Nome do Centro de Provas">
-            </div>
-            <div class="apps-list-select-group-search">
-                <input type="checkbox" id="check-list-centroProva-inativo" data-target="list-centroProva-inativo">
-                <label for="search-list-centroProva-inativo">Inativo:</label>
-                <select name="inativo" id="list-centroProva-inativo" class="select-search select2">
-                    <option value="True" {% if request.GET.inativo == 'True' %}selected{% endif %}>Sim</option>
-                    <option value="False" {% if request.GET.inativo == 'False' %}selected{% endif %}>Não</option>
-                </select>
-            </div>
-        </div>
+        {% include 'includes/search_fields.html' %}
         <!-- Botões de Ação -->
         <div class="apps-list-btn-group-search">
             <button type="submit" class="btn-list btn-circle btn-dark"></button>
@@ -46,36 +32,9 @@
     <!-- Paginação da Tabela -->
     {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
     <!-- Tabela de busca -->
-    <table class="tb-list" id="tb-list-centroProva">
-        <thead>
-            <tr>
-                <th>
-                    <a href="?order_by=id&descending={% if request.GET.order_by == 'id' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
-                        ID {% if request.GET.order_by == 'id' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=nome&descending={% if request.GET.order_by == 'nome' and not request.GET.descending == 'True' %}True{% else %}False{% endif %}&q={{ request.GET.q }}&inativo={{ request.GET.inativo }}">
-                        Nome {% if request.GET.order_by == 'nome' %}{% if request.GET.descending == 'True' %}▼{% else %}▲{% endif %}{% endif %}
-                    </a>
-                </th>
-                <th>Inativo</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for centro in page_obj %}
-            <tr>
-                <td>{{ centro.id }}</td>
-                <td><a href="{% url 'centroprova_detail' centro.pk %}">{{ centro.nome }}</a></td>
-                <td>{{ centro.inativo|yesno:"Sim,Não" }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="4">Nenhum centro de prova encontrado.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="ajax-table tb-list" id="ajax-table">
+        {% include 'includes/table.html' %}
+    </div>
     <!-- Paginação da Tabela -->
     {% include 'includes/pagination.html' with page_obj=page_obj query_params=query_params %}
     <!-- Contador de registros -->
