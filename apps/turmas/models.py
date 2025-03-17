@@ -8,6 +8,7 @@ from datetime import datetime
 from django.db import models
 from apps.cursos.models import Curso, CursoVersao
 from apps.empresas.models import Empresa
+from apps.instrutores.models import Instrutor
 from apps.local.models import Local
 
 class TipoTurma (models.Model):
@@ -66,3 +67,19 @@ class Turma (models.Model):
     class Meta:
         """Meta-informações para o modelo Turma"""
         db_table = 'tb_turma'
+
+class TurmaInscricaoInstrutor (models.Model):
+    """Modelo que representa a Inscrição de um Instrutor em uma Turma."""
+    id = models.AutoField(primary_key=True)
+    turma = models.ForeignKey(Turma, on_delete=models.PROTECT)
+    instrutor = models.ForeignKey(Instrutor, on_delete=models.PROTECT)
+    carga_horaria = models.DurationField(default='00:00:00', db_column='cargaHoraria')
+    valor_hora = models.DecimalField(max_digits=16, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.turma} - {self.instrutor}"
+
+    class Meta:
+        """Meta-informações para o modelo TurmaInscricaoInstrutor."""
+        db_table = 'tb_turma-inscricaoInstrutor'
+        unique_together = ('turma', 'instrutor')
