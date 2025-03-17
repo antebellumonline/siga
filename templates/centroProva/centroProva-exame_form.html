@@ -17,31 +17,31 @@
             <div class="apps-form-group-edit-sub">
                 <h4 class="apps-form-sub-section-title">Detalhes do Exame</h4>
                 <div class="apps-form-input">
-                    {{ form.data.label_tag }}
+                    <label for="{{ form.data.id_for_label }}">{{ form.data.field.widget.attrs.label }}</label>
                     {{ form.data }}
                 </div>
                 <div class="apps-form-input">
-                    {{ form.centroProva.label_tag }}
+                    <label for="{{ form.centroProva.id_for_label }}">{{ form.centroProva.field.widget.attrs.label }}</label>
                     {{ form.centroProva }}
                 </div>
                 <div class="apps-form-input">
-                    {{ form.certificacao.label_tag }}
+                    <label for="{{ form.certificacao.id_for_label }}">{{ form.certificacao.field.widget.attrs.label }}</label>
                     {{ form.certificacao }}
                 </div>
                 <div class="apps-form-input">
-                    {{ form.aluno.label_tag }}
+                    <label for="{{ form.aluno.id_for_label }}">{{ form.aluno.field.widget.attrs.label }}</label>
                     {{ form.aluno }}
                 </div>
                 <div class="apps-form-input">
-                    {{ form.presenca.label_tag }}
+                    <label for="{{ form.presenca.id_for_label }}">{{ form.presenca.field.widget.attrs.label }}</label>
                     {{ form.presenca }}
                 </div>
                 <div class="apps-form-input">
-                    {{ form.cancelado.label_tag }}
+                    <label for="{{ form.cancelado.id_for_label }}">{{ form.cancelado.field.widget.attrs.label }}</label>
                     {{ form.cancelado }}
                 </div>
                 <div class="apps-form-input">
-                    {{ form.observacao.label_tag }}
+                    <label for="{{ form.observacao.id_for_label }}">{{ form.observacao.field.widget.attrs.label }}</label>
                     {{ form.observacao }}
                 </div>
             </div>
