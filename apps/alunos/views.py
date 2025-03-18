@@ -8,10 +8,12 @@ e interagir com os modelos de dados.
 """
 
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.core.paginator import Paginator
 from django.db.models import Q
 
 from apps.local.models import Cidade
+from apps.centroProva.models import CentroProvaExame
 from .models import Aluno, AlunoContato
 from .forms import AlunoForm, AlunoContatoFormSet
 
@@ -122,11 +124,133 @@ def aluno_detail(request, pk):
     # Obtém os filtros
     aluno = get_object_or_404(Aluno, pk=pk)
     contatos = AlunoContato.objects.filter(aluno=aluno).order_by('tipoContato__descricao')
+    exames = CentroProvaExame.objects.filter(aluno=aluno).order_by('data')
 
-    # Renderização do template
+    # Preparar os dados para o template reutilizável
+    tabs = [
+        {
+            'id': 'aluno-detail-dados-pessoais',
+            'icon': 'fa fa-user',
+            'label': 'Dados Pessoais'
+        },
+        {
+            'id': 'aluno-detail-endereco',
+            'icon': 'fa fa-map-location-dot',
+            'label': 'Endereço'
+        },
+        {
+            'id': 'aluno-detail-contatos',
+            'icon': 'fa fa-address-book',
+            'label': 'Contatos'
+        },
+        {
+            'id': 'aluno-detail-centroProva-exames',
+            'icon': 'fa fa-school',
+            'label': 'Centro de Provas'
+        },
+    ]
+
+    sections = [
+        {
+            'id': 'aluno-detail-dados-pessoais',
+            'title': 'Dados Pessoais',
+            'active': True,
+            'fields': [
+                {'label': 'Status do Aluno', 'value': 'Inativo' if aluno.inativo else 'Ativo'},
+                {'label': 'UID', 'value': aluno.uid},
+                {'label': 'Nome', 'value': aluno.nome},
+                {'label': 'CPF', 'value': aluno.cpf},
+                {'label': 'Observação', 'value': aluno.observacao},
+            ]
+        },
+        {
+            'id': 'aluno-detail-endereco',
+            'title': 'Endereço',
+            'active': False,
+            'fields': [
+                {'label': 'CEP', 'value': aluno.cep},
+                {'label': 'Endereço', 'value': aluno.endereco},
+                {'label': 'Número', 'value': aluno.numero},
+                {'label': 'Complemento', 'value': aluno.complemento},
+                {'label': 'Bairro', 'value': aluno.bairro},
+                {'label': 'Cidade', 'value': f"{aluno.cidade.nome} / {aluno.cidade.estado.uf}"},
+            ]
+        },
+        {
+            'id': 'aluno-detail-contatos',
+            'title': 'Contatos',
+            'active': False,
+            'fields': []
+        },
+        {
+            'id': 'aluno-detail-centroProva-exames',
+            'title': 'Exames Realizados no Centro de Provas',
+            'active': False,
+            'fields': []
+        }
+    ]
+
+    # Adicionando contatos à seção de contatos
+    if contatos:
+        sections[2]['is_table'] = True
+        sections[2]['table_headers'] = [
+            'Tipo de Contato',
+            'Contato',
+            'Detalhe'
+        ]
+        for contato in contatos:
+            sections[2]['fields'].append({
+                'values': [
+                    contato.tipoContato.descricao,
+                    contato.contato,
+                    contato.detalhe,
+                ]
+            })
+
+    # Adicionando exames à seção de exames
+    if exames:
+        sections[-1]['is_table'] = True
+        sections[-1]['table_headers'] = [
+            'Data',
+            'Centro de Provas',
+            'Certificação',
+            'Presença',
+            'Cancelado',
+            'Observação'
+        ]
+        for exame in exames:
+            sections[-1]['fields'].append({
+                'values': [
+                    exame.data.strftime('%d/%m/%Y %H:%M'),
+                    exame.centroProva.nome,
+                    f"{exame.certificacao.descricao} ({exame.certificacao.siglaExame})",
+                    'Sim' if exame.presenca else 'Não',
+                    'Sim' if exame.cancelado else 'Não',
+                    exame.observacao,
+                ]
+            })
+
+    buttons = [
+        {
+            'class': 'btn-edit',
+            'url': reverse('aluno_edit', args=[aluno.pk])
+        },
+        {
+            'class': 'btn-delete',
+            'url': '#',
+            'data': {'model': 'Aluno','pk': aluno.pk}
+        },
+        {
+            'class': 'btn-return',
+            'url': reverse('aluno_list'),
+        },
+    ]
+
     return render(request, 'alunos/aluno_detail.html', {
         'aluno': aluno,
-        'contatos': contatos
+        'tabs': tabs,
+        'sections': sections,
+        'buttons': buttons,
     })
 
 def aluno_edit(request, pk):
