@@ -31,14 +31,17 @@
     margin-top: 1.3rem;
     margin-bottom: 1.3rem;
 }
+.p-detail {
+    padding-left: 0.6rem;
+}
 
-.apps-detail-group .apps-detail-label {
+.apps-detail-label {
     font-family: 'Fredoka', sans-serif;
     font-weight: 500;
     padding-left: 0.6rem;
 }
 
-.apps-detail-group .apps-detail-value {
+.apps-detail-value {
     font-family: 'Montserrat', sans-serif;
     padding-right: 0.6rem;
 }
