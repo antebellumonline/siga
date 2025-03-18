@@ -206,6 +206,11 @@ def aluno_detail(request, pk):
                     contato.detalhe,
                 ]
             })
+    else:
+        # Adiciona uma linha informando que não há contatos
+        sections[2]['fields'] = [
+            {'value': 'Nenhum Contato encontrado.'}
+        ]
 
     # Adicionando exames à seção de exames
     if exames:
@@ -229,6 +234,11 @@ def aluno_detail(request, pk):
                     exame.observacao,
                 ]
             })
+    else:
+        # Adiciona uma linha informando que não há exames
+        sections[-1]['fields'] = [
+            {'value': 'Nenhum Exame Realizado no Centro de Provas encontrado.'}
+        ]
 
     buttons = [
         {

@@ -46,10 +46,14 @@
                     {% else %}
                         <div class="apps-detail-group">
                             {% for field in section.fields %}
-                                <p class="p-detail">
-                                    <span class="apps-detail-label">{{ field.label }}: </span>
-                                    <span class="apps-detail-value">{{ field.value }}</span>
-                                </p>
+                                {% if field.label %}
+                                    <p class="p-detail">
+                                        <span class="apps-detail-label">{{ field.label }}: </span>
+                                        <span class="apps-detail-value">{{ field.value }}</span>
+                                    </p>
+                                {% else %}
+                                    <p class="p-detail">{{ field.value }}</p>
+                                {% endif %}
                             {% endfor %}
                         </div>
                     {% endif %}
