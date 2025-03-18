@@ -3,7 +3,7 @@
 <div class="container-verticalTab">
     <div class="verticalTab-sidebar">
         {% for tab in tabs %}
-            <div class="verticalTab" data-content="{{ tab.id }}">
+            <div class="verticalTab {{ tab.class }}" data-content="{{ tab.id }}">
                 <i class="{{ tab.icon }}"></i>
                 <span>{{ tab.label }}</span>
             </div>

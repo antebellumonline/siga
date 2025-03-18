@@ -130,22 +130,22 @@ def aluno_detail(request, pk):
     tabs = [
         {
             'id': 'aluno-detail-dados-pessoais',
-            'icon': 'fa fa-user',
-            'label': 'Dados Pessoais'
+            'class': 'btn-detail',
+            'label': 'Detalhes',
         },
         {
             'id': 'aluno-detail-endereco',
-            'icon': 'fa fa-map-location-dot',
-            'label': 'Endereço'
+            'class': 'btn-address',
+            'label': 'Endereço',
         },
         {
             'id': 'aluno-detail-contatos',
-            'icon': 'fa fa-address-book',
+            'class': 'btn-contact',
             'label': 'Contatos'
         },
         {
             'id': 'aluno-detail-centroProva-exames',
-            'icon': 'fa fa-school',
+            'class': 'btn-testCenter',
             'label': 'Centro de Provas'
         },
     ]
@@ -262,6 +262,7 @@ def aluno_detail(request, pk):
         },
     ]
 
+    # Renderização do template
     return render(request, 'alunos/aluno_detail.html', {
         'aluno': aluno,
         'tabs': tabs,

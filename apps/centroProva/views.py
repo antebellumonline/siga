@@ -147,12 +147,127 @@ def centroprova_detail(request, pk):
     """
     View para Visualizar os detalhes de um Centro de Provas   
     """
-    # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
+    # Obtenção dos filtros
     centroprova = get_object_or_404(CentroProva, pk=pk)
+
+    # Obter exames realizados no centro de provas
+    exames = CentroProvaExame.objects.filter(centroProva=centroprova)
+
+    # Preparação dos Dados para o template reutilizável
+    tabs = [
+        {
+            'id': 'centroProva-detail-dados',
+            'class': 'btn-detail',
+            'label': 'Detalhes'
+        },
+        {
+            'id': 'centroProva-detail-certificador',
+            'class': 'btn-certifier',
+            'label': 'Certificadores'
+        },
+        {
+            'id': 'centroProva-detail-certificacao',
+            'class': 'btn-certification',
+            'label': 'Certificações'
+        },
+    ]
+
+    sections = [
+        {
+            'id': 'centroProva-detail-dados',
+            'title': 'Detalhes do Centro de Provas',
+            'active': True,
+            'fields': [
+                {
+                    'label': 'Status do Centro de Provas',
+                    'value': 'Inativo' if centroprova.inativo else 'Ativo'
+                },
+                {'label': 'Nome', 'value': centroprova.nome},
+            ]
+        },
+        {
+            'id': 'centroProva-detail-certificador',
+            'title': 'Certificadores neste Centro de Provas',
+            'active': False,
+            'fields': []
+        },
+        {
+            'id': 'centroProva-detail-certificacao',
+            'title': 'Certificações neste Centro de Provas',
+            'active': False,
+            'fields': []
+        },
+    ]
+
+    # Adicionar Itens às suas respectivas seções
+    if exames.exists():
+        # Certificadores
+        sections[1]['is_table'] = True
+        sections[1]['table_headers'] = [
+            'Nome do Certificador',
+            'Sigla do Certificador',
+        ]
+        certificadores_set = set()  # Usar um conjunto para evitar duplicatas
+        for exame in exames:
+            certificador = exame.certificacao.idCertificador
+            certificadores_set.add((certificador.descricao, certificador.siglaCertificador))
+
+        for descricao, sigla in certificadores_set:
+            sections[1]['fields'].append({
+                'values': [descricao, sigla]
+            })
+
+        if not sections[1]['fields']:
+            sections[1]['fields'] = [{'value': 'Nenhum Certificador encontrado.'}]
+
+        # Certificações
+        sections[2]['is_table'] = True
+        sections[2]['table_headers'] = [
+            'Nome da Certificação',
+            'Duração do Exame',
+            'Sigla do Exame',
+        ]
+        for exame in exames:
+            sections[2]['fields'].append({
+                'values': [
+                    exame.certificacao.descricao,
+                    exame.certificacao.duracao,
+                    exame.certificacao.siglaExame,
+                ]
+            })
+    else:
+        sections[1]['fields'] = [{'value': 'Nenhum Certificador encontrado.'}]
+        sections[2]['fields'] = [{'value': 'Nenhuma Certificação encontrada.'}]
+
+
+    buttons = [
+        {
+            'class': 'btn-edit',
+            'url': reverse('centroprova_edit', args=[centroprova.pk]),
+            'title': 'Editar Centro de Provas',
+            'aria-label': 'Editar Centro de Provas',
+        },
+        {
+            'class': 'btn-delete',
+            'url': '#',
+            'data': {'model': 'CentroProva','pk': centroprova.pk},
+            'title': 'Excluir Centro de Provas',
+        'aria-label': 'Excluir Centro de Provas',
+        },
+        {
+            'class': 'btn-return',
+            'url': reverse('centroprova_list'),
+            'title': 'Voltar para a lista de Centros de Provas',
+            'aria-label': 'Voltar para a lista de Centros de Provas',
+        },
+    ]
 
     # Renderização do template
     return render(request, 'centroProva/centroProva_detail.html', {
-        'centroprova': centroprova
+        'centroprova': centroprova,
+        'tabs': tabs,
+        'sections': sections,
+        'buttons': buttons,
     })
 
 def centroprova_edit(request, pk):

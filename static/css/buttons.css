@@ -146,6 +146,67 @@
 .btn-excel::before { content: "\f1c3"; }
 .btn-reset::before { content: "\f2f9"; }
 
+/* Botões dos Apps */
+.btn-address, /* Botão de Endereço */
+.btn-budget, /* Botão de Propostas Comerciais / Orçamentos */
+.btn-certification, /* Botão de Certificação */
+.btn-certifier, /* Botão de Certificador */
+.btn-class, /* Botão de Turma */
+.btn-company, /* Botão de Empresa */
+.btn-contact, /* Botão de Contato */
+.btn-course, /* Botão de Curso */
+.btn-detail, /* Botão de Detalhe */
+.btn-finance, /* Botão de Financeiro */
+.btn-invoice, /* Botão de Nota Fiscal */
+.btn-invoice-dollar, /* Botão de Invoice ($) */
+.btn-student, /* Botão de Aluno */
+.btn-teacher, /* Botão de Instrutor */
+.btn-testCenter, /* Botão de Centro de Provas */
+.btn-trainingBlocks, /* Botão de Training Blocks */
+.btn-voucher { /* Botão de Voucher */
+    color: black;
+}
+
+.btn-address::before,
+.btn-budget::before,
+.btn-certification::before,
+.btn-certifier::before,
+.btn-class::before,
+.btn-company::before,
+.btn-contact::before,
+.btn-course::before,
+.btn-detail::before,
+.btn-finance::before,
+.btn-invoice::before,
+.btn-invoice-dollar::before,
+.btn-student::before,
+.btn-teacher::before,
+.btn-testCenter::before,
+.btn-trainingBlocks::before,
+.btn-voucher::before {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+}
+
+.btn-address::before {content: "\f5a0";}
+.btn-budget::before {content: "\f15c";}
+.btn-certification::before {content: "\f0a3";}
+.btn-certifier::before {content: "\f4fc";}
+.btn-class::before {content: "\f0c0";}
+.btn-company::before {content: "\f1ad";}
+.btn-contact::before {content: "\f2b9";}
+.btn-course::before {content: "\f02d";}
+.btn-detail::before {content: "\f05a";}
+.btn-finance::before {content: "\f555";}
+.btn-invoice::before {content: "\f570";}
+.btn-invoice-dollar::before {content: "\f571";}
+.btn-student::before {content: "\f501";}
+.btn-teacher::before {content: "\f51c";}
+.btn-testCenter::before {content: "\f549";}
+.btn-trainingBlocks::before {content: "\e4e6";}
+.btn-voucher::before {content: "\f145";}
+
 /* Estilo para botões circulares */
 .btn-circle {
     width: 50px;

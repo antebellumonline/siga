@@ -13,35 +13,7 @@
 
 {% block content %}
 
-<div class="container-apps-detail">
-    <div class="apps-detail-group">
-        <div class="apps-detail-group-sub">
-            <h6 class="apps-detail-sub-section-title">Centro de Provas</h6>
-            <table class="tb-detail">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Inativo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ centroprova.id }}</td>
-                        <td>{{ centroprova.nome }}</td>
-                        <td>{{ centroprova.inativo|yesno:"Sim,Não" }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!-- Grupo de botões (Editar, Excluir e Retornar) -->
-    <div class="apps-detail-btn-group">
-        <a class="btn-edit btn-dark" href="{% url 'centroprova_edit' centroprova.pk %}">Editar</a>
-        <a class="btn-delete btn-yellow" id="btn-delete" data-model="centroprova" data-pk="{{ centroprova.pk }}" href="#">Excluir</a>
-        <a class="btn-return btn-dark" href="{% url 'centroprova_list' %}">Retornar</a>
-    </div>
-</div>
+{% include 'includes/apps_detail.html' %}
 
 <!-- Modal Pop-up -->
 {% include 'includes/modals.html' %}
