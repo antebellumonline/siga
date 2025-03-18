@@ -233,16 +233,22 @@ def aluno_detail(request, pk):
     buttons = [
         {
             'class': 'btn-edit',
-            'url': reverse('aluno_edit', args=[aluno.pk])
+            'url': reverse('aluno_edit', args=[aluno.pk]),
+            'title': 'Editar Aluno',
+            'aria-label': 'Editar Aluno',
         },
         {
             'class': 'btn-delete',
             'url': '#',
-            'data': {'model': 'Aluno','pk': aluno.pk}
+            'data': {'model': 'Aluno','pk': aluno.pk},
+            'title': 'Excluir Aluno',
+        'aria-label': 'Excluir Aluno',
         },
         {
             'class': 'btn-return',
             'url': reverse('aluno_list'),
+            'title': 'Voltar para a lista de Alunos',
+            'aria-label': 'Voltar para a lista de Alunos',
         },
     ]
 
