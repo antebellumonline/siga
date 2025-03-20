@@ -256,8 +256,35 @@ def exame_new(request):
     else:
         form = CentroProvaExameForm()
 
+    # Definindo as seções e botões
+    sections = [
+        {
+            'title': 'Dados do Exame Realizado no Centro de Provas',
+            'fields': [
+                form['data'],
+                form['centroProva'],
+                form['certificacao'],
+                form['aluno'],
+                form['presenca'],
+                form['cancelado'],
+                form['observacao'],
+            ]
+        },
+    ]
+
+    buttons = [
+        {
+            'class': 'btn-return',
+            'url': reverse('exame_list'),
+            'title': 'Retornar',
+            'text': 'Retornar',
+        },
+    ]
+
     return render(request, 'centroProva/centroProva-exame_form.html', {
-        'form': form, 
+        'form': form,
+        'sections': sections,
+        'buttons': buttons,
     })
 
 def exame_list(request):

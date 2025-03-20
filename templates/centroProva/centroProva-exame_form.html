@@ -10,48 +10,6 @@
 
 {% block content %}
 
-<div class="container-apps-form">
-    <form method="post" class="apps-form-edit">
-        {% csrf_token %}
-        <div class="apps-form-group-edit">
-            <div class="apps-form-group-edit-sub">
-                <h4 class="apps-form-sub-section-title">Detalhes do Exame</h4>
-                <div class="apps-form-input">
-                    <label for="{{ form.data.id_for_label }}">{{ form.data.field.widget.attrs.label }}</label>
-                    {{ form.data }}
-                </div>
-                <div class="apps-form-input">
-                    <label for="{{ form.centroProva.id_for_label }}">{{ form.centroProva.field.widget.attrs.label }}</label>
-                    {{ form.centroProva }}
-                </div>
-                <div class="apps-form-input">
-                    <label for="{{ form.certificacao.id_for_label }}">{{ form.certificacao.field.widget.attrs.label }}</label>
-                    {{ form.certificacao }}
-                </div>
-                <div class="apps-form-input">
-                    <label for="{{ form.aluno.id_for_label }}">{{ form.aluno.field.widget.attrs.label }}</label>
-                    {{ form.aluno }}
-                </div>
-                <div class="apps-form-input">
-                    <label for="{{ form.presenca.id_for_label }}">{{ form.presenca.field.widget.attrs.label }}</label>
-                    {{ form.presenca }}
-                </div>
-                <div class="apps-form-input">
-                    <label for="{{ form.cancelado.id_for_label }}">{{ form.cancelado.field.widget.attrs.label }}</label>
-                    {{ form.cancelado }}
-                </div>
-                <div class="apps-form-input">
-                    <label for="{{ form.observacao.id_for_label }}">{{ form.observacao.field.widget.attrs.label }}</label>
-                    {{ form.observacao }}
-                </div>
-            </div>
-        </div>
-        <!-- Grupo de botões (Salvar e Retornar) -->
-        <div class="apps-form-btn-group">
-            <button class="btn-save btn-dark" type="submit" accesskey="s">Salvar</button>
-            <a class="btn-return btn-yellow" href="{% url 'exame_list' %}">Retornar</a>
-        </div>
-    </form>
-</div>
+    {% include "includes/apps_form.html" %}
 
 {% endblock %}

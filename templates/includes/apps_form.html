@@ -1,0 +1,33 @@
+<!-- templates/includes/apps_form.html -->
+
+<div class="container-apps-form">
+    <form method="post" class="apps-form">
+        {% csrf_token %}
+        <div class="apps-form-group">
+            {% for section in sections %}
+                <div class="apps-form-group-edit-sub">
+                    <h4 class="apps-form-sub-section-title">{{ section.title }}</h4>
+                    {% for field in section.fields %}
+                        <div class="apps-form-input">
+                            <label for="{{ field.id_for_label }}">{{ field.field.widget.attrs.label }}</label>  <!-- Renderiza o label -->
+                            {{ field }}  <!-- Renderiza o campo -->
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="error">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <!-- Grupo de botões -->
+        <div class="apps-form-btn-group">
+            <button type="submit" class="btn-save btn-dark" title="Salvar">Salvar</button>
+            {% for button in buttons %}
+                <a class="{{ button.class }} btn-dark" href="{{ button.url }}" role="button" title="{{ button.title }}">{{ button.text }}</a>
+            {% endfor %}
+        </div>
+    </form>
+</div>

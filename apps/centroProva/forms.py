@@ -98,14 +98,14 @@ class CentroProvaExameForm(forms.ModelForm):
                 'class': 'apps-form-input select2',
                 'id': 'exame-presenca',
                 'name': 'exame-presenca',
-                'label': 'Presença: ',
+                'label': 'O Aluno estava Presente? ',
                 'placeholder': 'Marque se o aluno compareceu ao exame',
             }),
             'cancelado': BooleanSelect(attrs={
                 'class': 'apps-form-input select2',
                 'id': 'exame-cancelado',
                 'name': 'exame-cancelado',
-                'label': 'Cancelado: ',
+                'label': 'O Exame foi Cancelado? ',
                 'placeholder': 'Marque se o exame foi cancelado',
             }),
             'observacao': forms.Textarea(attrs={
