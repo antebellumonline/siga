@@ -1,0 +1,189 @@
+/* DETALHES DOS APPS */
+.body-apps-detail {
+    background-color: black;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.apps-detail-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.25rem;
+    color: #3FB081;
+}
+
+.container-apps-detail {
+    max-width: 75rem;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.apps-detail-group {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1.3rem;
+    margin-bottom: 1.3rem;
+}
+.p-detail {
+    padding-left: 0.6rem;
+}
+
+.apps-detail-label {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 500;
+    padding-left: 0.6rem;
+}
+
+.apps-detail-value {
+    font-family: 'Montserrat', sans-serif;
+    padding-right: 0.6rem;
+}
+
+/* Subgrupo */
+.apps-detail-group-sub {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+    margin-bottom: 1.3rem;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border: 0.13rem solid #3FB081;
+}
+
+.apps-detail-group-sub div {
+    flex: 1 1 calc(50% - 0.6rem);
+}
+
+.apps-detail-sub-section-title {
+    background-color: #3FB081;
+    color: black;
+    padding: 6px;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.apps-detail-group-sub-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 1 1 calc(50% - 1.3rem);
+    padding: 0.3rem;
+    box-sizing: border-box;
+}
+
+.apps-detail-group-sub-info label {
+    color: black;
+    margin-right: 0.6rem;
+    flex: 0 0 auto;
+}
+
+/* Status */
+.apps-detail-group-status {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border: 0.13rem solid #E6B510;
+    margin-bottom: 1.3rem;
+    margin: 0 auto;
+    width: 30%;
+    box-sizing: border-box;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.apps-detail-status-section-title {
+    background-color: #E6B510;
+    color: black;
+    padding: 10px;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.apps-detail-group-status-sub {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 0.6rem;
+}
+
+/* Botões */
+.apps-detail-btn-group {
+    margin: 0.5rem;
+    text-align: right;
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Tabela */
+.tb-detail {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border: 0.06rem solid white;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    box-shadow: 0 0.13rem 0.3rem rgba(0, 0, 0, 0.1);
+    margin-top: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.tb-detail th, 
+.tb-detail td {
+    text-align: left;
+    padding: 0.5rem;
+}
+
+.tb-detail thead {
+    background-color: #E6B510;
+    color: black;
+}
+
+.tb-detail thead th {
+    border-bottom: none;
+}
+
+.tb-detail tbody tr:nth-child(odd) {
+    background-color: #babab9;
+}
+
+.tb-detail tbody tr:nth-child(even) {
+    background-color: #e3e3e1;
+}
+
+.tb-detail th a {
+    color: black;
+    text-decoration: none;
+}
+
+.tb-detail th a:hover {
+    text-decoration: underline;
+}
+
+.tb-detail td {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: black;
+}

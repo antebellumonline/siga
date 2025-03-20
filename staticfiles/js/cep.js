@@ -1,13 +1,21 @@
 /* static/js/cep.js */
-function buscaEndereco() {
-    var cep = document.getElementById("cep").value;
+function buscaEndereco(event) {
+    var cepInput = event.target;
+    var form = cepInput.closest('form'); // Identifica o formulário mais próximo
+
+    if (!form) return; // Se não estiver dentro de um formulário, sai
+
+    var cep = cepInput.value.trim();
+
+    if (!cep) return;
+
     fetch(`/apis/buscacep/${cep}/`)
         .then(response => response.json())
         .then(data => {
             if (data.ibge) {
-                document.getElementById("logradouro").value = data.logradouro;
-                document.getElementById("bairro").value = data.bairro;
-                $('#select-cidade').val(data.ibge).trigger('change');
+                form.querySelector(".logradouro-input").value = data.logradouro || "";
+                form.querySelector(".bairro-input").value = data.bairro || "";
+                $(form.querySelector(".cidade-input")).val(data.ibge).trigger('change');
             } else {
                 alert("CEP não encontrado!");
             }
@@ -16,8 +24,7 @@ function buscaEndereco() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    const cepInput = document.getElementById('cep');
-    if (cepInput) {
-        cepInput.addEventListener('blur', buscaEndereco);
-    }
+    document.querySelectorAll(".cep-input").forEach(input => {
+        input.addEventListener("blur", buscaEndereco);
+    });
 });
