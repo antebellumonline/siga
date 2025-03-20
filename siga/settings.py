@@ -161,7 +161,7 @@ MICROSOFT = {
     'app_id': os.getenv('MICROSOFT_APP_ID'),
     'app_secret': os.getenv('MICROSOFT_APP_SECRET'),
     'redirect': os.getenv('MICROSOFT_REDIRECT'),
-    'scopes': os.getenv('MICROSOFT_SCOPES').split(','),
+    'scopes': os.getenv('MICROSOFT_SCOPES', '').split(',') if os.getenv('MICROSOFT_SCOPES') else [],
     'authority': os.getenv('MICROSOFT_AUTHORITY'),
     'valid_email_domains': os.getenv('MICROSOFT_VALID_EMAIL_DOMAINS').split(','),
     'logout_uri': os.getenv('MICROSOFT_LOGOUT_URI')
