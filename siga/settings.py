@@ -156,17 +156,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Configuração de login/logout Microsoft
-MICROSOFT = {
-    'app_id': os.getenv('MICROSOFT_APP_ID', '') if os.getenv('MICROSOFT_APP_ID') else '',
-    'app_secret': os.getenv('MICROSOFT_APP_SECRET', '') if os.getenv('MICROSOFT_APP_SECRET') else '',
-    'redirect': os.getenv('MICROSOFT_REDIRECT', '') if os.getenv('MICROSOFT_REDIRECT') else '',
-    'scopes': os.getenv('MICROSOFT_SCOPES', '').split(',') if os.getenv('MICROSOFT_SCOPES') else [],
-    'authority': os.getenv('MICROSOFT_AUTHORITY', '') if os.getenv('MICROSOFT_AUTHORITY') else '',
-    'valid_email_domains': os.getenv('MICROSOFT_VALID_EMAIL_DOMAINS', '').split(',') if os.getenv('MICROSOFT_VALID_EMAIL_DOMAINS') else [],
-    'logout_uri': os.getenv('MICROSOFT_LOGOUT_URI', '') if os.getenv('MICROSOFT_LOGOUT_URI') else ''
-}
-
 # Configurações do django-allauth
 SITE_ID = 1
 
@@ -183,21 +172,6 @@ LOGOUT_REDIRECT_URL = 'login'
 # Configurações da conta
 ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_EMAIL_REQUIRED = True
-
-# Configurações do Microsoft Azure AD
-SOCIALACCOUNT_PROVIDERS = {
-    'microsoft': {
-        'APP': {
-            'client_id': MICROSOFT['app_id'],
-            'secret': MICROSOFT['app_secret'],
-            'key': ''
-        },
-        'AUTH_PARAMS': {
-            'scope': 'email',
-        },
-        'OAUTH_PKCE_ENABLED': True,  # Habilitar PKCE
-    }
-}
 
 # Configurações de logging
 LOGGING = {
