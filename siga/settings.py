@@ -157,15 +157,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Configuração de login/logout Microsoft
-#MICROSOFT = {
-#    'app_id': os.getenv('MICROSOFT_APP_ID', '') if os.getenv('MICROSOFT_APP_ID') else '',
-#    'app_secret': os.getenv('MICROSOFT_APP_SECRET', '') if os.getenv('MICROSOFT_APP_SECRET') else '',
-#    'redirect': os.getenv('MICROSOFT_REDIRECT', '') if os.getenv('MICROSOFT_REDIRECT') else '',
-#    'scopes': os.getenv('MICROSOFT_SCOPES', '').split(',') if os.getenv('MICROSOFT_SCOPES') else [],
-#    'authority': os.getenv('MICROSOFT_AUTHORITY', '') if os.getenv('MICROSOFT_AUTHORITY') else '',
-#    'valid_email_domains': os.getenv('MICROSOFT_VALID_EMAIL_DOMAINS', '').split(',') if os.getenv('MICROSOFT_VALID_EMAIL_DOMAINS') else [],
-#    'logout_uri': os.getenv('MICROSOFT_LOGOUT_URI', '') if os.getenv('MICROSOFT_LOGOUT_URI') else ''
-#}
+MICROSOFT = {
+    'app_id': os.getenv('MICROSOFT_APP_ID', '') if os.getenv('MICROSOFT_APP_ID') else '',
+    'app_secret': os.getenv('MICROSOFT_APP_SECRET', '') if os.getenv('MICROSOFT_APP_SECRET') else '',
+    'redirect': os.getenv('MICROSOFT_REDIRECT', '') if os.getenv('MICROSOFT_REDIRECT') else '',
+    'scopes': os.getenv('MICROSOFT_SCOPES', '').split(',') if os.getenv('MICROSOFT_SCOPES') else [],
+    'authority': os.getenv('MICROSOFT_AUTHORITY', '') if os.getenv('MICROSOFT_AUTHORITY') else '',
+    'valid_email_domains': os.getenv('MICROSOFT_VALID_EMAIL_DOMAINS', '').split(',') if os.getenv('MICROSOFT_VALID_EMAIL_DOMAINS') else [],
+    'logout_uri': os.getenv('MICROSOFT_LOGOUT_URI', '') if os.getenv('MICROSOFT_LOGOUT_URI') else ''
+}
 
 # Configurações do django-allauth
 SITE_ID = 1
