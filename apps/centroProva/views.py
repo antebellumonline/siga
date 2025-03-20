@@ -150,25 +150,12 @@ def centroprova_detail(request, pk):
     # Obtenção dos filtros
     centroprova = get_object_or_404(CentroProva, pk=pk)
 
-    # Obter exames realizados no centro de provas
-    exames = CentroProvaExame.objects.filter(centroProva=centroprova)
-
     # Preparação dos Dados para o template reutilizável
     tabs = [
         {
             'id': 'centroProva-detail-dados',
             'class': 'btn-detail',
             'label': 'Detalhes'
-        },
-        {
-            'id': 'centroProva-detail-certificador',
-            'class': 'btn-certifier',
-            'label': 'Certificadores'
-        },
-        {
-            'id': 'centroProva-detail-certificacao',
-            'class': 'btn-certification',
-            'label': 'Certificações'
         },
     ]
 
@@ -185,60 +172,7 @@ def centroprova_detail(request, pk):
                 {'label': 'Nome', 'value': centroprova.nome},
             ]
         },
-        {
-            'id': 'centroProva-detail-certificador',
-            'title': 'Certificadores neste Centro de Provas',
-            'active': False,
-            'fields': []
-        },
-        {
-            'id': 'centroProva-detail-certificacao',
-            'title': 'Certificações neste Centro de Provas',
-            'active': False,
-            'fields': []
-        },
     ]
-
-    # Adicionar Itens às suas respectivas seções
-    if exames.exists():
-        # Certificadores
-        sections[1]['is_table'] = True
-        sections[1]['table_headers'] = [
-            'Nome do Certificador',
-            'Sigla do Certificador',
-        ]
-        certificadores_set = set()  # Usar um conjunto para evitar duplicatas
-        for exame in exames:
-            certificador = exame.certificacao.idCertificador
-            certificadores_set.add((certificador.descricao, certificador.siglaCertificador))
-
-        for descricao, sigla in certificadores_set:
-            sections[1]['fields'].append({
-                'values': [descricao, sigla]
-            })
-
-        if not sections[1]['fields']:
-            sections[1]['fields'] = [{'value': 'Nenhum Certificador encontrado.'}]
-
-        # Certificações
-        sections[2]['is_table'] = True
-        sections[2]['table_headers'] = [
-            'Nome da Certificação',
-            'Duração do Exame',
-            'Sigla do Exame',
-        ]
-        for exame in exames:
-            sections[2]['fields'].append({
-                'values': [
-                    exame.certificacao.descricao,
-                    exame.certificacao.duracao,
-                    exame.certificacao.siglaExame,
-                ]
-            })
-    else:
-        sections[1]['fields'] = [{'value': 'Nenhum Certificador encontrado.'}]
-        sections[2]['fields'] = [{'value': 'Nenhuma Certificação encontrada.'}]
-
 
     buttons = [
         {
