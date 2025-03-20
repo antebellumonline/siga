@@ -84,6 +84,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.microsoft',
+    'csp',
     'siga',
     'apis',
     'django_bootstrap5',
@@ -265,3 +266,9 @@ def set_strict_mode(connection, **_):
     """
     with connection.cursor() as cursor:
         cursor.execute("SET SESSION sql_mode='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION';")
+
+# Configurações CSP
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_IMG_SRC = ("'self'", "data:", "https://antebellum.com.br")
+CSP_SCRIPT_SRC = ("'self'", "http://viacep.com.br", "'unsafe-inline'", "https://cdn.jsdelivr.net")
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net")
