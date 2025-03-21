@@ -34,11 +34,36 @@ def centroprova_new(request):
         form = CentroProvaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('centroProva_list'))
+            return redirect(reverse('centroprova_list'))
+        else:
+            print(form.errors)
     else:
         form = CentroProvaForm()
+
+    # Definição das Seções e Botões
+    sections = [
+        {
+            'title': 'Dados do Centro de Provas',
+            'fields': [
+                form['nome'],
+            ]
+        },
+    ]
+
+    buttons = [
+        {
+            'class': 'btn-return',
+            'url': reverse('centroprova_list'),
+            'title': 'Retornar',
+            'text': 'Retornar',
+        },
+    ]
+
+    # Renderização do template
     return render(request, 'centroProva/centroProva_form.html', {
-        'form': form
+        'form': form,
+        'sections': sections,
+        'buttons': buttons,
     })
 
 def centroprova_list(request):
@@ -222,9 +247,31 @@ def centroprova_edit(request, pk):
     else:
         form = CentroProvaForm(instance=centroprova)
 
+    # Definição das Seções e Botões
+    sections = [
+        {
+            'title': 'Dados do Centro de Provas',
+            'fields': [
+                form['inativo'],
+                form['nome'],
+            ]
+        },
+    ]
+
+    buttons = [
+        {
+            'class': 'btn-return',
+            'url': reverse('centroprova_list'),
+            'title': 'Retornar',
+            'text': 'Retornar',
+        },
+    ]
+
     # Renderização do template
     return render(request, 'centroProva/centroProva_form.html', {
-        'form': form
+        'form': form,
+        'sections': sections,
+        'buttons': buttons,
     })
 
 def centroprova_delete(request, pk):
@@ -256,7 +303,7 @@ def exame_new(request):
     else:
         form = CentroProvaExameForm()
 
-    # Definindo as seções e botões
+    # Definição das Seções e Botões
     sections = [
         {
             'title': 'Dados do Exame Realizado no Centro de Provas',
@@ -281,6 +328,7 @@ def exame_new(request):
         },
     ]
 
+    # Renderização do template
     return render(request, 'centroProva/centroProva-exame_form.html', {
         'form': form,
         'sections': sections,
@@ -500,9 +548,35 @@ def exame_edit(request, pk):
     else:
         form = CentroProvaExameForm(instance=exame)
 
+    # Definição das Seções e Botões
+    sections = [
+        {
+            'title': 'Dados do Exame Realizado no Centro de Provas',
+            'fields': [
+                form['data'],
+                form['centroProva'],
+                form['certificacao'],
+                form['aluno'],
+                form['presenca'],
+                form['cancelado'],
+                form['observacao'],
+            ]
+        },
+    ]
+    buttons = [
+        {
+            'class': 'btn-return',
+            'url': reverse('exame_list'),
+            'title': 'Retornar',
+            'text': 'Retornar',
+        },
+    ]
+
     # Renderização do template
     return render(request, 'centroProva/centroProva-exame_form.html', {
-        'form': form, 
+        'form': form,
+        'sections': sections,
+        'buttons': buttons,
     })
 
 def exame_delete(request, pk):

@@ -21,10 +21,17 @@ class CentroProvaForm(forms.ModelForm):
         """
         model = CentroProva
         fields = [
+            'inativo',
             'nome',
-            'inativo'
         ]
         widgets = {
+            'inativo': BooleanSelect(attrs={
+                'class': 'apps-form-input select2',
+                'id': 'centroProva-inativo',
+                'name': 'centroProva-inativo',
+                'label': 'Este Centro de Provas está Inativo? ',
+                'placeholder': 'Selecione o status do Centro de Prova',
+            }),
             'nome': forms.TextInput(attrs={
                 'class': 'apps-form-input',
                 'id': 'centroProva-nome',
@@ -32,13 +39,6 @@ class CentroProvaForm(forms.ModelForm):
                 'label': 'Nome do Centro de Provas: ',
                 'placeholder': 'Informe o nome do Centro de Prova',
                 'autofocus': True,
-            }),
-            'inativo': BooleanSelect(attrs={
-                'class': 'apps-form-input select2',
-                'id': 'centroProva-inativo',
-                'name': 'centroProva-inativo',
-                'label': 'Status: ',
-                'placeholder': 'Selecione o status do Centro de Prova',
             }),
         }
 
