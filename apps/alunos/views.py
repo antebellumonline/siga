@@ -173,7 +173,14 @@ def aluno_detail(request, pk):
                 {'label': 'Número', 'value': aluno.numero},
                 {'label': 'Complemento', 'value': aluno.complemento},
                 {'label': 'Bairro', 'value': aluno.bairro},
-                {'label': 'Cidade', 'value': f"{aluno.cidade.nome} / {aluno.cidade.estado.uf}"},
+                {
+                    'label': 'Cidade',
+                    'value': (
+                        f"{aluno.cidade.nome} / {aluno.cidade.estado.uf}"
+                        if aluno.cidade
+                        else 'N/A'
+                    )
+                },
             ]
         },
         {
@@ -252,7 +259,7 @@ def aluno_detail(request, pk):
             'url': '#',
             'data': {'model': 'Aluno','pk': aluno.pk},
             'title': 'Excluir Aluno',
-        'aria-label': 'Excluir Aluno',
+            'aria-label': 'Excluir Aluno',
         },
         {
             'class': 'btn-return',
