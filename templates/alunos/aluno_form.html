@@ -10,6 +10,8 @@
 
 {% block content %}
 
+{% include "includes/apps_form.html" %}
+
 <div class="container-apps-form">
     <form method="post" class="apps-form-edit">
         {% csrf_token %}

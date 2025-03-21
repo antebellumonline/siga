@@ -1,7 +1,7 @@
 <!-- templates/includes/apps_form.html -->
 
 <div class="container-apps-form">
-    <form method="post" class="apps-form">
+    <form method="post" enctype="multipart/form-data" class="apps-form">
         {% csrf_token %}
         <div class="apps-form-group">
             {% for section in sections %}
@@ -36,10 +36,16 @@
                             </table>
                         </div>
                     {% else %}
+                        {% if section.is_formset %}
+                            {{ section.formset.management_form }}  <!-- Certifica que o Django reconhece o formset -->
+                        {% endif %}
+
                         {% for field in section.fields %}
                             <div class="apps-form-input">
-                                <label for="{{ field.id_for_label }}">{{ field.field.widget.attrs.label }}</label>  <!-- Renderiza o label -->
-                                {{ field }}  <!-- Renderiza o campo -->
+                                <label for="{{ field.id_for_label }}">
+                                    {{ field.label }}  <!-- Correção: renderizando o label correto -->
+                                </label>
+                                {{ field }}  <!-- Renderiza o campo do formulário -->
                                 {% if field.help_text %}
                                     <small class="form-text text-muted">{{ field.help_text }}</small>
                                 {% endif %}
@@ -51,8 +57,8 @@
                     {% endif %}
                 </div>
             {% endfor %}
-
         </div>
+
         <!-- Grupo de botões -->
         <div class="apps-form-btn-group">
             <button type="submit" class="btn-save btn-dark" title="Salvar">Salvar</button>
