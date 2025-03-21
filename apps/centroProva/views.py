@@ -525,9 +525,81 @@ def exame_detail(request, pk):
     # Obtém o objeto pelo ID (pk) ou retorna erro 404 se não encontrado
     centroprova_exame = get_object_or_404(CentroProvaExame, pk=pk)
 
+    # Preparação dos Dados para o template reutilizável
+    tabs = [
+        {
+            'id': 'exame-detail-dados',
+            'class': 'btn-detail',
+            'label': 'Detalhes'
+        },
+    ]
+
+    sections = [
+        {
+            'id': 'exame-detail-dados',
+            'title': 'Detalhes do Exame Realizado no Centro de Provas',
+            'active': True,
+            'fields': [
+                {'label': 'ID', 'value': centroprova_exame.id,},
+                {'label': 'Data do Exame', 'value': centroprova_exame.data},
+                {'label': 'Centro de Provas', 'value': centroprova_exame.centroProva.nome},
+                {
+                    'label': 'Certificação',
+                    'value': (
+                        f"{centroprova_exame.certificacao.descricao} "
+                        f"({centroprova_exame.certificacao.siglaExame})"
+                        if centroprova_exame.certificacao.siglaExame
+                        else centroprova_exame.certificacao.descricao
+                    )
+                },
+                {
+                    'label': 'Aluno',
+                    'value': (
+                        f"{centroprova_exame.aluno.uid} - "
+                        f"{centroprova_exame.aluno.nome}"
+                    )
+                },
+                {
+                    'label': 'O Aluno estava Presente?',
+                    'value': 'Sim' if centroprova_exame.presenca else 'Não'
+                },
+                {
+                    'label': 'O Exame foi Cancelado?',
+                    'value': 'Sim' if centroprova_exame.cancelado else 'Não'
+                },
+                {'label': 'Observações do Exame', 'value': centroprova_exame.observacao},
+            ]
+        },
+    ]
+
+    buttons = [
+        {
+            'class': 'btn-edit',
+            'url': reverse('exame_edit', args=[centroprova_exame.pk]),
+            'title': 'Editar',
+            'aria-label': 'Editar Exame Realizado no Centro de Provas',
+        },
+        {
+            'class': 'btn-delete',
+            'url': '#',
+            'data': {'model': 'CentroProvaExame','pk': centroprova_exame.pk},
+            'title': 'Excluir',
+        'aria-label': 'Excluir Exame Realizado no Centro de Provas',
+        },
+        {
+            'class': 'btn-return',
+            'url': reverse('exame_list'),
+            'title': 'Voltar para a lista de Centros de Provas',
+            'aria-label': 'Voltar para a lista de Centros de Provas',
+        },
+    ]
+
     # Renderização do template
     return render(request, 'centroProva/centroProva-exame_detail.html', {
-        'centroprova_exame': centroprova_exame
+        'centroprova_exame': centroprova_exame,
+        'tabs': tabs,
+        'sections': sections,
+        'buttons': buttons,
     })
 
 def exame_edit(request, pk):

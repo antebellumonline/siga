@@ -10,54 +10,9 @@
 
 {% block content %}
 
-<div class="container-apps-detail">
-    <div class="apps-detail-group">
-        <div class="apps-detail-group-sub">
-            <h6 class="apps-detail-sub-section-title">Detalhes do Exame Realizado no Centro de Provas</h6>
-            <p class="p-detail">
-                <span class="apps-detail-label">ID: </span>
-                <span class="apps-detail-value">{{ centroprova_exame.id }}</span>
-            </p>
-            <p class="p-detail">
-                <span class="apps-detail-label">Data: </span>
-                <span class="apps-detail-value">{{ centroprova_exame.data|date:"d/m/Y H:i" }}</span>
-            </p>
-            <p class="p-detail">
-                <span class="apps-detail-label">Centro de Provas: </span>
-                <span class="apps-detail-value">{{ centroprova_exame.centroProva.nome }}</span>
-            </p>
-            <p class="p-detail">
-                <span class="apps-detail-label">Certificação: </span>
-                <span class="apps-detail-value">{{ centroprova_exame.certificacao.descricao }} 
-                    {% if centroprova_exame.certificacao.siglaExame %}
-                        ({{ centroprova_exame.certificacao.siglaExame }})
-                    {% endif %}
-                </span>
-            </p>
-            <p class="p-detail">
-                <span class="apps-detail-label">Aluno: </span>
-                <span class="apps-detail-value">{{ centroprova_exame.aluno.uid }} - {{ centroprova_exame.aluno.nome }}</span>
-            </p>
-            <p class="p-detail">
-                <span class="apps-detail-label">O aluno estava presente? </span>
-                <span class="apps-detail-value">{{ centroprova_exame.presenca|yesno:"Sim,Não" }}</span>
-            </p>
-            <p class="p-detail">
-                <span class="apps-detail-label">O Exame foi cancelado? </span>
-                <span class="apps-detail-value">{{ centroprova_exame.cancelado|yesno:"Sim,Não" }}</span>
-            </p>
-        </div>
-    </div>
+    {% include 'includes/apps_detail.html' %}
 
-    <!-- Grupo de botões (Editar, Excluir e Retornar) -->
-    <div class="apps-detail-btn-group">
-        <a class="btn-edit btn-dark" href="{% url 'exame_edit' centroprova_exame.pk %}">Editar</a>
-        <a class="btn-delete btn-yellow" id="btn-delete" data-model="centroprova_exame" data-pk="{{ centroprova_exame.pk }}" href="#">Excluir</a>
-        <a class="btn-return btn-dark" href="{% url 'exame_list' %}">Retornar</a>
-    </div>
-</div>
-
-<!-- Modal Pop-up -->
-{% include 'includes/modals.html' %}
+    <!-- Modal Pop-up -->
+    {% include 'includes/modals.html' %}
 
 {% endblock %}
